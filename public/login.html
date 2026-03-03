@@ -5,120 +5,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión | Ecugaming Import</title>
-    <link rel="stylesheet" href="style.css?v=1.0.1">
+    <link rel="stylesheet" href="style.css?v=1.0.3">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .auth-container {
-            max-width: 450px;
-            margin: 120px auto;
-            padding: 2.5rem;
-            background: #fff;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, .05);
-            border: 1px solid var(--border);
-        }
+    body { background: var(--bg-light); color: var(--text); }
+    .auth-container {
+    max-width: 450px;
+    margin: 120px auto;
+    padding: 2.5rem;
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border);
+    }
 
-        .auth-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+    .auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    }
 
-        .auth-header h1 {
-            color: var(--secondary);
-            font-weight: 900;
-            font-size: 2rem;
-        }
+    .auth-header h1 {
+    color: var(--white);
+    font-weight: 900;
+    font-size: 2rem;
+    }
 
-        .auth-header span {
-            color: var(--primary);
-        }
+    .auth-header span {
+    color: var(--primary);
+    }
 
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
+    .form-group {
+    margin-bottom: 1.2rem;
+    }
 
-        .form-group label {
-            display: block;
-            margin-bottom: .5rem;
-            font-weight: 600;
-            font-size: .9rem;
-            color: var(--text-dim);
-        }
+    .form-group label {
+    display: block;
+    margin-bottom: .5rem;
+    font-weight: 600;
+    font-size: .9rem;
+    color: var(--text-dim);
+    }
 
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: #f8fafc;
-            font-size: 1rem;
-            transition: .3s;
-            box-sizing: border-box;
-        }
+    .form-control {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--white);
+    font-size: 1rem;
+    transition: .3s;
+    box-sizing: border-box;
+    }
 
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 113, 227, .1);
-        }
+    .form-control:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 113, 227, .1);
+    }
 
-        .btn-auth {
-            width: 100%;
-            padding: 1rem;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: .2s;
-        }
+    .btn-auth {
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: .2s;
+    }
 
-        .btn-auth:hover {
-            opacity: .88;
-        }
+    .btn-auth:hover {
+    opacity: .88;
+    }
 
-        .btn-auth:disabled {
-            opacity: .6;
-            cursor: not-allowed;
-        }
+    .btn-auth:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    }
 
-        .auth-footer {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: .9rem;
-            color: var(--text-dim);
-        }
+    .auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: .9rem;
+    color: var(--text-dim);
+    }
 
-        .auth-footer a {
-            color: var(--primary);
-            font-weight: 700;
-            text-decoration: none;
-        }
+    .auth-footer a {
+    color: var(--primary);
+    font-weight: 700;
+    text-decoration: none;
+    }
 
-        .error-msg {
-            background: #fff0f0;
-            color: #c0392b;
-            border: 1px solid #f5c6c6;
-            border-radius: 10px;
-            padding: .8rem 1rem;
-            margin-bottom: 1rem;
-            font-size: .9rem;
-            display: none;
-        }
+    .error-msg {
+    background: #fff0f0;
+    color: #c0392b;
+    border: 1px solid #f5c6c6;
+    border-radius: 10px;
+    padding: .8rem 1rem;
+    margin-bottom: 1rem;
+    font-size: .9rem;
+    display: none;
+    }
 
-        .success-msg {
-            background: #f0fff4;
-            color: #27ae60;
-            border: 1px solid #b2dfdb;
-            border-radius: 10px;
-            padding: .8rem 1rem;
-            margin-bottom: 1rem;
-            font-size: .9rem;
-            display: none;
-        }
+    .success-msg {
+    background: #f0fff4;
+    color: #27ae60;
+    border: 1px solid #b2dfdb;
+    border-radius: 10px;
+    padding: .8rem 1rem;
+    margin-bottom: 1rem;
+    font-size: .9rem;
+    display: none;
+    }
     </style>
 </head>
 
