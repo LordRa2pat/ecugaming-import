@@ -11,11 +11,8 @@
 </head>
 
 <body>
-    <!-- Top Info Bar -->
-    <div
-        style="background: var(--secondary); color: #fff; text-align: center; padding: 0.5rem; font-size: 0.8rem; font-weight: 600;">
-        <i class="fa fa-truck-fast"></i> Envíos 100% seguros a nivel nacional vía Servientrega, Tramaco Express y
-        Cooperativas.
+    <div class="top-bar">
+        <i class="fa fa-truck-fast"></i> Envíos 100% seguros a nivel nacional vía Servientrega y Tramaco Express.
     </div>
 
     <header>
@@ -23,151 +20,86 @@
 
         <div class="search-container">
             <i class="fa fa-search search-icon"></i>
-            <input type="text" id="searchInput" placeholder="Buscar iPhone, PS5, Accesorios..."
-                oninput="handleSearch()">
+            <input type="text" id="searchInput" placeholder="Buscar..." oninput="handleSearch()">
         </div>
 
         <div class="nav-actions">
-            <button class="btn-secondary"
-                style="margin:0; padding:0.5rem 1rem; border:none; color:var(--primary); font-weight:700;"
-                onclick="location.href='tracking.html'">
-                <i class="fa fa-map-marker-alt"></i> Rastreo
-            </button>
-            <div id="authArea" style="display:flex; gap:0.5rem; align-items:center;">
-                <button class="btn-secondary" style="margin:0; padding:0.5rem 1rem;"
-                    onclick="location.href='login.html'">Login</button>
+            <div id="authArea" style="display:flex; gap:1.5rem; align-items:center;">
+                <i class="fa fa-user-circle" style="font-size:1.2rem; cursor:pointer;"
+                    onclick="location.href='login.html'"></i>
             </div>
-            <div onclick="toggleCart(true)" style="position:relative; cursor:pointer; margin-left:1rem;">
-                <i class="fa fa-shopping-cart" style="font-size:1.5rem; color:var(--text); transition:0.2s;"></i>
+            <div onclick="toggleCart(true)" style="position:relative; cursor:pointer;">
+                <i class="fa fa-shopping-bag" style="font-size:1.2rem; color:var(--text);"></i>
                 <span id="cartBadge"
-                    style="position:absolute; top:-8px; right:-12px; background:var(--primary); color:#fff; font-size:0.75rem; padding:2px 6px; border-radius:50%; font-weight:800; display:none;">0</span>
+                    style="position:absolute; top:-5px; right:-8px; background:var(--accent); color:#fff; font-size:10px; padding:2px 5px; border-radius:50%; font-weight:800; display:none;">0</span>
             </div>
         </div>
     </header>
 
-    <section class="hero-3d">
-        <div class="hero-3d-content">
-            <span class="featured-badge">Super Promoción de Remate 🔥</span>
-            <h1 id="heroTitle">Sube de Nivel con <span>Ecugaming</span></h1>
-            <p id="heroDesc">Los mejores smartphones, consolas y accesorios con garantía real. Paga de contado y recibe
-                en el mismo día.</p>
-            <button class="btn-buy" style="width:auto; padding:1.2rem 3rem;" onclick="scrollToCatalog()">Ver Catálogo
-                Completo</button>
+    <section class="hero-promo">
+        <h1 id="heroTitle">iPhone 15 Pro</h1>
+        <p id="heroDesc">Titanio. Tan fuerte. Tan ligero. Tan Pro.</p>
+        <div style="display:flex; gap:20px; margin-top:20px;">
+            <button class="btn-buy" onclick="scrollToCatalog()">Comprar</button>
+            <button class="btn-secondary" onclick="scrollToCatalog()">Más información ></button>
         </div>
-        <div class="scene-3d">
-            <div class="card-3d" id="hero3dCard">
+        <div class="scene-3d" style="margin-top: 40px; width: 100%; max-width: 800px;">
+            <div class="card-3d" id="hero3dCard" style="background:none; border:none; box-shadow:none;">
                 <!-- Injected via JS -->
             </div>
         </div>
     </section>
 
-    <div class="categories-container" id="categoryNav">
+    <!-- Categories Bar -->
+    <div class="categories-container" id="categoryNav" style="top:44px;">
         <div class="categories">
-            <button class="category-pill active" onclick="filterCategory('All')">Todas las Ofertas</button>
-            <button class="category-pill" onclick="filterCategory('iPhone')">Apple iPhone</button>
+            <button class="category-pill active" onclick="filterCategory('All')">Todos</button>
+            <button class="category-pill" onclick="filterCategory('iPhone')">iPhone</button>
             <button class="category-pill" onclick="filterCategory('Consolas')">Consolas</button>
-            <button class="category-pill" onclick="filterCategory('Juegos')">Juegos Físicos (PS4, PS5, Switch)</button>
+            <button class="category-pill" onclick="filterCategory('Juegos')">Juegos</button>
             <button class="category-pill" onclick="filterCategory('Accesorios')">Accesorios</button>
-            <button class="category-pill" onclick="filterCategory('Laptops')">Laptops</button>
         </div>
     </div>
 
-    <!-- Súper Promociones Section -->
-    <main class="catalog-section" id="promoSection" style="display:none; padding-bottom: 0;">
-        <h2 class="section-title"><i class="fa fa-fire"></i> Súper Promociones / Remate de Stock</h2>
-        <div id="promoCatalog" class="grid" style="margin-bottom: 3rem;">
-            <!-- Promo Products -->
-        </div>
-    </main>
-
     <!-- Main Catalog Section -->
-    <main class="catalog-section" id="catalogStart">
-        <h2 class="section-title"><i class="fa fa-box-open"></i> Catálogo Completo <span
-                style="font-size:0.8rem; background:#f1f5f9; padding:0.2rem 0.5rem; border-radius:10px; color:var(--text-dim); margin-left:1rem; font-weight:600;">(Top
-                9 Destacados)</span></h2>
-        <div id="catalog" class="grid">
+    <main class="catalog-section" id="catalogStart"
+        style="background:#fff; border-radius:30px; margin-top:-30px; position:relative; z-index:100;">
+        <div id="catalog" class="grid" style="padding:40px 0;">
             <!-- Products injected by JS -->
         </div>
     </main>
 
-    <!-- Tech News Section (Dynamically powered by n8n) -->
-    <main class="catalog-section" id="newsSection"
-        style="padding-top: 2rem; background: #fff; margin-bottom:2rem; border-radius:24px; box-shadow:0 10px 25px -5px rgba(0,0,0,0.05);">
-        <h2 class="section-title" style="margin-bottom:1rem;"><i class="fa fa-newspaper"></i> Noticias Gamer & Tech</h2>
-        <p
-            style="color:var(--text-dim); text-align:center; margin-bottom: 2rem; max-width:600px; margin-left:auto; margin-right:auto;">
-            Últimas novedades del mundo de los videojuegos, tecnología y lanzamientos. Actualizado cada 12 horas por
-            nuestra IA.</p>
-        <div id="newsContainer" class="grid"
-            style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
-            <p style="grid-column:1/-1; text-align:center; color:var(--text-dim);"><i class="fa fa-spinner fa-spin"></i>
-                Cargando noticias desde Ecugaming AI...</p>
-        </div>
-    </main>
-
-    <!-- Credit Banner embedded in home -->
-    <div class="credit-banner">
-        <div class="credit-info">
-            <h2>¿Lo quieres ahora? Llévalo a Crédito.</h2>
-            <p>Aplica a nuestro Crédito Directo con una entrada mínima desde <strong>$88</strong>. Respuesta inmediata y
-                sin papeleos interminables.</p>
-            <button class="btn-credit" onclick="location.href='credito.html'">Aplicar al Crédito Ahora <i
-                    class="fa fa-arrow-right"></i></button>
-        </div>
-        <img src="https://cdn-icons-png.flaticon.com/512/3593/3593539.png"
-            style="width: 150px; opacity:0.9; transform: rotate(-15deg);" alt="Crédito">
-    </div>
-
     <!-- Footer -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <div class="logo" style="font-size: 1.5rem; margin-bottom:1rem;">Ecugaming <span>Import</span></div>
-                <p>Tu aliado tecnológico en Lago Agrio y todo el Ecuador. Facturación electrónica y garantía comprobada.
-                </p>
+    <footer style="background:#f5f5f7; border-top:none; text-align:center; padding:60px 5%;">
+        <div style="max-width:800px; margin:0 auto;">
+            <div class="logo" style="justify-content:center; margin-bottom:20px;">Ecugaming <span>Import</span></div>
+            <p style="color:var(--text-dim); font-size:12px; line-height:1.6; margin-bottom:40px;">
+                Copyright © 2026 Ecugaming Import. Todos los derechos reservados. <br>
+                Lago Agrio, Ecuador. Envíos nacionales vía Servientrega.
+            </p>
+            <div style="display:flex; justify-content:center; gap:30px; font-size:12px;">
+                <a href="terminos.html" style="color:var(--text); text-decoration:none;">Privacidad</a>
+                <a href="terminos.html" style="color:var(--text); text-decoration:none;">Términos de uso</a>
+                <a href="envios.html" style="color:var(--text); text-decoration:none;">Ventas y reembolsos</a>
             </div>
-            <div class="footer-col">
-                <h3>Enlaces Rápidos</h3>
-                <a href="#catalogStart">Catálogo</a>
-                <a href="credito.html">Solicitar Crédito</a>
-                <a href="admin.html">Portal Empleados</a>
-            </div>
-            <div class="footer-col">
-                <h3>Políticas y Envíos</h3>
-                <a href="envios.html">Política de Envíos (Servientrega / Tramaco)</a>
-                <a href="terminos.html">Términos y Condiciones</a>
-                <a href="terminos.html#garantia">Póliza de Garantía</a>
-            </div>
-            <div class="footer-col">
-                <h3>Contacto</h3>
-                <p><i class="fab fa-whatsapp"></i> 096 260 9951</p>
-                <p><i class="fab fa-instagram"></i> @ecugaming_import</p>
-                <p><i class="fa fa-envelope"></i> CONTACTO@ECUGAMINGIMPORT.ONLINE</p>
-                <p><i class="fa fa-map-marker-alt"></i> Lago Agrio, Ecuador</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2026 Ecugaming Import. Todos los derechos reservados.
         </div>
     </footer>
 
     <!-- Cart Sidebar -->
     <div id="cartSidebar" class="cart-sidebar">
         <div class="cart-header">
-            <h2 style="font-size: 1.5rem; color:var(--secondary);"><i class="fa fa-shopping-cart"></i> Tu Carrito</h2>
+            <h2 style="font-size: 1.2rem; color:var(--text);">Bolsa</h2>
             <span class="close-btn" onclick="toggleCart(false)">&times;</span>
         </div>
-        <div id="cartItems" class="cart-items"
-            style="flex-grow:1; overflow-y:auto; margin-bottom:2rem; padding-right:1rem;">
+        <div id="cartItems" class="cart-items" style="flex-grow:1; overflow-y:auto; margin-bottom:20px;">
             <!-- Cart items -->
         </div>
-        <div class="cart-total" style="border-top:2px solid var(--border); padding-top:1.5rem;">
+        <div class="cart-total" style="border-top:1px solid var(--border); padding-top:20px;">
             <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem;">
-                <span style="color:var(--text-dim); font-size:1.1rem; font-weight:600;">Total a pagar:</span>
-                <span id="cartTotalText" style="font-size:2rem; font-weight:900; color:var(--text);">$0.00</span>
+                <span style="font-weight:600;">Total:</span>
+                <span id="cartTotalText" style="font-weight:900;">$0.00</span>
             </div>
-            <button class="btn-buy" onclick="handleCheckout()" style="font-size: 1.1rem; padding: 1.2rem;">Proceder al
-                Pago Seguro</button>
+            <button class="btn-buy" onclick="handleCheckout()" style="width:100%; padding:14px;">Revisar</button>
         </div>
     </div>
 

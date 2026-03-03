@@ -15,28 +15,58 @@ app.use(express.json({ limit: '50mb' }));
 
 // Paths
 const DATA_DIR = path.join(__dirname, '../public/data');
-const STOCK_FILE = path.join(DATA_DIR, 'stock.json');
-const USERS_FILE = path.join(DATA_DIR, 'users.json');
-const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
 
-// Ensure data directory and files exist
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+// Persistent path for Vercel (ephemeral but better than read-only)
+const getPersistPath = (filename) => {
+    const tmpPath = path.join('/tmp', filename);
+    const localPath = path.join(DATA_DIR, filename);
+
+    // If we're on Vercel/Linux, use /tmp for writes, but try to seed from local
+    if (process.env.VERCEL || process.platform === 'linux') {
+        if (!fs.existsSync(tmpPath) && fs.existsSync(localPath)) {
+            try {
+                fs.copyFileSync(localPath, tmpPath);
+            } catch (e) { /* silent fail */ }
+        }
+        return tmpPath;
+    }
+    return localPath;
+};
+
+const STOCK_FILE = getPersistPath('stock.json');
+const USERS_FILE = getPersistPath('users.json');
+const ORDERS_FILE = getPersistPath('orders.json');
+
+// Ensure data directory exists locally
+if (!fs.existsSync(DATA_DIR) && !process.env.VERCEL) fs.mkdirSync(DATA_DIR, { recursive: true });
+
+// Ensure files exist in their target locations
 [STOCK_FILE, USERS_FILE, ORDERS_FILE].forEach(file => {
-    if (!fs.existsSync(file)) fs.writeFileSync(file, '[]');
+    if (!fs.existsSync(file)) {
+        try { fs.writeFileSync(file, '[]'); } catch (e) { console.error(`Cannot write ${file}`); }
+    }
 });
 
 // Helpers
 const readData = (file) => {
     try {
+        if (!fs.existsSync(file)) return [];
         const content = fs.readFileSync(file, 'utf8');
         return content ? JSON.parse(content) : [];
-    } catch (e) { return []; }
+    } catch (e) {
+        console.error(`Read error on ${file}:`, e);
+        return [];
+    }
 };
 
 const saveData = (file, data) => {
     try {
         fs.writeFileSync(file, JSON.stringify(data, null, 2));
-    } catch (e) { console.error(`Error saving ${file}:`, e); }
+        return true;
+    } catch (e) {
+        console.error(`Save error on ${file}:`, e);
+        return false;
+    }
 };
 
 // --- STOCK API ---
@@ -93,20 +123,29 @@ app.post('/api/stock/update', (req, res) => {
 // --- AUTH API ---
 app.post('/api/auth/register', (req, res) => {
     const { name, email, phone, password } = req.body;
-    let users = readData(USERS_FILE);
-    if (users.find(u => u.email === email)) return res.status(400).json({ error: "Email ya registrado" });
+    if (!name || !email || !password) return res.status(400).json({ error: "Datos incompletos" });
 
-    const newUser = { id: Date.now().toString(), name, email, phone, password };
+    let users = readData(USERS_FILE);
+    if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
+        return res.status(400).json({ error: "Email ya registrado" });
+    }
+
+    const newUser = { id: Date.now().toString(), name, email: email.toLowerCase(), phone, password };
     users.push(newUser);
     saveData(USERS_FILE, users);
-    res.json({ message: "Usuario creado", user: { id: newUser.id, name, email, phone } });
+    res.json({ message: "Usuario creado", user: { id: newUser.id, name, email: newUser.email, phone } });
 });
 
 app.post('/api/auth/login', (req, res) => {
     const { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({ error: "Email y contraseña requeridos" });
+
     const users = readData(USERS_FILE);
-    const user = users.find(u => u.email === email && u.password === password);
-    if (!user) return res.status(401).json({ error: "Credenciales inválidas" });
+    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+
+    if (!user) {
+        return res.status(401).json({ error: "Credenciales inválidas" });
+    }
     res.json({ user: { id: user.id, name: user.name, email: user.email, phone: user.phone } });
 });
 

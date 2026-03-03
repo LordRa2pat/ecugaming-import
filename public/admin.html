@@ -636,12 +636,29 @@
                 const promoBadge = item.is_clearance ? '<span style="background:#ef4444; color:#fff; padding:2px 6px; border-radius:4px; font-size:0.7rem; font-weight:800;">PROMO</span>' : '';
 
                 tr.innerHTML = `
-                    <td><img src="${imgSrc}" class="product-img-mini"></td>
-                    <td style="font-weight:600; color:var(--secondary);">${item.name}</td>
-                    <td><span style="font-weight:700; ${item.stock < 10 ? 'color:#ef4444;' : ''}">${item.stock}</span></td>
+                    <td>
+                        <div style="position:relative; width:44px; height:44px;">
+                            <img src="${imgSrc}" class="product-img-mini" id="img_${item.id}">
+                            <label for="file_${item.id}" style="position:absolute; bottom:-5px; right:-5px; background:var(--accent); color:#fff; width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:10px;">
+                                <i class="fa fa-camera"></i>
+                            </label>
+                            <input type="file" id="file_${item.id}" hidden accept="image/*" onchange="quickUpdateImage('${item.id}', this)">
+                        </div>
+                    </td>
+                    <td style="font-weight:600; color:var(--text);">${item.name}</td>
+                    <td>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <input type="number" value="${item.stock}" style="width:60px; padding:4px; border-radius:6px; border:1px solid var(--border); font-weight:700;" 
+                                onchange="quickUpdateStock('${item.id}', this.value)">
+                        </div>
+                    </td>
                     <td style="font-weight:800;">$${item.price.toFixed(2)}</td>
                     <td>${item.old_price ? `<span style="text-decoration:line-through; color:var(--text-dim); font-size:0.8rem;">$${item.old_price}</span>` : ''} ${promoBadge}</td>
-                    <td><button class="btn-edit" onclick="openEdit('${item.id}')"><i class="fa fa-pen"></i> Editar</button></td>
+                    <td>
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn-edit" onclick="openEdit('${item.id}')" style="background:#f5f5f7; color:var(--text); border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:12px;"><i class="fa fa-pen"></i> Detalle</button>
+                        </div>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -770,6 +787,36 @@
                 btn.innerText = 'Guardar Cambios';
                 btn.disabled = false;
             }
+        }
+
+        async function quickUpdateStock(id, newStock) {
+            try {
+                const res = await fetch('/api/stock/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-hash': adminHash },
+                    body: JSON.stringify({ id, stock: parseInt(newStock) })
+                });
+                if (!res.ok) alert('No se pudo actualizar el stock');
+            } catch (err) { console.error(err); }
+        }
+
+        async function quickUpdateImage(id, input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async function (e) {
+                const base64 = e.target.result;
+                document.getElementById('img_' + id).src = base64;
+                try {
+                    const res = await fetch('/api/stock/update', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'x-admin-hash': adminHash },
+                        body: JSON.stringify({ id, imageBase64: base64 })
+                    });
+                    if (!res.ok) alert('No se pudo actualizar la imagen');
+                } catch (err) { console.error(err); }
+            };
+            reader.readAsDataURL(file);
         }
 
         initAdmin();
