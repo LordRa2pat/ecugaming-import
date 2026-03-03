@@ -142,9 +142,75 @@ header {
 
 .nav-actions {
     display: flex;
-    gap: 24px;
+    gap: 16px;
     align-items: center;
 }
+
+/* ── Auth Button & User Dropdown (all pages) ── */
+.btn-auth {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: .85rem;
+    font-weight: 700;
+    padding: .45rem 1.1rem;
+    border-radius: 980px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    text-decoration: none;
+    transition: .2s;
+    white-space: nowrap;
+}
+.btn-auth:hover { background: rgba(255,255,255,0.1); border-color: var(--primary); color: var(--primary); }
+
+.user-menu { position: relative; }
+
+.user-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: .85rem;
+    font-weight: 700;
+    padding: .45rem 1.1rem;
+    border-radius: 980px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    transition: .2s;
+}
+.user-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--primary); color: var(--primary); }
+
+.user-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.4);
+    min-width: 190px;
+    display: none;
+    z-index: 2000;
+    padding: .5rem 0;
+    backdrop-filter: blur(20px);
+}
+.user-dropdown.open { display: block; animation: fadeIn 0.2s ease-out; }
+.user-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .75rem 1.4rem;
+    color: var(--text);
+    text-decoration: none;
+    font-size: .88rem;
+    font-weight: 600;
+    transition: .15s;
+}
+.user-dropdown a:hover { background: rgba(255,140,0,0.1); color: var(--primary); }
+.user-dropdown a i { width: 16px; text-align: center; color: var(--primary); }
 
 /* Search Bar */
 .search-container {
