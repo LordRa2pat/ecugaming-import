@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin | Ecugaming Import</title>
-    <link rel="stylesheet" href="style.css?v=1.0.4">
+    <link rel="stylesheet" href="style.css?v=1.0.5">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -671,7 +671,66 @@
             <div class="admin-panel" id="panel-settings">
                 <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Ajustes</h2>
                 <div class="admin-card">
-                    <p>Configuración general de la tienda, envíos y WhatsApp.</p>
+                    <p style="color:#9999a8; margin-bottom: 2rem;">Configuración general de la tienda, envíos y
+                        WhatsApp.</p>
+
+                    <h3
+                        style="font-size:1.1rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.5rem; margin-bottom:1rem;">
+                        General & Envíos</h3>
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label>Texto Topbar (Envíos)</label>
+                            <div style="display:flex; gap:0.5rem;">
+                                <input type="text" id="set-shipping_topbar_text" class="form-control">
+                                <button class="btn-action primary"
+                                    onclick="saveSetting('shipping_topbar_text', document.getElementById('set-shipping_topbar_text').value)">Guardar</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp Contacto</label>
+                            <div style="display:flex; gap:0.5rem;">
+                                <input type="text" id="set-whatsapp" class="form-control">
+                                <button class="btn-action primary"
+                                    onclick="saveSetting('whatsapp', document.getElementById('set-whatsapp').value)">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label>Envío Gratis desde ($)</label>
+                            <div style="display:flex; gap:0.5rem;">
+                                <input type="number" id="set-free_shipping_threshold" class="form-control">
+                                <button class="btn-action primary"
+                                    onclick="saveSetting('free_shipping_threshold', document.getElementById('set-free_shipping_threshold').value)">Guardar</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Costo de Envío Base ($)</label>
+                            <div style="display:flex; gap:0.5rem;">
+                                <input type="number" id="set-shipping_cost" class="form-control">
+                                <button class="btn-action primary"
+                                    onclick="saveSetting('shipping_cost', document.getElementById('set-shipping_cost').value)">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3
+                        style="font-size:1.1rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.5rem; margin-top:2rem; margin-bottom:1rem;">
+                        Métodos de Pago (JSON)</h3>
+                    <div class="form-group">
+                        <label>Cuentas Bancarias Valid JSON</label>
+                        <textarea id="set-bank_accounts" class="form-control"
+                            style="min-height:100px; font-family:monospace; font-size:0.85rem; padding:1rem;"></textarea>
+                        <button class="btn-action primary" style="margin-top:0.5rem;"
+                            onclick="saveJsonSetting('bank_accounts')">Guardar JSON Bancos</button>
+                    </div>
+                    <div class="form-group" style="margin-top:1.5rem;">
+                        <label>Crypto Wallets Valid JSON</label>
+                        <textarea id="set-crypto_wallets" class="form-control"
+                            style="min-height:100px; font-family:monospace; font-size:0.85rem; padding:1rem;"></textarea>
+                        <button class="btn-action primary" style="margin-top:0.5rem;"
+                            onclick="saveJsonSetting('crypto_wallets')">Guardar JSON Crypto</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -819,8 +878,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-    <script src="/lib/supabase-client.js?v=1.0.4"></script>
-    <script src="/lib/auth.js?v=1.0.4"></script>
+    <script src="/lib/supabase-client.js?v=1.0.5"></script>
+    <script src="/lib/auth.js?v=1.0.5"></script>
     <script>
         let adminToken = '';
         let allProducts = [];
@@ -857,6 +916,31 @@
                 case 'audit': loadAuditLogs(); break;
                 case 'customers': loadUsers(); break;
             }
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.textContent = msg;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '20px';
+            toast.style.right = '20px';
+            toast.style.background = 'var(--primary)';
+            toast.style.color = '#fff';
+            toast.style.padding = '12px 24px';
+            toast.style.borderRadius = '8px';
+            toast.style.fontWeight = '700';
+            toast.style.zIndex = '9999';
+            toast.style.boxShadow = 'var(--shadow-glass)';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
         }
 
         async function signOutAdmin() { await _supabase.auth.signOut(); location.href = 'login.html'; }
