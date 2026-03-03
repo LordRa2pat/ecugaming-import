@@ -15,7 +15,7 @@
  *   - Inserts in batches of 20
  */
 
-require('dotenv').config();
+require('dotenv').config({ path: '.env.production' });
 const { createClient } = require('@supabase/supabase-js');
 const path = require('path');
 const fs = require('fs');
@@ -121,17 +121,17 @@ async function migrate() {
     const imageUrl = p.image && !isBase64Image(p.image) ? p.image : null;
 
     return {
-      name:        p.name || 'Sin nombre',
+      name: p.name || 'Sin nombre',
       slug,
       category_id: resolveCategoryId(p.category, categories),
-      brand:       p.brand || '',
+      brand: p.brand || '',
       description: p.description || '',
-      specs:       p.specs || {},
-      price:       parseFloat(p.price) || 0,
-      sale_price:  p.old_price ? parseFloat(p.old_price) : null,
-      stock:       parseInt(p.stock) || 0,
-      badge:       mapBadge(p),
-      is_active:   true,
+      specs: p.specs || {},
+      price: parseFloat(p.price) || 0,
+      sale_price: p.old_price ? parseFloat(p.old_price) : null,
+      stock: parseInt(p.stock) || 0,
+      badge: mapBadge(p),
+      is_active: true,
       // store old image URL separately as a note if it's a URL (not base64)
       _legacy_image: imageUrl
     };
@@ -152,7 +152,7 @@ async function migrate() {
       .select('id, name, slug');
 
     if (error) {
-      console.error(`❌ Batch ${Math.floor(i/BATCH)+1} error:`, error.message);
+      console.error(`❌ Batch ${Math.floor(i / BATCH) + 1} error:`, error.message);
       errors += batch.length;
       continue;
     }
@@ -163,9 +163,9 @@ async function migrate() {
       const legacyImg = batch[j]._legacy_image;
       if (legacyImg && data[j]) {
         imageInserts.push({
-          product_id:   data[j].id,
+          product_id: data[j].id,
           storage_path: legacyImg,  // URL, not storage path, but better than null
-          sort:         0
+          sort: 0
         });
       }
     }
@@ -175,7 +175,7 @@ async function migrate() {
     }
 
     inserted += data.length;
-    console.log(`  ✓ Batch ${Math.floor(i/BATCH)+1}: ${data.length} products inserted`);
+    console.log(`  ✓ Batch ${Math.floor(i / BATCH) + 1}: ${data.length} products inserted`);
   }
 
   // Verify

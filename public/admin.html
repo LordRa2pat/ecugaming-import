@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,90 +9,308 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: #0a0a0f; color: #f5f5f7; }
-        header { background: #111117; border-bottom: 1px solid #2a2a30; }
-        header .logo { color: #f5f5f7; }
-        .admin-layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 60px); }
-        @media(max-width:768px){ .admin-layout{grid-template-columns:1fr;} .admin-sidebar{display:none;} }
-        .admin-sidebar { background:#111117; border-right:1px solid #2a2a30; padding:1.5rem 1rem; display:flex; flex-direction:column; gap:.3rem; }
-        .sidebar-item { display:flex; align-items:center; gap:.7rem; padding:.75rem 1rem; border-radius:10px; cursor:pointer; font-size:.85rem; font-weight:600; color:#9999a8; text-decoration:none; transition:.15s; border:none; background:none; width:100%; text-align:left; }
-        .sidebar-item:hover  { background:#1e1e28; color:#f5f5f7; }
-        .sidebar-item.active { background:var(--primary); color:#fff; }
-        .sidebar-item i { width:16px; text-align:center; }
-        .sidebar-sep { height:1px; background:#2a2a30; margin:.5rem 0; }
-        .admin-content { padding:2rem; overflow-x:auto; }
-        .admin-panel { display:none; }
-        .admin-panel.active { display:block; }
-        .admin-card { background:#111117; border:1px solid #2a2a30; border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; }
-        .admin-card h3 { font-size:1rem; font-weight:800; margin-bottom:1.2rem; color:#f5f5f7; display:flex; align-items:center; gap:.5rem; }
-        .stats-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin-bottom:2rem; }
-        .stat-card { background:#111117; border:1px solid #2a2a30; border-radius:14px; padding:1.2rem; }
-        .stat-label { font-size:.78rem; color:#9999a8; font-weight:600; text-transform:uppercase; letter-spacing:.05em; margin-bottom:.5rem; }
-        .stat-value { font-size:2rem; font-weight:900; color:#f5f5f7; line-height:1; }
-        .stat-card.accent { border-color:var(--primary); }
-        .stat-card.accent .stat-value { color:var(--primary); }
-        .admin-table { width:100%; border-collapse:collapse; font-size:.83rem; }
-        .admin-table th { padding:.7rem 1rem; background:#1a1a22; color:#9999a8; font-weight:700; text-align:left; font-size:.75rem; text-transform:uppercase; letter-spacing:.05em; }
-        .admin-table td { padding:.7rem 1rem; border-bottom:1px solid #1e1e28; color:#d0d0d8; vertical-align:middle; }
-        .admin-table tr:hover td { background:#141420; }
-        .product-thumb { width:40px; height:40px; border-radius:8px; object-fit:cover; background:#2a2a30; }
-        .table-search { display:flex; gap:.8rem; margin-bottom:1.2rem; }
-        .table-search input { flex:1; padding:.75rem 1rem; background:#1a1a22; border:1px solid #2a2a30; border-radius:10px; color:#f5f5f7; font-size:.9rem; }
-        .table-search input:focus { outline:none; border-color:var(--primary); }
-        .table-search input::placeholder { color:#555; }
-        .btn-action { background:none; border:1px solid #2a2a30; border-radius:8px; padding:.35rem .7rem; cursor:pointer; font-size:.78rem; color:#d0d0d8; transition:.15s; white-space:nowrap; }
-        .btn-action:hover { background:#2a2a30; }
-        .btn-action.primary { background:var(--primary); border-color:var(--primary); color:#fff; }
-        .btn-action.danger  { border-color:#ef4444; color:#ef4444; }
-        .btn-action.danger:hover { background:#ef4444; color:#fff; }
-        .status-chip { display:inline-block; font-size:.68rem; font-weight:800; padding:2px 8px; border-radius:20px; text-transform:uppercase; letter-spacing:.04em; }
-        .s-confirmando_pago { background:#3d3000; color:#ffd60a; }
-        .s-orden_confirmada { background:#003055; color:#64d2ff; }
-        .s-empacando        { background:#003020; color:#30d158; }
-        .s-enviado          { background:#001a40; color:#64abff; }
-        .s-recibido         { background:#003020; color:#30d158; }
-        .s-cancelado        { background:#3d0000; color:#ff6b6b; }
-        .pay-pending        { background:#3d2000; color:#ff9f0a; }
-        .pay-paid           { background:#003020; color:#30d158; }
-        .pay-failed         { background:#3d0000; color:#ff6b6b; }
-        .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.75); z-index:9999; justify-content:center; align-items:flex-start; padding:2rem 1rem; overflow-y:auto; }
-        .modal-overlay.show { display:flex; }
-        .modal-box { background:#111117; border:1px solid #2a2a30; border-radius:20px; padding:2rem; width:100%; max-width:580px; position:relative; }
-        .modal-box h3 { font-size:1.1rem; font-weight:800; color:#f5f5f7; margin-bottom:1.4rem; }
-        .modal-close { position:absolute; top:1rem; right:1.2rem; background:none; border:none; font-size:1.4rem; cursor:pointer; color:#9999a8; }
-        .form-group { margin-bottom:.9rem; }
-        .form-group label { display:block; margin-bottom:.3rem; font-size:.82rem; font-weight:600; color:#9999a8; }
-        .form-control { width:100%; padding:.8rem 1rem; background:#1a1a22; border:1px solid #2a2a30; border-radius:10px; color:#f5f5f7; font-size:.9rem; transition:.2s; box-sizing:border-box; }
-        .form-control:focus { border-color:var(--primary); outline:none; }
-        .form-control option { background:#1a1a22; }
-        .form-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
-        @media(max-width:500px){ .form-row-2{grid-template-columns:1fr;} }
-        .btn-save { background:var(--primary); color:#fff; border:none; border-radius:10px; padding:.8rem 1.8rem; font-weight:800; cursor:pointer; transition:.2s; font-size:.9rem; }
-        .btn-save:hover { opacity:.88; }
-        .btn-save:disabled { opacity:.5; cursor:not-allowed; }
-        .modal-footer { display:flex; gap:.8rem; margin-top:1.2rem; }
-        .btn-cancel-modal { background:#1a1a22; border:1px solid #2a2a30; border-radius:10px; padding:.8rem 1.4rem; font-weight:700; cursor:pointer; color:#f5f5f7; }
-        .img-gallery { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:.8rem; }
-        .img-thumb-wrap { position:relative; }
-        .img-thumb { width:70px; height:70px; border-radius:8px; object-fit:cover; border:1px solid #2a2a30; }
-        .img-del-btn { position:absolute; top:-5px; right:-5px; background:#ef4444; color:#fff; border:none; border-radius:50%; width:18px; height:18px; font-size:.6rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-        .upload-trigger { width:70px; height:70px; border:2px dashed #2a2a30; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#9999a8; font-size:1.4rem; transition:.2s; }
-        .upload-trigger:hover { border-color:var(--primary); color:var(--primary); }
-        .settings-row { border-bottom:1px solid #1e1e28; padding:1rem 0; display:flex; align-items:flex-start; gap:1rem; flex-wrap:wrap; }
-        .settings-row:last-child { border-bottom:none; }
-        .settings-label { font-size:.85rem; font-weight:700; color:#f5f5f7; min-width:180px; }
-        .settings-desc { font-size:.75rem; color:#9999a8; margin-top:.2rem; }
-        .order-detail-panel { position:fixed; right:0; top:0; bottom:0; width:480px; max-width:95vw; background:#111117; border-left:1px solid #2a2a30; padding:1.5rem; overflow-y:auto; z-index:9998; transform:translateX(100%); transition:transform .3s; }
-        .order-detail-panel.open { transform:translateX(0); }
-        .timeline { list-style:none; padding:0; position:relative; }
-        .timeline::before { content:''; position:absolute; left:12px; top:0; bottom:0; width:2px; background:#2a2a30; }
-        .tl-item { display:flex; gap:.8rem; padding:.6rem 0; }
-        .tl-dot { width:24px; height:24px; border-radius:50%; border:2px solid #2a2a30; background:#111117; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.6rem; z-index:1; }
-        .tl-dot.done    { background:#34c759; border-color:#34c759; color:#fff; }
-        .tl-dot.current { background:var(--primary); border-color:var(--primary); color:#fff; }
-        .loading-spinner { text-align:center; padding:3rem; color:#9999a8; }
+        body {
+            background: var(--secondary);
+            color: var(--bg-light);
+            font-feature-settings: "cv11", "ss01";
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        header .logo {
+            color: var(--white);
+        }
+
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: calc(100vh - 48px);
+            background: #000;
+        }
+
+        @media(max-width:768px) {
+            .admin-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-sidebar {
+                display: none;
+            }
+        }
+
+        .admin-sidebar {
+            background: #000;
+            border-right: 1px solid var(--border);
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+        }
+
+        .sidebar-item.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        .sidebar-item i {
+            width: 18px;
+            font-size: 16px;
+        }
+
+        .sidebar-sep {
+            height: 1px;
+            background: var(--border);
+            margin: 1rem 0;
+            opacity: 0.5;
+        }
+
+        .admin-content {
+            padding: 2.5rem;
+            overflow-x: auto;
+            background: var(--secondary);
+            border-top-left-radius: 32px;
+            margin-top: 1rem;
+        }
+
+        .admin-panel {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .admin-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.8rem;
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .stat-card.accent {
+            background: linear-gradient(135deg, rgba(0, 113, 227, 0.1), transparent);
+            border-color: rgba(0, 113, 227, 0.3);
+        }
+
+        .stat-card.accent .stat-value {
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13px;
+        }
+
+        .admin-table th {
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-dim);
+            font-weight: 600;
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .admin-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: #e2e2e7;
+            vertical-align: middle;
+        }
+
+        .admin-table tr:hover td {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .product-thumb {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: #2a2a30;
+            border: 1px solid var(--border);
+        }
+
+        .table-search {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-search input {
+            flex: 1;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--white);
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .table-search input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px var(--primary-glow);
+        }
+
+        .btn-action {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #e2e2e7;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-action:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .btn-action.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .btn-action.primary:hover {
+            opacity: 0.9;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        .status-chip {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .modal-box {
+            background: #1c1c1e;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--white);
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-glow);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-dim);
+        }
     </style>
 </head>
+
 <body>
     <header>
         <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
@@ -102,12 +321,17 @@
 
     <div class="admin-layout">
         <div class="admin-sidebar">
-            <button class="sidebar-item active" onclick="switchPanel('dashboard',this)"><i class="fa fa-chart-bar"></i> Dashboard</button>
-            <button class="sidebar-item" onclick="switchPanel('products',this)"><i class="fa fa-box"></i> Productos</button>
-            <button class="sidebar-item" onclick="switchPanel('orders',this)"><i class="fa fa-receipt"></i> Pedidos</button>
-            <button class="sidebar-item" onclick="switchPanel('coupons',this)"><i class="fa fa-tag"></i> Cupones</button>
+            <button class="sidebar-item active" onclick="switchPanel('dashboard',this)"><i class="fa fa-chart-bar"></i>
+                Dashboard</button>
+            <button class="sidebar-item" onclick="switchPanel('products',this)"><i class="fa fa-box"></i>
+                Productos</button>
+            <button class="sidebar-item" onclick="switchPanel('orders',this)"><i class="fa fa-receipt"></i>
+                Pedidos</button>
+            <button class="sidebar-item" onclick="switchPanel('coupons',this)"><i class="fa fa-tag"></i>
+                Cupones</button>
             <div class="sidebar-sep"></div>
-            <button class="sidebar-item" onclick="switchPanel('settings',this)"><i class="fa fa-cog"></i> Settings</button>
+            <button class="sidebar-item" onclick="switchPanel('settings',this)"><i class="fa fa-cog"></i>
+                Settings</button>
         </div>
 
         <div class="admin-content">
@@ -115,31 +339,64 @@
             <div class="admin-panel active" id="panel-dashboard">
                 <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Dashboard</h2>
                 <div class="stats-grid">
-                    <div class="stat-card accent"><div class="stat-label">Productos activos</div><div class="stat-value" id="statProds">—</div></div>
-                    <div class="stat-card"><div class="stat-label">Pedidos totales</div><div class="stat-value" id="statOrders">—</div></div>
-                    <div class="stat-card"><div class="stat-label">Pendientes pago</div><div class="stat-value" id="statPending">—</div></div>
-                    <div class="stat-card"><div class="stat-label">Enviados</div><div class="stat-value" id="statShipped">—</div></div>
+                    <div class="stat-card accent">
+                        <div class="stat-label">Productos activos</div>
+                        <div class="stat-value" id="statProds">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Pedidos totales</div>
+                        <div class="stat-value" id="statOrders">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Pendientes pago</div>
+                        <div class="stat-value" id="statPending">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Enviados</div>
+                        <div class="stat-value" id="statShipped">—</div>
+                    </div>
                 </div>
                 <div class="admin-card">
                     <h3><i class="fa fa-receipt" style="color:var(--primary);"></i> Últimos Pedidos</h3>
-                    <div id="recentOrders"><div class="loading-spinner"><i class="fa fa-spinner fa-spin fa-2x"></i></div></div>
+                    <div id="recentOrders">
+                        <div class="loading-spinner"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
+                    </div>
                 </div>
             </div>
 
             <!-- Products -->
             <div class="admin-panel" id="panel-products">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+                <div
+                    style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
                     <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7;">Productos</h2>
-                    <button class="btn-action primary" onclick="openProductModal()"><i class="fa fa-plus"></i> Nuevo</button>
+                    <button class="btn-action primary" onclick="openProductModal()"><i class="fa fa-plus"></i>
+                        Nuevo</button>
                 </div>
                 <div class="admin-card">
                     <div class="table-search">
-                        <input type="text" id="prodSearch" placeholder="Buscar por nombre o categoría..." oninput="filterProducts()">
+                        <input type="text" id="prodSearch" placeholder="Buscar por nombre o categoría..."
+                            oninput="filterProducts()">
                     </div>
                     <div style="overflow-x:auto;">
                         <table class="admin-table">
-                            <thead><tr><th>Img</th><th>Nombre</th><th>Cat.</th><th>Precio</th><th>Stock</th><th>Badge</th><th>Estado</th><th>Acciones</th></tr></thead>
-                            <tbody id="productsBody"><tr><td colspan="8" class="loading-spinner" style="text-align:center;"><i class="fa fa-spinner fa-spin"></i></td></tr></tbody>
+                            <thead>
+                                <tr>
+                                    <th>Img</th>
+                                    <th>Nombre</th>
+                                    <th>Cat.</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Badge</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsBody">
+                                <tr>
+                                    <td colspan="8" class="loading-spinner" style="text-align:center;"><i
+                                            class="fa fa-spinner fa-spin"></i></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -147,7 +404,8 @@
 
             <!-- Orders -->
             <div class="admin-panel" id="panel-orders">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+                <div
+                    style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
                     <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7;">Pedidos</h2>
                     <select id="orderStatusFilter" class="form-control" style="width:auto;" onchange="loadOrders()">
                         <option value="">Todos</option>
@@ -162,8 +420,24 @@
                 <div class="admin-card">
                     <div style="overflow-x:auto;">
                         <table class="admin-table">
-                            <thead><tr><th>ID</th><th>Cliente</th><th>Ciudad</th><th>Total</th><th>Estado</th><th>Pago</th><th>Fecha</th><th>Acciones</th></tr></thead>
-                            <tbody id="ordersBody"><tr><td colspan="8" class="loading-spinner" style="text-align:center;"><i class="fa fa-spinner fa-spin"></i></td></tr></tbody>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Ciudad</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                    <th>Pago</th>
+                                    <th>Fecha</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersBody">
+                                <tr>
+                                    <td colspan="8" class="loading-spinner" style="text-align:center;"><i
+                                            class="fa fa-spinner fa-spin"></i></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -171,13 +445,26 @@
 
             <!-- Coupons -->
             <div class="admin-panel" id="panel-coupons">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+                <div
+                    style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
                     <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7;">Cupones</h2>
-                    <button class="btn-action primary" onclick="openCouponModal()"><i class="fa fa-plus"></i> Nuevo</button>
+                    <button class="btn-action primary" onclick="openCouponModal()"><i class="fa fa-plus"></i>
+                        Nuevo</button>
                 </div>
                 <div class="admin-card">
                     <table class="admin-table">
-                        <thead><tr><th>Código</th><th>Tipo</th><th>Valor</th><th>Envío libre</th><th>Min.$</th><th>Usos</th><th>Estado</th><th></th></tr></thead>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Tipo</th>
+                                <th>Valor</th>
+                                <th>Envío libre</th>
+                                <th>Min.$</th>
+                                <th>Usos</th>
+                                <th>Estado</th>
+                                <th></th>
+                            </tr>
+                        </thead>
                         <tbody id="couponsBody"></tbody>
                     </table>
                 </div>
@@ -189,39 +476,61 @@
                 <div class="admin-card">
                     <h3><i class="fa fa-truck" style="color:var(--primary);"></i> Envíos</h3>
                     <div class="settings-row">
-                        <div><div class="settings-label">Umbral envío gratis ($)</div><div class="settings-desc">Pedidos ≥ este valor obtienen envío gratis</div></div>
-                        <input type="number" id="set-free_shipping_threshold" class="form-control" style="max-width:150px;" min="0">
-                        <button class="btn-action primary" onclick="saveSetting('free_shipping_threshold', +document.getElementById('set-free_shipping_threshold').value)">Guardar</button>
+                        <div>
+                            <div class="settings-label">Umbral envío gratis ($)</div>
+                            <div class="settings-desc">Pedidos ≥ este valor obtienen envío gratis</div>
+                        </div>
+                        <input type="number" id="set-free_shipping_threshold" class="form-control"
+                            style="max-width:150px;" min="0">
+                        <button class="btn-action primary"
+                            onclick="saveSetting('free_shipping_threshold', +document.getElementById('set-free_shipping_threshold').value)">Guardar</button>
                     </div>
                     <div class="settings-row">
-                        <div><div class="settings-label">Costo de envío ($)</div><div class="settings-desc">Cuando no aplica envío gratis</div></div>
-                        <input type="number" id="set-shipping_cost" class="form-control" style="max-width:150px;" min="0" step="0.50">
-                        <button class="btn-action primary" onclick="saveSetting('shipping_cost', +document.getElementById('set-shipping_cost').value)">Guardar</button>
+                        <div>
+                            <div class="settings-label">Costo de envío ($)</div>
+                            <div class="settings-desc">Cuando no aplica envío gratis</div>
+                        </div>
+                        <input type="number" id="set-shipping_cost" class="form-control" style="max-width:150px;"
+                            min="0" step="0.50">
+                        <button class="btn-action primary"
+                            onclick="saveSetting('shipping_cost', +document.getElementById('set-shipping_cost').value)">Guardar</button>
                     </div>
                     <div class="settings-row">
-                        <div><div class="settings-label">Texto Top Bar</div><div class="settings-desc">Mensaje barra superior de la tienda</div></div>
+                        <div>
+                            <div class="settings-label">Texto Top Bar</div>
+                            <div class="settings-desc">Mensaje barra superior de la tienda</div>
+                        </div>
                         <input type="text" id="set-shipping_topbar_text" class="form-control" style="flex:1;">
-                        <button class="btn-action primary" onclick="saveSetting('shipping_topbar_text', document.getElementById('set-shipping_topbar_text').value)">Guardar</button>
+                        <button class="btn-action primary"
+                            onclick="saveSetting('shipping_topbar_text', document.getElementById('set-shipping_topbar_text').value)">Guardar</button>
                     </div>
                 </div>
                 <div class="admin-card">
                     <h3><i class="fa fa-building-columns" style="color:var(--primary);"></i> Cuentas Bancarias</h3>
-                    <div class="settings-desc" style="margin-bottom:.8rem;">Array JSON: bank, type, number, beneficiary, cedula</div>
-                    <textarea id="set-bank_accounts" class="form-control" style="min-height:120px; font-family:monospace; font-size:.78rem;"></textarea>
-                    <button class="btn-action primary" style="margin-top:.6rem;" onclick="saveJsonSetting('bank_accounts')">Guardar cuentas</button>
+                    <div class="settings-desc" style="margin-bottom:.8rem;">Array JSON: bank, type, number, beneficiary,
+                        cedula</div>
+                    <textarea id="set-bank_accounts" class="form-control"
+                        style="min-height:120px; font-family:monospace; font-size:.78rem;"></textarea>
+                    <button class="btn-action primary" style="margin-top:.6rem;"
+                        onclick="saveJsonSetting('bank_accounts')">Guardar cuentas</button>
                 </div>
                 <div class="admin-card">
                     <h3><i class="fab fa-bitcoin" style="color:#f7931a;"></i> Wallets Crypto</h3>
                     <div class="settings-desc" style="margin-bottom:.8rem;">Array JSON: network, address, qr</div>
-                    <textarea id="set-crypto_wallets" class="form-control" style="min-height:100px; font-family:monospace; font-size:.78rem;"></textarea>
-                    <button class="btn-action primary" style="margin-top:.6rem;" onclick="saveJsonSetting('crypto_wallets')">Guardar wallets</button>
+                    <textarea id="set-crypto_wallets" class="form-control"
+                        style="min-height:100px; font-family:monospace; font-size:.78rem;"></textarea>
+                    <button class="btn-action primary" style="margin-top:.6rem;"
+                        onclick="saveJsonSetting('crypto_wallets')">Guardar wallets</button>
                 </div>
                 <div class="admin-card">
                     <h3><i class="fab fa-whatsapp" style="color:#25d366;"></i> WhatsApp</h3>
                     <div class="settings-row">
-                        <div><div class="settings-label">Número (+593XXXXXXXXX)</div></div>
+                        <div>
+                            <div class="settings-label">Número (+593XXXXXXXXX)</div>
+                        </div>
                         <input type="text" id="set-whatsapp" class="form-control" style="max-width:200px;">
-                        <button class="btn-action primary" onclick="saveSetting('whatsapp', document.getElementById('set-whatsapp').value)">Guardar</button>
+                        <button class="btn-action primary"
+                            onclick="saveSetting('whatsapp', document.getElementById('set-whatsapp').value)">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -235,11 +544,14 @@
             <h3 id="productModalTitle">Nuevo Producto</h3>
             <input type="hidden" id="prodId">
             <div class="form-row-2">
-                <div class="form-group"><label>Nombre *</label><input type="text" id="prodName" class="form-control"></div>
-                <div class="form-group"><label>Marca</label><input type="text" id="prodBrand" class="form-control"></div>
+                <div class="form-group"><label>Nombre *</label><input type="text" id="prodName" class="form-control">
+                </div>
+                <div class="form-group"><label>Marca</label><input type="text" id="prodBrand" class="form-control">
+                </div>
             </div>
             <div class="form-row-2">
-                <div class="form-group"><label>Categoría</label><select id="prodCategory" class="form-control"></select></div>
+                <div class="form-group"><label>Categoría</label><select id="prodCategory" class="form-control"></select>
+                </div>
                 <div class="form-group"><label>Badge</label>
                     <select id="prodBadge" class="form-control">
                         <option value="">Sin badge</option>
@@ -250,26 +562,35 @@
                 </div>
             </div>
             <div class="form-row-2">
-                <div class="form-group"><label>Precio *</label><input type="number" id="prodPrice" class="form-control" min="0" step="0.01"></div>
-                <div class="form-group"><label>Precio oferta</label><input type="number" id="prodSalePrice" class="form-control" min="0" step="0.01"></div>
+                <div class="form-group"><label>Precio *</label><input type="number" id="prodPrice" class="form-control"
+                        min="0" step="0.01"></div>
+                <div class="form-group"><label>Precio oferta</label><input type="number" id="prodSalePrice"
+                        class="form-control" min="0" step="0.01"></div>
             </div>
             <div class="form-row-2">
-                <div class="form-group"><label>Stock</label><input type="number" id="prodStock" class="form-control" min="0"></div>
+                <div class="form-group"><label>Stock</label><input type="number" id="prodStock" class="form-control"
+                        min="0"></div>
                 <div class="form-group"><label>Activo</label>
-                    <select id="prodActive" class="form-control"><option value="true">Sí</option><option value="false">No</option></select>
+                    <select id="prodActive" class="form-control">
+                        <option value="true">Sí</option>
+                        <option value="false">No</option>
+                    </select>
                 </div>
             </div>
-            <div class="form-group"><label>Descripción</label><textarea id="prodDesc" class="form-control" style="min-height:70px;"></textarea></div>
+            <div class="form-group"><label>Descripción</label><textarea id="prodDesc" class="form-control"
+                    style="min-height:70px;"></textarea></div>
             <div id="prodImagesSection" style="display:none;">
                 <div class="form-group">
                     <label>Imágenes (Storage)</label>
                     <div class="img-gallery" id="prodImgGallery"></div>
-                    <input type="file" id="newImageFile" accept="image/*" style="display:none;" onchange="uploadProductImage()">
+                    <input type="file" id="newImageFile" accept="image/*" style="display:none;"
+                        onchange="uploadProductImage()">
                 </div>
             </div>
             <div class="modal-footer">
                 <button class="btn-cancel-modal" onclick="closeModal('productModal')">Cancelar</button>
-                <button class="btn-save" id="btnSaveProd" onclick="saveProduct()"><i class="fa fa-save"></i> Guardar</button>
+                <button class="btn-save" id="btnSaveProd" onclick="saveProduct()"><i class="fa fa-save"></i>
+                    Guardar</button>
             </div>
         </div>
     </div>
@@ -280,7 +601,8 @@
             <button class="modal-close" onclick="closeModal('statusModal')">&times;</button>
             <h3>Actualizar Estado</h3>
             <input type="hidden" id="statusOrderId">
-            <div class="form-group"><label>Orden</label><input id="statusOrderLabel" class="form-control" disabled style="opacity:.6;"></div>
+            <div class="form-group"><label>Orden</label><input id="statusOrderLabel" class="form-control" disabled
+                    style="opacity:.6;"></div>
             <div class="form-group"><label>Nuevo Estado *</label>
                 <select id="statusSelect" class="form-control">
                     <option value="confirmando_pago">Confirmando Pago</option>
@@ -291,8 +613,10 @@
                     <option value="cancelado">Cancelado</option>
                 </select>
             </div>
-            <div class="form-group"><label>Código de guía (tracking)</label><input type="text" id="trackingCodeInput" class="form-control" placeholder="Ej: 1234567890ABC"></div>
-            <div class="form-group"><label>Nota interna</label><textarea id="statusNote" class="form-control" style="min-height:60px;"></textarea></div>
+            <div class="form-group"><label>Código de guía (tracking)</label><input type="text" id="trackingCodeInput"
+                    class="form-control" placeholder="Ej: 1234567890ABC"></div>
+            <div class="form-group"><label>Nota interna</label><textarea id="statusNote" class="form-control"
+                    style="min-height:60px;"></textarea></div>
             <div class="modal-footer">
                 <button class="btn-cancel-modal" onclick="closeModal('statusModal')">Cancelar</button>
                 <button class="btn-save" onclick="updateOrderStatus()"><i class="fa fa-check"></i> Actualizar</button>
@@ -307,23 +631,36 @@
             <h3 id="couponModalTitle">Nuevo Cupón</h3>
             <input type="hidden" id="couponId">
             <div class="form-row-2">
-                <div class="form-group"><label>Código *</label><input type="text" id="couponCode" class="form-control" style="text-transform:uppercase;"></div>
+                <div class="form-group"><label>Código *</label><input type="text" id="couponCode" class="form-control"
+                        style="text-transform:uppercase;"></div>
                 <div class="form-group"><label>Tipo *</label>
-                    <select id="couponType" class="form-control"><option value="percent">Porcentaje (%)</option><option value="fixed">Fijo ($)</option></select>
+                    <select id="couponType" class="form-control">
+                        <option value="percent">Porcentaje (%)</option>
+                        <option value="fixed">Fijo ($)</option>
+                    </select>
                 </div>
             </div>
             <div class="form-row-2">
-                <div class="form-group"><label>Valor *</label><input type="number" id="couponValue" class="form-control" min="0" step="0.01"></div>
-                <div class="form-group"><label>Min. subtotal ($)</label><input type="number" id="couponMin" class="form-control" min="0"></div>
+                <div class="form-group"><label>Valor *</label><input type="number" id="couponValue" class="form-control"
+                        min="0" step="0.01"></div>
+                <div class="form-group"><label>Min. subtotal ($)</label><input type="number" id="couponMin"
+                        class="form-control" min="0"></div>
             </div>
             <div class="form-row-2">
-                <div class="form-group"><label>Válido desde</label><input type="datetime-local" id="couponStarts" class="form-control"></div>
-                <div class="form-group"><label>Válido hasta</label><input type="datetime-local" id="couponEnds" class="form-control"></div>
+                <div class="form-group"><label>Válido desde</label><input type="datetime-local" id="couponStarts"
+                        class="form-control"></div>
+                <div class="form-group"><label>Válido hasta</label><input type="datetime-local" id="couponEnds"
+                        class="form-control"></div>
             </div>
-            <div class="form-group"><label>Máx. usos</label><input type="number" id="couponMaxUses" class="form-control" placeholder="vacío = ilimitado" min="1"></div>
+            <div class="form-group"><label>Máx. usos</label><input type="number" id="couponMaxUses" class="form-control"
+                    placeholder="vacío = ilimitado" min="1"></div>
             <div style="display:flex; gap:1.5rem; margin-bottom:1rem;">
-                <label style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-size:.85rem; color:#d0d0d8;"><input type="checkbox" id="couponFreeShip"> Envío gratis</label>
-                <label style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-size:.85rem; color:#d0d0d8;"><input type="checkbox" id="couponActive" checked> Activo</label>
+                <label
+                    style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-size:.85rem; color:#d0d0d8;"><input
+                        type="checkbox" id="couponFreeShip"> Envío gratis</label>
+                <label
+                    style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-size:.85rem; color:#d0d0d8;"><input
+                        type="checkbox" id="couponActive" checked> Activo</label>
             </div>
             <div class="modal-footer">
                 <button class="btn-cancel-modal" onclick="closeModal('couponModal')">Cancelar</button>
@@ -347,8 +684,8 @@
     <script>
         let adminToken = '';
         let allProducts = [];
-        let allCoupons  = [];
-        let categories  = [];
+        let allCoupons = [];
+        let categories = [];
         let currentProductId = null;
 
         async function init() {
@@ -371,8 +708,8 @@
             document.getElementById('panel-' + name).classList.add('active');
             if (btn) btn.classList.add('active');
             if (name === 'products') loadProducts();
-            if (name === 'orders')   loadOrders();
-            if (name === 'coupons')  loadCoupons();
+            if (name === 'orders') loadOrders();
+            if (name === 'coupons') loadCoupons();
             if (name === 'settings') loadSettings();
         }
 
@@ -382,18 +719,17 @@
         async function loadDashboard() {
             const [pr, or] = await Promise.all([apiFetch('/api/admin/products'), apiFetch('/api/admin/orders?limit=100')]);
             const prods = await pr.json();
-            const data  = await or.json();
+            const data = await or.json();
             const orders = data.orders || [];
-            document.getElementById('statProds').textContent   = (prods || []).filter(p => p.is_active).length;
-            document.getElementById('statOrders').textContent  = data.total || 0;
+            document.getElementById('statProds').textContent = (prods || []).filter(p => p.is_active).length;
+            document.getElementById('statOrders').textContent = data.total || 0;
             document.getElementById('statPending').textContent = orders.filter(o => o.status === 'confirmando_pago').length;
             document.getElementById('statShipped').textContent = orders.filter(o => o.status === 'enviado').length;
-            const recent = orders.slice(0,8);
+            const recent = orders.slice(0, 8);
             document.getElementById('recentOrders').innerHTML = recent.length
-                ? `<table class="admin-table"><thead><tr><th>ID</th><th>Cliente</th><th>Total</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody>${
-                    recent.map(o => `<tr>
+                ? `<table class="admin-table"><thead><tr><th>ID</th><th>Cliente</th><th>Total</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody>${recent.map(o => `<tr>
                         <td style="font-weight:700;">${o.id}</td>
-                        <td>${o.customer?.first_name||''} ${o.customer?.last_name||''}</td>
+                        <td>${o.customer?.first_name || ''} ${o.customer?.last_name || ''}</td>
                         <td>$${Number(o.total).toFixed(2)}</td>
                         <td><span class="status-chip s-${o.status}">${statusLabel(o.status)}</span></td>
                         <td>${new Date(o.created_at).toLocaleDateString('es-EC')}</td>
@@ -419,7 +755,7 @@
 
         function filterProducts() {
             const q = document.getElementById('prodSearch').value.toLowerCase();
-            renderProductsTable(allProducts.filter(p => p.name.toLowerCase().includes(q) || (p.category?.name||'').toLowerCase().includes(q)));
+            renderProductsTable(allProducts.filter(p => p.name.toLowerCase().includes(q) || (p.category?.name || '').toLowerCase().includes(q)));
         }
 
         function renderProductsTable(products) {
@@ -432,14 +768,14 @@
                 return `<tr>
                     <td><img class="product-thumb" src="${imgUrl}" alt="" onerror="this.src='https://via.placeholder.com/40'"></td>
                     <td style="font-weight:700; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.name}</td>
-                    <td>${p.category?.name||'—'}</td>
-                    <td>$${Number(ap).toFixed(2)}${p.sale_price?`<br><span style="text-decoration:line-through;font-size:.7rem;color:#9999a8;">$${Number(p.price).toFixed(2)}</span>`:''}</td>
-                    <td style="font-weight:700; color:${p.stock<5?'#ff6b6b':'#d0d0d8'};">${p.stock}</td>
-                    <td>${p.badge?`<span class="status-chip" style="background:#3d2000;color:#ff9f0a;">${p.badge}</span>`:'—'}</td>
-                    <td><span class="status-chip ${p.is_active?'s-recibido':'s-cancelado'}">${p.is_active?'Activo':'Inactivo'}</span></td>
+                    <td>${p.category?.name || '—'}</td>
+                    <td>$${Number(ap).toFixed(2)}${p.sale_price ? `<br><span style="text-decoration:line-through;font-size:.7rem;color:#9999a8;">$${Number(p.price).toFixed(2)}</span>` : ''}</td>
+                    <td style="font-weight:700; color:${p.stock < 5 ? '#ff6b6b' : '#d0d0d8'};">${p.stock}</td>
+                    <td>${p.badge ? `<span class="status-chip" style="background:#3d2000;color:#ff9f0a;">${p.badge}</span>` : '—'}</td>
+                    <td><span class="status-chip ${p.is_active ? 's-recibido' : 's-cancelado'}">${p.is_active ? 'Activo' : 'Inactivo'}</span></td>
                     <td style="display:flex; gap:.3rem; flex-wrap:wrap;">
                         <button class="btn-action" onclick='editProduct("${p.id}")'>Editar</button>
-                        <button class="btn-action danger" onclick='toggleProduct("${p.id}",${!p.is_active})'>${p.is_active?'Desactivar':'Activar'}</button>
+                        <button class="btn-action danger" onclick='toggleProduct("${p.id}",${!p.is_active})'>${p.is_active ? 'Desactivar' : 'Activar'}</button>
                     </td>
                 </tr>`;
             }).join('');
@@ -448,8 +784,8 @@
         function openProductModal() {
             currentProductId = null;
             document.getElementById('productModalTitle').textContent = 'Nuevo Producto';
-            ['prodId','prodName','prodBrand','prodDesc','prodPrice','prodSalePrice','prodStock'].forEach(id => document.getElementById(id).value = '');
-            document.getElementById('prodBadge').value  = '';
+            ['prodId', 'prodName', 'prodBrand', 'prodDesc', 'prodPrice', 'prodSalePrice', 'prodStock'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('prodBadge').value = '';
             document.getElementById('prodActive').value = 'true';
             document.getElementById('prodCategory').value = '';
             document.getElementById('prodImagesSection').style.display = 'none';
@@ -461,16 +797,16 @@
             const p = allProducts.find(x => x.id === id);
             if (!p) return;
             document.getElementById('productModalTitle').textContent = 'Editar Producto';
-            document.getElementById('prodId').value        = p.id;
-            document.getElementById('prodName').value      = p.name;
-            document.getElementById('prodBrand').value     = p.brand || '';
-            document.getElementById('prodDesc').value      = p.description || '';
-            document.getElementById('prodPrice').value     = p.price;
+            document.getElementById('prodId').value = p.id;
+            document.getElementById('prodName').value = p.name;
+            document.getElementById('prodBrand').value = p.brand || '';
+            document.getElementById('prodDesc').value = p.description || '';
+            document.getElementById('prodPrice').value = p.price;
             document.getElementById('prodSalePrice').value = p.sale_price || '';
-            document.getElementById('prodStock').value     = p.stock;
-            document.getElementById('prodBadge').value     = p.badge || '';
-            document.getElementById('prodActive').value    = String(p.is_active);
-            document.getElementById('prodCategory').value  = p.category?.id || '';
+            document.getElementById('prodStock').value = p.stock;
+            document.getElementById('prodBadge').value = p.badge || '';
+            document.getElementById('prodActive').value = String(p.is_active);
+            document.getElementById('prodCategory').value = p.category?.id || '';
             renderProductImages(p);
             document.getElementById('prodImagesSection').style.display = 'block';
             openModal('productModal');
@@ -494,12 +830,12 @@
             btn.disabled = true;
             const payload = {
                 name, price,
-                brand:       document.getElementById('prodBrand').value.trim(),
+                brand: document.getElementById('prodBrand').value.trim(),
                 description: document.getElementById('prodDesc').value.trim(),
-                sale_price:  parseFloat(document.getElementById('prodSalePrice').value) || null,
-                stock:       parseInt(document.getElementById('prodStock').value) || 0,
-                badge:       document.getElementById('prodBadge').value || null,
-                is_active:   document.getElementById('prodActive').value === 'true',
+                sale_price: parseFloat(document.getElementById('prodSalePrice').value) || null,
+                stock: parseInt(document.getElementById('prodStock').value) || 0,
+                badge: document.getElementById('prodBadge').value || null,
+                is_active: document.getElementById('prodActive').value === 'true',
                 category_id: document.getElementById('prodCategory').value || null
             };
             const res = id
@@ -507,7 +843,7 @@
                 : await apiFetch('/api/admin/products', { method: 'POST', body: JSON.stringify(payload) });
             btn.disabled = false;
             if (res.ok) { closeModal('productModal'); await loadProducts(); showToast('Producto guardado ✓'); }
-            else { const e = await res.json(); alert('Error: ' + (e.error||'Desconocido')); }
+            else { const e = await res.json(); alert('Error: ' + (e.error || 'Desconocido')); }
         }
 
         async function uploadProductImage() {
@@ -539,24 +875,24 @@
         // Orders
         async function loadOrders() {
             const status = document.getElementById('orderStatusFilter')?.value || '';
-            const res    = await apiFetch('/api/admin/orders?limit=100' + (status ? '&status=' + status : ''));
-            const data   = await res.json();
+            const res = await apiFetch('/api/admin/orders?limit=100' + (status ? '&status=' + status : ''));
+            const data = await res.json();
             const orders = data.orders || [];
-            const tbody  = document.getElementById('ordersBody');
+            const tbody = document.getElementById('ordersBody');
             if (!orders.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#9999a8;padding:2rem;">Sin pedidos.</td></tr>'; return; }
             tbody.innerHTML = orders.map(o => {
                 const addr = o.shipping_address || {};
                 return `<tr>
                     <td style="font-weight:700;">${o.id}</td>
-                    <td>${o.customer?.first_name||'—'} ${o.customer?.last_name||''}<br><span style="font-size:.72rem;color:#9999a8;">${o.customer?.email||''}</span></td>
-                    <td>${addr.city||'—'}</td>
+                    <td>${o.customer?.first_name || '—'} ${o.customer?.last_name || ''}<br><span style="font-size:.72rem;color:#9999a8;">${o.customer?.email || ''}</span></td>
+                    <td>${addr.city || '—'}</td>
                     <td style="font-weight:700;">$${Number(o.total).toFixed(2)}</td>
                     <td><span class="status-chip s-${o.status}">${statusLabel(o.status)}</span></td>
                     <td><span class="status-chip pay-${o.payment_status}">${o.payment_status}</span></td>
                     <td>${new Date(o.created_at).toLocaleDateString('es-EC')}</td>
                     <td style="display:flex;gap:.3rem;flex-wrap:wrap;">
                         <button class="btn-action" onclick="showOrderDetail('${o.id}')">Ver</button>
-                        <button class="btn-action primary" onclick="openStatusModal('${o.id}','${o.status}','${o.tracking_code||''}')">Estado</button>
+                        <button class="btn-action primary" onclick="openStatusModal('${o.id}','${o.status}','${o.tracking_code || ''}')">Estado</button>
                     </td>
                 </tr>`;
             }).join('');
@@ -566,17 +902,17 @@
             const panel = document.getElementById('orderDetailPanel');
             panel.classList.add('open');
             document.getElementById('orderDetailContent').innerHTML = '<div class="loading-spinner"><i class="fa fa-spinner fa-spin fa-2x"></i></div>';
-            const res   = await apiFetch(`/api/admin/orders/${orderId}`);
+            const res = await apiFetch(`/api/admin/orders/${orderId}`);
             const order = await res.json();
             if (!res.ok) { document.getElementById('orderDetailContent').innerHTML = `<p style="color:#ff6b6b;">${order.error}</p>`; return; }
 
-            const addr  = order.shipping_address || {};
-            const SS    = ['confirmando_pago','orden_confirmada','empacando','enviado','recibido'];
-            const labels = { confirmando_pago:'Confirmando pago', orden_confirmada:'Confirmada', empacando:'Empacando', enviado:'Enviado', recibido:'Recibido' };
+            const addr = order.shipping_address || {};
+            const SS = ['confirmando_pago', 'orden_confirmada', 'empacando', 'enviado', 'recibido'];
+            const labels = { confirmando_pago: 'Confirmando pago', orden_confirmada: 'Confirmada', empacando: 'Empacando', enviado: 'Enviado', recibido: 'Recibido' };
             const curIdx = SS.indexOf(order.status);
 
             const timeline = SS.map((s, i) => {
-                const ev   = (order.events||[]).find(e => e.status === s);
+                const ev = (order.events || []).find(e => e.status === s);
                 const state = i < curIdx ? 'done' : i === curIdx ? 'current' : '';
                 const color = state === 'current' ? 'var(--primary)' : state === 'done' ? '#34c759' : '#9999a8';
                 return `<li class="tl-item"><div class="tl-dot ${state}"><i class="fa fa-circle" style="font-size:.35rem;"></i></div>
@@ -584,36 +920,36 @@
                     ${ev ? `<div style="font-size:.72rem; color:#9999a8;">${new Date(ev.created_at).toLocaleString('es-EC')}</div>${ev.note ? `<div style="font-size:.72rem; color:#9999a8; font-style:italic;">${ev.note}</div>` : ''}` : ''}</div></li>`;
             }).join('');
 
-            const items  = (order.items||[]).map(i => `<div style="display:flex;gap:.7rem;align-items:center;padding:.5rem 0;border-bottom:1px solid #1e1e28;"><img src="${i.product_snapshot?.image_url||'https://via.placeholder.com/40'}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;" onerror="this.src='https://via.placeholder.com/40'"><div style="flex:1;"><div style="font-size:.82rem;font-weight:700;">${i.product_snapshot?.name||'—'}</div><div style="font-size:.72rem;color:#9999a8;">x${i.qty}</div></div><div style="font-size:.85rem;font-weight:800;">$${Number(i.line_total).toFixed(2)}</div></div>`).join('');
-            const proofs = (order.proofs||[]).map(p => `<div style="font-size:.8rem;color:#d0d0d8;padding:.4rem 0;">${p.method} · ${p.bank||p.txid||''}${p.proof_path ? `<a href="${SUPABASE_URL}/storage/v1/object/public/payment-proofs/${p.proof_path}" target="_blank" style="color:var(--primary);margin-left:.5rem;"><i class="fa fa-eye"></i> Ver</a>` : ''}</div>`).join('') || '<div style="color:#9999a8;font-size:.8rem;">Sin comprobante</div>';
+            const items = (order.items || []).map(i => `<div style="display:flex;gap:.7rem;align-items:center;padding:.5rem 0;border-bottom:1px solid #1e1e28;"><img src="${i.product_snapshot?.image_url || 'https://via.placeholder.com/40'}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;" onerror="this.src='https://via.placeholder.com/40'"><div style="flex:1;"><div style="font-size:.82rem;font-weight:700;">${i.product_snapshot?.name || '—'}</div><div style="font-size:.72rem;color:#9999a8;">x${i.qty}</div></div><div style="font-size:.85rem;font-weight:800;">$${Number(i.line_total).toFixed(2)}</div></div>`).join('');
+            const proofs = (order.proofs || []).map(p => `<div style="font-size:.8rem;color:#d0d0d8;padding:.4rem 0;">${p.method} · ${p.bank || p.txid || ''}${p.proof_path ? `<a href="${SUPABASE_URL}/storage/v1/object/public/payment-proofs/${p.proof_path}" target="_blank" style="color:var(--primary);margin-left:.5rem;"><i class="fa fa-eye"></i> Ver</a>` : ''}</div>`).join('') || '<div style="color:#9999a8;font-size:.8rem;">Sin comprobante</div>';
 
             document.getElementById('orderDetailContent').innerHTML = `
                 <div style="margin-bottom:1rem;"><div style="font-size:1rem;font-weight:800;color:#f5f5f7;">${order.id}</div><div style="font-size:.75rem;color:#9999a8;">${new Date(order.created_at).toLocaleString('es-EC')}</div><span class="status-chip s-${order.status}" style="margin-top:.5rem;display:inline-block;">${statusLabel(order.status)}</span></div>
-                <div style="background:#1a1a22;border-radius:12px;padding:1rem;margin-bottom:1rem;font-size:.82rem;"><div style="font-weight:700;color:#f5f5f7;margin-bottom:.5rem;">Envío</div><div>${addr.firstName||''} ${addr.lastName||''} · ${addr.phone||''}</div><div style="color:#9999a8;">${addr.address1||''}, ${addr.city||''}, ${addr.province||''}</div>${order.carrier?`<div style="margin-top:.3rem;"><i class="fa fa-truck"></i> ${order.carrier}${order.carrier_agency_name?' · '+order.carrier_agency_name:''}</div>`:''}${order.tracking_code?`<div style="color:var(--primary);font-weight:700;margin-top:.3rem;"><i class="fa fa-box"></i> Guía: ${order.tracking_code}</div>`:''}</div>
+                <div style="background:#1a1a22;border-radius:12px;padding:1rem;margin-bottom:1rem;font-size:.82rem;"><div style="font-weight:700;color:#f5f5f7;margin-bottom:.5rem;">Envío</div><div>${addr.firstName || ''} ${addr.lastName || ''} · ${addr.phone || ''}</div><div style="color:#9999a8;">${addr.address1 || ''}, ${addr.city || ''}, ${addr.province || ''}</div>${order.carrier ? `<div style="margin-top:.3rem;"><i class="fa fa-truck"></i> ${order.carrier}${order.carrier_agency_name ? ' · ' + order.carrier_agency_name : ''}</div>` : ''}${order.tracking_code ? `<div style="color:var(--primary);font-weight:700;margin-top:.3rem;"><i class="fa fa-box"></i> Guía: ${order.tracking_code}</div>` : ''}</div>
                 <div style="margin-bottom:1rem;">${items}</div>
-                <div style="background:#1a1a22;border-radius:12px;padding:1rem;margin-bottom:1rem;font-size:.82rem;"><div style="display:flex;justify-content:space-between;margin-bottom:.3rem;"><span>Subtotal</span><span>$${Number(order.subtotal).toFixed(2)}</span></div>${order.discount_total>0?`<div style="display:flex;justify-content:space-between;margin-bottom:.3rem;color:#34c759;"><span>Descuento</span><span>-$${Number(order.discount_total).toFixed(2)}</span></div>`:''}<div style="display:flex;justify-content:space-between;margin-bottom:.3rem;"><span>Envío</span><span>${order.shipping_total==0?'GRATIS':'$'+Number(order.shipping_total).toFixed(2)}</span></div><div style="display:flex;justify-content:space-between;font-weight:900;color:#f5f5f7;border-top:1px solid #2a2a30;padding-top:.4rem;margin-top:.4rem;"><span>Total</span><span>$${Number(order.total).toFixed(2)}</span></div></div>
+                <div style="background:#1a1a22;border-radius:12px;padding:1rem;margin-bottom:1rem;font-size:.82rem;"><div style="display:flex;justify-content:space-between;margin-bottom:.3rem;"><span>Subtotal</span><span>$${Number(order.subtotal).toFixed(2)}</span></div>${order.discount_total > 0 ? `<div style="display:flex;justify-content:space-between;margin-bottom:.3rem;color:#34c759;"><span>Descuento</span><span>-$${Number(order.discount_total).toFixed(2)}</span></div>` : ''}<div style="display:flex;justify-content:space-between;margin-bottom:.3rem;"><span>Envío</span><span>${order.shipping_total == 0 ? 'GRATIS' : '$' + Number(order.shipping_total).toFixed(2)}</span></div><div style="display:flex;justify-content:space-between;font-weight:900;color:#f5f5f7;border-top:1px solid #2a2a30;padding-top:.4rem;margin-top:.4rem;"><span>Total</span><span>$${Number(order.total).toFixed(2)}</span></div></div>
                 <div style="margin-bottom:1rem;"><div style="font-size:.82rem;font-weight:700;color:#f5f5f7;margin-bottom:.5rem;">Comprobante</div>${proofs}</div>
                 <div><div style="font-size:.82rem;font-weight:700;color:#f5f5f7;margin-bottom:.5rem;">Timeline</div><ul class="timeline">${timeline}</ul></div>
-                <button class="btn-action primary" style="width:100%;margin-top:1rem;" onclick="openStatusModal('${order.id}','${order.status}','${order.tracking_code||''}')"><i class="fa fa-edit"></i> Cambiar Estado</button>`;
+                <button class="btn-action primary" style="width:100%;margin-top:1rem;" onclick="openStatusModal('${order.id}','${order.status}','${order.tracking_code || ''}')"><i class="fa fa-edit"></i> Cambiar Estado</button>`;
         }
 
         function closeOrderDetail() { document.getElementById('orderDetailPanel').classList.remove('open'); }
 
         function openStatusModal(orderId, currentStatus, tracking) {
-            document.getElementById('statusOrderId').value     = orderId;
-            document.getElementById('statusOrderLabel').value  = orderId;
-            document.getElementById('statusSelect').value      = currentStatus;
+            document.getElementById('statusOrderId').value = orderId;
+            document.getElementById('statusOrderLabel').value = orderId;
+            document.getElementById('statusSelect').value = currentStatus;
             document.getElementById('trackingCodeInput').value = tracking || '';
-            document.getElementById('statusNote').value        = '';
+            document.getElementById('statusNote').value = '';
             openModal('statusModal');
         }
 
         async function updateOrderStatus() {
-            const id     = document.getElementById('statusOrderId').value;
+            const id = document.getElementById('statusOrderId').value;
             const status = document.getElementById('statusSelect').value;
-            const note   = document.getElementById('statusNote').value.trim();
-            const track  = document.getElementById('trackingCodeInput').value.trim();
-            const res    = await apiFetch(`/api/admin/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status, note, trackingCode: track }) });
+            const note = document.getElementById('statusNote').value.trim();
+            const track = document.getElementById('trackingCodeInput').value.trim();
+            const res = await apiFetch(`/api/admin/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status, note, trackingCode: track }) });
             if (res.ok) {
                 closeModal('statusModal');
                 loadOrders();
@@ -631,21 +967,21 @@
             tbody.innerHTML = allCoupons.map(c => `<tr>
                 <td style="font-weight:800;font-family:monospace;color:var(--primary);">${c.code}</td>
                 <td>${c.type}</td>
-                <td>${c.type==='percent'?c.value+'%':'$'+c.value}</td>
-                <td>${c.free_shipping?'✓':'—'}</td>
+                <td>${c.type === 'percent' ? c.value + '%' : '$' + c.value}</td>
+                <td>${c.free_shipping ? '✓' : '—'}</td>
                 <td>$${c.min_subtotal}</td>
-                <td>${c.redemption_count}${c.max_redemptions?'/'+c.max_redemptions:''}</td>
-                <td><span class="status-chip ${c.is_active?'s-recibido':'s-cancelado'}">${c.is_active?'Activo':'Inactivo'}</span></td>
+                <td>${c.redemption_count}${c.max_redemptions ? '/' + c.max_redemptions : ''}</td>
+                <td><span class="status-chip ${c.is_active ? 's-recibido' : 's-cancelado'}">${c.is_active ? 'Activo' : 'Inactivo'}</span></td>
                 <td><button class="btn-action" onclick='editCoupon("${c.id}")'>Editar</button></td>
             </tr>`).join('');
         }
 
         function openCouponModal() {
             document.getElementById('couponModalTitle').textContent = 'Nuevo Cupón';
-            ['couponId','couponCode','couponValue','couponMin','couponMaxUses','couponStarts','couponEnds'].forEach(id => document.getElementById(id).value = '');
-            document.getElementById('couponType').value     = 'percent';
+            ['couponId', 'couponCode', 'couponValue', 'couponMin', 'couponMaxUses', 'couponStarts', 'couponEnds'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('couponType').value = 'percent';
             document.getElementById('couponFreeShip').checked = false;
-            document.getElementById('couponActive').checked   = true;
+            document.getElementById('couponActive').checked = true;
             openModal('couponModal');
         }
 
@@ -653,33 +989,33 @@
             const c = allCoupons.find(x => x.id === id);
             if (!c) return;
             document.getElementById('couponModalTitle').textContent = 'Editar Cupón';
-            document.getElementById('couponId').value      = c.id;
-            document.getElementById('couponCode').value    = c.code;
-            document.getElementById('couponType').value    = c.type;
-            document.getElementById('couponValue').value   = c.value;
-            document.getElementById('couponMin').value     = c.min_subtotal || '';
+            document.getElementById('couponId').value = c.id;
+            document.getElementById('couponCode').value = c.code;
+            document.getElementById('couponType').value = c.type;
+            document.getElementById('couponValue').value = c.value;
+            document.getElementById('couponMin').value = c.min_subtotal || '';
             document.getElementById('couponMaxUses').value = c.max_redemptions || '';
-            document.getElementById('couponStarts').value  = c.starts_at ? c.starts_at.slice(0,16) : '';
-            document.getElementById('couponEnds').value    = c.ends_at   ? c.ends_at.slice(0,16)   : '';
+            document.getElementById('couponStarts').value = c.starts_at ? c.starts_at.slice(0, 16) : '';
+            document.getElementById('couponEnds').value = c.ends_at ? c.ends_at.slice(0, 16) : '';
             document.getElementById('couponFreeShip').checked = c.free_shipping;
-            document.getElementById('couponActive').checked   = c.is_active;
+            document.getElementById('couponActive').checked = c.is_active;
             openModal('couponModal');
         }
 
         async function saveCoupon() {
-            const id    = document.getElementById('couponId').value;
-            const code  = document.getElementById('couponCode').value.trim().toUpperCase();
+            const id = document.getElementById('couponId').value;
+            const code = document.getElementById('couponCode').value.trim().toUpperCase();
             const value = parseFloat(document.getElementById('couponValue').value);
             if (!code || isNaN(value)) { alert('Código y valor son requeridos.'); return; }
             const payload = {
                 code, value,
-                type:            document.getElementById('couponType').value,
-                free_shipping:   document.getElementById('couponFreeShip').checked,
-                is_active:       document.getElementById('couponActive').checked,
-                min_subtotal:    parseFloat(document.getElementById('couponMin').value) || 0,
+                type: document.getElementById('couponType').value,
+                free_shipping: document.getElementById('couponFreeShip').checked,
+                is_active: document.getElementById('couponActive').checked,
+                min_subtotal: parseFloat(document.getElementById('couponMin').value) || 0,
                 max_redemptions: parseInt(document.getElementById('couponMaxUses').value) || null,
-                starts_at:       document.getElementById('couponStarts').value || null,
-                ends_at:         document.getElementById('couponEnds').value   || null
+                starts_at: document.getElementById('couponStarts').value || null,
+                ends_at: document.getElementById('couponEnds').value || null
             };
             const res = id
                 ? await apiFetch(`/api/admin/coupons/${id}`, { method: 'PATCH', body: JSON.stringify(payload) })
@@ -692,12 +1028,12 @@
         async function loadSettings() {
             const { data } = await _supabase.from('settings').select('*');
             const map = {};
-            (data||[]).forEach(s => { map[s.key] = s.value; });
-            ['free_shipping_threshold','shipping_cost','whatsapp','shipping_topbar_text'].forEach(key => {
+            (data || []).forEach(s => { map[s.key] = s.value; });
+            ['free_shipping_threshold', 'shipping_cost', 'whatsapp', 'shipping_topbar_text'].forEach(key => {
                 const el = document.getElementById('set-' + key);
-                if (el) el.value = typeof map[key] === 'string' ? map[key].replace(/^"|"$/g,'') : (map[key] ?? '');
+                if (el) el.value = typeof map[key] === 'string' ? map[key].replace(/^"|"$/g, '') : (map[key] ?? '');
             });
-            ['bank_accounts','crypto_wallets'].forEach(key => {
+            ['bank_accounts', 'crypto_wallets'].forEach(key => {
                 const el = document.getElementById('set-' + key);
                 if (el) el.value = JSON.stringify(map[key] || [], null, 2);
             });
@@ -718,9 +1054,9 @@
 
         // Utils
         function statusLabel(s) {
-            return { confirmando_pago:'Confirmando pago', orden_confirmada:'Confirmada', empacando:'Empacando', enviado:'Enviado', recibido:'Recibido', cancelado:'Cancelado' }[s] || s;
+            return { confirmando_pago: 'Confirmando pago', orden_confirmada: 'Confirmada', empacando: 'Empacando', enviado: 'Enviado', recibido: 'Recibido', cancelado: 'Cancelado' }[s] || s;
         }
-        function openModal(id)  { document.getElementById(id).classList.add('show'); }
+        function openModal(id) { document.getElementById(id).classList.add('show'); }
         function closeModal(id) { document.getElementById(id).classList.remove('show'); }
         function showToast(msg) {
             const t = document.createElement('div');
@@ -737,4 +1073,5 @@
         init();
     </script>
 </body>
+
 </html>

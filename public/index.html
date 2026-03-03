@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,43 +10,107 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* User menu dropdown */
-        .user-menu { position: relative; }
+        .user-menu {
+            position: relative;
+        }
+
         .user-btn {
-            background: none; border: none; cursor: pointer;
-            font-size: .85rem; font-weight: 700; color: var(--text);
-            display: flex; align-items: center; gap: .4rem;
-            padding: .4rem .8rem; border-radius: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: .85rem;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            padding: .4rem .8rem;
+            border-radius: 8px;
             transition: background .2s;
         }
-        .user-btn:hover { background: var(--bg-light); }
+
+        .user-btn:hover {
+            background: var(--bg-light);
+        }
+
         .user-dropdown {
-            position: absolute; right: 0; top: calc(100% + 8px);
-            background: #fff; border: 1px solid var(--border);
-            border-radius: 14px; box-shadow: 0 8px 30px rgba(0,0,0,.12);
-            min-width: 180px; display: none; z-index: 999;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 8px);
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .12);
+            min-width: 180px;
+            display: none;
+            z-index: 999;
             padding: .5rem 0;
         }
-        .user-dropdown.open { display: block; }
-        .user-dropdown a {
-            display: flex; align-items: center; gap: .6rem;
-            padding: .7rem 1.2rem; color: var(--text); text-decoration: none;
-            font-size: .88rem; font-weight: 600; transition: background .15s;
+
+        .user-dropdown.open {
+            display: block;
         }
-        .user-dropdown a:hover { background: var(--bg-light); }
-        .user-dropdown a i { width: 16px; text-align: center; color: var(--text-dim); }
+
+        .user-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            padding: .7rem 1.2rem;
+            color: var(--text);
+            text-decoration: none;
+            font-size: .88rem;
+            font-weight: 600;
+            transition: background .15s;
+        }
+
+        .user-dropdown a:hover {
+            background: var(--bg-light);
+        }
+
+        .user-dropdown a i {
+            width: 16px;
+            text-align: center;
+            color: var(--text-dim);
+        }
+
         /* Badge section tags */
         .badge-tag {
-            display: inline-block; font-size: .7rem; font-weight: 800;
-            padding: 2px 8px; border-radius: 20px; margin-bottom: .3rem;
+            display: inline-block;
+            font-size: .7rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-bottom: .3rem;
         }
-        .badge-oferta  { background: #ff2d55; color: #fff; }
-        .badge-remate  { background: #ff9500; color: #fff; }
-        .badge-nuevo   { background: #34c759; color: #fff; }
+
+        .badge-oferta {
+            background: #ff2d55;
+            color: #fff;
+        }
+
+        .badge-remate {
+            background: #ff9500;
+            color: #fff;
+        }
+
+        .badge-nuevo {
+            background: #34c759;
+            color: #fff;
+        }
+
         /* News section */
-        #newsSection { padding: 40px 5% 20px; }
-        #newsSection h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; }
+        #newsSection {
+            padding: 40px 5% 20px;
+        }
+
+        #newsSection h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
+
 <body>
     <div class="top-bar" id="topBarText">
         <i class="fa fa-truck-fast"></i> Envíos 100% seguros a nivel nacional vía Servientrega y Tramaco Express.
@@ -61,7 +126,8 @@
 
         <div class="nav-actions">
             <div id="authArea" style="display:flex; gap:.5rem; align-items:center;">
-                <a href="login.html" style="font-size:.85rem; font-weight:700; color:var(--text); text-decoration:none; display:flex; align-items:center; gap:.4rem;">
+                <a href="login.html"
+                    style="font-size:.85rem; font-weight:700; color:var(--text); text-decoration:none; display:flex; align-items:center; gap:.4rem;">
                     <i class="fa fa-user-circle" style="font-size:1.1rem;"></i> Entrar
                 </a>
             </div>
@@ -73,14 +139,21 @@
         </div>
     </header>
 
-    <section class="hero-promo">
-        <h1 id="heroTitle">EcuGaming Import</h1>
-        <p id="heroDesc">Tecnología premium · Envío seguro · Lago Agrio, Ecuador.</p>
+    <section class="hero-promo fade-in"
+        style="background: radial-gradient(circle at 50% 50%, #1d1d1f 0%, #000000 100%);">
+        <h1 id="heroTitle"
+            style="background: var(--gradient-premium); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+            EcuGaming Import</h1>
+        <p id="heroDesc" style="color: rgba(255,255,255,0.8);">Tecnología premium · Envío seguro · Lago Agrio, Ecuador.
+        </p>
         <div style="display:flex; gap:20px; margin-top:20px;">
-            <button class="btn-buy" onclick="scrollToCatalog()">Ver Catálogo</button>
-            <button class="btn-secondary" onclick="scrollToCatalog()">Ofertas <i class="fa fa-bolt"></i></button>
+            <button class="btn-buy" onclick="scrollToCatalog()" style="padding: 12px 32px; font-weight: 600;">Ver
+                Catálogo</button>
+            <button class="btn-secondary" onclick="scrollToCatalog()"
+                style="color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 980px; padding: 12px 32px; font-weight: 600;">Ofertas
+                <i class="fa fa-bolt" style="color: #ff9500;"></i></button>
         </div>
-        <div class="scene-3d" style="margin-top:40px; width:100%; max-width:800px;">
+        <div class="scene-3d fade-in" style="margin-top:40px; width:100%; max-width:800px; animation-delay: 0.2s;">
             <div class="card-3d" id="hero3dCard" style="background:none; border:none; box-shadow:none;"></div>
         </div>
     </section>
@@ -97,16 +170,17 @@
     </div>
 
     <!-- Promo Section (badge products) — was missing, now exists -->
-    <section id="promoSection" style="display:none; padding:0 5% 10px;">
-        <h2 style="font-size:1.4rem; font-weight:800; padding:30px 0 16px; display:flex; align-items:center; gap:.5rem;">
+    <section id="promoSection" class="fade-in" style="display:none; padding:0 5% 10px; animation-delay: 0.4s;">
+        <h2
+            style="font-size:1.4rem; font-weight:800; padding:30px 0 16px; display:flex; align-items:center; gap:.5rem;">
             <i class="fa fa-bolt" style="color:#ff9500;"></i> Ofertas Destacadas
         </h2>
         <div id="promoCatalog" class="grid"></div>
     </section>
 
     <!-- Main Catalog Section -->
-    <main class="catalog-section" id="catalogStart"
-        style="background:#fff; border-radius:30px; margin-top:-30px; position:relative; z-index:100;">
+    <main class="catalog-section fade-in" id="catalogStart"
+        style="background:#fff; border-radius:30px; margin-top:-30px; position:relative; z-index:100; animation-delay: 0.6s;">
         <div id="catalog" class="grid" style="padding:40px 0;">
             <!-- Products injected by JS -->
         </div>
@@ -128,9 +202,9 @@
             </p>
             <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:20px 30px; font-size:12px;">
                 <a href="privacidad.html" style="color:var(--text); text-decoration:none;">Privacidad</a>
-                <a href="terminos.html"   style="color:var(--text); text-decoration:none;">Términos de uso</a>
-                <a href="pagos.html"      style="color:var(--text); text-decoration:none;">Pagos</a>
-                <a href="envios.html"     style="color:var(--text); text-decoration:none;">Envíos</a>
+                <a href="terminos.html" style="color:var(--text); text-decoration:none;">Términos de uso</a>
+                <a href="pagos.html" style="color:var(--text); text-decoration:none;">Pagos</a>
+                <a href="envios.html" style="color:var(--text); text-decoration:none;">Envíos</a>
                 <a href="devoluciones.html" style="color:var(--text); text-decoration:none;">Devoluciones</a>
             </div>
         </div>
@@ -230,8 +304,8 @@
             document.getElementById('heroDesc').textContent = item.description || 'Tecnología premium garantizada.';
 
             const activePrice = item.sale_price ?? item.price;
-            const hasPromo    = item.sale_price && item.sale_price < item.price;
-            const imgSrc      = item.image_url || item.image || 'https://via.placeholder.com/400';
+            const hasPromo = item.sale_price && item.sale_price < item.price;
+            const imgSrc = item.image_url || item.image || 'https://via.placeholder.com/400';
 
             const heroCard = document.getElementById('hero3dCard');
             heroCard.innerHTML = `
@@ -264,9 +338,9 @@
 
         function createCardHTML(item) {
             const activePrice = item.sale_price ?? item.price;
-            const hasPromo    = item.sale_price && item.sale_price < item.price;
-            const imgSrc      = item.image_url || item.image;
-            const imgTag      = imgSrc
+            const hasPromo = item.sale_price && item.sale_price < item.price;
+            const imgSrc = item.image_url || item.image;
+            const imgTag = imgSrc
                 ? `<img src="${imgSrc}" alt="${item.name}" style="width:100%; height:100%; object-fit:contain; border-radius:12px;" onerror="this.style.display='none'">`
                 : `<i class="fa fa-image"></i>`;
 
@@ -284,8 +358,8 @@
                 <p class="card-desc">${item.description || 'Tecnología premium garantizada. Envío seguro a todo el país.'}</p>
                 <div style="display:flex; gap:.5rem;">
                     ${item.stock > 0
-                        ? `<button class="btn-buy" onclick="addToCart('${item.id}')"><i class="fa fa-cart-plus"></i></button>`
-                        : `<button class="btn-secondary" disabled style="opacity:.5;">Agotado</button>`}
+                    ? `<button class="btn-buy" onclick="addToCart('${item.id}')"><i class="fa fa-cart-plus"></i></button>`
+                    : `<button class="btn-secondary" disabled style="opacity:.5;">Agotado</button>`}
                     <button class="btn-secondary" style="margin-top:0;" onclick="location.href='product.html?id=${item.id}'">Ver</button>
                 </div>`;
         }
@@ -345,7 +419,7 @@
         }
 
         function renderCartUI() {
-            const items     = Cart.get();
+            const items = Cart.get();
             const itemsCont = document.getElementById('cartItems');
             itemsCont.innerHTML = items.length
                 ? ''
@@ -392,4 +466,5 @@
         init();
     </script>
 </body>
+
 </html>
