@@ -172,12 +172,15 @@ async function notifyN8N(payload) {
 
     if (host && user && pass && payload.customerEmail) {
         try {
+            // Use resolved IP to avoid DNS lookup issues in serverless environments
+            // TLS servername must still be the hostname for certificate validation
+            const smtpIp = process.env.SMTP_IP || host;
             const transporter = nodemailer.createTransport({
-                host,
+                host: smtpIp,
                 port: parseInt(process.env.SMTP_PORT || '465'),
                 secure: true,   // SSL/TLS on port 465
                 auth: { user, pass },
-                tls: { rejectUnauthorized: true },
+                tls: { rejectUnauthorized: true, servername: host },
             });
             await transporter.sendMail({
                 from: `"Ecu Gaming Import" <${from}>`,
@@ -986,10 +989,11 @@ app.get('/api/test-email', async (req, res) => {
         const pass = process.env.SMTP_PASS;
         const from = process.env.SMTP_FROM || user;
 
+        const smtpIp = process.env.SMTP_IP || host;
         const transporter = nodemailer.createTransport({
-            host, port: 465, secure: true,
+            host: smtpIp, port: 465, secure: true,
             auth: { user, pass },
-            tls: { rejectUnauthorized: true },
+            tls: { rejectUnauthorized: true, servername: host },
         });
 
         await transporter.verify();
