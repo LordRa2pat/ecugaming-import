@@ -6,6 +6,9 @@
         { "source": "/admin", "destination": "/admin.html" },
         { "source": "/admin-orders", "destination": "/admin-orders.html" },
         { "source": "/admin-products", "destination": "/admin-products.html" },
+        { "source": "/admin-coupons", "destination": "/admin-coupons.html" },
+        { "source": "/admin-customers", "destination": "/admin-customers.html" },
+        { "source": "/admin-settings", "destination": "/admin-settings.html" },
         { "source": "/account", "destination": "/account.html" },
         { "source": "/checkout", "destination": "/checkout.html" },
         { "source": "/tracking", "destination": "/tracking.html" },
@@ -15,6 +18,7 @@
         { "source": "/terminos", "destination": "/terminos.html" },
         { "source": "/privacidad", "destination": "/privacidad.html" },
         { "source": "/pagos", "destination": "/pagos.html" },
-        { "source": "/devoluciones", "destination": "/devoluciones.html" }
+        { "source": "/devoluciones", "destination": "/devoluciones.html" },
+        { "source": "/credito", "destination": "/credito.html" }
     ]
 }
