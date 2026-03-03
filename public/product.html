@@ -98,9 +98,9 @@
 
 <body>
     <header>
-        <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
+        <div class="logo" onclick="location.href='/'">Ecugaming <span>Import</span></div>
         <div class="nav-actions" id="userArea">
-            <button class="btn-secondary" onclick="location.href='login.html'">Iniciar Sesión</button>
+            <button class="btn-secondary" onclick="location.href='/login'">Iniciar Sesión</button>
         </div>
     </header>
 
@@ -151,7 +151,7 @@
                     ? `<button class="btn-buy" onclick="addToCart('${product.id}')" style="font-size: 1.2rem; padding: 1.2rem;"><i class="fa fa-cart-plus"></i> Añadir al Carrito</button>`
                     : `<button class="btn-secondary" disabled>Agotado</button>`
                 }
-                    <button class="btn-secondary" style="margin-top:1rem;" onclick="location.href='index.html'"><i class="fa fa-arrow-left"></i> Seguir Comprando</button>
+                    <button class="btn-secondary" style="margin-top:1rem;" onclick="location.href='/'"><i class="fa fa-arrow-left"></i> Seguir Comprando</button>
                 </div>
             `;
         }
@@ -162,7 +162,7 @@
                 cart.push(product);
                 localStorage.setItem('eg_cart', JSON.stringify(cart));
                 alert('Añadido al carrito con éxito.');
-                location.href = 'index.html'; // Or show side cart
+                location.href = '/'; // Or show side cart
             });
         }
 

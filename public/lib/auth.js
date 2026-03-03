@@ -31,7 +31,7 @@ const Auth = {
    * Ensure user is logged in. If not, redirect to login page.
    * Returns session if logged in, null (and redirects) if not.
    */
-  async requireAuth(redirectTo = 'login.html') {
+  async requireAuth(redirectTo = '/login') {
     const session = await this.getSession();
     if (!session) {
       location.href = `${redirectTo}?redirect=${encodeURIComponent(location.pathname + location.search)}`;
@@ -47,7 +47,7 @@ const Auth = {
   async requireAdmin() {
     const session = await this.getSession();
     if (!session) {
-      location.href = 'login.html';
+      location.href = '/login';
       return null;
     }
     const { data: profile } = await _supabase
@@ -57,7 +57,7 @@ const Auth = {
       .single();
     if (!profile || profile.role !== 'admin') {
       alert('Acceso denegado. Se requieren permisos de administrador.');
-      location.href = 'index.html';
+      location.href = '/';
       return null;
     }
     return session.access_token;
@@ -68,7 +68,7 @@ const Auth = {
    */
   async signOut() {
     await _supabase.auth.signOut();
-    location.href = 'index.html';
+    location.href = '/';
   },
 
   /**
@@ -81,7 +81,7 @@ const Auth = {
     const session = await this.getSession();
     if (!session) {
       el.innerHTML = `
-        <a href="login.html" class="btn-auth">
+        <a href="/login" class="btn-auth">
           <i class="fas fa-user"></i> Iniciar Sesión
         </a>`;
       return;
@@ -99,8 +99,8 @@ const Auth = {
           <i class="fas fa-chevron-down" style="font-size:10px;margin-left:4px"></i>
         </button>
         <div id="userDropdown" class="user-dropdown">
-          <a href="account.html"><i class="fas fa-box"></i> Mi Cuenta</a>
-          ${profile?.role === 'admin' ? '<a href="admin.html"><i class="fas fa-cog"></i> Panel Admin</a>' : ''}
+          <a href="/account"><i class="fas fa-box"></i> Mi Cuenta</a>
+          ${profile?.role === 'admin' ? '<a href="/admin"><i class="fas fa-cog"></i> Panel Admin</a>' : ''}
           <a href="#" onclick="Auth.signOut()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
         </div>
       </div>`;

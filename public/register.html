@@ -144,7 +144,7 @@
 
 <body>
     <header>
-        <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
+        <div class="logo" onclick="location.href='/'">Ecugaming <span>Import</span></div>
     </header>
 
     <div class="auth-container">
@@ -188,7 +188,7 @@
         </form>
 
         <div class="auth-footer">
-            ¿Ya tienes cuenta? <a href="login.html">Inicia Sesión</a>
+            ¿Ya tienes cuenta? <a href="/login">Inicia Sesión</a>
         </div>
     </div>
 
@@ -261,10 +261,10 @@
             // If disabled (recommended for dev), session is created immediately
             if (data.session) {
                 showSuccess('¡Cuenta creada! Redirigiendo...');
-                setTimeout(() => { location.href = 'index.html'; }, 800);
+                setTimeout(() => { location.href = '/'; }, 800);
             } else {
                 showSuccess('¡Cuenta creada! Revisa tu correo para confirmar tu cuenta y luego inicia sesión.');
-                setTimeout(() => { location.href = 'login.html'; }, 3000);
+                setTimeout(() => { location.href = '/login'; }, 3000);
             }
         });
     </script>

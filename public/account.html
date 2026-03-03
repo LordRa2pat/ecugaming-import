@@ -602,7 +602,7 @@
 
 <body>
     <header>
-        <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
+        <div class="logo" onclick="location.href='/'">Ecugaming <span>Import</span></div>
         <div style="flex:1;"></div>
         <div id="authArea"></div>
     </header>
@@ -817,7 +817,7 @@
         function renderOrders() {
             const container = document.getElementById('orderList');
             if (!orders || !orders.length) {
-                container.innerHTML = '<p style="color:var(--text-dim); text-align:center; padding:2rem;">Aún no tienes pedidos. <a href="index.html" style="color:var(--primary); font-weight:700;">¡Empieza a comprar!</a></p>';
+                container.innerHTML = '<p style="color:var(--text-dim); text-align:center; padding:2rem;">Aún no tienes pedidos. <a href="/" style="color:var(--primary); font-weight:700;">¡Empieza a comprar!</a></p>';
                 return;
             }
             container.innerHTML = orders.map(o => {

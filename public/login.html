@@ -126,7 +126,7 @@
 
 <body>
     <header>
-        <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
+        <div class="logo" onclick="location.href='/'">Ecugaming <span>Import</span></div>
     </header>
 
     <div class="auth-container">
@@ -155,7 +155,7 @@
         </form>
 
         <div class="auth-footer">
-            ¿No tienes cuenta? <a href="register.html">Regístrate Hoy</a>
+            ¿No tienes cuenta? <a href="/register">Regístrate Hoy</a>
         </div>
     </div>
 
@@ -167,7 +167,7 @@
             const { data: { session } } = await _supabase.auth.getSession();
             if (session) {
                 const params = new URLSearchParams(location.search);
-                location.href = params.get('redirect') || 'index.html';
+                location.href = params.get('redirect') || '/';
                 return;
             }
         })();
@@ -213,7 +213,7 @@
             showSuccess('¡Bienvenido! Redirigiendo...');
             const params = new URLSearchParams(location.search);
             setTimeout(() => {
-                location.href = params.get('redirect') || 'index.html';
+                location.href = params.get('redirect') || '/';
             }, 600);
         });
     </script>

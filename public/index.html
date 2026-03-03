@@ -201,7 +201,7 @@
 
         <div class="nav-actions">
             <div id="authArea" style="display:flex; gap:.5rem; align-items:center;">
-                <a href="login.html"
+                <a href="/login"
                     style="font-size:.85rem; font-weight:700; color:var(--text); text-decoration:none; display:flex; align-items:center; gap:.4rem;">
                     <i class="fa fa-user-circle" style="font-size:1.1rem;"></i> Entrar
                 </a>
@@ -277,11 +277,11 @@
                 Lago Agrio, Ecuador. Envíos nacionales vía Servientrega y Tramaco Express.
             </p>
             <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:20px 30px; font-size:12px;">
-                <a href="privacidad.html" style="color:var(--text); text-decoration:none;">Privacidad</a>
-                <a href="terminos.html" style="color:var(--text); text-decoration:none;">Términos de uso</a>
-                <a href="pagos.html" style="color:var(--text); text-decoration:none;">Pagos</a>
-                <a href="envios.html" style="color:var(--text); text-decoration:none;">Envíos</a>
-                <a href="devoluciones.html" style="color:var(--text); text-decoration:none;">Devoluciones</a>
+                <a href="/privacidad" style="color:var(--text); text-decoration:none;">Privacidad</a>
+                <a href="/terminos" style="color:var(--text); text-decoration:none;">Términos de uso</a>
+                <a href="/pagos" style="color:var(--text); text-decoration:none;">Pagos</a>
+                <a href="/envios" style="color:var(--text); text-decoration:none;">Envíos</a>
+                <a href="/devoluciones" style="color:var(--text); text-decoration:none;">Devoluciones</a>
             </div>
         </div>
     </footer>
@@ -527,11 +527,11 @@
             if (Cart.isEmpty()) return alert('El carrito está vacío.');
             const session = await _supabase.auth.getSession();
             if (!session.data.session) {
-                location.href = 'login.html?redirect=checkout.html';
+                location.href = '/login?redirect=/checkout';
                 return;
             }
             toggleCart(false);
-            location.href = 'checkout.html';
+            location.href = '/checkout';
         }
 
         // Listen to cart updates from other scripts

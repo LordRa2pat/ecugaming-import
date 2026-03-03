@@ -403,6 +403,10 @@
                 <div class="img-gallery" id="prodImgGallery"></div>
                 <input type="file" id="newImageFile" accept="image/*" style="display:none;"
                     onchange="uploadProductImage()">
+                <div style="display:flex; gap:0.5rem; margin-top:0.75rem; align-items:center;">
+                    <input type="text" id="imgUrlInput" class="form-control" placeholder="Pegar URL de imagen (https://...)" style="flex:1; padding:10px 14px; font-size:13px;">
+                    <button class="btn-action primary" onclick="addImageByUrl()" style="white-space:nowrap; padding:10px 18px;"><i class="fa fa-link"></i> Agregar URL</button>
+                </div>
             </div>
 
             <div style="margin-top:2rem; display:flex; justify-content:flex-end; gap:1rem;">
@@ -569,6 +573,18 @@
             await apiFetch(`/api/admin/products/${productId}/images/${imageId}`, { method: 'DELETE' });
             await loadProducts();
             const p = allProducts.find(x => x.id === productId);
+            if (p) renderProductImages(p);
+        }
+
+        async function addImageByUrl() {
+            const url = document.getElementById('imgUrlInput').value.trim();
+            if (!url || !currentProductId) { alert('Pega una URL válida y asegúrate de tener el producto seleccionado.'); return; }
+            if (!url.startsWith('http')) { alert('La URL debe comenzar con http:// o https://'); return; }
+            const { error } = await _supabase.from('product_images').insert({ product_id: currentProductId, storage_path: url, sort: 0 });
+            if (error) { alert('Error al guardar: ' + error.message); return; }
+            document.getElementById('imgUrlInput').value = '';
+            await loadProducts();
+            const p = allProducts.find(x => x.id === currentProductId);
             if (p) renderProductImages(p);
         }
 

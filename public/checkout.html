@@ -186,7 +186,7 @@
 </head>
 <body>
     <header>
-        <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
+        <div class="logo" onclick="location.href='/'">Ecugaming <span>Import</span></div>
         <div style="flex:1;"></div>
         <div style="display:flex; align-items:center; gap:.5rem; font-size:.85rem; color:var(--text-dim);">
             <i class="fa fa-lock" style="color:#34c759;"></i> Pago seguro
@@ -265,7 +265,7 @@
                     </div>
                 </div>
                 <div class="step-nav">
-                    <button class="btn-back" onclick="location.href='index.html'"><i class="fa fa-arrow-left"></i> Carrito</button>
+                    <button class="btn-back" onclick="location.href='/'"><i class="fa fa-arrow-left"></i> Carrito</button>
                     <button class="btn-next" onclick="goStep(2)">Continuar <i class="fa fa-arrow-right"></i></button>
                 </div>
             </div>
@@ -482,7 +482,7 @@
 
             if (Cart.isEmpty()) {
                 alert('Tu carrito está vacío.');
-                location.href = 'index.html';
+                location.href = '/';
                 return;
             }
 
@@ -872,7 +872,7 @@
                 document.getElementById('btnWhatsapp').onclick = () =>
                     window.open(`https://wa.me/593962609951?text=${waMsg}`, '_blank');
                 document.getElementById('btnTracking').onclick = () =>
-                    location.href = `tracking.html?id=${orderId}`;
+                    location.href = `/tracking?id=${orderId}`;
 
                 document.getElementById('successModal').classList.add('show');
 

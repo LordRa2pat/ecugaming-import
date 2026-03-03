@@ -19,7 +19,7 @@
         }
 
         .legal-content h1 {
-            color: var(--secondary);
+            color: var(--white);
             margin-bottom: 2rem;
             font-size: 2.2rem;
             font-weight: 900;
@@ -74,15 +74,54 @@
             color: var(--white);
             font-size: 0.95rem;
         }
+
+        .delivery-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .delivery-table th {
+            background: rgba(255, 140, 0, 0.12);
+            color: var(--primary);
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .delivery-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            vertical-align: middle;
+        }
+
+        .delivery-table tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .delivery-table td:first-child {
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .badge-fast { color: #34c759; font-weight: 700; }
+        .badge-mid  { color: #ff9f0a; font-weight: 700; }
+        .badge-slow { color: #ff6b6b; font-weight: 700; }
     </style>
 </head>
 
 <body>
     <header>
-        <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
+        <div class="logo" onclick="location.href='/'">Ecugaming <span>Import</span></div>
         <div class="nav-actions">
             <button class="btn-secondary" style="margin:0; padding:0.5rem 1.5rem;"
-                onclick="location.href='index.html'">Regresar a Tienda</button>
+                onclick="location.href='/'">Regresar a Tienda</button>
         </div>
     </header>
 
@@ -113,15 +152,61 @@
             </ul>
 
             <h2>2. Tiempos de Despacho y Entrega</h2>
-            <p>Todo pedido cuyo pago (transferencia/depósito/cripto) sea confirmado antes de las 16:00 horas en días
-                laborables, será despachado el mismo día.</p>
-            <ul>
-                <li><strong>Quito, Guayaquil, Cuenca y ciudades principales:</strong> 24 a 48 horas laborables
-                    vía Servientrega o Tramaco Express.</li>
-                <li><strong>Provincias y Oriente:</strong> 24 horas vía Cooperativa de Transporte.</li>
-                <li><strong>Entregas locales (Lago Agrio):</strong> Entrega inmediata en tienda o domicilio el mismo
-                    día.</li>
-            </ul>
+            <p>Todo pedido cuyo pago (transferencia/depósito/cripto) sea confirmado antes de las 16:00 horas en días laborables, será despachado el mismo día.</p>
+
+            <table class="delivery-table">
+                <thead>
+                    <tr>
+                        <th>Destino</th>
+                        <th>Servientrega</th>
+                        <th>Tramaco Express</th>
+                        <th>Cooperativa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Quito</td>
+                        <td><span class="badge-fast">24 h</span></td>
+                        <td><span class="badge-fast">24 h</span></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>Guayaquil</td>
+                        <td><span class="badge-fast">24–48 h</span></td>
+                        <td><span class="badge-fast">24–48 h</span></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>Cuenca</td>
+                        <td><span class="badge-fast">24–48 h</span></td>
+                        <td><span class="badge-fast">24–48 h</span></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>Capitales de provincia (Loja, Ambato, Riobamba, etc.)</td>
+                        <td><span class="badge-mid">48 h</span></td>
+                        <td><span class="badge-mid">48 h</span></td>
+                        <td><span class="badge-fast">24 h</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ciudades intermedias (Esmeraldas, Machala, Manta, etc.)</td>
+                        <td><span class="badge-mid">48–72 h</span></td>
+                        <td><span class="badge-mid">48 h</span></td>
+                        <td><span class="badge-fast">24 h</span></td>
+                    </tr>
+                    <tr>
+                        <td>Oriente / Amazonía (Tena, Puyo, Macas, Coca, etc.)</td>
+                        <td><span class="badge-mid">48–72 h</span></td>
+                        <td><span class="badge-mid">48 h</span></td>
+                        <td><span class="badge-fast">24 h</span></td>
+                    </tr>
+                    <tr>
+                        <td>Lago Agrio (entrega local)</td>
+                        <td colspan="3" style="text-align:center;"><span class="badge-fast">Mismo día — entrega en tienda o a domicilio</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size:0.85rem; color:var(--text-dim);">* Tiempos contados desde la confirmación del pago en días laborables. Para zonas rurales o de difícil acceso puede haber 1 día adicional.</p>
 
             <h2>3. Costos de Envío</h2>
             <p>El costo del envío es <strong>GRATUITO</strong> en los siguientes casos:</p>
@@ -129,10 +214,8 @@
                 <li>Compras superiores a <strong>$500 USD</strong>.</li>
                 <li>Productos con etiqueta <strong>"Súper OFERTA"</strong> o <strong>"Remate"</strong> (envío incluido
                     en la promoción).</li>
-                <li>Al usar el cupón <strong>ECU10</strong> (10% descuento + envío gratis).</li>
             </ul>
-            <p>Para compras menores a $500 sin cupón aplicado, el costo base de envío es de <strong>$5.00 USD</strong> a
-                nivel nacional. Este valor puede variar según el volumen del paquete y la cobertura del carrier.</p>
+            <p>Para compras menores a $500, el costo base de envío es de <strong>$5.00 USD</strong> a nivel nacional. Este valor puede variar según el volumen del paquete y la cobertura del carrier.</p>
 
             <div class="notice-box">
                 <i class="fa fa-info-circle" style="color:var(--accent); margin-right:0.5rem;"></i>
@@ -144,7 +227,7 @@
             <h2>4. Rastreo de Pedido</h2>
             <p>Una vez despachado tu paquete, recibirás la Guía de Remisión (número de tracking y foto) vía WhatsApp.
                 También puedes consultar el estado de tu envío en tiempo real desde nuestra página de <a
-                    href="tracking.html" style="color:var(--primary);font-weight:600;">rastreo de pedidos</a>.</p>
+                    href="/tracking" style="color:var(--primary);font-weight:600;">rastreo de pedidos</a>.</p>
 
             <div
                 style="margin-top:3rem; padding-top:2rem; border-top:1px solid var(--border); text-align:center; color:var(--text-dim); font-size:0.9rem;">
