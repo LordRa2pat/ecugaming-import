@@ -450,38 +450,30 @@ app.post('/api/orders/create', requireAuth(async (req, res) => {
         const { error: itemsError } = await supabase.from('order_items').insert(itemsWithOrderId);
         if (itemsError) throw itemsError;
 
-        // 7. Decrement stock
+        // 7. Decrement stock (fallback direct update if RPC not available)
         for (const item of items) {
-            await supabase.rpc('decrement_stock', {
+            const { error: rpcErr } = await supabase.rpc('decrement_stock', {
                 product_id: item.productId,
                 amount: item.qty
-            }).catch(() => {
-                // Fallback if RPC not available
-                supabase.from('products')
-                    .select('stock')
-                    .eq('id', item.productId)
-                    .single()
-                    .then(({ data: p }) => {
-                        if (p) supabase.from('products')
-                            .update({ stock: Math.max(0, p.stock - item.qty) })
-                            .eq('id', item.productId);
-                    });
             });
+            if (rpcErr) {
+                const { data: p } = await supabase.from('products')
+                    .select('stock').eq('id', item.productId).single();
+                if (p) await supabase.from('products')
+                    .update({ stock: Math.max(0, p.stock - item.qty) })
+                    .eq('id', item.productId);
+            }
         }
 
         // 8. Increment coupon redemption count
         if (validatedCouponCode) {
-            await supabase.from('coupons')
-                .update({ redemption_count: supabase.rpc('increment', { x: 1 }) })
-                .eq('code', validatedCouponCode)
-                .catch(() => {
-                    supabase.from('coupons').select('redemption_count').eq('code', validatedCouponCode).single()
-                        .then(({ data: c }) => {
-                            if (c) supabase.from('coupons')
-                                .update({ redemption_count: (c.redemption_count || 0) + 1 })
-                                .eq('code', validatedCouponCode);
-                        });
-                });
+            const { data: currentCoupon } = await supabase.from('coupons')
+                .select('redemption_count').eq('code', validatedCouponCode).single();
+            if (currentCoupon) {
+                await supabase.from('coupons')
+                    .update({ redemption_count: (currentCoupon.redemption_count || 0) + 1 })
+                    .eq('code', validatedCouponCode);
+            }
         }
 
         // 9. Log initial status event
