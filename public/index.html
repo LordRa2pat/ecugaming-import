@@ -310,9 +310,9 @@
 
     <!-- Supabase + libs -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-    <script src="/lib/supabase-client.js?v=1.0.2"></script>
-    <script src="/lib/cart.js?v=1.0.1"></script>
-    <script src="/lib/auth.js?v=1.0.1"></script>
+    <script src="/lib/supabase-client.js?v=1.0.8"></script>
+    <script src="/lib/cart.js?v=1.0.8"></script>
+    <script src="/lib/auth.js?v=1.0.8"></script>
 
     <script>
         let allProducts = [];
@@ -421,10 +421,10 @@
             return `
                 <div class="card-tag">${item.category || ''}</div>
                 ${badgeHTML(item.badge)}
-                <div class="card-img-placeholder" onclick="location.href='product.html?id=${item.id}'" style="cursor:pointer;">
+                <div class="card-img-placeholder" onclick="location.href='/product?id=${item.id}'" style="cursor:pointer;">
                     ${imgTag}
                 </div>
-                <h3 class="card-name" onclick="location.href='product.html?id=${item.id}'" style="cursor:pointer;">${item.name}</h3>
+                <h3 class="card-name" onclick="location.href='/product?id=${item.id}'" style="cursor:pointer;">${item.name}</h3>
                 <div class="price-container">
                     <div class="card-price">$${Number(activePrice).toFixed(2)}</div>
                     ${hasPromo ? `<div class="card-old-price">$${Number(item.price).toFixed(2)}</div>` : ''}
@@ -434,7 +434,7 @@
                     ${item.stock > 0
                     ? `<button class="btn-buy" onclick="addToCart('${item.id}')"><i class="fa fa-cart-plus"></i></button>`
                     : `<button class="btn-secondary" disabled style="opacity:.5;">Agotado</button>`}
-                    <button class="btn-secondary" style="margin-top:0;" onclick="location.href='product.html?id=${item.id}'">Ver</button>
+                    <button class="btn-secondary" style="margin-top:0;" onclick="location.href='/product?id=${item.id}'">Ver</button>
                 </div>`;
         }
 
