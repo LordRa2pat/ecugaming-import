@@ -1,22 +1,20 @@
 {
     "version": 2,
-    "name": "ecugaming-import",
     "rewrites": [
         { "source": "/api/(.*)", "destination": "/api/index.js" },
-        { "source": "/product", "destination": "/public/product.html" },
-        { "source": "/admin", "destination": "/public/admin.html" },
-        { "source": "/admin-orders", "destination": "/public/admin-orders.html" },
-        { "source": "/admin-products", "destination": "/public/admin-products.html" },
-        { "source": "/account", "destination": "/public/account.html" },
-        { "source": "/checkout", "destination": "/public/checkout.html" },
-        { "source": "/tracking", "destination": "/public/tracking.html" },
-        { "source": "/login", "destination": "/public/login.html" },
-        { "source": "/register", "destination": "/public/register.html" },
-        { "source": "/envios", "destination": "/public/envios.html" },
-        { "source": "/terminos", "destination": "/public/terminos.html" },
-        { "source": "/privacidad", "destination": "/public/privacidad.html" },
-        { "source": "/pagos", "destination": "/public/pagos.html" },
-        { "source": "/devoluciones", "destination": "/public/devoluciones.html" },
-        { "source": "/(.*)", "destination": "/public/$1" }
+        { "source": "/product", "destination": "/product.html" },
+        { "source": "/admin", "destination": "/admin.html" },
+        { "source": "/admin-orders", "destination": "/admin-orders.html" },
+        { "source": "/admin-products", "destination": "/admin-products.html" },
+        { "source": "/account", "destination": "/account.html" },
+        { "source": "/checkout", "destination": "/checkout.html" },
+        { "source": "/tracking", "destination": "/tracking.html" },
+        { "source": "/login", "destination": "/login.html" },
+        { "source": "/register", "destination": "/register.html" },
+        { "source": "/envios", "destination": "/envios.html" },
+        { "source": "/terminos", "destination": "/terminos.html" },
+        { "source": "/privacidad", "destination": "/privacidad.html" },
+        { "source": "/pagos", "destination": "/pagos.html" },
+        { "source": "/devoluciones", "destination": "/devoluciones.html" }
     ]
 }
