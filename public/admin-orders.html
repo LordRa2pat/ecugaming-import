@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas | Ecugaming Import</title>
+    <link rel="stylesheet" href="style.css?v=1.0.6">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: var(--secondary);
+            color: var(--bg-light);
+            font-feature-settings: "cv11", "ss01";
+        }
+
+        .admin-layout {
+            min-height: 100vh;
+            background: #000;
+        }
+
+        .admin-sidebar {
+            background: #050505;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            overflow-y: auto;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            z-index: 1100;
+        }
+
+        .sidebar-brand {
+            padding: 0 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-brand span {
+            color: var(--primary);
+        }
+
+        .sidebar-group {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 1.5rem 1rem 0.5rem;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: #a1a1aa;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--white);
+        }
+
+        .sidebar-item.active {
+            background: var(--primary) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 12px var(--primary-glow);
+            font-weight: 700;
+        }
+
+        .admin-content {
+            padding: 2.5rem;
+            overflow-x: auto;
+            background: var(--bg-light);
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+
+        .admin-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-glass);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13px;
+        }
+
+        .admin-table th {
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-dim);
+            font-weight: 600;
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .admin-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: #e2e2e7;
+            vertical-align: middle;
+        }
+
+        .btn-action {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #e2e2e7;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-action.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .status-chip {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 8px;
+            text-transform: uppercase;
+        }
+
+        .s-confirmando_pago {
+            background: rgba(255, 159, 10, 0.1);
+            color: #ff9f0a;
+        }
+
+        .s-orden_confirmada {
+            background: rgba(48, 209, 88, 0.1);
+            color: #30d158;
+        }
+
+        .s-empacando {
+            background: rgba(100, 210, 255, 0.1);
+            color: #64d2ff;
+        }
+
+        .s-enviado {
+            background: rgba(191, 90, 242, 0.1);
+            color: #bf5af2;
+        }
+
+        .s-recibido {
+            background: rgba(52, 199, 89, 0.1);
+            color: #34c759;
+        }
+
+        .s-cancelado {
+            background: rgba(255, 69, 58, 0.1);
+            color: #ff453a;
+        }
+
+        .order-detail-panel {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            height: 100vh;
+            background: #1c1c1e;
+            border-left: 1px solid var(--border);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1200;
+            padding: 2rem;
+            overflow-y: auto;
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .order-detail-panel.open {
+            right: 0;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #1c1c1e;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--white);
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .timeline {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .tl-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .tl-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #3a3a3c;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        .tl-dot.done {
+            background: #34c759;
+        }
+
+        .tl-dot.current {
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand">Ecugaming <span>Import</span></div>
+            <div class="sidebar-group">Principal</div>
+            <a href="admin.html" class="sidebar-item"><i class="fa fa-th-large"></i> Dashboard</a>
+            <a href="admin-products.html" class="sidebar-item"><i class="fa fa-box"></i> Inventario</a>
+            <a href="admin-orders.html" class="sidebar-item active"><i class="fa fa-shopping-cart"></i> Ventas</a>
+            <a href="admin-customers.html" class="sidebar-item"><i class="fa fa-users"></i> Clientes</a>
+            <div class="sidebar-group">Configuración</div>
+            <a href="admin-settings.html" class="sidebar-item"><i class="fa fa-cog"></i> Ajustes</a>
+            <div style="margin-top:auto; padding:1rem;">
+                <button class="sidebar-item" onclick="signOutAdmin()" style="color:#ff6b6b;"><i
+                        class="fa fa-sign-out-alt"></i> Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <div class="admin-content">
+            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Pedidos / Ventas</h2>
+
+            <div class="admin-card">
+                <div class="table-search">
+                    <select id="orderStatusFilter" class="form-control" style="max-width:200px;"
+                        onchange="loadOrders()">
+                        <option value="">Todos los estados</option>
+                        <option value="confirmando_pago">Confirmando Pago</option>
+                        <option value="orden_confirmada">Confirmadas</option>
+                        <option value="enviado">Enviadas</option>
+                    </select>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Ciudad</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Pago</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Panel -->
+    <div class="order-detail-panel" id="orderDetailPanel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+            <h3 style="font-weight:800; color:#f5f5f7; margin:0;">Detalle de Orden</h3>
+            <button class="btn-action" onclick="closeOrderDetail()"><i class="fa fa-times"></i></button>
+        </div>
+        <div id="orderDetailContent"></div>
+    </div>
+
+    <!-- Status Change Modal -->
+    <div class="modal-overlay" id="statusModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('statusModal')">&times;</button>
+            <h3 style="color:white; margin-bottom:1.5rem;">Actualizar Estado</h3>
+            <input type="hidden" id="statusOrderId">
+            <div class="form-group"><label>Nuevo Estado *</label>
+                <select id="statusSelect" class="form-control">
+                    <option value="confirmando_pago">Confirmando Pago</option>
+                    <option value="orden_confirmada">Orden Confirmada</option>
+                    <option value="empacando">Empacando</option>
+                    <option value="enviado">Enviado</option>
+                    <option value="recibido">Recibido</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Código Tracking (Guía)</label><input type="text" id="trackingCodeInput"
+                    class="form-control"></div>
+            <div class="form-group"><label>Nota interna</label><textarea id="statusNote"
+                    class="form-control"></textarea></div>
+            <div style="margin-top:2rem; display:flex; justify-content:flex-end; gap:1rem;">
+                <button class="btn-action" onclick="closeModal('statusModal')">Cancelar</button>
+                <button class="btn-action primary" onclick="updateOrderStatus()">Actualizar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="/lib/supabase-client.js?v=1.0.6"></script>
+    <script src="/lib/auth.js?v=1.0.6"></script>
+    <script>
+        let adminToken = '';
+        const SUPABASE_URL = window.SUPABASE_URL || 'https://dpomkchvjpdkndkksphy.supabase.co';
+
+        async function init() {
+            adminToken = await Auth.requireAdmin();
+            if (!adminToken) return;
+            loadOrders();
+        }
+
+        async function apiFetch(url, opts = {}) {
+            return fetch(url, {
+                ...opts,
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken, ...(opts.headers || {}) }
+            });
+        }
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        function closeOrderDetail() { document.getElementById('orderDetailPanel').classList.remove('open'); }
+        async function signOutAdmin() { await _supabase.auth.signOut(); location.href = 'login.html'; }
+
+        async function loadOrders() {
+            const status = document.getElementById('orderStatusFilter').value;
+            const res = await apiFetch('/api/admin/orders?limit=100' + (status ? '&status=' + status : ''));
+            const data = await res.json();
+            const orders = data.orders || [];
+            const tbody = document.getElementById('ordersBody');
+            tbody.innerHTML = orders.map(o => `
+                <tr>
+                    <td style="font-weight:700;">${o.id}</td>
+                    <td>${o.customer?.first_name || '—'} ${o.customer?.last_name || ''}</td>
+                    <td>${o.shipping_address?.city || '—'}</td>
+                    <td style="font-weight:700;">$${Number(o.total).toFixed(2)}</td>
+                    <td><span class="status-chip s-${o.status}">${statusLabel(o.status)}</span></td>
+                    <td><span class="status-chip payment-${o.payment_status}">${o.payment_status}</span></td>
+                    <td>${new Date(o.created_at).toLocaleDateString()}</td>
+                    <td style="display:flex; gap:.3rem;">
+                        <button class="btn-action" onclick="showOrderDetail('${o.id}')">Ver</button>
+                        <button class="btn-action primary" onclick="openStatusModal('${o.id}','${o.status}','${o.tracking_code || ''}')">Estado</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function showOrderDetail(id) {
+            const panel = document.getElementById('orderDetailPanel');
+            panel.classList.add('open');
+            document.getElementById('orderDetailContent').innerHTML = 'Cargando...';
+            const res = await apiFetch(`/api/admin/orders/${id}`);
+            const o = await res.json();
+            const itemsHtml = (o.items || []).map(i => `
+                <div style="display:flex; gap:1rem; padding:0.5rem 0; border-bottom:1px solid #2c2c2e;">
+                    <img src="${i.product_snapshot?.image_url}" style="width:40px; height:40px; border-radius:6px; object-fit:cover;">
+                    <div style="flex:1;">
+                        <div style="font-size:0.85rem; font-weight:700; color:white;">${i.product_snapshot?.name}</div>
+                        <div style="font-size:0.75rem; color:var(--text-dim);">x${i.qty}</div>
+                    </div>
+                    <div style="font-weight:700; color:white;">$${i.line_total}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('orderDetailContent').innerHTML = `
+                <div style="margin-bottom:1.5rem; background:#2c2c2e; padding:1rem; border-radius:12px;">
+                    <div style="color:var(--primary); font-weight:800; font-size:1.1rem; margin-bottom:0.5rem;">Ciente: ${o.shipping_address?.firstName} ${o.shipping_address?.lastName}</div>
+                    <div style="color:white; font-size:0.85rem;">${o.shipping_address?.phone}</div>
+                    <div style="color:var(--text-dim); font-size:0.85rem; margin-top:0.5rem;">${o.shipping_address?.address1}</div>
+                </div>
+                <div>${itemsHtml}</div>
+                <div style="margin-top:1.5rem; text-align:right;">
+                    <div style="color:var(--text-dim); font-size:0.9rem;">Subtotal: $${o.subtotal}</div>
+                    <div style="color:white; font-size:1.2rem; font-weight:900; margin-top:0.2rem;">Total: $${o.total}</div>
+                </div>
+            `;
+        }
+
+        function openStatusModal(id, status, track) {
+            document.getElementById('statusOrderId').value = id;
+            document.getElementById('statusSelect').value = status;
+            document.getElementById('trackingCodeInput').value = track;
+            openModal('statusModal');
+        }
+
+        async function updateOrderStatus() {
+            const id = document.getElementById('statusOrderId').value;
+            const status = document.getElementById('statusSelect').value;
+            const track = document.getElementById('trackingCodeInput').value;
+            await apiFetch(`/api/admin/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status, trackingCode: track }) });
+            closeModal('statusModal');
+            loadOrders();
+        }
+
+        function statusLabel(s) {
+            return { confirmando_pago: 'Pendiente', orden_confirmada: 'Confirmada', empacando: 'Empacando', enviado: 'Enviado', recibido: 'Recibido', cancelado: 'Cancelado' }[s] || s;
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupones | Ecugaming Import</title>
+    <link rel="stylesheet" href="style.css?v=1.0.6">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: var(--secondary);
+            color: var(--bg-light);
+            font-feature-settings: "cv11", "ss01";
+        }
+
+        .admin-layout {
+            min-height: 100vh;
+            background: #000;
+        }
+
+        .admin-sidebar {
+            background: #050505;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            overflow-y: auto;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            z-index: 1100;
+        }
+
+        .sidebar-brand {
+            padding: 0 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-brand span {
+            color: var(--primary);
+        }
+
+        .sidebar-group {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 1.5rem 1rem 0.5rem;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: #a1a1aa;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--white);
+        }
+
+        .sidebar-item.active {
+            background: var(--primary) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 12px var(--primary-glow);
+            font-weight: 700;
+        }
+
+        .admin-content {
+            padding: 2.5rem;
+            overflow-x: auto;
+            background: var(--bg-light);
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+
+        .admin-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-glass);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13px;
+        }
+
+        .admin-table th {
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-dim);
+            font-weight: 600;
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .admin-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: #e2e2e7;
+            vertical-align: middle;
+        }
+
+        .btn-action {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #e2e2e7;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-action.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #1c1c1e;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--white);
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand">Ecugaming <span>Import</span></div>
+            <div class="sidebar-group">Principal</div>
+            <a href="admin.html" class="sidebar-item"><i class="fa fa-th-large"></i> Dashboard</a>
+            <a href="admin-products.html" class="sidebar-item"><i class="fa fa-box"></i> Inventario</a>
+            <a href="admin-orders.html" class="sidebar-item"><i class="fa fa-shopping-cart"></i> Ventas</a>
+            <a href="admin-customers.html" class="sidebar-item"><i class="fa fa-users"></i> Clientes</a>
+            <div class="sidebar-group">Marketing</div>
+            <a href="admin-coupons.html" class="sidebar-item active"><i class="fa fa-ticket-alt"></i> Cupones</a>
+            <div class="sidebar-group">Configuración</div>
+            <a href="admin-settings.html" class="sidebar-item"><i class="fa fa-cog"></i> Ajustes</a>
+            <div style="margin-top:auto; padding:1rem;">
+                <button class="sidebar-item" onclick="signOutAdmin()" style="color:#ff6b6b;"><i
+                        class="fa fa-sign-out-alt"></i> Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <div class="admin-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+                <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7;">Gestión de Cupones</h2>
+                <button class="btn-action primary" onclick="openCouponModal()"><i class="fa fa-plus"></i> Nuevo
+                    Cupón</button>
+            </div>
+            <div class="admin-card">
+                <div style="overflow-x:auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Tipo</th>
+                                <th>Valor</th>
+                                <th>E. Gratis</th>
+                                <th>Min. Compra</th>
+                                <th>Usos</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="couponsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Cupón -->
+    <div class="modal-overlay" id="couponModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('couponModal')">&times;</button>
+            <h3 id="couponModalTitle" style="color:white; margin-bottom:1.5rem;">Nuevo Cupón</h3>
+            <input type="hidden" id="couponId">
+            <div class="form-group"><label>Código *</label><input type="text" id="couponCode" class="form-control"
+                    style="text-transform:uppercase;"></div>
+            <div class="form-row-2">
+                <div class="form-group"><label>Tipo *</label><select id="couponType" class="form-control">
+                        <option value="percent">Porcentaje</option>
+                        <option value="fixed">Fijo</option>
+                    </select></div>
+                <div class="form-group"><label>Valor *</label><input type="number" id="couponValue"
+                        class="form-control"></div>
+            </div>
+            <div style="margin-top:1.5rem; display:flex; justify-content:flex-end; gap:1rem;">
+                <button class="btn-action" onclick="closeModal('couponModal')">Cancelar</button>
+                <button class="btn-action primary" onclick="saveCoupon()">Guardar Cupón</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="/lib/supabase-client.js?v=1.0.6"></script>
+    <script src="/lib/auth.js?v=1.0.6"></script>
+    <script>
+        let adminToken = '';
+        let allCoupons = [];
+        async function init() {
+            adminToken = await Auth.requireAdmin();
+            if (!adminToken) return;
+            loadCoupons();
+        }
+
+        async function apiFetch(url, opts = {}) {
+            return fetch(url, {
+                ...opts,
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken, ...(opts.headers || {}) }
+            });
+        }
+
+        async function loadCoupons() {
+            const res = await apiFetch('/api/admin/coupons');
+            allCoupons = await res.json();
+            const tbody = document.getElementById('couponsBody');
+            tbody.innerHTML = allCoupons.map(c => `
+                <tr>
+                    <td style="font-weight:800; font-family:monospace; color:var(--primary);">${c.code}</td>
+                    <td>${c.type}</td>
+                    <td>${c.type === 'percent' ? c.value + '%' : '$' + c.value}</td>
+                    <td>${c.free_shipping ? 'Sí' : 'No'}</td>
+                    <td>$${c.min_subtotal}</td>
+                    <td>${c.redemption_count}</td>
+                    <td><span class="status-chip ${c.is_active ? 's-recibido' : 's-cancelado'}">${c.is_active ? 'Activo' : 'Inactivo'}</span></td>
+                    <td><button class="btn-action" onclick='editCoupon("${c.id}")'>Editar</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function openCouponModal() {
+            document.getElementById('couponId').value = '';
+            document.getElementById('couponCode').value = '';
+            openModal('couponModal');
+        }
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        async function signOutAdmin() { await _supabase.auth.signOut(); location.href = 'login.html'; }
+
+        async function saveCoupon() {
+            const id = document.getElementById('couponId').value;
+            const code = document.getElementById('couponCode').value.trim();
+            const val = document.getElementById('couponValue').value;
+            const res = id ? await apiFetch(`/api/admin/coupons/${id}`, { method: 'PATCH', body: JSON.stringify({ code, value: val }) })
+                : await apiFetch('/api/admin/coupons', { method: 'POST', body: JSON.stringify({ code, value: val, type: document.getElementById('couponType').value }) });
+            if (res.ok) { closeModal('couponModal'); loadCoupons(); }
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
