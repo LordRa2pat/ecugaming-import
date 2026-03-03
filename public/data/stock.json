@@ -1,0 +1,4402 @@
+[
+  {
+    "id": "lmg0c40j8",
+    "name": "PS4 Pro Standard 2TB",
+    "category": "Consolas",
+    "price": 683.38,
+    "stock": 47,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "84517wfy6",
+    "name": "iPhone 15 Gold 128GB",
+    "category": "iPhone",
+    "price": 443.27,
+    "stock": 2,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 15 Gold 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wr4c7l1kp",
+    "name": "SNES Classic Grape",
+    "category": "Retro",
+    "price": 568.06,
+    "stock": 40,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "v08f1h1zq",
+    "name": "iPhone 11 Natural Titanium 128GB",
+    "category": "iPhone",
+    "price": 861.94,
+    "stock": 31,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Natural Titanium 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "78gc4a2ix",
+    "name": "Returnal",
+    "category": "Juegos PS5",
+    "price": 284.39,
+    "stock": 28,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Returnal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "v4ypl1km5",
+    "name": "Pokémon Violet",
+    "category": "Juegos Nintendo",
+    "price": 193.74,
+    "stock": 37,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Violet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "a5fratiby",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 694.23,
+    "stock": 27,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "gj66jzcnh",
+    "name": "iPhone 11 Silver 1TB",
+    "category": "iPhone",
+    "price": 400.72,
+    "stock": 25,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Silver 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "k3m8h0few",
+    "name": "Pokémon Scarlet",
+    "category": "Juegos Nintendo",
+    "price": 388.34,
+    "stock": 46,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Scarlet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "jue9qutm5",
+    "name": "Elden Ring",
+    "category": "Juegos PS5",
+    "price": 445.12,
+    "stock": 18,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Elden Ring es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8bue4v7xb",
+    "name": "Ratchet & Clank: Rift Apart",
+    "category": "Juegos PS5",
+    "price": 422.6,
+    "stock": 44,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Ratchet & Clank: Rift Apart es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dzb6gx2h0",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 328.52,
+    "stock": 23,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "gvmh7gdwe",
+    "name": "Pokémon Violet",
+    "category": "Juegos Nintendo",
+    "price": 186.59,
+    "stock": 48,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Violet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "1d6638j01",
+    "name": "Nintendo Switch Lite Standard 500GB",
+    "category": "Consolas",
+    "price": 686.9,
+    "stock": 21,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Standard 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "rm0kq1odn",
+    "name": "iPhone 11 Sierra Blue 512GB",
+    "category": "iPhone",
+    "price": 425.41,
+    "stock": 37,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Sierra Blue 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "47mrt3g8u",
+    "name": "Nintendo Switch Lite Special Edition 2TB",
+    "category": "Consolas",
+    "price": 613.16,
+    "stock": 48,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Special Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "sga4u4ps8",
+    "name": "SNES Classic Grape",
+    "category": "Retro",
+    "price": 110.11,
+    "stock": 30,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0y9r9b21m",
+    "name": "NES Classic Grape",
+    "category": "Retro",
+    "price": 456.57,
+    "stock": 8,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "36rxqphlx",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 304.15,
+    "stock": 19,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "x34ehrkb6",
+    "name": "Sega Genesis Grape",
+    "category": "Retro",
+    "price": 183.4,
+    "stock": 34,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mcpgqoctk",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 572.52,
+    "stock": 4,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "nh3zor77m",
+    "name": "iPhone 13 Alpine Green 256GB",
+    "category": "iPhone",
+    "price": 737.53,
+    "stock": 21,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Alpine Green 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "nc8vja4sz",
+    "name": "iPhone 11 Space Black 128GB",
+    "category": "iPhone",
+    "price": 850.63,
+    "stock": 28,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Space Black 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "f2963z2m4",
+    "name": "Zelda: Tears of the Kingdom",
+    "category": "Juegos Nintendo",
+    "price": 144.24,
+    "stock": 45,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Zelda: Tears of the Kingdom es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "uzq8pgfwm",
+    "name": "AMD Ryzen 9 7950X",
+    "category": "Componentes PC",
+    "price": 643.58,
+    "stock": 30,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. AMD Ryzen 9 7950X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "96z3l5sk7",
+    "name": "iPhone 11 Graphite 128GB",
+    "category": "iPhone",
+    "price": 523.96,
+    "stock": 37,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Graphite 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "3cyiimfnm",
+    "name": "Ryzen 7 5800X",
+    "category": "Componentes PC",
+    "price": 286.43,
+    "stock": 17,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Ryzen 7 5800X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "7ck2l6mx5",
+    "name": "Sega Genesis Grape",
+    "category": "Retro",
+    "price": 396.68,
+    "stock": 24,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "kp7m18ydy",
+    "name": "Pokémon Violet",
+    "category": "Juegos Nintendo",
+    "price": 342.79,
+    "stock": 21,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Violet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "tlsedwah7",
+    "name": "Zelda: Tears of the Kingdom",
+    "category": "Juegos Nintendo",
+    "price": 284.48,
+    "stock": 49,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Zelda: Tears of the Kingdom es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "z9nemoqhf",
+    "name": "Metroid Dread",
+    "category": "Juegos Nintendo",
+    "price": 324.31,
+    "stock": 41,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Metroid Dread es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "lvslojz5l",
+    "name": "PS5 Slim Standard 1TB",
+    "category": "Consolas",
+    "price": 549.25,
+    "stock": 43,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Slim Standard 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "3yp7hj2g3",
+    "name": "Ryzen 7 5800X",
+    "category": "Componentes PC",
+    "price": 564.88,
+    "stock": 24,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Ryzen 7 5800X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "phjgu21d3",
+    "name": "Xbox Series X Special Edition 2TB",
+    "category": "Consolas",
+    "price": 486.16,
+    "stock": 12,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series X Special Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "vvma5zn40",
+    "name": "The Last of Us Part I",
+    "category": "Juegos PS5",
+    "price": 475.05,
+    "stock": 5,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. The Last of Us Part I es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "sish7nica",
+    "name": "Zelda: Tears of the Kingdom",
+    "category": "Juegos Nintendo",
+    "price": 435.44,
+    "stock": 26,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Zelda: Tears of the Kingdom es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "saj3zozw8",
+    "name": "SNES Classic Teal",
+    "category": "Retro",
+    "price": 200.46,
+    "stock": 10,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mkee1a2sx",
+    "name": "GameCube Grape",
+    "category": "Retro",
+    "price": 596.52,
+    "stock": 34,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "umexywbdl",
+    "name": "Splatoon 3",
+    "category": "Juegos Nintendo",
+    "price": 145.48,
+    "stock": 22,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Splatoon 3 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "71y9v8w9p",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 519.1,
+    "stock": 15,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "qfscbmumg",
+    "name": "Ryzen 7 5800X",
+    "category": "Componentes PC",
+    "price": 579.19,
+    "stock": 12,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Ryzen 7 5800X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "4on6nctrn",
+    "name": "Zelda: Tears of the Kingdom",
+    "category": "Juegos Nintendo",
+    "price": 422.9,
+    "stock": 17,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Zelda: Tears of the Kingdom es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "2yr0qvxw8",
+    "name": "Nintendo Switch OLED Limited Edition 1TB",
+    "category": "Consolas",
+    "price": 713.94,
+    "stock": 17,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch OLED Limited Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "im3ug9e81",
+    "name": "Nintendo Switch Lite Limited Edition 2TB",
+    "category": "Consolas",
+    "price": 632.54,
+    "stock": 27,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Limited Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "kwmsy7k1x",
+    "name": "Pokémon Violet",
+    "category": "Juegos Nintendo",
+    "price": 58.67,
+    "stock": 28,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Violet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9seyehhad",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 129.11,
+    "stock": 36,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "jebgtkiq5",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 492.69,
+    "stock": 18,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "new5ri4yu",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 506.17,
+    "stock": 6,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8oae3fkse",
+    "name": "Control DualSense",
+    "category": "Accesorios",
+    "price": 88.02,
+    "stock": 34,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Control DualSense es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "rkomb4idj",
+    "name": "PS4 Pro Special Edition 2TB",
+    "category": "Consolas",
+    "price": 470.79,
+    "stock": 4,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Special Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "7tt639zm4",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 691.66,
+    "stock": 31,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "altuoatgy",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 402.76,
+    "stock": 27,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "bvi7bubts",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 560.58,
+    "stock": 42,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "qtdefs3ha",
+    "name": "NES Classic Teal",
+    "category": "Retro",
+    "price": 306.53,
+    "stock": 30,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "bk8yl5849",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 114.83,
+    "stock": 43,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mzw00dimg",
+    "name": "Pokémon Scarlet",
+    "category": "Juegos Nintendo",
+    "price": 284.37,
+    "stock": 37,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Scarlet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "vc3m0h8en",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 522.91,
+    "stock": 19,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "31vfvxj78",
+    "name": "iPhone 11 Silver 256GB",
+    "category": "iPhone",
+    "price": 874.38,
+    "stock": 38,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Silver 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "xabd8rc1s",
+    "name": "SNES Classic Teal",
+    "category": "Retro",
+    "price": 385.58,
+    "stock": 2,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "pygwzq6r3",
+    "name": "iPhone 14 Space Black 1TB",
+    "category": "iPhone",
+    "price": 518.87,
+    "stock": 31,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Space Black 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "d4ucrx4jc",
+    "name": "Nintendo Switch Lite Standard 500GB",
+    "category": "Consolas",
+    "price": 538.43,
+    "stock": 43,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Standard 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "5thcyruvu",
+    "name": "PS5 Special Edition 2TB",
+    "category": "Consolas",
+    "price": 400.85,
+    "stock": 23,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Special Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "a4o8asocf",
+    "name": "iPhone 15 Sierra Blue 1TB",
+    "category": "iPhone",
+    "price": 481.04,
+    "stock": 27,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 15 Sierra Blue 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "71g3qic3b",
+    "name": "Logitech G502",
+    "category": "Accesorios",
+    "price": 210.56,
+    "stock": 27,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Logitech G502 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "6o08ecj1h",
+    "name": "Samsung 990 Pro 2TB SSD",
+    "category": "Componentes PC",
+    "price": 237.7,
+    "stock": 19,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Samsung 990 Pro 2TB SSD es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "1ti15vxyr",
+    "name": "Pokémon Scarlet",
+    "category": "Juegos Nintendo",
+    "price": 348.47,
+    "stock": 21,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Scarlet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "5us8x1m2o",
+    "name": "Pokémon Scarlet",
+    "category": "Juegos Nintendo",
+    "price": 163.73,
+    "stock": 16,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Scarlet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "2yqkgjrlc",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 202.32,
+    "stock": 23,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "gtdbcf5cp",
+    "name": "iPhone 14 Gold 512GB",
+    "category": "iPhone",
+    "price": 869.22,
+    "stock": 28,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Gold 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ew30tg788",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 428.92,
+    "stock": 48,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "da72n5uad",
+    "name": "Xbox Series S Limited Edition 500GB",
+    "category": "Consolas",
+    "price": 739.95,
+    "stock": 7,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series S Limited Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mvi1ngpmh",
+    "name": "iPhone 14 Sierra Blue 256GB",
+    "category": "iPhone",
+    "price": 859.67,
+    "stock": 28,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Sierra Blue 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "pyxmvg2hq",
+    "name": "Nintendo Switch Lite Limited Edition 1TB",
+    "category": "Consolas",
+    "price": 668.24,
+    "stock": 28,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Limited Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ke25wkzhn",
+    "name": "Control DualSense",
+    "category": "Accesorios",
+    "price": 189.53,
+    "stock": 36,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Control DualSense es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "jzn82080v",
+    "name": "iPhone 13 Natural Titanium 128GB",
+    "category": "iPhone",
+    "price": 794.29,
+    "stock": 24,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Natural Titanium 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "vrhfgne5g",
+    "name": "Splatoon 3",
+    "category": "Juegos Nintendo",
+    "price": 116.27,
+    "stock": 21,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Splatoon 3 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "glvwd8023",
+    "name": "Sega Genesis Standard",
+    "category": "Retro",
+    "price": 417.63,
+    "stock": 11,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "p4fpgwesa",
+    "name": "iPhone 13 Space Black 1TB",
+    "category": "iPhone",
+    "price": 470,
+    "stock": 7,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Space Black 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "4uuacm39u",
+    "name": "iPhone 11 Gold 128GB",
+    "category": "iPhone",
+    "price": 503.51,
+    "stock": 25,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Gold 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "3do95rrxv",
+    "name": "N64 Grape",
+    "category": "Retro",
+    "price": 145.35,
+    "stock": 37,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. N64 Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "m7ipt823n",
+    "name": "Gameboy Color Grape",
+    "category": "Retro",
+    "price": 521.6,
+    "stock": 40,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Gameboy Color Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "27wvx42yo",
+    "name": "PS5 Standard 500GB",
+    "category": "Consolas",
+    "price": 795.87,
+    "stock": 39,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Standard 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "85ci4mcod",
+    "name": "PS4 Pro Standard 2TB",
+    "category": "Consolas",
+    "price": 515,
+    "stock": 18,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "7jqxmhr89",
+    "name": "Control DualSense",
+    "category": "Accesorios",
+    "price": 242.96,
+    "stock": 22,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Control DualSense es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "nu1ydd9fi",
+    "name": "Samsung 990 Pro 2TB SSD",
+    "category": "Componentes PC",
+    "price": 432.16,
+    "stock": 48,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Samsung 990 Pro 2TB SSD es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dqqxzhmw2",
+    "name": "Gameboy Color Grape",
+    "category": "Retro",
+    "price": 340.87,
+    "stock": 18,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Gameboy Color Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "o4ntmi6f3",
+    "name": "Samsung 990 Pro 2TB SSD",
+    "category": "Componentes PC",
+    "price": 677.11,
+    "stock": 5,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Samsung 990 Pro 2TB SSD es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "t1ayr67to",
+    "name": "PS5 Special Edition 500GB",
+    "category": "Consolas",
+    "price": 605.38,
+    "stock": 21,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Special Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "uhf6a2uem",
+    "name": "PS4 Pro Special Edition 500GB",
+    "category": "Consolas",
+    "price": 627.63,
+    "stock": 1,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Special Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "4idakyx6g",
+    "name": "GameCube Standard",
+    "category": "Retro",
+    "price": 210.8,
+    "stock": 24,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "oqpffsrcl",
+    "name": "Returnal",
+    "category": "Juegos PS5",
+    "price": 485.11,
+    "stock": 4,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Returnal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "m9hyzkfqa",
+    "name": "Returnal",
+    "category": "Juegos PS5",
+    "price": 403.89,
+    "stock": 18,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Returnal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "80hzijze3",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 549.31,
+    "stock": 1,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "jr2nmorz4",
+    "name": "Sega Genesis Standard",
+    "category": "Retro",
+    "price": 284.3,
+    "stock": 20,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8585xf736",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 694.62,
+    "stock": 28,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "drkv62qlo",
+    "name": "Xbox Series X Standard 500GB",
+    "category": "Consolas",
+    "price": 563.79,
+    "stock": 48,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series X Standard 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ji3t93lxh",
+    "name": "Gameboy Color Grape",
+    "category": "Retro",
+    "price": 241.53,
+    "stock": 19,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Gameboy Color Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "996jcr2ln",
+    "name": "NES Classic Berry",
+    "category": "Retro",
+    "price": 391.08,
+    "stock": 20,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "7yeznj0yq",
+    "name": "GameCube Standard",
+    "category": "Retro",
+    "price": 329.64,
+    "stock": 17,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ga58e6203",
+    "name": "The Last of Us Part I",
+    "category": "Juegos PS5",
+    "price": 263.06,
+    "stock": 45,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. The Last of Us Part I es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0jj90eei7",
+    "name": "Ratchet & Clank: Rift Apart",
+    "category": "Juegos PS5",
+    "price": 505.84,
+    "stock": 35,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Ratchet & Clank: Rift Apart es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "p2hicayhn",
+    "name": "GameCube Standard",
+    "category": "Retro",
+    "price": 368.21,
+    "stock": 37,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "1vry7uyqi",
+    "name": "iPhone 14 Pacific Blue 1TB",
+    "category": "iPhone",
+    "price": 530.89,
+    "stock": 42,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Pacific Blue 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "i2jnkkbrl",
+    "name": "Logitech G502",
+    "category": "Accesorios",
+    "price": 520.98,
+    "stock": 44,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Logitech G502 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "nh8scmub6",
+    "name": "Nintendo Switch Lite Limited Edition 500GB",
+    "category": "Consolas",
+    "price": 372.78,
+    "stock": 20,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Limited Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0r7w0iohs",
+    "name": "Metroid Dread",
+    "category": "Juegos Nintendo",
+    "price": 198.01,
+    "stock": 6,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Metroid Dread es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "vemacsqwf",
+    "name": "SNES Classic Teal",
+    "category": "Retro",
+    "price": 592.77,
+    "stock": 16,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "xau6maeun",
+    "name": "The Last of Us Part I",
+    "category": "Juegos PS5",
+    "price": 489.49,
+    "stock": 38,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. The Last of Us Part I es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "chgta6841",
+    "name": "Spider-Man 2",
+    "category": "Juegos PS5",
+    "price": 156.68,
+    "stock": 45,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Spider-Man 2 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mjng89tov",
+    "name": "The Last of Us Part I",
+    "category": "Juegos PS5",
+    "price": 535.4,
+    "stock": 50,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. The Last of Us Part I es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "heiuicsjt",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 82.26,
+    "stock": 31,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "nef5ot6kd",
+    "name": "Razer BlackWidow",
+    "category": "Accesorios",
+    "price": 279.65,
+    "stock": 39,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Razer BlackWidow es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "18a43crpw",
+    "name": "SNES Classic Grape",
+    "category": "Retro",
+    "price": 347.48,
+    "stock": 41,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0i69wg2xv",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 237.93,
+    "stock": 44,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9a7dz2vb5",
+    "name": "Ryzen 7 5800X",
+    "category": "Componentes PC",
+    "price": 646.98,
+    "stock": 6,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Ryzen 7 5800X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "bqei94464",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 372.11,
+    "stock": 9,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "u41rjh3vl",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 508.77,
+    "stock": 18,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "xh4uv3io2",
+    "name": "PS5 Slim Special Edition 500GB",
+    "category": "Consolas",
+    "price": 792.63,
+    "stock": 41,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Slim Special Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "gfxc3f4vp",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 244.34,
+    "stock": 19,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "33dawjc3f",
+    "name": "God of War Ragnarok",
+    "category": "Juegos PS5",
+    "price": 312.39,
+    "stock": 16,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. God of War Ragnarok es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "z8y2krddg",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 617.67,
+    "stock": 20,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "45ceagmw4",
+    "name": "iPhone 13 Gold 512GB",
+    "category": "iPhone",
+    "price": 700.09,
+    "stock": 5,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Gold 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "rlzxds48j",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 385.09,
+    "stock": 10,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9vckqywms",
+    "name": "Ratchet & Clank: Rift Apart",
+    "category": "Juegos PS5",
+    "price": 361.7,
+    "stock": 42,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Ratchet & Clank: Rift Apart es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "v40t8r9lm",
+    "name": "GameCube Berry",
+    "category": "Retro",
+    "price": 442.96,
+    "stock": 12,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "uz3sfq0ay",
+    "name": "Horizon Forbidden West",
+    "category": "Juegos PS5",
+    "price": 377.77,
+    "stock": 14,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Horizon Forbidden West es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ip9r8rt4c",
+    "name": "Returnal",
+    "category": "Juegos PS5",
+    "price": 310.56,
+    "stock": 35,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Returnal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "bs1p915jf",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 186.16,
+    "stock": 3,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "537tunwtn",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 462.94,
+    "stock": 1,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "tiz87w464",
+    "name": "iPhone 14 Pacific Blue 512GB",
+    "category": "iPhone",
+    "price": 411.14,
+    "stock": 41,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Pacific Blue 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "4l6v8b2a3",
+    "name": "Elden Ring",
+    "category": "Juegos PS5",
+    "price": 362.77,
+    "stock": 44,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Elden Ring es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "n1woyqjvi",
+    "name": "GameCube Berry",
+    "category": "Retro",
+    "price": 160.92,
+    "stock": 43,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "w0ryq056r",
+    "name": "Xbox Series S Limited Edition 1TB",
+    "category": "Consolas",
+    "price": 600.1,
+    "stock": 43,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series S Limited Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "kww8w8gns",
+    "name": "Nintendo Switch OLED Standard 2TB",
+    "category": "Consolas",
+    "price": 469.87,
+    "stock": 44,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch OLED Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "3kfc0czu0",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 475.43,
+    "stock": 26,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0g0pq7sg7",
+    "name": "iPhone 13 Natural Titanium 256GB",
+    "category": "iPhone",
+    "price": 676.78,
+    "stock": 6,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Natural Titanium 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "6oi3e3lal",
+    "name": "GameCube Grape",
+    "category": "Retro",
+    "price": 530.37,
+    "stock": 28,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "tj3dr39rg",
+    "name": "Logitech G502",
+    "category": "Accesorios",
+    "price": 76.8,
+    "stock": 20,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Logitech G502 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "2bgtlbssy",
+    "name": "SNES Classic Grape",
+    "category": "Retro",
+    "price": 370.1,
+    "stock": 2,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8l14x13st",
+    "name": "Gameboy Color Standard",
+    "category": "Retro",
+    "price": 164.29,
+    "stock": 19,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Gameboy Color Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9dpiq4vwz",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 140.04,
+    "stock": 22,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "5zzzzzqsi",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 169.99,
+    "stock": 50,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wg77awhig",
+    "name": "iPhone 14 Space Black 256GB",
+    "category": "iPhone",
+    "price": 840.88,
+    "stock": 16,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Space Black 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "5wm7kflkr",
+    "name": "Mario Bros Wonder",
+    "category": "Juegos Nintendo",
+    "price": 372.97,
+    "stock": 24,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Bros Wonder es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wmw279724",
+    "name": "iPhone 14 Alpine Green 128GB",
+    "category": "iPhone",
+    "price": 894.58,
+    "stock": 12,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Alpine Green 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "y494taboh",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 444.66,
+    "stock": 44,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "len2yxe2k",
+    "name": "Final Fantasy XVI",
+    "category": "Juegos PS5",
+    "price": 58.81,
+    "stock": 21,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Final Fantasy XVI es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9yszwscin",
+    "name": "GameCube Standard",
+    "category": "Retro",
+    "price": 457.2,
+    "stock": 41,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "fxtwpzkkt",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 458.67,
+    "stock": 5,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "l302dq8mf",
+    "name": "N64 Grape",
+    "category": "Retro",
+    "price": 410.56,
+    "stock": 39,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. N64 Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "59l82vh6h",
+    "name": "iPhone 13 Graphite 512GB",
+    "category": "iPhone",
+    "price": 744.62,
+    "stock": 11,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Graphite 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ov08uuvr2",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 662.38,
+    "stock": 31,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0dl6doyy4",
+    "name": "PS5 Special Edition 2TB",
+    "category": "Consolas",
+    "price": 543.86,
+    "stock": 20,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Special Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "cutiwdn00",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 447.65,
+    "stock": 46,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "z4zq77tko",
+    "name": "Xbox Series S Standard 2TB",
+    "category": "Consolas",
+    "price": 406.67,
+    "stock": 41,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series S Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "40trn9al2",
+    "name": "Razer BlackWidow",
+    "category": "Accesorios",
+    "price": 197.28,
+    "stock": 33,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Razer BlackWidow es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wqypjanl5",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 496.6,
+    "stock": 15,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mococnrcg",
+    "name": "iPhone 11 Pacific Blue 128GB",
+    "category": "iPhone",
+    "price": 627.16,
+    "stock": 49,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Pacific Blue 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "iokav6rwp",
+    "name": "NES Classic Standard",
+    "category": "Retro",
+    "price": 507.94,
+    "stock": 34,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "3fviiqmdp",
+    "name": "iPhone 15 Sierra Blue 256GB",
+    "category": "iPhone",
+    "price": 631.09,
+    "stock": 30,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 15 Sierra Blue 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "chi77i79t",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 334.5,
+    "stock": 24,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0pksubmif",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 436.48,
+    "stock": 7,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "miuynlmel",
+    "name": "NES Classic Berry",
+    "category": "Retro",
+    "price": 571.69,
+    "stock": 27,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "gxl2tkgsg",
+    "name": "Returnal",
+    "category": "Juegos PS5",
+    "price": 90.22,
+    "stock": 34,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Returnal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9oe0kmhb2",
+    "name": "Zelda: Tears of the Kingdom",
+    "category": "Juegos Nintendo",
+    "price": 88.76,
+    "stock": 5,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Zelda: Tears of the Kingdom es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0753vyl0a",
+    "name": "SNES Classic Berry",
+    "category": "Retro",
+    "price": 127.63,
+    "stock": 24,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "sj1sdo3qz",
+    "name": "iPhone 11 Pacific Blue 256GB",
+    "category": "iPhone",
+    "price": 867.31,
+    "stock": 4,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Pacific Blue 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "y17sdmnld",
+    "name": "PS4 Pro Standard 1TB",
+    "category": "Consolas",
+    "price": 418.98,
+    "stock": 6,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Standard 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wqxemuy0h",
+    "name": "Xbox Series X Special Edition 500GB",
+    "category": "Consolas",
+    "price": 447.7,
+    "stock": 36,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series X Special Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "fqlzit9s5",
+    "name": "Gameboy Color Berry",
+    "category": "Retro",
+    "price": 271.05,
+    "stock": 1,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Gameboy Color Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "lgb9c3tv7",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 671.53,
+    "stock": 31,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mcv7dnex9",
+    "name": "Control DualSense",
+    "category": "Accesorios",
+    "price": 205.54,
+    "stock": 14,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Control DualSense es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ut5qv2ji4",
+    "name": "NES Classic Teal",
+    "category": "Retro",
+    "price": 290.86,
+    "stock": 11,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ui7l7icaq",
+    "name": "PS5 Limited Edition 1TB",
+    "category": "Consolas",
+    "price": 706.62,
+    "stock": 31,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Limited Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "yze4vwmsp",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 514.21,
+    "stock": 23,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "v5xl5qr00",
+    "name": "Spider-Man 2",
+    "category": "Juegos PS5",
+    "price": 422.99,
+    "stock": 28,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Spider-Man 2 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "vcz8nmbdh",
+    "name": "Ratchet & Clank: Rift Apart",
+    "category": "Juegos PS5",
+    "price": 489.05,
+    "stock": 24,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Ratchet & Clank: Rift Apart es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "142yldc4w",
+    "name": "Zelda: Tears of the Kingdom",
+    "category": "Juegos Nintendo",
+    "price": 483.83,
+    "stock": 25,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Zelda: Tears of the Kingdom es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "foclvbpa2",
+    "name": "iPhone 13 Alpine Green 1TB",
+    "category": "iPhone",
+    "price": 822.46,
+    "stock": 3,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Alpine Green 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wgqnhpsl6",
+    "name": "Sega Genesis Grape",
+    "category": "Retro",
+    "price": 395.63,
+    "stock": 34,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "hlt0fybwe",
+    "name": "Sega Genesis Teal",
+    "category": "Retro",
+    "price": 265.09,
+    "stock": 47,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "pk7exdpt4",
+    "name": "iPhone 12 Deep Purple 1TB",
+    "category": "iPhone",
+    "price": 451.14,
+    "stock": 14,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 12 Deep Purple 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "fh7kf4sgf",
+    "name": "Nintendo Switch Lite Limited Edition 500GB",
+    "category": "Consolas",
+    "price": 478.19,
+    "stock": 45,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Limited Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "fb76g39vp",
+    "name": "Ratchet & Clank: Rift Apart",
+    "category": "Juegos PS5",
+    "price": 345.12,
+    "stock": 4,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Ratchet & Clank: Rift Apart es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ua1gid1yz",
+    "name": "Nintendo Switch Lite Limited Edition 2TB",
+    "category": "Consolas",
+    "price": 346.35,
+    "stock": 43,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Limited Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dwlrpuf9p",
+    "name": "iPhone 14 Graphite 1TB",
+    "category": "iPhone",
+    "price": 505.14,
+    "stock": 26,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Graphite 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "jt3ce5b1q",
+    "name": "Nintendo Switch Lite Standard 2TB",
+    "category": "Consolas",
+    "price": 746.49,
+    "stock": 39,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "oskysbonz",
+    "name": "Control DualSense",
+    "category": "Accesorios",
+    "price": 525.91,
+    "stock": 12,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Control DualSense es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "o033z63kw",
+    "name": "Xbox Series S Standard 2TB",
+    "category": "Consolas",
+    "price": 734.39,
+    "stock": 6,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series S Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "pz0vh7xyd",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 260.05,
+    "stock": 20,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "snar1qy8z",
+    "name": "Ryzen 7 5800X",
+    "category": "Componentes PC",
+    "price": 633.58,
+    "stock": 46,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Ryzen 7 5800X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8erft9m5s",
+    "name": "Nintendo Switch Lite Special Edition 500GB",
+    "category": "Consolas",
+    "price": 496.1,
+    "stock": 17,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Special Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "sbgthtwth",
+    "name": "Sega Genesis Teal",
+    "category": "Retro",
+    "price": 399.51,
+    "stock": 45,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ovrcuyyss",
+    "name": "N64 Berry",
+    "category": "Retro",
+    "price": 576.11,
+    "stock": 43,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. N64 Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "1gbldcwee",
+    "name": "N64 Standard",
+    "category": "Retro",
+    "price": 425.72,
+    "stock": 25,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. N64 Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "5pn73z5rf",
+    "name": "SNES Classic Berry",
+    "category": "Retro",
+    "price": 455.49,
+    "stock": 26,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "7u4v0rxup",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 426.24,
+    "stock": 8,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "asvzwye5a",
+    "name": "SNES Classic Standard",
+    "category": "Retro",
+    "price": 285.28,
+    "stock": 33,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dzwedu4t3",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 235.14,
+    "stock": 42,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "u1n1gk4bt",
+    "name": "AMD Ryzen 9 7950X",
+    "category": "Componentes PC",
+    "price": 385.95,
+    "stock": 27,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. AMD Ryzen 9 7950X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "5bakj9711",
+    "name": "GameCube Berry",
+    "category": "Retro",
+    "price": 187.41,
+    "stock": 48,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dq83qj24w",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 575.13,
+    "stock": 8,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ey2bjg0aa",
+    "name": "God of War Ragnarok",
+    "category": "Juegos PS5",
+    "price": 157.77,
+    "stock": 35,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. God of War Ragnarok es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "vlls1x71u",
+    "name": "iPhone 13 Sierra Blue 128GB",
+    "category": "iPhone",
+    "price": 684,
+    "stock": 40,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Sierra Blue 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "hufyo2d04",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 441.35,
+    "stock": 33,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "5057o5nwh",
+    "name": "Razer BlackWidow",
+    "category": "Accesorios",
+    "price": 353.89,
+    "stock": 49,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Razer BlackWidow es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "2hk4yz13g",
+    "name": "Spider-Man 2",
+    "category": "Juegos PS5",
+    "price": 368.25,
+    "stock": 4,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Spider-Man 2 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "zn0cz2g29",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 367.66,
+    "stock": 5,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "n5t8gojhg",
+    "name": "SNES Classic Berry",
+    "category": "Retro",
+    "price": 111.62,
+    "stock": 23,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "qysufe2jl",
+    "name": "Metroid Dread",
+    "category": "Juegos Nintendo",
+    "price": 370.22,
+    "stock": 34,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Metroid Dread es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "kyiptblqq",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 351.32,
+    "stock": 37,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "zcd00d514",
+    "name": "Control DualSense",
+    "category": "Accesorios",
+    "price": 465.47,
+    "stock": 4,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Control DualSense es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "lzjaedo04",
+    "name": "Sega Genesis Berry",
+    "category": "Retro",
+    "price": 510.66,
+    "stock": 35,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mgc45uwkv",
+    "name": "iPhone 14 Alpine Green 1TB",
+    "category": "iPhone",
+    "price": 594.32,
+    "stock": 2,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Alpine Green 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ldqj2gdlr",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 362.08,
+    "stock": 33,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "b5lwwe83b",
+    "name": "Xbox Series X Standard 2TB",
+    "category": "Consolas",
+    "price": 383.4,
+    "stock": 18,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series X Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "2zjrrcern",
+    "name": "iPhone SE Deep Purple 128GB",
+    "category": "iPhone",
+    "price": 786.92,
+    "stock": 13,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone SE Deep Purple 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dqd4vgk6v",
+    "name": "Zelda: Tears of the Kingdom",
+    "category": "Juegos Nintendo",
+    "price": 541.64,
+    "stock": 20,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Zelda: Tears of the Kingdom es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9oozc0gk5",
+    "name": "PS5 Slim Limited Edition 1TB",
+    "category": "Consolas",
+    "price": 720.25,
+    "stock": 40,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Slim Limited Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "kuar2kntz",
+    "name": "Ratchet & Clank: Rift Apart",
+    "category": "Juegos PS5",
+    "price": 384.47,
+    "stock": 21,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Ratchet & Clank: Rift Apart es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "qq2sze9p2",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 75.51,
+    "stock": 10,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "itqcsprb5",
+    "name": "Spider-Man 2",
+    "category": "Juegos PS5",
+    "price": 249.26,
+    "stock": 1,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Spider-Man 2 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ulxkawc72",
+    "name": "PS5 Slim Standard 500GB",
+    "category": "Consolas",
+    "price": 528.19,
+    "stock": 21,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Slim Standard 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "qkncjacn3",
+    "name": "Horizon Forbidden West",
+    "category": "Juegos PS5",
+    "price": 189.7,
+    "stock": 2,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Horizon Forbidden West es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "kacqdbry7",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 396.99,
+    "stock": 27,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "zkjcre4vh",
+    "name": "Razer BlackWidow",
+    "category": "Accesorios",
+    "price": 247.19,
+    "stock": 11,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Razer BlackWidow es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "h3e3cnwe0",
+    "name": "GameCube Teal",
+    "category": "Retro",
+    "price": 145.25,
+    "stock": 6,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ard96nm25",
+    "name": "Control DualSense",
+    "category": "Accesorios",
+    "price": 288.22,
+    "stock": 11,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Control DualSense es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9uy0x8mwk",
+    "name": "Gameboy Color Berry",
+    "category": "Retro",
+    "price": 526.67,
+    "stock": 9,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Gameboy Color Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wp4tmkc4q",
+    "name": "AMD Ryzen 9 7950X",
+    "category": "Componentes PC",
+    "price": 594.86,
+    "stock": 18,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. AMD Ryzen 9 7950X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "3bvw6o9ny",
+    "name": "iPhone 15 Deep Purple 128GB",
+    "category": "iPhone",
+    "price": 806.62,
+    "stock": 26,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 15 Deep Purple 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "uuakz5tf7",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 214.42,
+    "stock": 35,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "xquazv07y",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 390.9,
+    "stock": 19,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "4f44ezo41",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 450.55,
+    "stock": 41,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "l9cgeq2xx",
+    "name": "Metroid Dread",
+    "category": "Juegos Nintendo",
+    "price": 199.63,
+    "stock": 15,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Metroid Dread es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0nlwmamhg",
+    "name": "GameCube Grape",
+    "category": "Retro",
+    "price": 263.93,
+    "stock": 43,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "yeit2awgz",
+    "name": "iPhone 11 Graphite 128GB",
+    "category": "iPhone",
+    "price": 624.23,
+    "stock": 40,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Graphite 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mf1nywg9k",
+    "name": "God of War Ragnarok",
+    "category": "Juegos PS5",
+    "price": 221.38,
+    "stock": 15,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. God of War Ragnarok es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "b2zpg2ymw",
+    "name": "PS4 Pro Special Edition 1TB",
+    "category": "Consolas",
+    "price": 399.52,
+    "stock": 15,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Special Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "1j7o2stdo",
+    "name": "Razer BlackWidow",
+    "category": "Accesorios",
+    "price": 313.91,
+    "stock": 10,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Razer BlackWidow es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "tgwzvzwde",
+    "name": "NES Classic Berry",
+    "category": "Retro",
+    "price": 218.08,
+    "stock": 13,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "90pnrh6yc",
+    "name": "PS5 Slim Limited Edition 2TB",
+    "category": "Consolas",
+    "price": 528.26,
+    "stock": 2,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Slim Limited Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "r69d0hd1n",
+    "name": "PS5 Special Edition 2TB",
+    "category": "Consolas",
+    "price": 785.23,
+    "stock": 4,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Special Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "n5qz579z9",
+    "name": "NES Classic Teal",
+    "category": "Retro",
+    "price": 562.21,
+    "stock": 39,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "08dtxm2ec",
+    "name": "NES Classic Berry",
+    "category": "Retro",
+    "price": 497.79,
+    "stock": 33,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "vxzofgm57",
+    "name": "Ryzen 7 5800X",
+    "category": "Componentes PC",
+    "price": 572.37,
+    "stock": 27,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Ryzen 7 5800X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "46qwy981p",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 123.47,
+    "stock": 30,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "bfoiawfm6",
+    "name": "Xbox Series X Limited Edition 2TB",
+    "category": "Consolas",
+    "price": 664.64,
+    "stock": 41,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series X Limited Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "fexhkzott",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 385.29,
+    "stock": 26,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "zxspbzggq",
+    "name": "Elden Ring",
+    "category": "Juegos PS5",
+    "price": 350.22,
+    "stock": 37,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Elden Ring es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "nhwbpq00v",
+    "name": "NES Classic Grape",
+    "category": "Retro",
+    "price": 575.16,
+    "stock": 4,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "y7q9l6j2o",
+    "name": "iPhone 14 Sierra Blue 256GB",
+    "category": "iPhone",
+    "price": 721.17,
+    "stock": 21,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Sierra Blue 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "trxqdxi6k",
+    "name": "Control DualSense",
+    "category": "Accesorios",
+    "price": 119.61,
+    "stock": 9,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Control DualSense es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "g3yblk1ei",
+    "name": "iPhone 11 Graphite 256GB",
+    "category": "iPhone",
+    "price": 486.29,
+    "stock": 38,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Graphite 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "slx8y97m4",
+    "name": "Sega Genesis Standard",
+    "category": "Retro",
+    "price": 266.23,
+    "stock": 13,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "vetomzkkv",
+    "name": "N64 Grape",
+    "category": "Retro",
+    "price": 409.95,
+    "stock": 16,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. N64 Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wldjfpbhf",
+    "name": "iPhone 11 Gold 512GB",
+    "category": "iPhone",
+    "price": 831.11,
+    "stock": 12,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Gold 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "cywr1wwuj",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 43.09,
+    "stock": 4,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "uwnvhijm5",
+    "name": "AMD Ryzen 9 7950X",
+    "category": "Componentes PC",
+    "price": 391.03,
+    "stock": 37,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. AMD Ryzen 9 7950X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "louet0vyd",
+    "name": "Nintendo Switch Lite Special Edition 500GB",
+    "category": "Consolas",
+    "price": 581.24,
+    "stock": 15,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Special Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8m3fz12tn",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 366.4,
+    "stock": 39,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "f41gecsfk",
+    "name": "Nintendo Switch Lite Special Edition 1TB",
+    "category": "Consolas",
+    "price": 459.66,
+    "stock": 50,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Special Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "tk11mhk0f",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 76.1,
+    "stock": 20,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "5r0opwi4h",
+    "name": "SNES Classic Berry",
+    "category": "Retro",
+    "price": 589.53,
+    "stock": 37,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "khf06qbrv",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 246.19,
+    "stock": 43,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "d71dcsecs",
+    "name": "PS5 Slim Limited Edition 2TB",
+    "category": "Consolas",
+    "price": 462.97,
+    "stock": 25,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Slim Limited Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "s8xvw8mj9",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 276.27,
+    "stock": 38,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "k9d7qntnm",
+    "name": "N64 Grape",
+    "category": "Retro",
+    "price": 461.61,
+    "stock": 38,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. N64 Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "kzchh0jy6",
+    "name": "Ryzen 7 5800X",
+    "category": "Componentes PC",
+    "price": 291.07,
+    "stock": 21,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Ryzen 7 5800X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "vlzceeb9l",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 133.21,
+    "stock": 36,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wmph86a1j",
+    "name": "iPhone 14 Deep Purple 1TB",
+    "category": "iPhone",
+    "price": 434.65,
+    "stock": 46,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Deep Purple 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "l18nlp6s9",
+    "name": "PS5 Slim Special Edition 500GB",
+    "category": "Consolas",
+    "price": 442.55,
+    "stock": 19,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Slim Special Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "jewmek4aq",
+    "name": "Samsung 990 Pro 2TB SSD",
+    "category": "Componentes PC",
+    "price": 564.01,
+    "stock": 10,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Samsung 990 Pro 2TB SSD es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ybye7r07u",
+    "name": "Xbox Series S Limited Edition 500GB",
+    "category": "Consolas",
+    "price": 783.74,
+    "stock": 4,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series S Limited Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "t60iz37x1",
+    "name": "Logitech G502",
+    "category": "Accesorios",
+    "price": 132.97,
+    "stock": 34,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Logitech G502 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "43bo6el9m",
+    "name": "Kirby and the Forgotten Land",
+    "category": "Juegos Nintendo",
+    "price": 244.29,
+    "stock": 26,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Kirby and the Forgotten Land es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "gdhaznioi",
+    "name": "Sega Genesis Standard",
+    "category": "Retro",
+    "price": 538.5,
+    "stock": 27,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "c69lh5ruv",
+    "name": "Xbox Series X Standard 2TB",
+    "category": "Consolas",
+    "price": 479.16,
+    "stock": 23,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series X Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "6oad1nu9x",
+    "name": "Samsung 990 Pro 2TB SSD",
+    "category": "Componentes PC",
+    "price": 233.64,
+    "stock": 42,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Samsung 990 Pro 2TB SSD es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ylxyjjzuu",
+    "name": "Pokémon Violet",
+    "category": "Juegos Nintendo",
+    "price": 247.7,
+    "stock": 39,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Violet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mvrrmk5hh",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 61.81,
+    "stock": 7,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "m8ypy8755",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 273.52,
+    "stock": 40,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "6fq7qje1t",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 501.19,
+    "stock": 47,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "o950x16ml",
+    "name": "Razer BlackWidow",
+    "category": "Accesorios",
+    "price": 333.45,
+    "stock": 31,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Razer BlackWidow es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "08t6dmkw2",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 243.37,
+    "stock": 14,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9r427og68",
+    "name": "Returnal",
+    "category": "Juegos PS5",
+    "price": 144.43,
+    "stock": 8,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Returnal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "31xp5rn8z",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 507.32,
+    "stock": 2,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "1mp8ocu44",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 110.63,
+    "stock": 24,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "5gfkz4sfm",
+    "name": "NES Classic Standard",
+    "category": "Retro",
+    "price": 317.45,
+    "stock": 13,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "v1ywyg8yp",
+    "name": "PS4 Pro Standard 1TB",
+    "category": "Consolas",
+    "price": 622.97,
+    "stock": 21,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Standard 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ucniebkru",
+    "name": "Samsung 990 Pro 2TB SSD",
+    "category": "Componentes PC",
+    "price": 502.63,
+    "stock": 45,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Samsung 990 Pro 2TB SSD es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "uxoq9rbzx",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 126.87,
+    "stock": 20,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "pz8ezyjig",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 94.67,
+    "stock": 24,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "e63pfrgdu",
+    "name": "Xbox Series S Standard 2TB",
+    "category": "Consolas",
+    "price": 707.01,
+    "stock": 41,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series S Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "w44y03f73",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 341.71,
+    "stock": 50,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "o3r9gjxo8",
+    "name": "Horizon Forbidden West",
+    "category": "Juegos PS5",
+    "price": 377.15,
+    "stock": 25,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Horizon Forbidden West es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9zvffy3hc",
+    "name": "Xbox Series X Standard 2TB",
+    "category": "Consolas",
+    "price": 443.6,
+    "stock": 9,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series X Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ggd06vrv1",
+    "name": "Pokémon Scarlet",
+    "category": "Juegos Nintendo",
+    "price": 522.98,
+    "stock": 35,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Scarlet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "jrbpww3c7",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 107.89,
+    "stock": 36,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "x8x86ypo5",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 426.18,
+    "stock": 13,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "f5p59s59d",
+    "name": "PS5 Standard 500GB",
+    "category": "Consolas",
+    "price": 660.04,
+    "stock": 49,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Standard 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dt24qtdqo",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 446.69,
+    "stock": 30,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "7b70d4if9",
+    "name": "Sega Genesis Teal",
+    "category": "Retro",
+    "price": 302.94,
+    "stock": 23,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "cz1mpccsx",
+    "name": "Spider-Man 2",
+    "category": "Juegos PS5",
+    "price": 320.57,
+    "stock": 4,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Spider-Man 2 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "gey1mfovj",
+    "name": "Returnal",
+    "category": "Juegos PS5",
+    "price": 350.27,
+    "stock": 16,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Returnal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "y2u29qlf5",
+    "name": "Gameboy Color Standard",
+    "category": "Retro",
+    "price": 129.2,
+    "stock": 30,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Gameboy Color Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "gzvwer8d9",
+    "name": "iPhone 12 Graphite 256GB",
+    "category": "iPhone",
+    "price": 432.83,
+    "stock": 50,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 12 Graphite 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ilf8q5rgr",
+    "name": "Ratchet & Clank: Rift Apart",
+    "category": "Juegos PS5",
+    "price": 477.73,
+    "stock": 35,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Ratchet & Clank: Rift Apart es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "7mbdqffwk",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 227.57,
+    "stock": 35,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "zuivnmmt4",
+    "name": "Ryzen 7 5800X",
+    "category": "Componentes PC",
+    "price": 292.56,
+    "stock": 24,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Ryzen 7 5800X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "is0d04h0m",
+    "name": "Mario Bros Wonder",
+    "category": "Juegos Nintendo",
+    "price": 542.54,
+    "stock": 19,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Bros Wonder es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mrzskvadl",
+    "name": "Sega Genesis Teal",
+    "category": "Retro",
+    "price": 345.97,
+    "stock": 18,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "m659tgu3l",
+    "name": "Final Fantasy XVI",
+    "category": "Juegos PS5",
+    "price": 473.65,
+    "stock": 46,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Final Fantasy XVI es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "84wtk7xi3",
+    "name": "Ryzen 7 5800X",
+    "category": "Componentes PC",
+    "price": 407.04,
+    "stock": 48,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Ryzen 7 5800X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "arryt13q8",
+    "name": "Ratchet & Clank: Rift Apart",
+    "category": "Juegos PS5",
+    "price": 133.75,
+    "stock": 5,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Ratchet & Clank: Rift Apart es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0fvbafnbe",
+    "name": "Nintendo Switch OLED Standard 2TB",
+    "category": "Consolas",
+    "price": 499.56,
+    "stock": 22,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch OLED Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "qld6lk6z9",
+    "name": "Sega Genesis Berry",
+    "category": "Retro",
+    "price": 488.26,
+    "stock": 24,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Sega Genesis Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "c8xgau0a4",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 400.8,
+    "stock": 24,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "qp97d2yac",
+    "name": "Nintendo Switch Lite Standard 1TB",
+    "category": "Consolas",
+    "price": 581.94,
+    "stock": 11,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Standard 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "z9hkuyaxu",
+    "name": "SNES Classic Grape",
+    "category": "Retro",
+    "price": 184.74,
+    "stock": 45,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "pwqywu0nu",
+    "name": "Elden Ring",
+    "category": "Juegos PS5",
+    "price": 233.81,
+    "stock": 6,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Elden Ring es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "rd2ldiwgu",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 324.83,
+    "stock": 8,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wqj97n47g",
+    "name": "Metroid Dread",
+    "category": "Juegos Nintendo",
+    "price": 409.77,
+    "stock": 27,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Metroid Dread es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dhiez7ibs",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 412.66,
+    "stock": 34,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "rt2t6z4tk",
+    "name": "Control DualSense",
+    "category": "Accesorios",
+    "price": 424.87,
+    "stock": 37,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Control DualSense es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mtx3v7p7r",
+    "name": "iPhone 11 Alpine Green 256GB",
+    "category": "iPhone",
+    "price": 626.07,
+    "stock": 38,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Alpine Green 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "uzixjj46t",
+    "name": "Nintendo Switch Lite Limited Edition 1TB",
+    "category": "Consolas",
+    "price": 787.06,
+    "stock": 39,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Limited Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "4tyby0xy6",
+    "name": "iPhone 15 Natural Titanium 128GB",
+    "category": "iPhone",
+    "price": 659.66,
+    "stock": 18,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 15 Natural Titanium 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "z31pmz9fn",
+    "name": "Nintendo Switch Lite Standard 500GB",
+    "category": "Consolas",
+    "price": 481.03,
+    "stock": 8,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Standard 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "t6d8rnx0s",
+    "name": "AMD Ryzen 9 7950X",
+    "category": "Componentes PC",
+    "price": 424.94,
+    "stock": 39,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. AMD Ryzen 9 7950X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "w47gfazp4",
+    "name": "iPhone 11 Space Black 512GB",
+    "category": "iPhone",
+    "price": 815.23,
+    "stock": 20,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Space Black 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mjj4chngg",
+    "name": "SNES Classic Berry",
+    "category": "Retro",
+    "price": 177.39,
+    "stock": 44,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "nqsu9ssq8",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 430.62,
+    "stock": 29,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "fs5gksqcr",
+    "name": "Final Fantasy XVI",
+    "category": "Juegos PS5",
+    "price": 49.03,
+    "stock": 36,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Final Fantasy XVI es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "kzvdc7u64",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 655.78,
+    "stock": 36,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "phsetkbzg",
+    "name": "The Last of Us Part I",
+    "category": "Juegos PS5",
+    "price": 341.27,
+    "stock": 18,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. The Last of Us Part I es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "oendnnzjf",
+    "name": "NES Classic Standard",
+    "category": "Retro",
+    "price": 436.6,
+    "stock": 11,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "97bpkso5v",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 361.53,
+    "stock": 12,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "6zepv47p6",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 478.82,
+    "stock": 17,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "4su4i6uz6",
+    "name": "Xbox Series S Standard 1TB",
+    "category": "Consolas",
+    "price": 712.3,
+    "stock": 35,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series S Standard 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "498nt1res",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 375.36,
+    "stock": 46,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "aoepslubv",
+    "name": "Spider-Man 2",
+    "category": "Juegos PS5",
+    "price": 526.84,
+    "stock": 42,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Spider-Man 2 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ijv1003y1",
+    "name": "iPhone 14 Natural Titanium 1TB",
+    "category": "iPhone",
+    "price": 444.12,
+    "stock": 13,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Natural Titanium 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "87ihy7mqc",
+    "name": "GameCube Standard",
+    "category": "Retro",
+    "price": 141.11,
+    "stock": 5,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "nqspw8wr4",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 37.48,
+    "stock": 14,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "gxfmlzf9d",
+    "name": "SNES Classic Standard",
+    "category": "Retro",
+    "price": 380.06,
+    "stock": 48,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "lvr0jaged",
+    "name": "Kirby and the Forgotten Land",
+    "category": "Juegos Nintendo",
+    "price": 235.64,
+    "stock": 19,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Kirby and the Forgotten Land es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "p33m5g28u",
+    "name": "iPhone 15 Natural Titanium 1TB",
+    "category": "iPhone",
+    "price": 739.35,
+    "stock": 15,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 15 Natural Titanium 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "6ypgonxrd",
+    "name": "GameCube Grape",
+    "category": "Retro",
+    "price": 427.54,
+    "stock": 45,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "7goihbzoi",
+    "name": "Gameboy Color Grape",
+    "category": "Retro",
+    "price": 306.36,
+    "stock": 47,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Gameboy Color Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "k1ob018rq",
+    "name": "Metroid Dread",
+    "category": "Juegos Nintendo",
+    "price": 234.59,
+    "stock": 48,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Metroid Dread es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dc0omwzik",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 237.55,
+    "stock": 1,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "p84riqedp",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 606.63,
+    "stock": 17,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "me2ejg2l6",
+    "name": "Xbox Series S Standard 500GB",
+    "category": "Consolas",
+    "price": 536.72,
+    "stock": 18,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series S Standard 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "5wb758moc",
+    "name": "iPhone 12 Space Black 512GB",
+    "category": "iPhone",
+    "price": 555.2,
+    "stock": 33,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 12 Space Black 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "yy33uar87",
+    "name": "Elden Ring",
+    "category": "Juegos PS5",
+    "price": 355.78,
+    "stock": 24,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Elden Ring es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "uxboziw7b",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 398.69,
+    "stock": 44,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9regbzv9u",
+    "name": "Samsung 990 Pro 2TB SSD",
+    "category": "Componentes PC",
+    "price": 495.77,
+    "stock": 9,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Samsung 990 Pro 2TB SSD es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "o7tmeojg2",
+    "name": "Xbox Series X Special Edition 2TB",
+    "category": "Consolas",
+    "price": 662.22,
+    "stock": 6,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series X Special Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "cmu16jxi8",
+    "name": "Spider-Man 2",
+    "category": "Juegos PS5",
+    "price": 73.14,
+    "stock": 8,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Spider-Man 2 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "r2ly98fqb",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 210.28,
+    "stock": 24,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "fubxup7de",
+    "name": "Ratchet & Clank: Rift Apart",
+    "category": "Juegos PS5",
+    "price": 125.52,
+    "stock": 3,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Ratchet & Clank: Rift Apart es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "255uxum1y",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 381.42,
+    "stock": 16,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9lcu9ihfd",
+    "name": "Samsung 990 Pro 2TB SSD",
+    "category": "Componentes PC",
+    "price": 625.38,
+    "stock": 41,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Samsung 990 Pro 2TB SSD es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "4vkyxpodb",
+    "name": "N64 Grape",
+    "category": "Retro",
+    "price": 480.27,
+    "stock": 12,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. N64 Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "bbs7plusn",
+    "name": "PS5 Special Edition 2TB",
+    "category": "Consolas",
+    "price": 308.47,
+    "stock": 36,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Special Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9bgczbiik",
+    "name": "Control DualSense",
+    "category": "Accesorios",
+    "price": 107.35,
+    "stock": 8,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Control DualSense es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "bjixu4q9k",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 80.6,
+    "stock": 10,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "6k0t8zx7u",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 484.59,
+    "stock": 6,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "f42vikd2g",
+    "name": "Returnal",
+    "category": "Juegos PS5",
+    "price": 312.31,
+    "stock": 15,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Returnal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "t7b3mve1d",
+    "name": "iPhone 12 Graphite 256GB",
+    "category": "iPhone",
+    "price": 818.49,
+    "stock": 17,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 12 Graphite 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "vzbkrx169",
+    "name": "GameCube Teal",
+    "category": "Retro",
+    "price": 305.81,
+    "stock": 2,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8d9sso1nf",
+    "name": "Spider-Man 2",
+    "category": "Juegos PS5",
+    "price": 47.45,
+    "stock": 2,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Spider-Man 2 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "j1zasi5ok",
+    "name": "iPhone SE Natural Titanium 512GB",
+    "category": "iPhone",
+    "price": 669.03,
+    "stock": 42,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone SE Natural Titanium 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "q6ny4ihgy",
+    "name": "Final Fantasy XVI",
+    "category": "Juegos PS5",
+    "price": 460.34,
+    "stock": 50,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Final Fantasy XVI es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "2ydtjavzi",
+    "name": "Kirby and the Forgotten Land",
+    "category": "Juegos Nintendo",
+    "price": 412.03,
+    "stock": 20,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Kirby and the Forgotten Land es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "myx7cfsxr",
+    "name": "PS5 Limited Edition 1TB",
+    "category": "Consolas",
+    "price": 697.99,
+    "stock": 30,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Limited Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8km3f1g5j",
+    "name": "PS5 Slim Limited Edition 1TB",
+    "category": "Consolas",
+    "price": 597.49,
+    "stock": 2,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Slim Limited Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "g1v4v7p8y",
+    "name": "Razer BlackWidow",
+    "category": "Accesorios",
+    "price": 401.08,
+    "stock": 47,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Razer BlackWidow es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ymmsl0bdo",
+    "name": "iPhone SE Sierra Blue 512GB",
+    "category": "iPhone",
+    "price": 662.73,
+    "stock": 3,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone SE Sierra Blue 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mep1zp9ls",
+    "name": "Ratchet & Clank: Rift Apart",
+    "category": "Juegos PS5",
+    "price": 372.95,
+    "stock": 24,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Ratchet & Clank: Rift Apart es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "31g5a50i3",
+    "name": "GameCube Grape",
+    "category": "Retro",
+    "price": 447.43,
+    "stock": 41,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "y7domzluh",
+    "name": "Nintendo Switch Lite Limited Edition 1TB",
+    "category": "Consolas",
+    "price": 715,
+    "stock": 40,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Limited Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "g0fap0r42",
+    "name": "Nintendo Switch OLED Limited Edition 2TB",
+    "category": "Consolas",
+    "price": 697.27,
+    "stock": 48,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch OLED Limited Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "3ptfmgjle",
+    "name": "Splatoon 3",
+    "category": "Juegos Nintendo",
+    "price": 215.68,
+    "stock": 36,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Splatoon 3 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "knzr2lu21",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 56.1,
+    "stock": 5,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "6dkr3vwbc",
+    "name": "Elden Ring",
+    "category": "Juegos PS5",
+    "price": 440.96,
+    "stock": 26,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Elden Ring es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9ri701q3h",
+    "name": "Xbox Series X Special Edition 1TB",
+    "category": "Consolas",
+    "price": 695.4,
+    "stock": 11,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series X Special Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mmqpvzrwd",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 122.05,
+    "stock": 48,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0s2rtdjnb",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 51.92,
+    "stock": 42,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "07gifi9gt",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 266.78,
+    "stock": 24,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "lx3k67q0q",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 152.54,
+    "stock": 46,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "fq84nrjww",
+    "name": "AMD Ryzen 9 7950X",
+    "category": "Componentes PC",
+    "price": 200.27,
+    "stock": 24,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. AMD Ryzen 9 7950X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "23peggdlk",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 492.54,
+    "stock": 18,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "sun257m8l",
+    "name": "SNES Classic Standard",
+    "category": "Retro",
+    "price": 269.54,
+    "stock": 24,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "xvh56l8r4",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 547.46,
+    "stock": 31,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "z662cma6h",
+    "name": "iPhone 11 Sierra Blue 256GB",
+    "category": "iPhone",
+    "price": 834.34,
+    "stock": 42,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 11 Sierra Blue 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "4qbzewwv6",
+    "name": "PS5 Slim Special Edition 1TB",
+    "category": "Consolas",
+    "price": 535.99,
+    "stock": 2,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Slim Special Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "cosumciq5",
+    "name": "Pokémon Scarlet",
+    "category": "Juegos Nintendo",
+    "price": 468.66,
+    "stock": 44,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Scarlet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "k9ny5mxm3",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 68.94,
+    "stock": 47,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "iywia1dvj",
+    "name": "Samsung 990 Pro 2TB SSD",
+    "category": "Componentes PC",
+    "price": 543.68,
+    "stock": 14,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Samsung 990 Pro 2TB SSD es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "7bbcit5o3",
+    "name": "AMD Ryzen 9 7950X",
+    "category": "Componentes PC",
+    "price": 546.63,
+    "stock": 37,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. AMD Ryzen 9 7950X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dojfiw1do",
+    "name": "iPhone 13 Silver 1TB",
+    "category": "iPhone",
+    "price": 613.47,
+    "stock": 5,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Silver 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "62uglbr1g",
+    "name": "Elden Ring",
+    "category": "Juegos PS5",
+    "price": 358.1,
+    "stock": 50,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Elden Ring es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "xbnsiazw3",
+    "name": "PS4 Pro Standard 500GB",
+    "category": "Consolas",
+    "price": 417.53,
+    "stock": 11,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Standard 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "l6rceskkd",
+    "name": "Samsung 990 Pro 2TB SSD",
+    "category": "Componentes PC",
+    "price": 534.35,
+    "stock": 4,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Samsung 990 Pro 2TB SSD es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "xky5o5im5",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 452.64,
+    "stock": 18,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "funnyb3nn",
+    "name": "Ryzen 7 5800X",
+    "category": "Componentes PC",
+    "price": 226.54,
+    "stock": 25,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Ryzen 7 5800X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dugilwb44",
+    "name": "The Last of Us Part I",
+    "category": "Juegos PS5",
+    "price": 423.68,
+    "stock": 32,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. The Last of Us Part I es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "l9qesrftt",
+    "name": "God of War Ragnarok",
+    "category": "Juegos PS5",
+    "price": 58.69,
+    "stock": 17,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. God of War Ragnarok es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "yyl4x8i78",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 467.02,
+    "stock": 1,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8hxcna616",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 237.35,
+    "stock": 25,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "2f9v4ysp7",
+    "name": "PS5 Standard 500GB",
+    "category": "Consolas",
+    "price": 791.6,
+    "stock": 36,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Standard 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "eil24vj2n",
+    "name": "GameCube Grape",
+    "category": "Retro",
+    "price": 466.22,
+    "stock": 37,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "i1vpcak0f",
+    "name": "iPhone 14 Natural Titanium 256GB",
+    "category": "iPhone",
+    "price": 632.8,
+    "stock": 2,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Natural Titanium 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "5zkm9picv",
+    "name": "Elden Ring",
+    "category": "Juegos PS5",
+    "price": 201.56,
+    "stock": 41,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Elden Ring es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "lmphhza6i",
+    "name": "Pokémon Violet",
+    "category": "Juegos Nintendo",
+    "price": 197.07,
+    "stock": 10,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Violet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "pgytk8g16",
+    "name": "Razer BlackWidow",
+    "category": "Accesorios",
+    "price": 214.04,
+    "stock": 1,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Razer BlackWidow es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "jf7jl1zv5",
+    "name": "N64 Teal",
+    "category": "Retro",
+    "price": 451.59,
+    "stock": 45,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. N64 Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "jrjlfaohh",
+    "name": "Nintendo Switch Lite Standard 2TB",
+    "category": "Consolas",
+    "price": 347.44,
+    "stock": 14,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8b69rcaty",
+    "name": "PS4 Pro Special Edition 2TB",
+    "category": "Consolas",
+    "price": 719.28,
+    "stock": 20,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Special Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9bcs6u7pw",
+    "name": "PS4 Pro Standard 2TB",
+    "category": "Consolas",
+    "price": 474.54,
+    "stock": 31,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "q8eht9nud",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 354.48,
+    "stock": 44,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "1bvukzzsn",
+    "name": "Razer BlackWidow",
+    "category": "Accesorios",
+    "price": 415.53,
+    "stock": 31,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Razer BlackWidow es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "bln99elb5",
+    "name": "Pokémon Scarlet",
+    "category": "Juegos Nintendo",
+    "price": 523,
+    "stock": 43,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Scarlet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "t4u0tqohk",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 291.3,
+    "stock": 31,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mi0d296mw",
+    "name": "Ratchet & Clank: Rift Apart",
+    "category": "Juegos PS5",
+    "price": 76.03,
+    "stock": 26,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Ratchet & Clank: Rift Apart es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "yf9czefh4",
+    "name": "Spider-Man 2",
+    "category": "Juegos PS5",
+    "price": 218.87,
+    "stock": 5,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Spider-Man 2 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wq1rj9asi",
+    "name": "iPhone 13 Alpine Green 512GB",
+    "category": "iPhone",
+    "price": 694.06,
+    "stock": 7,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Alpine Green 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ofpug40qs",
+    "name": "Xbox Series X Limited Edition 2TB",
+    "category": "Consolas",
+    "price": 307.08,
+    "stock": 28,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series X Limited Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "19daz87ei",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 379.31,
+    "stock": 14,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "3mwlan3xj",
+    "name": "Ryzen 7 5800X",
+    "category": "Componentes PC",
+    "price": 333.9,
+    "stock": 24,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Ryzen 7 5800X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "bxmlgbv3d",
+    "name": "Pokémon Scarlet",
+    "category": "Juegos Nintendo",
+    "price": 392.25,
+    "stock": 22,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Scarlet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ep6kr0u7c",
+    "name": "Horizon Forbidden West",
+    "category": "Juegos PS5",
+    "price": 359.92,
+    "stock": 30,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Horizon Forbidden West es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "db14aghzk",
+    "name": "iPhone 12 Alpine Green 128GB",
+    "category": "iPhone",
+    "price": 677.54,
+    "stock": 3,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 12 Alpine Green 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "cjk7y3tfo",
+    "name": "SNES Classic Grape",
+    "category": "Retro",
+    "price": 520.82,
+    "stock": 13,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "chnfjiiei",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 394.29,
+    "stock": 38,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "uwsrs3qbl",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 357.71,
+    "stock": 36,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "52bsn6pvt",
+    "name": "N64 Berry",
+    "category": "Retro",
+    "price": 463.47,
+    "stock": 39,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. N64 Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "fdmid45or",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 343.01,
+    "stock": 4,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "zomcia0ym",
+    "name": "PS5 Slim Standard 2TB",
+    "category": "Consolas",
+    "price": 667.36,
+    "stock": 42,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Slim Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mo476gvvc",
+    "name": "Elden Ring",
+    "category": "Juegos PS5",
+    "price": 104.69,
+    "stock": 43,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Elden Ring es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "z533xwcwx",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 567.65,
+    "stock": 47,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "231gyfp0v",
+    "name": "PS5 Standard 2TB",
+    "category": "Consolas",
+    "price": 591.43,
+    "stock": 41,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Standard 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "fx30eay0q",
+    "name": "The Last of Us Part I",
+    "category": "Juegos PS5",
+    "price": 392.25,
+    "stock": 45,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. The Last of Us Part I es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mv6911zbl",
+    "name": "Logitech G502",
+    "category": "Accesorios",
+    "price": 311.47,
+    "stock": 33,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Logitech G502 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "z6y3d5bfd",
+    "name": "Horizon Forbidden West",
+    "category": "Juegos PS5",
+    "price": 174.72,
+    "stock": 12,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Horizon Forbidden West es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "6858bwkbj",
+    "name": "Mario Bros Wonder",
+    "category": "Juegos Nintendo",
+    "price": 220.38,
+    "stock": 32,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Bros Wonder es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "hwr03aw2p",
+    "name": "iPhone 13 Alpine Green 512GB",
+    "category": "iPhone",
+    "price": 464.85,
+    "stock": 12,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Alpine Green 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wf0dax6fg",
+    "name": "PS4 Pro Standard 500GB",
+    "category": "Consolas",
+    "price": 347.53,
+    "stock": 9,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Standard 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9k87ql542",
+    "name": "iPhone 13 Deep Purple 1TB",
+    "category": "iPhone",
+    "price": 684.28,
+    "stock": 39,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Deep Purple 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "l8rxc0kmf",
+    "name": "iPhone 15 Gold 128GB",
+    "category": "iPhone",
+    "price": 675.98,
+    "stock": 11,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 15 Gold 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "uiwiibjai",
+    "name": "The Last of Us Part I",
+    "category": "Juegos PS5",
+    "price": 326.69,
+    "stock": 1,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. The Last of Us Part I es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "bz41l93zy",
+    "name": "Samsung 990 Pro 2TB SSD",
+    "category": "Componentes PC",
+    "price": 435.93,
+    "stock": 29,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Samsung 990 Pro 2TB SSD es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9buuhqng4",
+    "name": "Control DualSense",
+    "category": "Accesorios",
+    "price": 240.91,
+    "stock": 8,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Control DualSense es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "y1tqej9nr",
+    "name": "The Last of Us Part I",
+    "category": "Juegos PS5",
+    "price": 103.7,
+    "stock": 29,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. The Last of Us Part I es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "nt2df0skp",
+    "name": "iPhone 13 Alpine Green 128GB",
+    "category": "iPhone",
+    "price": 563.89,
+    "stock": 8,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Alpine Green 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "h9vb13ylk",
+    "name": "iPhone 14 Silver 256GB",
+    "category": "iPhone",
+    "price": 416.54,
+    "stock": 18,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Silver 256GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8u6hofejl",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 489.94,
+    "stock": 37,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "rpr6jpvt9",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 679.46,
+    "stock": 10,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "v5ims827i",
+    "name": "Elden Ring",
+    "category": "Juegos PS5",
+    "price": 510.53,
+    "stock": 32,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Elden Ring es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "48178io5n",
+    "name": "Pokémon Scarlet",
+    "category": "Juegos Nintendo",
+    "price": 218.75,
+    "stock": 38,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Scarlet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "tkhazu8l8",
+    "name": "iPhone 15 Pacific Blue 1TB",
+    "category": "iPhone",
+    "price": 545.02,
+    "stock": 5,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 15 Pacific Blue 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ysa3xuznk",
+    "name": "Pokémon Scarlet",
+    "category": "Juegos Nintendo",
+    "price": 288.77,
+    "stock": 23,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Scarlet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "bnfds5xd5",
+    "name": "iPhone 13 Space Black 1TB",
+    "category": "iPhone",
+    "price": 886.85,
+    "stock": 17,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Space Black 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mkiwhuctx",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 353.41,
+    "stock": 22,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "y7awmqrbt",
+    "name": "PS5 Slim Limited Edition 500GB",
+    "category": "Consolas",
+    "price": 567.05,
+    "stock": 8,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Slim Limited Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "1m5v35328",
+    "name": "iPhone 12 Space Black 512GB",
+    "category": "iPhone",
+    "price": 465.86,
+    "stock": 30,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 12 Space Black 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9wcwg47by",
+    "name": "Nintendo Switch OLED Special Edition 500GB",
+    "category": "Consolas",
+    "price": 377.29,
+    "stock": 31,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch OLED Special Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "3czmq3xix",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 677.79,
+    "stock": 39,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "btow8zpzb",
+    "name": "The Last of Us Part I",
+    "category": "Juegos PS5",
+    "price": 302.86,
+    "stock": 7,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. The Last of Us Part I es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "nc9d0f4vv",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 393.26,
+    "stock": 34,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9smmdyk9q",
+    "name": "PS5 Limited Edition 1TB",
+    "category": "Consolas",
+    "price": 674.64,
+    "stock": 10,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Limited Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "fk1ijhax0",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 194.44,
+    "stock": 39,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ym24z180p",
+    "name": "Splatoon 3",
+    "category": "Juegos Nintendo",
+    "price": 530.15,
+    "stock": 46,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Splatoon 3 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "t1dxc83nt",
+    "name": "Kirby and the Forgotten Land",
+    "category": "Juegos Nintendo",
+    "price": 492.08,
+    "stock": 29,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Kirby and the Forgotten Land es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "qamb03mtq",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 409.34,
+    "stock": 14,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "980z6arlu",
+    "name": "Final Fantasy XVI",
+    "category": "Juegos PS5",
+    "price": 391.9,
+    "stock": 31,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Final Fantasy XVI es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "lehbpmoo8",
+    "name": "iPhone 13 Natural Titanium 512GB",
+    "category": "iPhone",
+    "price": 400.56,
+    "stock": 24,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Natural Titanium 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "uphbx00tn",
+    "name": "PS5 Standard 1TB",
+    "category": "Consolas",
+    "price": 466.27,
+    "stock": 26,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Standard 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "pe2lbfz7c",
+    "name": "N64 Grape",
+    "category": "Retro",
+    "price": 317.42,
+    "stock": 47,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. N64 Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "wwwoim9u6",
+    "name": "GameCube Grape",
+    "category": "Retro",
+    "price": 374.41,
+    "stock": 10,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "c569mx6kh",
+    "name": "AMD Ryzen 9 7950X",
+    "category": "Componentes PC",
+    "price": 281.6,
+    "stock": 25,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. AMD Ryzen 9 7950X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ei44k7d3b",
+    "name": "AMD Ryzen 9 7950X",
+    "category": "Componentes PC",
+    "price": 617.65,
+    "stock": 48,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. AMD Ryzen 9 7950X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "qe0a5tv0x",
+    "name": "Returnal",
+    "category": "Juegos PS5",
+    "price": 74.07,
+    "stock": 5,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Returnal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "e8p5dd3cm",
+    "name": "SNES Classic Standard",
+    "category": "Retro",
+    "price": 185.17,
+    "stock": 17,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "256m6onls",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 50.23,
+    "stock": 39,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mylufjplh",
+    "name": "N64 Standard",
+    "category": "Retro",
+    "price": 448.14,
+    "stock": 6,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. N64 Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "537siotu0",
+    "name": "SNES Classic Standard",
+    "category": "Retro",
+    "price": 569.4,
+    "stock": 20,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9i0nowgov",
+    "name": "Ratchet & Clank: Rift Apart",
+    "category": "Juegos PS5",
+    "price": 455.35,
+    "stock": 44,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Ratchet & Clank: Rift Apart es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "mbuzmcwy6",
+    "name": "Gameboy Color Standard",
+    "category": "Retro",
+    "price": 293.11,
+    "stock": 34,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Gameboy Color Standard es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ji9t00a9t",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 335.92,
+    "stock": 48,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "6qw5oux1s",
+    "name": "Zelda: Tears of the Kingdom",
+    "category": "Juegos Nintendo",
+    "price": 72.06,
+    "stock": 38,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Zelda: Tears of the Kingdom es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ra6rdeovx",
+    "name": "Pokémon Violet",
+    "category": "Juegos Nintendo",
+    "price": 206.12,
+    "stock": 31,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Violet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dxbwx65c2",
+    "name": "Final Fantasy XVI",
+    "category": "Juegos PS5",
+    "price": 43.67,
+    "stock": 23,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Final Fantasy XVI es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "sfx6kurhl",
+    "name": "Gameboy Color Teal",
+    "category": "Retro",
+    "price": 184.78,
+    "stock": 20,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Gameboy Color Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0w9chp5cx",
+    "name": "Nintendo Switch Lite Special Edition 500GB",
+    "category": "Consolas",
+    "price": 749.11,
+    "stock": 30,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch Lite Special Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ukhd0ts4l",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 511.85,
+    "stock": 7,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "l6oxpgbpi",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 225.1,
+    "stock": 21,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "o5f61b38w",
+    "name": "Control DualSense",
+    "category": "Accesorios",
+    "price": 363.05,
+    "stock": 3,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Control DualSense es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "u96924jnr",
+    "name": "Corsair Vengeance 32GB RAM",
+    "category": "Componentes PC",
+    "price": 612.38,
+    "stock": 42,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. Corsair Vengeance 32GB RAM es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "5nozm0oy9",
+    "name": "GameCube Teal",
+    "category": "Retro",
+    "price": 475.32,
+    "stock": 16,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. GameCube Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "om7enkgic",
+    "name": "AMD Ryzen 9 7950X",
+    "category": "Componentes PC",
+    "price": 635.96,
+    "stock": 25,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. AMD Ryzen 9 7950X es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "bvz7jws8t",
+    "name": "Logitech G502",
+    "category": "Accesorios",
+    "price": 308.37,
+    "stock": 43,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Logitech G502 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ikmsuynst",
+    "name": "Metroid Dread",
+    "category": "Juegos Nintendo",
+    "price": 132.96,
+    "stock": 34,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Metroid Dread es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "yygcy71oc",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 460.93,
+    "stock": 47,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "kthq4w890",
+    "name": "PS4 Pro Limited Edition 500GB",
+    "category": "Consolas",
+    "price": 704.13,
+    "stock": 19,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Limited Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ne9oq697b",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 179.7,
+    "stock": 21,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "t06x4eke7",
+    "name": "iPhone 13 Deep Purple 1TB",
+    "category": "iPhone",
+    "price": 807.46,
+    "stock": 16,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 13 Deep Purple 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "k0bgou1xy",
+    "name": "The Last of Us Part I",
+    "category": "Juegos PS5",
+    "price": 63.06,
+    "stock": 46,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. The Last of Us Part I es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9dx1jnxpq",
+    "name": "PS5 Slim Limited Edition 2TB",
+    "category": "Consolas",
+    "price": 633.1,
+    "stock": 33,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Slim Limited Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "94xvbxqlz",
+    "name": "Spider-Man 2",
+    "category": "Juegos PS5",
+    "price": 459.26,
+    "stock": 41,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Spider-Man 2 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "9b32lmmvm",
+    "name": "Pokémon Violet",
+    "category": "Juegos Nintendo",
+    "price": 374.16,
+    "stock": 36,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Violet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "v2hykz4f8",
+    "name": "Metroid Dread",
+    "category": "Juegos Nintendo",
+    "price": 331.21,
+    "stock": 47,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Metroid Dread es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "fdca83erv",
+    "name": "iPhone 15 Gold 512GB",
+    "category": "iPhone",
+    "price": 762.09,
+    "stock": 14,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 15 Gold 512GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "o9sp2rlf9",
+    "name": "Gameboy Color Grape",
+    "category": "Retro",
+    "price": 272.65,
+    "stock": 41,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. Gameboy Color Grape es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "q0zc3ujir",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 486.28,
+    "stock": 16,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0vt8psetx",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 358.4,
+    "stock": 18,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "87cmfcjvc",
+    "name": "PS4 Pro Limited Edition 1TB",
+    "category": "Consolas",
+    "price": 628.27,
+    "stock": 24,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS4 Pro Limited Edition 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8x5j1ifb9",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 611.65,
+    "stock": 42,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "gnq3q3ze3",
+    "name": "Elden Ring",
+    "category": "Juegos PS5",
+    "price": 370.52,
+    "stock": 15,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Elden Ring es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "w3bzinpr5",
+    "name": "RTX 3070",
+    "category": "Componentes PC",
+    "price": 481.7,
+    "stock": 32,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 3070 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "dkbi6h1x6",
+    "name": "Razer BlackWidow",
+    "category": "Accesorios",
+    "price": 241.6,
+    "stock": 42,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Razer BlackWidow es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "pglpv36vs",
+    "name": "SNES Classic Berry",
+    "category": "Retro",
+    "price": 451.66,
+    "stock": 26,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0pz1xgcvl",
+    "name": "RTX 4080",
+    "category": "Componentes PC",
+    "price": 270.64,
+    "stock": 35,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. RTX 4080 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "453120jid",
+    "name": "NES Classic Berry",
+    "category": "Retro",
+    "price": 530.83,
+    "stock": 12,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "1gmdbytjx",
+    "name": "Xbox Series X Limited Edition 2TB",
+    "category": "Consolas",
+    "price": 600.94,
+    "stock": 37,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series X Limited Edition 2TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "z6hw25msv",
+    "name": "SNES Classic Berry",
+    "category": "Retro",
+    "price": 354.19,
+    "stock": 18,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "1j65fv3gw",
+    "name": "Mario Kart 8",
+    "category": "Juegos Nintendo",
+    "price": 412.48,
+    "stock": 1,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Mario Kart 8 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "m0t3yeaz8",
+    "name": "SNES Classic Teal",
+    "category": "Retro",
+    "price": 485.84,
+    "stock": 28,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "sdeca57ep",
+    "name": "NES Classic Teal",
+    "category": "Retro",
+    "price": 440.36,
+    "stock": 41,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. NES Classic Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ofgpby6nz",
+    "name": "Logitech G502",
+    "category": "Accesorios",
+    "price": 434.16,
+    "stock": 40,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Logitech G502 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "h7ceqjkl6",
+    "name": "Gran Turismo 7",
+    "category": "Juegos PS5",
+    "price": 230.76,
+    "stock": 38,
+    "description": "Producto premium de Juegos PS5. Calidad garantizada por Ecugaming Import. Gran Turismo 7 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "2ldlnb0xv",
+    "name": "Splatoon 3",
+    "category": "Juegos Nintendo",
+    "price": 70.29,
+    "stock": 13,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Splatoon 3 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "epy0u3pxd",
+    "name": "Xbox Series X Limited Edition 500GB",
+    "category": "Consolas",
+    "price": 617.01,
+    "stock": 26,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Xbox Series X Limited Edition 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "m1x3h2jee",
+    "name": "Pokémon Scarlet",
+    "category": "Juegos Nintendo",
+    "price": 229.22,
+    "stock": 17,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Scarlet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "itevhduqw",
+    "name": "iPhone 15 Gold 128GB",
+    "category": "iPhone",
+    "price": 773.52,
+    "stock": 22,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 15 Gold 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "1s7eguoba",
+    "name": "Pokémon Scarlet",
+    "category": "Juegos Nintendo",
+    "price": 486.42,
+    "stock": 31,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Scarlet es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "ej6g4qx0h",
+    "name": "Razer BlackWidow",
+    "category": "Accesorios",
+    "price": 115.22,
+    "stock": 17,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Razer BlackWidow es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "skefd97hj",
+    "name": "Xbox Wireless Controller",
+    "category": "Accesorios",
+    "price": 280.34,
+    "stock": 5,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Xbox Wireless Controller es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "opat49gy2",
+    "name": "SNES Classic Berry",
+    "category": "Retro",
+    "price": 344.31,
+    "stock": 34,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. SNES Classic Berry es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "k06ghn6n3",
+    "name": "HyperX Cloud II",
+    "category": "Accesorios",
+    "price": 147.41,
+    "stock": 28,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. HyperX Cloud II es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "935shvfqz",
+    "name": "N64 Teal",
+    "category": "Retro",
+    "price": 142.2,
+    "stock": 7,
+    "description": "Producto premium de Retro. Calidad garantizada por Ecugaming Import. N64 Teal es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "0m7b0gx9v",
+    "name": "Nintendo Switch OLED Standard 1TB",
+    "category": "Consolas",
+    "price": 470.75,
+    "stock": 41,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. Nintendo Switch OLED Standard 1TB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "u3ra9vsba",
+    "name": "PS5 Standard 500GB",
+    "category": "Consolas",
+    "price": 656.15,
+    "stock": 40,
+    "description": "Producto premium de Consolas. Calidad garantizada por Ecugaming Import. PS5 Standard 500GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "m74ck5i0n",
+    "name": "Mousepad RGB XL",
+    "category": "Accesorios",
+    "price": 132.76,
+    "stock": 30,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Mousepad RGB XL es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "8jvm4l0wb",
+    "name": "NVIDIA RTX 4090",
+    "category": "Componentes PC",
+    "price": 205.98,
+    "stock": 36,
+    "description": "Producto premium de Componentes PC. Calidad garantizada por Ecugaming Import. NVIDIA RTX 4090 es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "c4ncnksaq",
+    "name": "Razer BlackWidow",
+    "category": "Accesorios",
+    "price": 499.02,
+    "stock": 1,
+    "description": "Producto premium de Accesorios. Calidad garantizada por Ecugaming Import. Razer BlackWidow es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "but9c05a3",
+    "name": "iPhone 14 Silver 128GB",
+    "category": "iPhone",
+    "price": 715.1,
+    "stock": 26,
+    "description": "Producto premium de iPhone. Calidad garantizada por Ecugaming Import. iPhone 14 Silver 128GB es ideal para los entusiastas del gaming y la tecnología."
+  },
+  {
+    "id": "k202har1o",
+    "name": "Pokémon Violet",
+    "category": "Juegos Nintendo",
+    "price": 344.16,
+    "stock": 37,
+    "description": "Producto premium de Juegos Nintendo. Calidad garantizada por Ecugaming Import. Pokémon Violet es ideal para los entusiastas del gaming y la tecnología."
+  }
+]

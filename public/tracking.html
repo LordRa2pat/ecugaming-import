@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreo de Pedido | Ecugaming Import</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tracking-container {
+            max-width: 800px;
+            margin: 120px auto;
+            padding: 2.5rem;
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .tracking-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .tracking-header h1 {
+            color: var(--secondary);
+            font-weight: 900;
+        }
+
+        .tracking-header span {
+            color: var(--primary);
+        }
+
+        .tracking-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .tracking-input input {
+            flex-grow: 1;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            font-size: 1.1rem;
+        }
+
+        .tracking-result {
+            display: none;
+            margin-top: 3rem;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #e2e8f0;
+        }
+
+        .step {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 2.5rem;
+            transition: 0.3s;
+        }
+
+        .step-icon {
+            position: absolute;
+            left: 0;
+            width: 44px;
+            height: 44px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            z-index: 2;
+            border: 4px solid #fff;
+        }
+
+        .step.active .step-icon {
+            background: var(--accent);
+            box-shadow: 0 0 0 10px rgba(34, 197, 94, 0.1);
+        }
+
+        .step.active h4 {
+            color: var(--accent);
+        }
+
+        .step.current .step-icon {
+            background: var(--primary);
+            transform: scale(1.1);
+            box-shadow: 0 0 0 10px rgba(255, 69, 0, 0.2);
+        }
+
+        .step.current h4 {
+            color: var(--primary);
+        }
+
+        .step h4 {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--text-dim);
+        }
+
+        .step p {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
+    </header>
+
+    <div class="tracking-container">
+        <div class="tracking-header">
+            <h1>Rastrea tu <span>Pedido</span></h1>
+            <p>Ingresa tu número de orden (ORDER-XXXXXX) para consultar el estado actual.</p>
+        </div>
+        <div class="tracking-input">
+            <input type="text" id="orderId" placeholder="Ej: ORDER-ABC123XYZ">
+            <button class="btn-buy" onclick="trackOrder()" style="width: auto; padding: 1rem 2rem;">Rastrear</button>
+        </div>
+
+        <div id="trackingResult" class="tracking-result">
+            <div
+                style="background: var(--bg-light); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px dashed var(--border);">
+                <h3 id="resultTitle" style="color: var(--secondary); font-weight: 800;">Orden: ORDER-XXXXXXX</h3>
+                <p id="resultAddress" style="color: var(--text-dim);">Envío a: Calle Principal #123, Lago Agrio</p>
+            </div>
+
+            <div class="timeline" id="timeline">
+                <div class="step" id="step_confirmando_pago">
+                    <div class="step-icon"><i class="fa fa-receipt"></i></div>
+                    <h4>Confirmando Pago</h4>
+                    <p>Nuestro equipo está verificando tu comprobante de pago.</p>
+                </div>
+                <div class="step" id="step_orden_confirmada">
+                    <div class="step-icon"><i class="fa fa-check-circle"></i></div>
+                    <h4>Orden Confirmada</h4>
+                    <p>El pago fue validado y la orden está lista para procesamiento.</p>
+                </div>
+                <div class="step" id="step_empacando">
+                    <div class="step-icon"><i class="fa fa-box-open"></i></div>
+                    <h4>Empacando Producto</h4>
+                    <p>Estamos preparando tu equipo con la mayor protección.</p>
+                </div>
+                <div class="step" id="step_enviado">
+                    <div class="step-icon"><i class="fa fa-shipping-fast"></i></div>
+                    <h4>Enviado</h4>
+                    <p>Tu pedido ya está en manos de la transportadora (Servientrega).</p>
+                </div>
+                <div class="step" id="step_recibido">
+                    <div class="step-icon"><i class="fa fa-handshake"></i></div>
+                    <h4>Recibido</h4>
+                    <p>Pedido entregado exitosamente. ¡Gracias por confiar en nosotros!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function trackOrder() {
+            const id = document.getElementById('orderId').value.trim();
+            if (!id) return;
+            try {
+                const res = await fetch(`/api/orders/track/${id}`);
+                const order = await res.json();
+                if (res.ok) {
+                    showOrder(order);
+                } else {
+                    alert('Pedido no encontrado. Revisa el número de orden.');
+                }
+            } catch (err) { alert('Error de conexión'); }
+        }
+
+        function showOrder(order) {
+            document.getElementById('trackingResult').style.display = 'block';
+            document.getElementById('resultTitle').textContent = `Orden: ${order.id}`;
+            document.getElementById('resultAddress').textContent = `Envío a: ${order.address}`;
+
+            const states = ['confirmando_pago', 'orden_confirmada', 'empacando', 'enviado', 'recibido'];
+            const currentIndex = states.indexOf(order.status);
+
+            states.forEach((state, index) => {
+                const el = document.getElementById(`step_${state}`);
+                el.classList.remove('active', 'current');
+                if (index < currentIndex) el.classList.add('active');
+                if (index === currentIndex) el.classList.add('current');
+            });
+        }
+    </script>
+</body>
+
+</html>

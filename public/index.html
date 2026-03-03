@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecugaming Import | Tienda Oficial - Lago Agrio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Top Info Bar -->
+    <div
+        style="background: var(--secondary); color: #fff; text-align: center; padding: 0.5rem; font-size: 0.8rem; font-weight: 600;">
+        <i class="fa fa-truck-fast"></i> Envíos 100% seguros a nivel nacional vía Servientrega, Tramaco Express y
+        Cooperativas.
+    </div>
+
+    <header>
+        <div class="logo" onclick="location.reload()">Ecugaming <span>Import</span></div>
+
+        <div class="search-container">
+            <i class="fa fa-search search-icon"></i>
+            <input type="text" id="searchInput" placeholder="Buscar iPhone, PS5, Accesorios..."
+                oninput="handleSearch()">
+        </div>
+
+        <div class="nav-actions">
+            <button class="btn-secondary"
+                style="margin:0; padding:0.5rem 1rem; border:none; color:var(--primary); font-weight:700;"
+                onclick="location.href='tracking.html'">
+                <i class="fa fa-map-marker-alt"></i> Rastreo
+            </button>
+            <div id="authArea" style="display:flex; gap:0.5rem; align-items:center;">
+                <button class="btn-secondary" style="margin:0; padding:0.5rem 1rem;"
+                    onclick="location.href='login.html'">Login</button>
+            </div>
+            <div onclick="toggleCart(true)" style="position:relative; cursor:pointer; margin-left:1rem;">
+                <i class="fa fa-shopping-cart" style="font-size:1.5rem; color:var(--text); transition:0.2s;"></i>
+                <span id="cartBadge"
+                    style="position:absolute; top:-8px; right:-12px; background:var(--primary); color:#fff; font-size:0.75rem; padding:2px 6px; border-radius:50%; font-weight:800; display:none;">0</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-3d">
+        <div class="hero-3d-content">
+            <span class="featured-badge">Super Promoción de Remate 🔥</span>
+            <h1 id="heroTitle">Sube de Nivel con <span>Ecugaming</span></h1>
+            <p id="heroDesc">Los mejores smartphones, consolas y accesorios con garantía real. Paga de contado y recibe
+                en el mismo día.</p>
+            <button class="btn-buy" style="width:auto; padding:1.2rem 3rem;" onclick="scrollToCatalog()">Ver Catálogo
+                Completo</button>
+        </div>
+        <div class="scene-3d">
+            <div class="card-3d" id="hero3dCard">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <div class="categories-container" id="categoryNav">
+        <div class="categories">
+            <button class="category-pill active" onclick="filterCategory('All')">Todas las Ofertas</button>
+            <button class="category-pill" onclick="filterCategory('iPhone')">Apple iPhone</button>
+            <button class="category-pill" onclick="filterCategory('Consolas')">Consolas</button>
+            <button class="category-pill" onclick="filterCategory('Juegos')">Juegos Físicos (PS4, PS5, Switch)</button>
+            <button class="category-pill" onclick="filterCategory('Accesorios')">Accesorios</button>
+            <button class="category-pill" onclick="filterCategory('Laptops')">Laptops</button>
+        </div>
+    </div>
+
+    <!-- Súper Promociones Section -->
+    <main class="catalog-section" id="promoSection" style="display:none; padding-bottom: 0;">
+        <h2 class="section-title"><i class="fa fa-fire"></i> Súper Promociones / Remate de Stock</h2>
+        <div id="promoCatalog" class="grid" style="margin-bottom: 3rem;">
+            <!-- Promo Products -->
+        </div>
+    </main>
+
+    <!-- Main Catalog Section -->
+    <main class="catalog-section" id="catalogStart">
+        <h2 class="section-title"><i class="fa fa-box-open"></i> Catálogo Completo <span
+                style="font-size:0.8rem; background:#f1f5f9; padding:0.2rem 0.5rem; border-radius:10px; color:var(--text-dim); margin-left:1rem; font-weight:600;">(Top
+                9 Destacados)</span></h2>
+        <div id="catalog" class="grid">
+            <!-- Products injected by JS -->
+        </div>
+    </main>
+
+    <!-- Tech News Section (Dynamically powered by n8n) -->
+    <main class="catalog-section" id="newsSection"
+        style="padding-top: 2rem; background: #fff; margin-bottom:2rem; border-radius:24px; box-shadow:0 10px 25px -5px rgba(0,0,0,0.05);">
+        <h2 class="section-title" style="margin-bottom:1rem;"><i class="fa fa-newspaper"></i> Noticias Gamer & Tech</h2>
+        <p
+            style="color:var(--text-dim); text-align:center; margin-bottom: 2rem; max-width:600px; margin-left:auto; margin-right:auto;">
+            Últimas novedades del mundo de los videojuegos, tecnología y lanzamientos. Actualizado cada 12 horas por
+            nuestra IA.</p>
+        <div id="newsContainer" class="grid"
+            style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
+            <p style="grid-column:1/-1; text-align:center; color:var(--text-dim);"><i class="fa fa-spinner fa-spin"></i>
+                Cargando noticias desde Ecugaming AI...</p>
+        </div>
+    </main>
+
+    <!-- Credit Banner embedded in home -->
+    <div class="credit-banner">
+        <div class="credit-info">
+            <h2>¿Lo quieres ahora? Llévalo a Crédito.</h2>
+            <p>Aplica a nuestro Crédito Directo con una entrada mínima desde <strong>$88</strong>. Respuesta inmediata y
+                sin papeleos interminables.</p>
+            <button class="btn-credit" onclick="location.href='credito.html'">Aplicar al Crédito Ahora <i
+                    class="fa fa-arrow-right"></i></button>
+        </div>
+        <img src="https://cdn-icons-png.flaticon.com/512/3593/3593539.png"
+            style="width: 150px; opacity:0.9; transform: rotate(-15deg);" alt="Crédito">
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo" style="font-size: 1.5rem; margin-bottom:1rem;">Ecugaming <span>Import</span></div>
+                <p>Tu aliado tecnológico en Lago Agrio y todo el Ecuador. Facturación electrónica y garantía comprobada.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h3>Enlaces Rápidos</h3>
+                <a href="#catalogStart">Catálogo</a>
+                <a href="credito.html">Solicitar Crédito</a>
+                <a href="admin.html">Portal Empleados</a>
+            </div>
+            <div class="footer-col">
+                <h3>Políticas y Envíos</h3>
+                <a href="envios.html">Política de Envíos (Servientrega / Tramaco)</a>
+                <a href="terminos.html">Términos y Condiciones</a>
+                <a href="terminos.html#garantia">Póliza de Garantía</a>
+            </div>
+            <div class="footer-col">
+                <h3>Contacto</h3>
+                <p><i class="fab fa-whatsapp"></i> 096 260 9951</p>
+                <p><i class="fab fa-instagram"></i> @ecugaming_import</p>
+                <p><i class="fa fa-envelope"></i> CONTACTO@ECUGAMINGIMPORT.ONLINE</p>
+                <p><i class="fa fa-map-marker-alt"></i> Lago Agrio, Ecuador</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Ecugaming Import. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2 style="font-size: 1.5rem; color:var(--secondary);"><i class="fa fa-shopping-cart"></i> Tu Carrito</h2>
+            <span class="close-btn" onclick="toggleCart(false)">&times;</span>
+        </div>
+        <div id="cartItems" class="cart-items"
+            style="flex-grow:1; overflow-y:auto; margin-bottom:2rem; padding-right:1rem;">
+            <!-- Cart items -->
+        </div>
+        <div class="cart-total" style="border-top:2px solid var(--border); padding-top:1.5rem;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem;">
+                <span style="color:var(--text-dim); font-size:1.1rem; font-weight:600;">Total a pagar:</span>
+                <span id="cartTotalText" style="font-size:2rem; font-weight:900; color:var(--text);">$0.00</span>
+            </div>
+            <button class="btn-buy" onclick="handleCheckout()" style="font-size: 1.1rem; padding: 1.2rem;">Proceder al
+                Pago Seguro</button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="regModal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom:0.5rem;">Finalizar Compra</h2>
+            <p style="color:var(--text-dim); margin-bottom:1.5rem; font-size:0.9rem;">Por favor, ingresa tus datos para
+                generar la orden y procesar el envío.</p>
+
+            <input type="text" id="userName" placeholder="Nombres Completos" required>
+            <input type="text" id="userPhone" placeholder="Número de WhatsApp" required>
+            <input type="text" id="userAddress" placeholder="Ciudad y Dirección de Envío" required>
+
+            <div
+                style="background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; text-align: left;">
+                <h4 style="color:var(--secondary); margin-bottom:0.5rem; font-size:0.9rem;"><i
+                        class="fa fa-building-columns"></i> Cuentas Bancarias Autorizadas</h4>
+                <div style="font-size:0.85rem; font-weight:600; color:var(--text); margin-bottom:1rem;">
+                    <p>🏦 <strong>Banco Pichincha</strong> - Ahorros: 2215246840</p>
+                    <p>👤 <strong>Beneficiario:</strong> Morocho Acosta Luis Eduardo</p>
+                    <p>🪪 <strong>C.I.:</strong> 1714003660</p>
+                </div>
+                <p style="font-size:0.8rem; color:var(--text-dim);">⚠️ Al hacer clic en "Confirmar Pago", se generará tu
+                    número de orden y se te redirigirá a nuestro sistema de rastreo.</p>
+            </div>
+
+            <button class="btn-buy" style="background:var(--secondary); color:#fff;" onclick="processOrder()"><i
+                    class="fa fa-check-circle"></i> Confirmar y Generar Orden</button>
+            <p style="margin-top:1rem; font-size:0.9rem; color:var(--text-dim); cursor:pointer; font-weight:600; text-align:center;"
+                onclick="toggleModal('regModal', false)">Regresar</p>
+        </div>
+    </div>
+
+    <div class="floating-wa" onclick="window.open('https://wa.me/593962609951', '_blank')">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+    <script>
+        let allProducts = [];
+        let curProducts = [];
+        let cart = JSON.parse(localStorage.getItem('eg_cart')) || [];
+
+        async function init() {
+            await fetchStock();
+            updateUI();
+        }
+
+        async function fetchStock() {
+            try {
+                const res = await fetch('/api/stock');
+                allProducts = await res.json();
+                curProducts = [...allProducts];
+
+                // Render promos
+                const promos = allProducts.filter(p => p.is_clearance);
+                if (promos.length > 0) {
+                    document.getElementById('promoSection').style.display = 'block';
+                    renderCards(promos.slice(0, 9), 'promoCatalog');
+                    setup3DHero(promos[0]); // Setup Hero 3D using the top promo product
+                } else if (allProducts.length > 0) {
+                    setup3DHero(allProducts[0]);
+                }
+
+                // Render all
+                renderCards(allProducts.slice(0, 9), 'catalog');
+
+                // Trigger AI News Scraping Background Task
+                fetchNews();
+            } catch (err) { console.error('Error fetching stock:', err); }
+        }
+
+        async function fetchNews() {
+            try {
+                const res = await fetch('https://n8n-n8n.tlsfxv.easypanel.host/webhook/get-news');
+                const newsData = await res.json();
+                const container = document.getElementById('newsContainer');
+                container.innerHTML = '';
+                if (!newsData.length) throw new Error('No news');
+
+                newsData.forEach((news, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.style.animation = `slideIn 0.5s ease backwards ${idx * 0.1}s`;
+                    card.innerHTML = `
+                        <div style="width:100%; height:150px; background:#f8fafc; border-radius:12px; margin-bottom:1rem; overflow:hidden;">
+                            <img src="${news.image}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://via.placeholder.com/300x150?text=Noticia+Gamer'">
+                        </div>
+                        <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.5rem; line-height:1.2; color:var(--secondary);">${news.title}</h3>
+                        <p style="font-size:0.8rem; color:var(--text-dim);">${news.summary || news.contentSnippet || 'Actualización tecnológica importante...'}</p>
+                        <a href="${news.link}" target="_blank" style="margin-top:1rem; display:inline-block; font-size:0.85rem; color:var(--primary); font-weight:700; text-decoration:none;">Leer más <i class="fa fa-arrow-right"></i></a>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                document.getElementById('newsContainer').innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-dim);">Aún no hay noticias frescas publicadas por la IA. Vuelve más tarde.</p>';
+            }
+        }
+
+        function setup3DHero(item) {
+            document.getElementById('heroTitle').innerHTML = `${item.name}`;
+            document.getElementById('heroDesc').innerText = item.description || 'Lleva tus habilidades al siguiente nivel con nuestras ofertas destacadas de remate.';
+
+            const hasPromo = item.old_price && item.old_price > item.price;
+            const heroCard = document.getElementById('hero3dCard');
+            heroCard.innerHTML = `
+                <div class="card-img-placeholder" style="background:transparent; height:300px; padding:0;">
+                    <img src="${item.image || 'https://via.placeholder.com/400'}" style="transform: translateZ(50px) scale(1.1); filter: drop-shadow(0 20px 20px rgba(0,0,0,0.3)); max-height:280px; object-fit:contain;">
+                </div>
+                <div style="background:var(--card-bg); padding:1.5rem; border-radius:16px; margin-top:-2rem; position:relative; z-index:10; transform: translateZ(30px); text-align:left; box-shadow:0 10px 30px rgba(0,0,0,0.1);">
+                    <div style="font-weight:900; font-size:2.2rem; color:var(--primary); line-height:1;">$${item.price.toFixed(2)}</div>
+                    ${hasPromo ? `<div style="text-decoration:line-through; color:var(--text-dim); font-size:1rem;">$${item.old_price.toFixed(2)}</div>` : ''}
+                    <button class="btn-buy" style="margin-top:1rem;" onclick="addToCart('${item.id}')">¡Lo quiero ahora!</button>
+                </div>
+            `;
+
+            // Simple 3D Tilt Effect applied to entire hero visually
+            const scene = document.querySelector('.scene-3d');
+            scene.addEventListener('mousemove', (e) => {
+                const rect = scene.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xPct = (x / rect.width - 0.5) * 2; // -1 to 1
+                const yPct = (y / rect.height - 0.5) * -2; // Invert Y
+                heroCard.style.transform = `rotateY(${xPct * 15}deg) rotateX(${yPct * 15}deg)`;
+            });
+            scene.addEventListener('mouseleave', () => {
+                heroCard.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            });
+        }
+
+
+        function createCardHTML(item) {
+            const hasPromo = item.old_price && item.old_price > item.price;
+            const imgSrc = item.image ? `<img src="${item.image}" alt="${item.name}" style="width:100%; height:100%; object-fit:contain; border-radius:12px;">` : `<i class="fa fa-image"></i>`;
+
+            return `
+                <div class="card-tag">${item.category}</div>
+                ${item.is_clearance ? '<div class="super-promo-tag"><i class="fa fa-bolt"></i> Promo</div>' : ''}
+                
+                <div class="card-img-placeholder" onclick="location.href='product.html?id=${item.id}'" style="cursor:pointer;">
+                    ${imgSrc}
+                </div>
+                
+                <h3 class="card-name" onclick="location.href='product.html?id=${item.id}'" style="cursor:pointer;">${item.name}</h3>
+                
+                <div class="price-container">
+                    <div class="card-price">$${item.price.toFixed(2)}</div>
+                    ${hasPromo ? `<div class="card-old-price">$${item.old_price.toFixed(2)}</div>` : ''}
+                </div>
+                
+                <p class="card-desc">${item.description || 'Tecnología premium garantizada. Envío seguro a todo el país.'}</p>
+                
+                <div style="display:flex; gap:0.5rem;">
+                    ${item.stock > 0
+                    ? `<button class="btn-buy" onclick="addToCart('${item.id}')"><i class="fa fa-cart-plus"></i></button>`
+                    : `<button class="btn-secondary" disabled>X</button>`
+                }
+                    <button class="btn-secondary" style="margin-top:0;" onclick="location.href='product.html?id=${item.id}'">Ver Detalles</button>
+                </div>
+            `;
+        }
+
+        function renderCards(items, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = items.length ? '' : '<p style="grid-column:1/-1; text-align:center; color:var(--text-dim);">No encontramos productos en esta categoría.</p>';
+
+            items.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = createCardHTML(item);
+                container.appendChild(card);
+            });
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allProducts.filter(p =>
+                p.name.toLowerCase().includes(query) ||
+                p.category.toLowerCase().includes(query)
+            );
+            renderCards(filtered.slice(0, 9), 'catalog');
+            document.getElementById('promoSection').style.display = query ? 'none' : 'block';
+        }
+
+        function filterCategory(cat) {
+            document.querySelectorAll('.category-pill').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (cat === 'All') {
+                curProducts = [...allProducts];
+                document.getElementById('promoSection').style.display = allProducts.filter(p => p.is_clearance).length ? 'block' : 'none';
+            } else {
+                curProducts = allProducts.filter(p => p.category.toLowerCase().includes(cat.toLowerCase()));
+                document.getElementById('promoSection').style.display = 'none'; // Hide promos when filtering
+            }
+            renderCards(curProducts.slice(0, 9), 'catalog');
+        }
+
+        function scrollToCatalog() {
+            document.getElementById('catalogStart').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- Cart Logic ---
+        function addToCart(id) {
+            const product = allProducts.find(p => p.id === id);
+            cart.push(product);
+            localStorage.setItem('eg_cart', JSON.stringify(cart));
+            updateUI();
+            toggleCart(true);
+        }
+
+        function removeFromCart(idx) {
+            cart.splice(idx, 1);
+            localStorage.setItem('eg_cart', JSON.stringify(cart));
+            updateUI();
+        }
+
+        function updateUI() {
+            const itemsCont = document.getElementById('cartItems');
+            itemsCont.innerHTML = cart.length ? '' : '<p style="color:var(--text-dim); text-align:center; margin-top:2rem;">Tu carrito está vacío.</p>';
+
+            let total = 0;
+            cart.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <img src="${item.image || 'https://via.placeholder.com/50'}" style="width:50px; height:50px; object-fit:cover; border-radius:8px;">
+                        <div>
+                            <div style="font-weight:700; font-size:0.9rem; color:var(--text);">${item.name}</div>
+                            <div style="color:var(--primary); font-size:0.95rem; font-weight:800;">$${item.price.toFixed(2)}</div>
+                        </div>
+                    </div>
+                    <i class="fa fa-trash" style="color:#ef4444; cursor:pointer; padding:0.5rem;" onclick="removeFromCart(${idx})"></i>
+                `;
+                itemsCont.appendChild(div);
+                total += item.price;
+            });
+
+            document.getElementById('cartTotalText').innerText = `$${total.toFixed(2)}`;
+            const badge = document.getElementById('cartBadge');
+            badge.innerText = cart.length;
+            badge.style.display = cart.length > 0 ? 'inline-block' : 'none';
+
+            // Check Auth
+            const user = JSON.parse(localStorage.getItem('eg_user'));
+            const authArea = document.getElementById('authArea');
+            if (user && authArea) {
+                authArea.innerHTML = `
+                    <div style="text-align:right;">
+                        <div style="font-size:0.8rem; font-weight:800; color:var(--primary);">HOLA, ${user.name.split(' ')[0].toUpperCase()}</div>
+                        <div style="font-size:0.7rem; color:var(--text-dim); cursor:pointer;" onclick="logout()">[Cerrar Sesión]</div>
+                    </div>
+                `;
+            }
+        }
+
+        function logout() { localStorage.removeItem('eg_user'); location.reload(); }
+
+        function toggleCart(show) {
+            document.getElementById('cartSidebar').classList.toggle('open', show);
+        }
+
+        function toggleModal(id, show) {
+            document.getElementById(id).style.display = show ? 'flex' : 'none';
+            if (show) toggleCart(false);
+        }
+
+        function handleCheckout() {
+            if (cart.length === 0) return alert('El carrito está vacío.');
+            const user = JSON.parse(localStorage.getItem('eg_user'));
+            if (!user) {
+                alert('Para ver los datos bancarios y finalizar tu compra, por favor inicia sesión o regístrate.');
+                location.href = 'login.html';
+                return;
+            }
+
+            // Populate user data automatically
+            document.getElementById('userName').value = user.name;
+            document.getElementById('userPhone').value = user.phone;
+
+            // Show Bank Info (Now visible because user is logged in)
+            toggleModal('regModal', true);
+        }
+
+        async function processOrder() {
+            const user = JSON.parse(localStorage.getItem('eg_user'));
+            const address = document.getElementById('userAddress').value;
+            if (!address) return alert('Por favor ingresa la dirección de envío.');
+
+            const total = cart.reduce((acc, i) => acc + i.price, 0);
+
+            const orderData = {
+                userId: user.id,
+                items: cart,
+                total: total,
+                address: address
+            };
+
+            try {
+                const res = await fetch('/api/orders/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
+                const result = await res.json();
+
+                if (res.ok) {
+                    // Redirect to WhatsApp with ORDER ID for proof of payment
+                    const msg = `👋 *NUEVA ORDEN WEB - #${result.orderId}*%0A%0A` +
+                        `👤 *Cliente:* ${user.name}%0A` +
+                        `💰 *Total:* $${total.toFixed(2)}%0A` +
+                        `📍 *Envío:* ${address}%0A%0A` +
+                        `⚠️ *IMPORTANTE:* Ya puedes ver tu pedido en la web. Adjuntaré mi comprobante aquí.`;
+
+                    cart = [];
+                    localStorage.removeItem('eg_cart');
+                    alert(`¡Orden ${result.orderId} creada! Redirigiendo a WhatsApp para envío de comprobante.`);
+                    window.open(`https://wa.me/593962609951?text=${msg}`, '_blank');
+                    location.href = `tracking.html?id=${result.orderId}`;
+                }
+            } catch (err) { alert('Error creando la orden'); }
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

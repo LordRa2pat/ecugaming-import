@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto | Ecugaming Import</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .product-page {
+            max-width: 1200px;
+            margin: 120px auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .product-gallery {
+            position: sticky;
+            top: 120px;
+        }
+
+        .product-gallery img {
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-info h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            font-weight: 800;
+        }
+
+        .product-category {
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .product-price {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .product-old-price {
+            font-size: 1.5rem;
+            text-decoration: line-through;
+            color: var(--text-dim);
+            margin-left: 1rem;
+        }
+
+        .product-description {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .product-meta {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .meta-item {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .meta-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .product-page {
+                grid-template-columns: 1fr;
+                margin-top: 140px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
+        <div class="nav-actions" id="userArea">
+            <button class="btn-secondary" onclick="location.href='login.html'">Iniciar Sesión</button>
+        </div>
+    </header>
+
+    <main class="product-page" id="productDetail">
+        <p>Cargando producto...</p>
+    </main>
+
+    <script>
+        const cart = JSON.parse(localStorage.getItem('eg_cart')) || [];
+        const user = JSON.parse(localStorage.getItem('eg_user')) || null;
+
+        async function loadProduct() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            const res = await fetch('/api/stock');
+            const stock = await res.json();
+            const product = stock.find(p => p.id === id);
+
+            if (!product) {
+                document.getElementById('productDetail').innerHTML = '<h2>Producto no encontrado.</h2>';
+                return;
+            }
+
+            document.title = `${product.name} | Ecugaming Import`;
+
+            const hasPromo = product.old_price && product.old_price > product.price;
+
+            document.getElementById('productDetail').innerHTML = `
+                <div class="product-gallery">
+                    <img src="${product.image || 'https://via.placeholder.com/600'}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <span class="product-category">${product.category}</span>
+                    <h1>${product.name}</h1>
+                    <div class="product-price">
+                        $${product.price.toFixed(2)}
+                        ${hasPromo ? `<span class="product-old-price">$${product.old_price.toFixed(2)}</span>` : ''}
+                    </div>
+                    <p class="product-description">${product.description || 'Este producto cuenta con garantía oficial y soporte técnico especializado.'}</p>
+                    
+                    <div class="product-meta">
+                        <div class="meta-item"><i class="fa fa-truck"></i> Envío Gratis a Lago Agrio y Coca</div>
+                        <div class="meta-item"><i class="fa fa-shield-alt"></i> Garantía Real Directa</div>
+                        <div class="meta-item"><i class="fa fa-check-circle"></i> Disponibilidad: <strong>${product.stock > 0 ? 'En Stock' : 'Agotado'}</strong></div>
+                    </div>
+
+                    ${product.stock > 0
+                    ? `<button class="btn-buy" onclick="addToCart('${product.id}')" style="font-size: 1.2rem; padding: 1.2rem;"><i class="fa fa-cart-plus"></i> Añadir al Carrito</button>`
+                    : `<button class="btn-secondary" disabled>Agotado</button>`
+                }
+                    <button class="btn-secondary" style="margin-top:1rem;" onclick="location.href='index.html'"><i class="fa fa-arrow-left"></i> Seguir Comprando</button>
+                </div>
+            `;
+        }
+
+        function addToCart(id) {
+            fetch('/api/stock').then(r => r.json()).then(stock => {
+                const product = stock.find(p => p.id === id);
+                cart.push(product);
+                localStorage.setItem('eg_cart', JSON.stringify(cart));
+                alert('Añadido al carrito con éxito.');
+                location.href = 'index.html'; // Or show side cart
+            });
+        }
+
+        if (user) {
+            document.getElementById('userArea').innerHTML = `<span>Hola, ${user.name}</span> <button class="btn-secondary" onclick="logout()">Cerrar Sesión</button>`;
+        }
+        function logout() { localStorage.removeItem('eg_user'); location.reload(); }
+
+        loadProduct();
+    </script>
+</body>
+
+</html>

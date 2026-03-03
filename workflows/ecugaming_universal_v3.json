@@ -1,0 +1,120 @@
+{
+    "name": "Ecugaming Sales Agent (UNIVERSAL V3 - 100% Compatible)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "whatsapp-ecugaming",
+                "responseMode": "onReceived",
+                "options": {}
+            },
+            "id": "a1",
+            "name": "WhatsApp Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                100,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const rules = `PERSONA: Raúl Intriago (Ecugaming Import)...`; // Aquí va el texto de rules.md\nconst userMsg = $input.first().json.body?.text || 'Hola';\n\nreturn {\n  json: {\n    model: 'gpt-4o',\n    messages: [\n      { role: 'system', content: rules },\n      { role: 'user', content: userMsg }\n    ],\n    temperature: 0.7\n  }\n};"
+            },
+            "id": "a2",
+            "name": "Format Prompt",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                300,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://api.openai.com/v1/chat/completions",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpBearerAuth",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ $json }}",
+                "options": {}
+            },
+            "id": "a3",
+            "name": "OpenAI Call",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                500,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://ecugaming-import.vercel.app/api/stock",
+                "method": "GET",
+                "options": {}
+            },
+            "id": "a4",
+            "name": "Fetch Stock API",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                700,
+                150
+            ]
+        },
+        {
+            "parameters": {
+                "chatId": "TU_CHAT_ID",
+                "text": "🚨 ALERTA RAUL\nCliente dice: {{ $node[\"WhatsApp Webhook\"].json.body.text }}\nIA Responde: {{ $node[\"OpenAI Call\"].json.choices[0].message.content }}",
+                "replyMarkup": "inline_keyboard",
+                "inlineKeyboard": "[[{\"text\":\"✅ Aprobar\",\"callback_data\":\"ok\"},{\"text\":\"❌ No\",\"callback_data\":\"no\"}]]"
+            },
+            "id": "a5",
+            "name": "Telegram App",
+            "type": "n8n-nodes-base.telegram",
+            "typeVersion": 1,
+            "position": [
+                900,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "WhatsApp Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Format Prompt",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Format Prompt": {
+            "main": [
+                [
+                    {
+                        "node": "OpenAI Call",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": false,
+    "settings": {}
+}

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Crédito Directo | Ecugaming</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .credit-container {
+            max-width: 800px;
+            margin: 100px auto 40px;
+            padding: 0 5%;
+        }
+
+        .credit-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .credit-header h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            font-weight: 900;
+        }
+
+        .credit-header h1 span {
+            color: var(--primary);
+        }
+
+        .credit-card {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .step-indicator {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-dot {
+            flex: 1;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .step-dot.active {
+            background: var(--primary);
+        }
+
+        .form-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #f8fafc;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.1);
+        }
+
+        .file-upload {
+            border: 2px dashed #cbd5e1;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: #fffafa;
+        }
+
+        .file-upload input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-status {
+            color: #10b981;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
+        <div class="nav-actions">
+            <button class="btn-secondary" style="margin:0; padding:0.5rem 1.5rem;"
+                onclick="location.href='index.html'">Regresar a Tienda</button>
+        </div>
+    </header>
+
+    <main class="credit-container">
+        <div class="credit-header">
+            <h1>Crédito <span>Directo</span> Automatizado</h1>
+            <p
+                style="color:var(--text-dim); font-size:1.1rem; margin-top:0.5rem; max-width:600px; margin-left:auto; margin-right:auto;">
+                Nuestra aprobación es 100% por <strong>sistema y manejo de automatizaciones</strong>. Tu solicitud
+                tendrá respuesta garantizada en <strong>menos de 5 minutos</strong>.
+            </p>
+        </div>
+
+        <div
+            style="background: rgba(37, 211, 102, 0.1); border: 1px solid #25D366; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+            <h3 style="color: #075E54; margin-bottom: 1rem; font-size:1.1rem;"><i class="fa fa-info-circle"></i>
+                Condiciones Importantes para Crédito Directo</h3>
+            <ul style="font-size: 0.9rem; color: #075E54; margin-left:1.5rem; line-height: 1.6;">
+                <li><strong>Entrada Obligatoria:</strong> Todos nuestros productos a crédito directo aplican y se
+                    despachan *únicamente* con una cuota de entrada inicial.</li>
+                <li><strong>Notificación en Tiempo Real:</strong> Al finalizar, el sistema enviará automáticamente una
+                    notificación a tu WhatsApp informando el estado de tu pre-aprobación en 5 minutos.</li>
+                <li><strong>Cláusulas de Contrato:</strong> El crédito directo establece reserva de dominio sobre el
+                    dispositivo tecnológico hasta el pago de la última cuota. El atraso superior a 15 días generará
+                    intereses por mora y posible bloqueo por IMEI/MAC.</li>
+                <li><strong>Garantía:</strong> Tu equipo cuenta con garantía real durante toda la vida de tu crédito
+                    activo y al corriente.</li>
+            </ul>
+        </div>
+
+        <div class="credit-card" id="formCard">
+            <div class="step-indicator">
+                <div class="step-dot active" id="dot1"></div>
+                <div class="step-dot" id="dot2"></div>
+                <div class="step-dot" id="dot3"></div>
+            </div>
+
+            <form id="creditForm">
+                <!-- Step 1: Datos Personales -->
+                <div class="form-section active" id="step1">
+                    <h2 style="color:var(--secondary); margin-bottom:1.5rem;"><i class="fa fa-user"></i> Datos
+                        Personales</h2>
+                    <div class="form-group">
+                        <label>Nombres Completos</label>
+                        <input type="text" class="form-control" id="fullName" required placeholder="Ej: Juan Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label>Cédula de Identidad</label>
+                        <input type="text" class="form-control" id="idNumber" required placeholder="10 dígitos">
+                    </div>
+                    <div class="form-group">
+                        <label>Número de WhatsApp</label>
+                        <input type="text" class="form-control" id="phone" required placeholder="099...">
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección de Domicilio (Ciudad y Calles)</label>
+                        <input type="text" class="form-control" id="address" required>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn-buy" onclick="nextStep(1, 2)">Siguiente Paso <i
+                                class="fa fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Equipo y Economía -->
+                <div class="form-section" id="step2">
+                    <h2 style="color:var(--secondary); margin-bottom:1.5rem;"><i class="fa fa-money-bill-wave"></i>
+                        Interés y Capacidad de Pago</h2>
+                    <div class="form-group">
+                        <label>Equipo que deseas adquirir</label>
+                        <select class="form-control" id="product" required>
+                            <option value="">Selecciona una opción...</option>
+                            <option value="PlayStation 5 Slim">PlayStation 5 Slim 1TB</option>
+                            <option value="iPhone 16 Pro Max">iPhone 16 Pro Max</option>
+                            <option value="Laptop Gamer">Laptop Gamer RTX</option>
+                            <option value="Nintendo Switch OLED">Nintendo Switch OLED</option>
+                            <option value="Otro">Otro (Especificar en WhatsApp)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Entrada Inicial (Minimo $88)</label>
+                        <div style="position:relative;">
+                            <span
+                                style="position:absolute; left:1rem; top:50%; transform:translateY(-50%); font-weight:800; color:var(--text);">$</span>
+                            <input type="number" class="form-control" id="downPayment" min="88" required
+                                placeholder="88.00" style="padding-left: 2.5rem;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Lugar de Trabajo / Empresa</label>
+                        <input type="text" class="form-control" id="workPlace" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ingresos Mensuales Promedio</label>
+                        <div style="position:relative;">
+                            <span
+                                style="position:absolute; left:1rem; top:50%; transform:translateY(-50%); font-weight:800; color:var(--text);">$</span>
+                            <input type="number" class="form-control" id="monthlyIncome" required placeholder="500.00"
+                                style="padding-left: 2.5rem;">
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn-secondary" onclick="nextStep(2, 1)">Atrás</button>
+                        <button type="button" class="btn-buy" onclick="nextStep(2, 3)">Siguiente Paso <i
+                                class="fa fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Documentación -->
+                <div class="form-section" id="step3">
+                    <h2 style="color:var(--secondary); margin-bottom:1.5rem;"><i class="fa fa-file-invoice"></i>
+                        Documentación Digital</h2>
+                    <p style="color:var(--text-dim); margin-bottom:1.5rem; font-size:0.9rem;">Sube fotos claras de tus
+                        documentos para el análisis rápido de tu perfil.</p>
+
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div class="file-upload">
+                            <i class="fa fa-id-card" style="font-size:2rem; color: #cbd5e1; margin-bottom:0.5rem;"></i>
+                            <div style="font-size:0.85rem; font-weight:700;">Cédula Frontal</div>
+                            <input type="file" accept="image/*" id="cedulaFront" required
+                                onchange="showFileStatus('cedulaFrontStatus')">
+                            <div class="file-status" id="cedulaFrontStatus">✓ Archivo cargado</div>
+                        </div>
+                        <div class="file-upload">
+                            <i class="fa fa-id-card" style="font-size:2rem; color: #cbd5e1; margin-bottom:0.5rem;"></i>
+                            <div style="font-size:0.85rem; font-weight:700;">Cédula Posterior</div>
+                            <input type="file" accept="image/*" id="cedulaBack" required
+                                onchange="showFileStatus('cedulaBackStatus')">
+                            <div class="file-status" id="cedulaBackStatus">✓ Archivo cargado</div>
+                        </div>
+                        <div class="file-upload">
+                            <i class="fa fa-receipt" style="font-size:2rem; color: #cbd5e1; margin-bottom:0.5rem;"></i>
+                            <div style="font-size:0.85rem; font-weight:700;">Planilla Luz/Agua</div>
+                            <input type="file" accept="image/*" id="planilla" required
+                                onchange="showFileStatus('planillaStatus')">
+                            <div class="file-status" id="planillaStatus">✓ Archivo cargado</div>
+                        </div>
+                    </div>
+
+                    <div
+                        style="background:#f8fafc; padding:1.5rem; border-radius:12px; margin-top:2rem; font-size:0.8rem; color:var(--text-dim);">
+                        <input type="checkbox" required id="termsAccept" style="margin-right:0.5rem;">
+                        Acepto que la información proporcionada es verdadera y autorizo a Ecugaming Import a consultar
+                        mi buró de crédito. Conoce nuestros <a href="terminos.html"
+                            style="color:var(--primary); font-weight:700;">Términos y Condiciones</a>.
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn-secondary" onclick="nextStep(3, 2)">Atrás</button>
+                        <button type="submit" class="btn-buy" id="btnSubmit">Enviar Solicitud a Evaluación</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Success Message -->
+        <div class="credit-card" id="successMsg" style="display:none; text-align:center;">
+            <i class="fa fa-robot" style="font-size: 5rem; color: #10b981; margin-bottom: 1.5rem;"></i>
+            <h2 style="color:var(--secondary); font-size:2rem; margin-bottom:1rem;">¡Tu solicitud está en nuestro
+                Sistema!
+            </h2>
+            <div
+                style="background: #f8fafc; border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; text-align: left;">
+                <p style="color:var(--text-dim); font-size:1.1rem; margin-bottom:1rem;"><strong>Siguiente y último
+                        paso:</strong></p>
+                <ol style="color:var(--text-dim); font-size:1rem; margin-left: 1.5rem; line-height: 1.6;">
+                    <li>Nuestro bot de automatización evalúa tu perfil en tiempo real.</li>
+                    <li>Recibirás un mensaje de WhatsApp a tu número en <strong>menos de 5 minutos</strong> notificando
+                        tu Aprobación de Crédito.</li>
+                    <li>Lee atentamente el contrato virtual adjunto en WhatsApp y confírmanos tu entrada económica para
+                        proceder al despacho.</li>
+                </ol>
+            </div>
+            <button class="btn-buy"
+                onclick="window.open('https://wa.me/593962609951?text=Hola,%20acabo%20de%20enviar%20mi%20solicitud%20de%20Cr%C3%A9dito%20Directo.%20Espero%20mi%20aprobaci%C3%B3n.', '_blank')"
+                style="max-width:350px; margin:0 auto; background: #25D366; color: #fff;"><i
+                    class="fab fa-whatsapp"></i> Forzar actualización (Hablar con asesor) </button>
+            <p style="margin-top:2rem; cursor:pointer; color:var(--text-dim); font-size:0.9rem;"
+                onclick="location.href='index.html'"><u>Volver a la Tienda</u></p>
+        </div>
+
+    </main>
+
+    <script>
+        // Form Navigation
+        function nextStep(current, next) {
+            // Very basic validation (HTML5 'required' only works on form submit)
+            if (current === 1) {
+                if (!document.getElementById('fullName').value || !document.getElementById('idNumber').value) return alert('Llena los datos personales básicos.');
+            }
+            if (current === 2) {
+                const dp = document.getElementById('downPayment').value;
+                if (dp < 88) return alert('La entrada mínima es de $88.00');
+                if (!document.getElementById('product').value || !document.getElementById('monthlyIncome').value) return alert('Completa los campos de economía.');
+            }
+
+            document.getElementById(`step${current}`).classList.remove('active');
+            document.getElementById(`step${next}`).classList.add('active');
+
+            document.querySelectorAll('.step-dot').forEach(d => d.classList.remove('active'));
+            for (let i = 1; i <= next; i++) document.getElementById(`dot${i}`).classList.add('active');
+        }
+
+        function showFileStatus(statusId) {
+            document.getElementById(statusId).style.display = 'block';
+        }
+
+        // Convert File to Base64
+        function getBase64(file) {
+            return new Promise((resolve, reject) => {
+                if (!file) return resolve(null);
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // Submitting to n8n Webhook
+        document.getElementById('creditForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            if (!document.getElementById('termsAccept').checked) return alert('Debes aceptar los términos y condiciones.');
+
+            const btn = document.getElementById('btnSubmit');
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Procesando...';
+            btn.disabled = true;
+
+            try {
+                // Get Bases64
+                const frontBase64 = await getBase64(document.getElementById('cedulaFront').files[0]);
+                const backBase64 = await getBase64(document.getElementById('cedulaBack').files[0]);
+                const planillaBase64 = await getBase64(document.getElementById('planilla').files[0]);
+
+                const payload = {
+                    tipo: "SOLICITUD_CREDITO_DIRECTO",
+                    solicitante: {
+                        nombres: document.getElementById('fullName').value,
+                        cedula: document.getElementById('idNumber').value,
+                        whatsapp: document.getElementById('phone').value,
+                        direccion: document.getElementById('address').value,
+                    },
+                    economia: {
+                        producto: document.getElementById('product').value,
+                        entrada_ofrecida: parseFloat(document.getElementById('downPayment').value),
+                        lugar_trabajo: document.getElementById('workPlace').value,
+                        ingresos_mensuales: parseFloat(document.getElementById('monthlyIncome').value)
+                    },
+                    documentos: {
+                        cedula_frontal: frontBase64,
+                        cedula_reverso: backBase64,
+                        planilla_servicios: planillaBase64
+                    },
+                    fechaRegistro: new Date().toISOString()
+                };
+
+                // The generic n8n webhook URL
+                const WEBHOOK_URL = 'https://n8n-n8n.tlsfxv.easypanel.host/webhook/solicitud-credito';
+
+                // We try a no-cors request or just standard JSON post
+                try {
+                    await fetch(WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                } catch (webhookErr) {
+                    console.warn("Webhook CORS or reachability issue, continuing to success screen assuming n8n config will handle it later.", webhookErr);
+                }
+
+                // Show Success
+                document.getElementById('formCard').style.display = 'none';
+                document.getElementById('successMsg').style.display = 'block';
+
+            } catch (err) {
+                alert('Ocurrió un error leyendo los archivos. Intenta de nuevo.');
+                btn.innerHTML = 'Enviar Solicitud a Evaluación';
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

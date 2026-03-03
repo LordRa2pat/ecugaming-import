@@ -1,0 +1,131 @@
+{
+    "name": "Ecugaming Credito Directo (Webhook)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "solicitud-credito",
+                "responseMode": "lastNode",
+                "options": {
+                    "rawBody": true
+                }
+            },
+            "id": "e1bb8cc1-6677-4a0b-9602-f0ca3af999bb",
+            "name": "Webhook Crédito",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                180,
+                240
+            ],
+            "webhookId": "solicitud-credito"
+        },
+        {
+            "parameters": {
+                "content": "## Ingresa una solicitud Web\nEl formulario de credito.html envía el JSON a este Webhook.",
+                "height": 288,
+                "width": 264
+            },
+            "id": "e21b71d6-4e55-4672-8edb-cb61ff4f5298",
+            "name": "Sticky Note",
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+                140,
+                140
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const data = JSON.parse(items[0].json.body);\n\nconst mensaje = `🔔 *NUEVA SOLICITUD DE CRÉDITO DIRECTO*\\n\\n👤 *Cliente:* ${data.solicitante.nombres}\\n🪪 *Cédula:* ${data.solicitante.cedula}\\n📱 *WhatsApp:* ${data.solicitante.whatsapp}\\n📍 *Dirección:* ${data.solicitante.direccion}\\n\\n🎮 *Equipo Solicitado:* ${data.economia.producto}\\n💵 *Entrada Ofrecida:* $${data.economia.entrada_ofrecida}\\n🏢 *Lugar de Trabajo:* ${data.economia.lugar_trabajo}\\n💰 *Ingresos Mensuales:* $${data.economia.ingresos_mensuales}\\n\\n[ℹ️ Documentos Adjuntos en la carga del webhook]`\n\nreturn { json: { mensaje, telefono_wa: data.solicitante.whatsapp } };"
+            },
+            "id": "f5fcd3a3-b6dc-4fcb-8919-b5f7e7f722ff",
+            "name": "Formatear Alerta",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                400,
+                240
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://api.telegram.org/bot8162733996:AAEVTHkVzl32SpYDptbOnjUaOTwWdu7z6Gs/sendMessage",
+                "sendBody": true,
+                "contentType": "raw",
+                "rawBody": "={\n  \"chat_id\": \"TU_CHAT_ID_AQUI\",\n  \"text\": \"{{$json.mensaje}}\",\n  \"parse_mode\": \"Markdown\"\n}",
+                "options": {}
+            },
+            "id": "a671bd47-19c4-42b4-8dbb-0a7891cfb363",
+            "name": "Notificar a Raúl (Telegram)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                640,
+                240
+            ]
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "{\n  \"status\": \"success\",\n  \"message\": \"Solicitud en Evaluación\"\n}",
+                "options": {}
+            },
+            "id": "d04a6019-943e-4340-9da2-04ce49b3dc32",
+            "name": "Responder Web (OK)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1.1,
+            "position": [
+                860,
+                240
+            ]
+        }
+    ],
+    "pinData": {},
+    "connections": {
+        "Webhook Crédito": {
+            "main": [
+                [
+                    {
+                        "node": "Formatear Alerta",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Formatear Alerta": {
+            "main": [
+                [
+                    {
+                        "node": "Notificar a Raúl (Telegram)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Notificar a Raúl (Telegram)": {
+            "main": [
+                [
+                    {
+                        "node": "Responder Web (OK)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": false,
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "versionId": "f0adba7d-bcf5-4eaf-8fb1-e414c71ef622",
+    "meta": {
+        "templateCredsSetupCompleted": true
+    },
+    "id": "eJ47Z3sRzE96fT9y",
+    "tags": []
+}

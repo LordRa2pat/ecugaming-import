@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración | Ecugaming Import</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: var(--bg-light);
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 0 5%;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .admin-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .upload-zone {
+            border: 2px dashed #cbd5e1;
+            padding: 3rem;
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #f8fafc;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--primary);
+            background: #fffafa;
+        }
+
+        /* Product Table */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .product-img-mini {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #e2e8f0;
+        }
+
+        .btn-edit {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .btn-edit:hover {
+            background: #00122e;
+        }
+
+        /* Modal Override for Admin */
+        #editModal .modal-content {
+            max-width: 600px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+            color: var(--text-dim);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin: 0;
+            transform: scale(1.2);
+        }
+
+        /* Admin Layout */
+        .admin-layout {
+            display: flex;
+            min-height: calc(100vh - 70px);
+            margin-top: 70px;
+        }
+
+        .admin-sidebar {
+            width: 250px;
+            background: #fff;
+            border-right: 1px solid var(--border);
+            padding: 2rem 1rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .admin-nav {
+            list-style: none;
+        }
+
+        .admin-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-nav a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .admin-nav a:hover,
+        .admin-nav a.active {
+            background: rgba(255, 69, 0, 0.1);
+            color: var(--primary);
+        }
+
+        .admin-main {
+            flex: 1;
+            margin-left: 250px;
+            padding: 2rem 5%;
+        }
+
+        @media (max-width: 768px) {
+            .admin-layout {
+                flex-direction: column;
+            }
+
+            .admin-sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .admin-main {
+                margin-left: 0;
+            }
+        }
+
+        .section-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section-panel.active {
+            display: block;
+        }
+
+        /* Credit Approvals Grid */
+        .credit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .credit-card-admin {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            position: relative;
+        }
+
+        .badge-pending {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #fef08a;
+            color: #854d0e;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Secure Login Wall -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <i class="fa fa-lock" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+            <h2>Acceso Privado</h2>
+            <p style="color:var(--text-dim); margin-bottom: 2rem; font-size:0.9rem;">Área restringida. Ingrese la clave
+                maestra SHA.</p>
+            <input type="password" id="adminPass" class="form-control"
+                style="width:100%; box-sizing:border-box; padding:1rem; border:1px solid #cbd5e1; border-radius:12px; margin-bottom:1.5rem; text-align:center; font-size:1.2rem; letter-spacing:3px;"
+                placeholder="contraseña">
+            <button class="btn-buy" style="width:100%" onclick="attemptLogin()">Desbloquear Panel</button>
+            <div id="loginError"
+                style="color:#ef4444; font-weight:700; font-size:0.85rem; margin-top:1rem; display:none;">Clave
+                Incorrecta</div>
+        </div>
+    </div>
+    <header>
+        <div class="logo">ADMIN <span>ECU</span></div>
+        <div class="nav-actions">
+            <button onclick="location.href='index.html'" class="btn-secondary"
+                style="margin:0; padding:0.5rem 1.5rem;"><i class="fa fa-store"></i> Ver Tienda</button>
+        </div>
+    </header>
+
+    <div class="admin-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="admin-sidebar">
+            <ul class="admin-nav">
+                <li><a href="#" class="active" onclick="switchTab('dashboard')"><i class="fa fa-chart-pie"></i>
+                        Dashboard</a></li>
+                <li><a href="#" onclick="switchTab('catalogo')"><i class="fa fa-box-open"></i> Catálogo (+50)</a></li>
+                <li><a href="#" onclick="switchTab('creditos')"><i class="fa fa-file-invoice-dollar"></i> Créditos
+                        Directos <span
+                            style="background:var(--primary);color:#fff;border-radius:50%;padding:2px 6px;font-size:0.7rem;">3</span></a>
+                </li>
+                <li><a href="#" onclick="switchTab('configuracion')"><i class="fa fa-cogs"></i> Configuraciones</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+
+            <!-- Dashboard Section -->
+            <div id="tab-dashboard" class="section-panel active">
+                <div class="admin-header">
+                    <div>
+                        <h1 style="font-size: 2rem; font-weight: 900; color: var(--secondary);">Resumen General</h1>
+                        <p style="color: var(--text-dim);">Estadísticas y estado actual de la plataforma.</p>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statTotal">--</div>
+                        <div style="font-size: 0.85rem; color: var(--text-dim); font-weight:600;">Total Productos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statPromos">--</div>
+                        <div style="font-size: 0.85rem; color: var(--text-dim); font-weight:600;">En Súper Promo</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statLow" style="color: #ef4444;">--</div>
+                        <div style="font-size: 0.85rem; color: var(--text-dim); font-weight:600;">Stock Bajo (<10)<
+                                /div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: #25D366;">3</div>
+                            <div style="font-size: 0.85rem; color: var(--text-dim); font-weight:600;">Solicitudes
+                                Crédito Pendientes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Catalogo Section -->
+                <div id="tab-catalogo" class="section-panel">
+                    <div class="admin-header">
+                        <div>
+                            <h1 style="font-size: 2rem; font-weight: 900; color: var(--secondary);">Gestión Avanzada
+                            </h1>
+                            <p style="color: var(--text-dim);">Más de 50 funciones para editar tu catálogo y SEO.</p>
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">Carga Masiva (Excel/CSV)</h2>
+                        <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+                            <i class="fa fa-file-excel"
+                                style="font-size: 3rem; color: #10b981; margin-bottom: 1rem;"></i>
+                            <h3 style="font-size: 1.1rem; font-weight: 700;">Subir inventario maestro</h3>
+                            <p style="color: var(--text-dim); font-size: 0.9rem;">Sincronización total de precios y
+                                stock desde ERP.</p>
+                            <input type="file" id="fileInput" hidden accept=".xlsx, .xls, .csv"
+                                onchange="handleFile(event)">
+                        </div>
+                        <div id="statusMsg" style="text-align:center; margin-top: 1rem; font-weight: 700;"></div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div
+                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem; flex-wrap:wrap; gap:1rem;">
+                            <h2 style="font-size: 1.2rem;">Productos Individuales</h2>
+                            <div class="search-container" style="width: 250px;">
+                                <i class="fa fa-search search-icon"></i>
+                                <input type="text" id="adminSearch" placeholder="Buscar por ID / Nombre..."
+                                    oninput="handleAdminSearch()" style="padding:0.5rem 1rem 0.5rem 2.5rem;">
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Img</th>
+                                        <th>Producto / Categoría</th>
+                                        <th>Stock</th>
+                                        <th>Precio</th>
+                                        <th>Promo</th>
+                                        <th>Acciones (+50 configs)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productTableBody">
+                                    <!-- Rendered via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pedidos Section -->
+                <div id="tab-orders" class="section-panel">
+                    <div class="admin-header">
+                        <div>
+                            <h1 style="font-size: 2rem; font-weight: 900; color: var(--secondary);">Gestión de Pedidos
+                            </h1>
+                            <p style="color: var(--text-dim);">Administra las órdenes web y actualiza el tracking de tus
+                                clientes.</p>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID Orden</th>
+                                    <th>Cliente</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <!-- Rendered via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="tab-configuracion" class="section-panel">
+                    <div class="admin-header">
+                        <div>
+                            <h1 style="font-size: 2rem; font-weight: 900; color: var(--secondary);">Configuraciones del
+                                Sistema</h1>
+                            <p style="color: var(--text-dim);">Variables globales y automatizaciones.</p>
+                        </div>
+                    </div>
+                    <div class="admin-card" style="opacity: 0.7;">
+                        <h3 style="margin-bottom:1rem;"><i class="fa fa-robot"></i> Integración n8n Activa</h3>
+                        <p style="font-size:0.9rem; color:var(--text-dim);">Los Webhooks de sincronización de noticias y
+                            recepción de créditos están configurados y funcionando a través de EasyPanel Docker.</p>
+                    </div>
+                    <div class="admin-card" style="opacity: 0.7;">
+                        <h3 style="margin-bottom:1rem;"><i class="fa fa-whatsapp"></i> Bot de WhatsApp Activo</h3>
+                        <p style="font-size:0.9rem; color:var(--text-dim);">El flujo V3.6.0 de n8n está capturando
+                            eventos para notificaciones automáticas con plantillas pre-aprobadas.</p>
+                    </div>
+                </div>
+
+        </main>
+    </div>
+
+    <!-- Modi Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; border-bottom:1px solid var(--border); padding-bottom:1rem;">
+                <h2 style="font-size:1.5rem; margin:0;" id="editTitle">Modo Edición Avanzada</h2>
+                <i class="fa fa-times close-btn" onclick="closeModal()"></i>
+            </div>
+
+            <form id="editForm" onsubmit="saveProduct(event)">
+                <input type="hidden" id="editId">
+
+                <div style="display:flex; gap:1rem; margin-bottom:1.5rem; border-bottom:2px solid #e2e8f0;">
+                    <button type="button" class="btn-secondary"
+                        style="border:none; border-bottom:3px solid var(--primary); border-radius:0; margin:0; font-weight:800; color:var(--primary);">Básico</button>
+                    <button type="button" class="btn-secondary"
+                        style="border:none; border-radius:0; margin:0; opacity:0.5; pointer-events:none;">SEO &
+                        Meta</button>
+                    <button type="button" class="btn-secondary"
+                        style="border:none; border-radius:0; margin:0; opacity:0.5; pointer-events:none;">Specs
+                        (35+)</button>
+                    <button type="button" class="btn-secondary"
+                        style="border:none; border-radius:0; margin:0; opacity:0.5; pointer-events:none;">Media &
+                        3D</button>
+                </div>
+
+                <div class="form-group">
+                    <label>Nombre Público del Producto (Se usa para slugs y URLs)</label>
+                    <input type="text" id="editName" disabled style="background:#e2e8f0; font-weight: 700;">
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Precio Actual ($)</label>
+                        <input type="number" step="0.01" id="editPrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Precio Anterior (Tachado $)</label>
+                        <input type="number" step="0.01" id="editOldPrice" placeholder="Opcional">
+                    </div>
+                    <div class="form-group">
+                        <label>Stock Disponible Físico</label>
+                        <input type="number" id="editStock" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Categoría Principal (Breadcrumb)</label>
+                        <select id="editCat" class="form-control" disabled style="background:#e2e8f0;">
+                            <option>Smartphone</option>
+                            <option>Consola</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label>Imagen del Producto (Póster principal)</label>
+                        <input type="file" id="editImage" accept="image/*" style="padding: 0.5rem; background:#fff;">
+                        <small style="color:var(--text-dim); display:block; margin-top:-10px;">Recomendado: 1:1 fondo
+                            transparente. Las actualizaciones de BD pueden tomar 2 min.</small>
+                    </div>
+                </div>
+
+                <div class="checkbox-group"
+                    style="background:#fef2f2; padding:1rem; border-radius:12px; border:1px dashed #ef4444;">
+                    <input type="checkbox" id="editClearance">
+                    <label for="editClearance" style="color: #ef4444; font-weight:800; font-size:1rem; margin:0;">
+                        🔥 Integrar al carrusel "Súper Promo / Remate" de la pantalla principal</label>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; gap:1rem; margin-top:2rem;">
+                    <button type="button" class="btn-secondary" style="width:auto; padding:0.8rem 2rem;"
+                        onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn-buy" id="btnSave" style="width:auto; padding:0.8rem 2rem;"><i
+                            class="fa fa-save"></i> Guardar Configuración</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let fullStock = [];
+        let filteredStock = [];
+        let currentImageBase64 = null;
+        let adminHash = sessionStorage.getItem('eg_admin_hash') || null;
+
+        // Valid SHA-256 for Ecugaming2026 is c9f43040d4afc34302592256dd4195827600da604b737f2485841e0bf44f5465
+        const TARGET_HASH = "c9f43040d4afc34302592256dd4195827600da604b737f2485841e0bf44f5465";
+
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function attemptLogin() {
+            const pass = document.getElementById('adminPass').value;
+            const hash = await sha256(pass);
+
+            if (hash === TARGET_HASH) {
+                adminHash = hash;
+                sessionStorage.setItem('eg_admin_hash', hash);
+                document.getElementById('loginOverlay').style.display = 'none';
+                initAdmin();
+            } else {
+                const err = document.getElementById('loginError');
+                err.style.display = 'block';
+                err.style.animation = 'shake 0.5s';
+                setTimeout(() => err.style.animation = '', 500);
+            }
+        }
+
+        // Auto unlock if session holds valid hash
+        if (adminHash === TARGET_HASH) {
+            document.getElementById('loginOverlay').style.display = 'none';
+            initAdmin();
+        }
+
+        async function initAdmin() {
+            await fetchStock();
+        }
+
+        async function fetchStock() {
+            try {
+                const res = await fetch('/api/stock');
+                fullStock = await res.json();
+                filteredStock = [...fullStock];
+                updateStats();
+                renderTable(filteredStock);
+                fetchOrders(); // Also load orders
+            } catch (err) { console.error('Error fetching stock:', err); }
+        }
+
+        async function fetchOrders() {
+            try {
+                const res = await fetch('/api/orders', { headers: { 'x-admin-hash': adminHash } });
+                const orders = await res.json();
+                renderOrdersTable(orders);
+            } catch (err) { console.error('Error fetching orders:', err); }
+        }
+
+        function renderOrdersTable(orders) {
+            const tbody = document.getElementById('ordersTableBody');
+            tbody.innerHTML = orders.length ? '' : '<tr><td colspan="5" style="text-align:center;">No hay órdenes aún.</td></tr>';
+            orders.reverse().forEach(o => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight:700;">${o.id}</td>
+                    <td>${o.address.split(',')[0]}</td>
+                    <td style="font-weight:700;">$${o.total.toFixed(2)}</td>
+                    <td><span class="badge" style="background:#f1f5f9; color:var(--secondary); padding:4px 8px; border-radius:6px; font-size:0.75rem;">${o.status.toUpperCase()}</span></td>
+                    <td>
+                        <select onchange="updateOrderStatus('${o.id}', this.value)" style="padding:0.3rem; font-size:0.8rem; border-radius:6px;">
+                            <option value="confirmando_pago" ${o.status === 'confirmando_pago' ? 'selected' : ''}>Confirmando Pago</option>
+                            <option value="orden_confirmada" ${o.status === 'orden_confirmada' ? 'selected' : ''}>Orden Confirmada</option>
+                            <option value="empacando" ${o.status === 'empacando' ? 'selected' : ''}>Empacando</option>
+                            <option value="enviado" ${o.status === 'enviado' ? 'selected' : ''}>Enviado</option>
+                            <option value="recibido" ${o.status === 'recibido' ? 'selected' : ''}>Recibido</option>
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function updateOrderStatus(id, status) {
+            try {
+                await fetch('/api/orders/update-status', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-hash': adminHash },
+                    body: JSON.stringify({ id, status })
+                });
+                alert(`Orden ${id} actualizada a ${status}`);
+            } catch (e) { alert('Error actualizando orden'); }
+        }
+
+        function updateStats() {
+            document.getElementById('statTotal').innerText = fullStock.length;
+            document.getElementById('statLow').innerText = fullStock.filter(p => p.stock < 10).length;
+            document.getElementById('statPromos').innerText = fullStock.filter(p => p.is_clearance).length;
+        }
+
+        function renderTable(items) {
+            const tbody = document.getElementById('productTableBody');
+            tbody.innerHTML = '';
+
+            // Limit render to 50 items for performance, search handles the rest
+            const renderLimit = items.slice(0, 50);
+
+            renderLimit.forEach(item => {
+                const tr = document.createElement('tr');
+                const imgSrc = item.image ? item.image : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="%23cbd5e1" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>';
+                const promoBadge = item.is_clearance ? '<span style="background:#ef4444; color:#fff; padding:2px 6px; border-radius:4px; font-size:0.7rem; font-weight:800;">PROMO</span>' : '';
+
+                tr.innerHTML = `
+                    <td><img src="${imgSrc}" class="product-img-mini"></td>
+                    <td style="font-weight:600; color:var(--secondary);">${item.name}</td>
+                    <td><span style="font-weight:700; ${item.stock < 10 ? 'color:#ef4444;' : ''}">${item.stock}</span></td>
+                    <td style="font-weight:800;">$${item.price.toFixed(2)}</td>
+                    <td>${item.old_price ? `<span style="text-decoration:line-through; color:var(--text-dim); font-size:0.8rem;">$${item.old_price}</span>` : ''} ${promoBadge}</td>
+                    <td><button class="btn-edit" onclick="openEdit('${item.id}')"><i class="fa fa-pen"></i> Editar</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            if (items.length > 50) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="6" style="text-align:center; color:var(--text-dim);">Mostrando 50 de ${items.length}. Usa el buscador.</td>`;
+                tbody.appendChild(tr);
+            }
+        }
+
+        function handleAdminSearch() {
+            const query = document.getElementById('adminSearch').value.toLowerCase();
+            if (!query) {
+                filteredStock = [...fullStock];
+            } else {
+                filteredStock = fullStock.filter(p =>
+                    p.name.toLowerCase().includes(query) ||
+                    p.id.toLowerCase().includes(query)
+                );
+            }
+            renderTable(filteredStock);
+        }
+
+        // --- File Upload ---
+        async function handleFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const msg = document.getElementById('statusMsg');
+            msg.innerText = "Subiendo archivo...";
+            msg.style.color = "var(--text)";
+
+            try {
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    headers: { 'x-admin-hash': adminHash },
+                    body: formData
+                });
+                const result = await res.json();
+
+                if (res.ok) {
+                    msg.innerText = `Éxito: ${result.message}`;
+                    msg.style.color = "#10b981";
+                    fetchStock(); // Reload table
+                } else {
+                    msg.innerText = `Error: ${result.error}`;
+                    msg.style.color = "#ef4444";
+                }
+            } catch (error) {
+                msg.innerText = "Error subiendo el archivo. Asegúrate que tienes permisos (Hash).";
+                msg.style.color = "#ef4444";
+            }
+        }
+
+        // --- Edit Logic ---
+        function openEdit(id) {
+            const prod = fullStock.find(p => p.id === id);
+            if (!prod) return;
+
+            document.getElementById('editId').value = prod.id;
+            document.getElementById('editName').value = prod.name;
+            document.getElementById('editPrice').value = prod.price;
+            document.getElementById('editOldPrice').value = prod.old_price || '';
+            document.getElementById('editStock').value = prod.stock;
+            document.getElementById('editClearance').checked = prod.is_clearance || false;
+            document.getElementById('editImage').value = '';
+            currentImageBase64 = prod.image || null;
+
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        // Convert image to base64
+        document.getElementById('editImage').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                currentImageBase64 = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        async function saveProduct(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSave');
+            btn.innerText = 'Guardando...';
+            btn.disabled = true;
+
+            const id = document.getElementById('editId').value;
+            const updatedProduct = {
+                id: id,
+                price: parseFloat(document.getElementById('editPrice').value),
+                old_price: document.getElementById('editOldPrice').value ? parseFloat(document.getElementById('editOldPrice').value) : null,
+                stock: parseInt(document.getElementById('editStock').value),
+                is_clearance: document.getElementById('editClearance').checked,
+                imageBase64: currentImageBase64
+            };
+            // Enviar la actualización a la API unitaria (Vercel)
+            try {
+                const res = await fetch('/api/stock/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-admin-hash': adminHash
+                    },
+                    body: JSON.stringify(updatedProduct)
+                });
+
+                if (res.ok) {
+                    closeModal();
+                    await fetchStock(); // Refresh
+                } else {
+                    alert('Error guardando los datos');
+                }
+            } catch (e) {
+                alert('Connection error');
+            } finally {
+                btn.innerText = 'Guardar Cambios';
+                btn.disabled = false;
+            }
+        }
+
+        initAdmin();
+    </script>
+</body>
+
+</html>

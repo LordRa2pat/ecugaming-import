@@ -1,0 +1,114 @@
+{
+    "name": "Ecugaming Tech News API",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "GET",
+                "path": "get-news",
+                "responseMode": "lastNode",
+                "options": {}
+            },
+            "id": "webhook-news",
+            "name": "Webhook GET News",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                200,
+                300
+            ],
+            "webhookId": "get-news"
+        },
+        {
+            "parameters": {
+                "url": "https://api.rss2json.com/v1/api.json?rss_url=https://es.ign.com/feed.xml",
+                "options": {}
+            },
+            "id": "fetch-rss",
+            "name": "Fetch IGN News",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                400,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const rssData = items[0].json;\nlet newsList = [];\n\nif (rssData && rssData.items) {\n    newsList = rssData.items.slice(0, 4).map(item => ({\n        title: item.title,\n        link: item.link,\n        image: item.thumbnail || 'https://via.placeholder.com/300x150?text=News',\n        summary: item.description.replace(/<[^>]*>?/gm, '').substring(0, 100) + '...'\n    }));\n}\n\nreturn { json: { data: newsList } };"
+            },
+            "id": "format-news",
+            "name": "Format News",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                600,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "={{ $json.data }}",
+                "options": {
+                    "responseHeaders": {
+                        "entries": [
+                            {
+                                "name": "Access-Control-Allow-Origin",
+                                "value": "*"
+                            }
+                        ]
+                    }
+                }
+            },
+            "id": "respond-news",
+            "name": "Respond to Frontend",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1.1,
+            "position": [
+                800,
+                300
+            ]
+        }
+    ],
+    "pinData": {},
+    "connections": {
+        "Webhook GET News": {
+            "main": [
+                [
+                    {
+                        "node": "Fetch IGN News",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Fetch IGN News": {
+            "main": [
+                [
+                    {
+                        "node": "Format News",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Format News": {
+            "main": [
+                [
+                    {
+                        "node": "Respond to Frontend",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": false,
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "versionId": "ebff0aed-80cd-4f01-9878-7b952a2b02e5"
+}
