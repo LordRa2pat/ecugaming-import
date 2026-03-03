@@ -1,58 +1,12 @@
 {
     "version": 2,
     "name": "ecugaming-import",
+    "outputDirectory": "public",
+    "cleanUrls": true,
     "rewrites": [
         {
-            "source": "/api/(.*)",
+            "source": "/api/:path*",
             "destination": "/api/index.js"
-        },
-        {
-            "source": "/admin",
-            "destination": "/public/admin.html"
-        },
-        {
-            "source": "/account",
-            "destination": "/public/account.html"
-        },
-        {
-            "source": "/checkout",
-            "destination": "/public/checkout.html"
-        },
-        {
-            "source": "/tracking",
-            "destination": "/public/tracking.html"
-        },
-        {
-            "source": "/privacidad",
-            "destination": "/public/privacidad.html"
-        },
-        {
-            "source": "/pagos",
-            "destination": "/public/pagos.html"
-        },
-        {
-            "source": "/devoluciones",
-            "destination": "/public/devoluciones.html"
-        },
-        {
-            "source": "/envios",
-            "destination": "/public/envios.html"
-        },
-        {
-            "source": "/terminos",
-            "destination": "/public/terminos.html"
-        },
-        {
-            "source": "/login",
-            "destination": "/public/login.html"
-        },
-        {
-            "source": "/register",
-            "destination": "/public/register.html"
-        },
-        {
-            "source": "/(.*)",
-            "destination": "/public/$1"
         }
     ]
 }
