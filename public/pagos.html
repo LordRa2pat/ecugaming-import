@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métodos de Pago | Ecugaming Import</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .legal-container {
+            max-width: 800px;
+            margin: 100px auto 60px;
+            padding: 3rem 5%;
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+        .legal-content h1 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
+            font-weight: 900;
+        }
+        .legal-content h1 i { color: var(--primary); margin-right: 0.75rem; }
+        .legal-content .last-updated {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+        .legal-content h2 {
+            color: var(--primary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .legal-content p {
+            color: var(--text);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .legal-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-dim);
+        }
+        .legal-content li { margin-bottom: 0.5rem; line-height: 1.7; }
+
+        .payment-card {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: #fafafa;
+        }
+        .payment-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .payment-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .icon-bank { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+        .icon-crypto { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .icon-card { background: #94a3b8; }
+
+        .payment-card-title {
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: var(--secondary);
+        }
+        .payment-card-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+        .badge-maintenance {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+            border-radius: 20px;
+            padding: 0.2rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-left: 0.5rem;
+        }
+        .step-list {
+            counter-reset: steps;
+            list-style: none;
+            margin-left: 0;
+            padding: 0;
+        }
+        .step-list li {
+            counter-increment: steps;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+        .step-list li::before {
+            content: counter(steps);
+            min-width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .notice-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--accent);
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.5rem 0;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        .notice-warning {
+            background: #fffbeb;
+            border-left-color: #f59e0b;
+        }
+        .footer-note {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
+        <div class="nav-actions">
+            <button class="btn-secondary" style="margin:0;padding:0.5rem 1.5rem;"
+                onclick="location.href='index.html'">← Tienda</button>
+        </div>
+    </header>
+
+    <main class="legal-container">
+        <div class="legal-content">
+            <h1><i class="fa fa-credit-card"></i>Métodos de Pago</h1>
+            <p class="last-updated">Última actualización: Marzo 2026</p>
+
+            <p>Todos los precios están en <strong>Dólares de los Estados Unidos (USD)</strong>. Aceptamos los siguientes métodos de pago para compras en línea:</p>
+
+            <!-- Transferencia bancaria -->
+            <div class="payment-card">
+                <div class="payment-card-header">
+                    <div class="payment-card-icon icon-bank"><i class="fa fa-building-columns"></i></div>
+                    <div>
+                        <div class="payment-card-title">Transferencia / Depósito Bancario</div>
+                        <div class="payment-card-subtitle">Disponible — Confirmación en 1–2 horas hábiles</div>
+                    </div>
+                </div>
+                <p>Realiza una transferencia o depósito a una de nuestras cuentas bancarias y sube el comprobante directamente en el checkout. Aceptamos:</p>
+                <ul>
+                    <li><strong>Banco Pichincha</strong> — Cuenta Corriente</li>
+                    <li><strong>Banco del Pacífico</strong> — Cuenta de Ahorros</li>
+                    <li><strong>Banco Guayaquil</strong> — Cuenta de Ahorros</li>
+                </ul>
+                <p>Los números de cuenta actualizados se muestran al seleccionar el banco en el paso de pago del checkout.</p>
+                <h3 style="font-size:1rem;font-weight:700;color:var(--secondary);margin:1rem 0 0.5rem;">Proceso paso a paso:</h3>
+                <ol class="step-list">
+                    <li>Selecciona tu banco en el checkout y anota el número de cuenta y titular.</li>
+                    <li>Realiza la transferencia o depósito desde tu banco (en línea, app o en ventanilla).</li>
+                    <li>Sube la foto o captura del comprobante en el checkout.</li>
+                    <li>Confirma la orden — recibirás un número de pedido.</li>
+                    <li>Nuestro equipo verifica el pago y confirma tu orden vía WhatsApp (máx. 2 horas hábiles).</li>
+                </ol>
+                <div class="notice-box">
+                    <i class="fa fa-clock" style="color:var(--accent);margin-right:0.5rem;"></i>
+                    Transferencias recibidas después de las <strong>17:00</strong> se procesan el siguiente día hábil.
+                </div>
+            </div>
+
+            <!-- Criptomoneda -->
+            <div class="payment-card">
+                <div class="payment-card-header">
+                    <div class="payment-card-icon icon-crypto"><i class="fa fa-bitcoin-sign"></i></div>
+                    <div>
+                        <div class="payment-card-title">Criptomoneda</div>
+                        <div class="payment-card-subtitle">Disponible — Confirmación en 10–60 minutos según red</div>
+                    </div>
+                </div>
+                <p>Aceptamos pagos en criptomonedas. Las redes disponibles y sus wallets se muestran en el checkout. Actualmente aceptamos:</p>
+                <ul>
+                    <li><strong>Binance Pay</strong> — Pago instantáneo con tu cuenta Binance.</li>
+                    <li><strong>USDT (TRC20)</strong> — Tether en la red TRON (comisiones bajas).</li>
+                    <li><strong>Bitcoin (BTC)</strong> — Red Bitcoin estándar.</li>
+                </ul>
+                <h3 style="font-size:1rem;font-weight:700;color:var(--secondary);margin:1rem 0 0.5rem;">Proceso paso a paso:</h3>
+                <ol class="step-list">
+                    <li>Selecciona la red de criptomoneda en el checkout.</li>
+                    <li>Escanea el código QR o copia la dirección de wallet mostrada.</li>
+                    <li>Envía exactamente el monto indicado en USD equivalente.</li>
+                    <li>Ingresa el TXID (ID de transacción) o sube captura del envío.</li>
+                    <li>Confirmamos la transacción en blockchain — tu orden se activa automáticamente.</li>
+                </ol>
+                <div class="notice-box notice-warning">
+                    <i class="fa fa-triangle-exclamation" style="color:#f59e0b;margin-right:0.5rem;"></i>
+                    Verifica siempre que envías a la red correcta. Los fondos enviados a una red equivocada (ej: USDT en red ERC20 vs TRC20) pueden perderse sin posibilidad de recuperación.
+                </div>
+            </div>
+
+            <!-- Tarjeta -->
+            <div class="payment-card" style="opacity:0.7;">
+                <div class="payment-card-header">
+                    <div class="payment-card-icon icon-card"><i class="fa fa-credit-card"></i></div>
+                    <div>
+                        <div class="payment-card-title">
+                            Tarjeta de Crédito / Débito
+                            <span class="badge-maintenance">En Mantenimiento</span>
+                        </div>
+                        <div class="payment-card-subtitle">Próximamente disponible</div>
+                    </div>
+                </div>
+                <p>El módulo de pago con tarjeta está siendo implementado. Estaremos habilitando Visa, Mastercard y American Express. Síguenos en nuestras redes sociales para saber cuándo esté disponible.</p>
+            </div>
+
+            <h2><i class="fa fa-shield-halved"></i>Seguridad de los Pagos</h2>
+            <p>Ecugaming Import nunca te pedirá tu contraseña bancaria ni datos de tarjeta por WhatsApp, correo o redes sociales. Todos los comprobantes subidos son almacenados de forma segura y solo son accesibles por nuestro equipo de verificación.</p>
+
+            <h2><i class="fa fa-rotate-left"></i>Reembolsos</h2>
+            <p>En caso de cancelación de orden confirmada o producto defectuoso sin stock de reposición, el reembolso se realiza por el mismo método de pago utilizado en un plazo de <strong>3 a 5 días hábiles</strong>. Para más detalles, consulta nuestra <a href="devoluciones.html" style="color:var(--primary);font-weight:600;">Política de Devoluciones</a>.</p>
+
+            <div class="footer-note">
+                Consultas sobre pagos: <strong>099 435 6877</strong> (WhatsApp)<br>
+                Ecugaming Import — Lago Agrio, Ecuador
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

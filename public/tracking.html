@@ -11,7 +11,7 @@
     <style>
         .tracking-container {
             max-width: 800px;
-            margin: 120px auto;
+            margin: 120px auto 60px;
             padding: 2.5rem;
             background: #fff;
             border-radius: 24px;
@@ -36,7 +36,7 @@
         .tracking-input {
             display: flex;
             gap: 1rem;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
         }
 
         .tracking-input input {
@@ -50,27 +50,85 @@
 
         .tracking-result {
             display: none;
-            margin-top: 3rem;
+            margin-top: 2rem;
             animation: fadeIn 0.5s ease-in;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* Timeline Styles */
+        .order-info-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px dashed var(--border);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem 2rem;
+        }
+
+        .order-info-card .info-row {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .order-info-card .info-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+            margin-bottom: 0.2rem;
+        }
+
+        .order-info-card .info-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .tracking-code-box {
+            background: #ecfdf5;
+            border: 1px solid #6ee7b7;
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tracking-code-box i {
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+
+        .tracking-code-box span {
+            font-weight: 700;
+            color: var(--secondary);
+            font-size: 1.05rem;
+        }
+
+        .cancelled-box {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        /* Timeline */
         .timeline {
             position: relative;
-            padding: 2rem 0;
-            margin-top: 2rem;
+            padding: 2rem 0 0.5rem;
         }
 
         .timeline::before {
@@ -83,11 +141,10 @@
             background: #e2e8f0;
         }
 
-        .step {
+        .timeline-step {
             position: relative;
             padding-left: 60px;
             margin-bottom: 2.5rem;
-            transition: 0.3s;
         }
 
         .step-icon {
@@ -103,36 +160,66 @@
             color: #fff;
             z-index: 2;
             border: 4px solid #fff;
+            flex-shrink: 0;
         }
 
-        .step.active .step-icon {
+        .timeline-step.done .step-icon {
             background: var(--accent);
-            box-shadow: 0 0 0 10px rgba(34, 197, 94, 0.1);
         }
 
-        .step.active h4 {
-            color: var(--accent);
-        }
-
-        .step.current .step-icon {
+        .timeline-step.current .step-icon {
             background: var(--primary);
             transform: scale(1.1);
-            box-shadow: 0 0 0 10px rgba(255, 69, 0, 0.2);
+            box-shadow: 0 0 0 10px rgba(255, 69, 0, 0.15);
         }
 
-        .step.current h4 {
-            color: var(--primary);
+        .timeline-step.cancelled-step .step-icon {
+            background: #dc2626;
         }
 
-        .step h4 {
+        .step-title {
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: var(--text-dim);
+            margin-bottom: 0.2rem;
         }
 
-        .step p {
-            font-size: 0.9rem;
+        .timeline-step.done .step-title   { color: var(--accent); }
+        .timeline-step.current .step-title { color: var(--primary); }
+        .timeline-step.cancelled-step .step-title { color: #dc2626; }
+
+        .step-desc {
+            font-size: 0.88rem;
             color: var(--text-dim);
+            margin-bottom: 0.15rem;
+        }
+
+        .step-date {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .step-note {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            background: #f8fafc;
+            border-left: 3px solid var(--accent);
+            padding: 0.4rem 0.75rem;
+            border-radius: 0 6px 6px 0;
+            margin-top: 0.4rem;
+        }
+
+        .error-msg {
+            text-align: center;
+            padding: 2rem;
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .tracking-container { margin: 90px 1rem 2rem; padding: 1.5rem; }
+            .order-info-card { grid-template-columns: 1fr; }
+            .tracking-input { flex-direction: column; }
         }
     </style>
 </head>
@@ -140,85 +227,207 @@
 <body>
     <header>
         <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
+        <div class="nav-actions">
+            <button class="btn-secondary" style="margin:0;padding:0.5rem 1.5rem;"
+                onclick="location.href='index.html'">← Tienda</button>
+        </div>
     </header>
 
     <div class="tracking-container">
         <div class="tracking-header">
             <h1>Rastrea tu <span>Pedido</span></h1>
-            <p>Ingresa tu número de orden (ORDER-XXXXXX) para consultar el estado actual.</p>
+            <p>Ingresa tu número de orden (EG-XXXXXXXX) para consultar el estado actual.</p>
         </div>
+
         <div class="tracking-input">
-            <input type="text" id="orderId" placeholder="Ej: ORDER-ABC123XYZ">
-            <button class="btn-buy" onclick="trackOrder()" style="width: auto; padding: 1rem 2rem;">Rastrear</button>
+            <input type="text" id="orderId" placeholder="Ej: EG-ABC123XY" oninput="this.value=this.value.toUpperCase()">
+            <button class="btn-buy" id="trackBtn" onclick="trackOrder()" style="width:auto;padding:1rem 2rem;">
+                <i class="fa fa-search" style="margin-right:0.5rem;"></i>Rastrear
+            </button>
         </div>
+        <div id="trackError" style="color:#dc2626;font-size:0.9rem;margin-bottom:1rem;display:none;"></div>
 
-        <div id="trackingResult" class="tracking-result">
-            <div
-                style="background: var(--bg-light); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px dashed var(--border);">
-                <h3 id="resultTitle" style="color: var(--secondary); font-weight: 800;">Orden: ORDER-XXXXXXX</h3>
-                <p id="resultAddress" style="color: var(--text-dim);">Envío a: Calle Principal #123, Lago Agrio</p>
-            </div>
-
-            <div class="timeline" id="timeline">
-                <div class="step" id="step_confirmando_pago">
-                    <div class="step-icon"><i class="fa fa-receipt"></i></div>
-                    <h4>Confirmando Pago</h4>
-                    <p>Nuestro equipo está verificando tu comprobante de pago.</p>
-                </div>
-                <div class="step" id="step_orden_confirmada">
-                    <div class="step-icon"><i class="fa fa-check-circle"></i></div>
-                    <h4>Orden Confirmada</h4>
-                    <p>El pago fue validado y la orden está lista para procesamiento.</p>
-                </div>
-                <div class="step" id="step_empacando">
-                    <div class="step-icon"><i class="fa fa-box-open"></i></div>
-                    <h4>Empacando Producto</h4>
-                    <p>Estamos preparando tu equipo con la mayor protección.</p>
-                </div>
-                <div class="step" id="step_enviado">
-                    <div class="step-icon"><i class="fa fa-shipping-fast"></i></div>
-                    <h4>Enviado</h4>
-                    <p>Tu pedido ya está en manos de la transportadora (Servientrega).</p>
-                </div>
-                <div class="step" id="step_recibido">
-                    <div class="step-icon"><i class="fa fa-handshake"></i></div>
-                    <h4>Recibido</h4>
-                    <p>Pedido entregado exitosamente. ¡Gracias por confiar en nosotros!</p>
-                </div>
-            </div>
-        </div>
+        <div id="trackingResult" class="tracking-result"></div>
     </div>
 
     <script>
+        const STATUS_META = {
+            confirmando_pago:  { icon: 'fa-receipt',       label: 'Confirmando Pago',    desc: 'Nuestro equipo está verificando tu comprobante de pago.' },
+            orden_confirmada:  { icon: 'fa-check-circle',  label: 'Orden Confirmada',    desc: 'El pago fue validado y la orden está lista para procesamiento.' },
+            empacando:         { icon: 'fa-box-open',       label: 'Empacando Producto',  desc: 'Estamos preparando tu pedido con la mayor protección.' },
+            enviado:           { icon: 'fa-shipping-fast',  label: 'Enviado',             desc: 'Tu pedido está en camino con la transportadora.' },
+            recibido:          { icon: 'fa-handshake',      label: 'Recibido',            desc: '¡Pedido entregado! Gracias por confiar en nosotros.' },
+            cancelado:         { icon: 'fa-times-circle',   label: 'Cancelado',           desc: 'Este pedido fue cancelado.' }
+        };
+
+        const ORDER_FLOW = ['confirmando_pago','orden_confirmada','empacando','enviado','recibido'];
+
+        function formatDate(iso) {
+            if (!iso) return '';
+            const d = new Date(iso);
+            return d.toLocaleDateString('es-EC', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+        }
+
+        function formatAddress(sa) {
+            if (!sa) return '—';
+            const parts = [sa.address1, sa.city, sa.province].filter(Boolean);
+            if (sa.reference) parts.push(`Ref: ${sa.reference}`);
+            return parts.join(', ');
+        }
+
         async function trackOrder() {
-            const id = document.getElementById('orderId').value.trim();
-            if (!id) return;
+            const input = document.getElementById('orderId');
+            const id = input.value.trim().toUpperCase();
+            const errEl = document.getElementById('trackError');
+            const resultEl = document.getElementById('trackingResult');
+            const btn = document.getElementById('trackBtn');
+
+            errEl.style.display = 'none';
+            if (!id) { errEl.textContent = 'Ingresa el número de orden.'; errEl.style.display = 'block'; return; }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="margin-right:0.5rem;"></i>Buscando...';
+            resultEl.style.display = 'none';
+
             try {
-                const res = await fetch(`/api/orders/track/${id}`);
-                const order = await res.json();
-                if (res.ok) {
-                    showOrder(order);
-                } else {
-                    alert('Pedido no encontrado. Revisa el número de orden.');
+                const res = await fetch(`/api/orders/track/${encodeURIComponent(id)}`);
+                const data = await res.json();
+
+                if (!res.ok) {
+                    errEl.textContent = data.error || 'Pedido no encontrado. Revisa el número de orden.';
+                    errEl.style.display = 'block';
+                    resultEl.style.display = 'none';
+                    return;
                 }
-            } catch (err) { alert('Error de conexión'); }
+                renderOrder(data);
+            } catch (err) {
+                errEl.textContent = 'Error de conexión. Por favor intenta nuevamente.';
+                errEl.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa fa-search" style="margin-right:0.5rem;"></i>Rastrear';
+            }
         }
 
-        function showOrder(order) {
-            document.getElementById('trackingResult').style.display = 'block';
-            document.getElementById('resultTitle').textContent = `Orden: ${order.id}`;
-            document.getElementById('resultAddress').textContent = `Envío a: ${order.address}`;
+        function renderOrder(order) {
+            const resultEl = document.getElementById('trackingResult');
+            const sa = order.shipping_address || {};
+            const isCancelled = order.status === 'cancelado';
 
-            const states = ['confirmando_pago', 'orden_confirmada', 'empacando', 'enviado', 'recibido'];
-            const currentIndex = states.indexOf(order.status);
+            // Order info card
+            let html = `<div class="order-info-card">
+                <div class="info-row">
+                    <span class="info-label">Número de Orden</span>
+                    <span class="info-value">${order.id}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Estado Actual</span>
+                    <span class="info-value" style="color:${isCancelled ? '#dc2626' : 'var(--primary)'}">
+                        ${STATUS_META[order.status]?.label || order.status}
+                    </span>
+                </div>
+                <div class="info-row" style="grid-column:1/-1">
+                    <span class="info-label">Dirección de Envío</span>
+                    <span class="info-value">${formatAddress(sa)}</span>
+                </div>`;
 
-            states.forEach((state, index) => {
-                const el = document.getElementById(`step_${state}`);
-                el.classList.remove('active', 'current');
-                if (index < currentIndex) el.classList.add('active');
-                if (index === currentIndex) el.classList.add('current');
-            });
+            if (order.carrier) {
+                html += `<div class="info-row">
+                    <span class="info-label">Transportadora</span>
+                    <span class="info-value">${order.carrier}${order.carrier_agency_name ? ' — ' + order.carrier_agency_name : ''}</span>
+                </div>`;
+            }
+            html += `</div>`;
+
+            // Cancelled warning
+            if (isCancelled) {
+                html += `<div class="cancelled-box">
+                    <i class="fa fa-times-circle"></i>
+                    <span>Este pedido ha sido cancelado. Contáctanos por WhatsApp si tienes dudas.</span>
+                </div>`;
+            }
+
+            // Tracking code
+            if (order.tracking_code) {
+                html += `<div class="tracking-code-box">
+                    <i class="fa fa-barcode"></i>
+                    <div>
+                        <div style="font-size:0.8rem;color:var(--text-dim);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Código de Rastreo</div>
+                        <span>${order.tracking_code}</span>
+                    </div>
+                </div>`;
+            }
+
+            // Timeline
+            html += `<div class="timeline">`;
+
+            if (isCancelled) {
+                // Show events up to cancellation
+                const events = order.events || [];
+                if (events.length > 0) {
+                    events.forEach(ev => {
+                        const meta = STATUS_META[ev.status] || { icon: 'fa-circle', label: ev.status };
+                        const isCancelEv = ev.status === 'cancelado';
+                        html += `<div class="timeline-step ${isCancelEv ? 'cancelled-step' : 'done'}">
+                            <div class="step-icon"><i class="fa ${meta.icon}"></i></div>
+                            <div class="step-title">${meta.label}</div>
+                            <div class="step-date">${formatDate(ev.created_at)}</div>
+                            ${ev.note ? `<div class="step-note">${ev.note}</div>` : ''}
+                        </div>`;
+                    });
+                } else {
+                    html += `<div class="timeline-step cancelled-step">
+                        <div class="step-icon"><i class="fa fa-times-circle"></i></div>
+                        <div class="step-title">Cancelado</div>
+                        <div class="step-desc">Este pedido fue cancelado.</div>
+                    </div>`;
+                }
+            } else {
+                // Build timeline from events keyed by status
+                const events = order.events || [];
+                const eventMap = {};
+                events.forEach(ev => { eventMap[ev.status] = ev; });
+
+                const currentIdx = ORDER_FLOW.indexOf(order.status);
+
+                ORDER_FLOW.forEach((status, idx) => {
+                    const meta = STATUS_META[status];
+                    const ev = eventMap[status];
+                    let cls = '';
+                    if (idx < currentIdx) cls = 'done';
+                    else if (idx === currentIdx) cls = 'current';
+
+                    html += `<div class="timeline-step ${cls}">
+                        <div class="step-icon"><i class="fa ${meta.icon}"></i></div>
+                        <div class="step-title">${meta.label}</div>
+                        <div class="step-desc">${meta.desc}</div>`;
+                    if (ev) {
+                        html += `<div class="step-date">${formatDate(ev.created_at)}</div>`;
+                        if (ev.note) html += `<div class="step-note">${ev.note}</div>`;
+                    }
+                    html += `</div>`;
+                });
+            }
+
+            html += `</div>`;
+
+            resultEl.innerHTML = html;
+            resultEl.style.display = 'block';
         }
+
+        // Auto-track if ?id= param present
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(location.search);
+            const id = params.get('id');
+            if (id) {
+                document.getElementById('orderId').value = id.toUpperCase();
+                trackOrder();
+            }
+        });
+
+        document.getElementById('orderId').addEventListener('keydown', e => {
+            if (e.key === 'Enter') trackOrder();
+        });
     </script>
 </body>
 

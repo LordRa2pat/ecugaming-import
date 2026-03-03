@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Ecugaming Import</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: var(--bg-light); }
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+        @media(max-width:860px){ .checkout-layout{ grid-template-columns:1fr; } .order-summary{ order:-1; } }
+
+        /* Steps bar */
+        .steps-bar {
+            display: flex; gap: 0; margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border); padding-bottom: 1rem;
+        }
+        .step-item {
+            display: flex; align-items: center; gap: .5rem;
+            font-size: .82rem; font-weight: 700; color: var(--text-dim);
+            padding: 0 1rem; cursor: pointer;
+        }
+        .step-item.active { color: var(--primary); }
+        .step-item.done   { color: #34c759; }
+        .step-num {
+            width: 24px; height: 24px; border-radius: 50%;
+            border: 2px solid currentColor; display: flex; align-items: center;
+            justify-content: center; font-size: .75rem; font-weight: 800; flex-shrink: 0;
+        }
+        .step-item.done .step-num { background: #34c759; border-color: #34c759; color: #fff; }
+        .step-item.active .step-num { background: var(--primary); border-color: var(--primary); color: #fff; }
+        .step-sep { color: var(--border); font-size: 1.1rem; line-height: 1; }
+
+        /* Panels */
+        .step-panel { display: none; }
+        .step-panel.active { display: block; }
+        .checkout-card {
+            background: #fff; border-radius: 20px;
+            border: 1px solid var(--border); padding: 2rem;
+        }
+        .checkout-card h3 {
+            font-size: 1.1rem; font-weight: 800; margin-bottom: 1.4rem;
+            display: flex; align-items: center; gap: .5rem;
+        }
+        .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+        @media(max-width:500px){ .form-row-2 { grid-template-columns: 1fr; } }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: .3rem; font-size: .85rem; font-weight: 600; color: var(--text-dim); }
+        .form-control {
+            width: 100%; padding: .85rem 1rem; border: 1.5px solid var(--border);
+            border-radius: 10px; font-size: .95rem; transition: .2s; box-sizing: border-box; background: #fafafa;
+        }
+        .form-control:focus { border-color: var(--primary); outline: none; background: #fff; }
+        .optional-label { font-size: .75rem; color: var(--text-dim); margin-left: .4rem; }
+
+        /* Carrier selection */
+        .carrier-options { display: grid; grid-template-columns: repeat(3,1fr); gap: .8rem; }
+        @media(max-width:500px){ .carrier-options { grid-template-columns: 1fr; } }
+        .carrier-card {
+            border: 2px solid var(--border); border-radius: 14px; padding: 1rem;
+            cursor: pointer; text-align: center; transition: .2s;
+        }
+        .carrier-card:hover   { border-color: var(--accent); }
+        .carrier-card.selected { border-color: var(--primary); background: #fff8f0; }
+        .carrier-card i { font-size: 1.6rem; color: var(--text-dim); margin-bottom: .5rem; display: block; }
+        .carrier-card.selected i { color: var(--primary); }
+        .carrier-card span { font-size: .82rem; font-weight: 700; color: var(--text); display: block; }
+
+        /* Coupon */
+        .coupon-applied {
+            background: #f0fff4; border: 1.5px solid #34c759; border-radius: 12px;
+            padding: .8rem 1rem; display: flex; align-items: center; gap: .6rem;
+            font-size: .9rem; font-weight: 700; color: #27ae60;
+        }
+        .coupon-applied i { font-size: 1rem; }
+        .coupon-input-row { display: flex; gap: .6rem; }
+        .coupon-input-row .form-control { flex: 1; }
+        .coupon-input-row button { padding: .85rem 1.2rem; border-radius: 10px; background: var(--primary); color: #fff; border: none; font-weight: 700; cursor: pointer; white-space: nowrap; }
+
+        /* Payment methods */
+        .pay-methods { display: grid; grid-template-columns: repeat(3,1fr); gap: .8rem; margin-bottom: 1.5rem; }
+        @media(max-width:560px){ .pay-methods { grid-template-columns: 1fr; } }
+        .pay-method-card {
+            border: 2px solid var(--border); border-radius: 14px; padding: 1rem .8rem;
+            cursor: pointer; text-align: center; transition: .2s; position: relative;
+        }
+        .pay-method-card:hover:not(.disabled)   { border-color: var(--accent); }
+        .pay-method-card.selected               { border-color: var(--primary); background: #fff8f0; }
+        .pay-method-card.disabled               { opacity: .55; cursor: not-allowed; }
+        .pay-method-card i { font-size: 1.5rem; color: var(--text-dim); margin-bottom: .4rem; display: block; }
+        .pay-method-card.selected i { color: var(--primary); }
+        .pay-method-card span { font-size: .78rem; font-weight: 700; color: var(--text); display: block; }
+        .maintenance-badge {
+            position: absolute; top: 4px; right: 4px;
+            background: #ff9500; color: #fff; font-size: .6rem; font-weight: 800;
+            padding: 2px 6px; border-radius: 20px;
+        }
+        .pay-detail { display: none; }
+        .pay-detail.active { display: block; }
+
+        /* Bank account info box */
+        .bank-info-box {
+            background: #f8fafc; border: 1px solid var(--border); border-radius: 14px;
+            padding: 1.2rem; margin-bottom: 1.2rem;
+        }
+        .bank-info-box h4 { font-size: .88rem; font-weight: 800; margin-bottom: .7rem; color: var(--secondary); }
+        .bank-row { display: flex; justify-content: space-between; align-items: center; padding: .3rem 0; }
+        .bank-row span:first-child { font-size: .82rem; color: var(--text-dim); }
+        .bank-row span:last-child  { font-size: .88rem; font-weight: 700; color: var(--text); }
+        .bank-number { font-size: 1.2rem !important; font-weight: 900 !important; color: var(--primary) !important; letter-spacing: .05em; }
+
+        /* Crypto */
+        .crypto-wallet-box {
+            background: #f8fafc; border: 1.5px dashed var(--border); border-radius: 14px;
+            padding: 1.2rem; margin-bottom: 1.2rem; text-align: center;
+        }
+        .crypto-wallet-box .wallet-addr {
+            font-size: .78rem; font-weight: 700; background: #fff; border: 1px solid var(--border);
+            border-radius: 8px; padding: .5rem .8rem; margin: .5rem 0; word-break: break-all; text-align: left;
+        }
+        .crypto-wallet-box img.qr-img { width: 120px; height: 120px; margin: .5rem auto; display: block; }
+
+        /* Upload area */
+        .file-upload-area {
+            border: 2px dashed var(--border); border-radius: 12px; padding: 1.2rem;
+            text-align: center; cursor: pointer; transition: .2s;
+        }
+        .file-upload-area:hover { border-color: var(--primary); background: #fff8f0; }
+        .file-upload-area i { font-size: 1.8rem; color: var(--text-dim); }
+        .file-upload-area p { font-size: .82rem; color: var(--text-dim); margin: .4rem 0 0; }
+        #proofFile, #cryptoFile { display: none; }
+
+        /* Step navigation buttons */
+        .step-nav { display: flex; gap: .8rem; margin-top: 1.5rem; }
+        .btn-back { background: var(--bg-light); color: var(--text); border: 1.5px solid var(--border); border-radius: 12px; padding: .9rem 1.4rem; font-weight: 700; cursor: pointer; transition: .2s; }
+        .btn-back:hover { background: #e8e8ed; }
+        .btn-next { background: var(--primary); color: #fff; border: none; border-radius: 12px; padding: .9rem 1.8rem; font-weight: 800; cursor: pointer; transition: .2s; flex: 1; }
+        .btn-next:hover { opacity: .88; }
+        .btn-next:disabled { opacity: .5; cursor: not-allowed; }
+
+        /* Order Summary Sidebar */
+        .order-summary { position: sticky; top: 80px; }
+        .summary-card { background: #fff; border-radius: 20px; border: 1px solid var(--border); padding: 1.5rem; }
+        .summary-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 1.2rem; }
+        .summary-item { display: flex; gap: 1rem; align-items: flex-start; padding: .7rem 0; border-bottom: 1px solid #f0f0f5; }
+        .summary-item:last-child { border-bottom: none; }
+        .summary-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+        .summary-item .item-info { flex: 1; }
+        .summary-item .item-name { font-size: .85rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+        .summary-item .item-qty  { font-size: .75rem; color: var(--text-dim); }
+        .summary-item .item-price { font-size: .9rem; font-weight: 800; color: var(--text); white-space: nowrap; }
+        .summary-divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+        .summary-row { display: flex; justify-content: space-between; font-size: .88rem; margin-bottom: .5rem; }
+        .summary-row.discount { color: #27ae60; font-weight: 700; }
+        .summary-row.total { font-size: 1.1rem; font-weight: 900; color: var(--text); margin-top: .5rem; }
+        .coupon-chip { display: inline-flex; align-items: center; gap: .4rem; background: #f0fff4; color: #27ae60; border: 1px solid #b2dfdb; border-radius: 20px; font-size: .78rem; font-weight: 700; padding: .3rem .8rem; margin-bottom: .8rem; }
+
+        /* Success modal */
+        .success-modal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5);
+            z-index: 9999; justify-content: center; align-items: center;
+        }
+        .success-modal.show { display: flex; }
+        .success-inner {
+            background: #fff; border-radius: 24px; padding: 2.5rem;
+            text-align: center; max-width: 480px; width: 90%; animation: fadeIn .3s;
+        }
+        .success-inner .icon { font-size: 3.5rem; color: #34c759; margin-bottom: 1rem; }
+        .success-inner h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: .5rem; }
+        .success-inner p  { color: var(--text-dim); font-size: .95rem; margin-bottom: 1.5rem; }
+        .order-id-box { background: var(--bg-light); border-radius: 12px; padding: .8rem 1.2rem; font-size: 1.1rem; font-weight: 800; margin-bottom: 1.5rem; }
+        .success-btns { display: flex; gap: .8rem; flex-wrap: wrap; justify-content: center; }
+        .btn-wa { background: #25d366; color: #fff; border: none; border-radius: 12px; padding: .9rem 1.5rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: .5rem; }
+        .btn-track { background: var(--primary); color: #fff; border: none; border-radius: 12px; padding: .9rem 1.5rem; font-weight: 700; cursor: pointer; }
+        @keyframes fadeIn { from { opacity:0; transform:scale(.95); } to { opacity:1; transform:scale(1); } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
+        <div style="flex:1;"></div>
+        <div style="display:flex; align-items:center; gap:.5rem; font-size:.85rem; color:var(--text-dim);">
+            <i class="fa fa-lock" style="color:#34c759;"></i> Pago seguro
+        </div>
+    </header>
+
+    <div class="checkout-layout">
+        <!-- LEFT: Checkout Steps -->
+        <div>
+            <!-- Steps bar -->
+            <div class="steps-bar" id="stepsBar">
+                <div class="step-item active" id="sbar1"><div class="step-num">1</div> Envío</div>
+                <div class="step-sep">›</div>
+                <div class="step-item" id="sbar2"><div class="step-num">2</div> Transportista</div>
+                <div class="step-sep">›</div>
+                <div class="step-item" id="sbar3"><div class="step-num">3</div> Cupón</div>
+                <div class="step-sep">›</div>
+                <div class="step-item" id="sbar4"><div class="step-num">4</div> Pago</div>
+            </div>
+
+            <!-- Step 1: Shipping data -->
+            <div class="step-panel active" id="panel1">
+                <div class="checkout-card">
+                    <h3><i class="fa fa-map-marker-alt" style="color:var(--primary);"></i> Datos de Envío</h3>
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label>Nombres <span style="color:red">*</span></label>
+                            <input type="text" id="shipFirst" class="form-control" placeholder="Juan" autocomplete="given-name">
+                        </div>
+                        <div class="form-group">
+                            <label>Apellidos <span style="color:red">*</span></label>
+                            <input type="text" id="shipLast" class="form-control" placeholder="Pérez" autocomplete="family-name">
+                        </div>
+                    </div>
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label>Teléfono / WhatsApp <span style="color:red">*</span></label>
+                            <input type="tel" id="shipPhone" class="form-control" placeholder="0999 123 456" autocomplete="tel">
+                        </div>
+                        <div class="form-group">
+                            <label>Cédula <span class="optional-label">(opcional)</span></label>
+                            <input type="text" id="shipCedula" class="form-control" placeholder="1712345678">
+                        </div>
+                    </div>
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label>Provincia <span style="color:red">*</span></label>
+                            <input type="text" id="shipProvince" class="form-control" placeholder="Sucumbíos" list="provinces-list" autocomplete="address-level1">
+                            <datalist id="provinces-list">
+                                <option>Azuay</option><option>Bolívar</option><option>Cañar</option><option>Carchi</option>
+                                <option>Chimborazo</option><option>Cotopaxi</option><option>El Oro</option><option>Esmeraldas</option>
+                                <option>Galápagos</option><option>Guayas</option><option>Imbabura</option><option>Loja</option>
+                                <option>Los Ríos</option><option>Manabí</option><option>Morona Santiago</option><option>Napo</option>
+                                <option>Orellana</option><option>Pastaza</option><option>Pichincha</option><option>Santa Elena</option>
+                                <option>Santo Domingo</option><option>Sucumbíos</option><option>Tungurahua</option><option>Zamora Chinchipe</option>
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label>Ciudad <span style="color:red">*</span></label>
+                            <input type="text" id="shipCity" class="form-control" placeholder="Lago Agrio" autocomplete="address-level2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección <span style="color:red">*</span></label>
+                        <input type="text" id="shipAddr" class="form-control" placeholder="Calle principal y secundaria, N° casa" autocomplete="street-address">
+                    </div>
+                    <div class="form-group">
+                        <label>Referencia <span class="optional-label">(opcional)</span></label>
+                        <input type="text" id="shipRef" class="form-control" placeholder="Cerca del parque central, edificio azul...">
+                    </div>
+                    <div id="savedAddressSection" style="display:none; margin-bottom:1rem;">
+                        <label style="font-size:.85rem; font-weight:700; color:var(--text-dim); display:block; margin-bottom:.4rem;">O usa una dirección guardada:</label>
+                        <select id="savedAddressSelect" class="form-control" onchange="fillSavedAddress(this.value)">
+                            <option value="">— Seleccionar —</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="step-nav">
+                    <button class="btn-back" onclick="location.href='index.html'"><i class="fa fa-arrow-left"></i> Carrito</button>
+                    <button class="btn-next" onclick="goStep(2)">Continuar <i class="fa fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Step 2: Carrier -->
+            <div class="step-panel" id="panel2">
+                <div class="checkout-card">
+                    <h3><i class="fa fa-truck" style="color:var(--primary);"></i> Seleccionar Transportista</h3>
+                    <div class="carrier-options">
+                        <div class="carrier-card" id="car-Servientrega" onclick="selectCarrier('Servientrega')">
+                            <i class="fa fa-truck"></i>
+                            <span>Servientrega</span>
+                            <small style="color:var(--text-dim); font-size:.72rem;">24-48h nacional</small>
+                        </div>
+                        <div class="carrier-card" id="car-Tramaco Express" onclick="selectCarrier('Tramaco Express')">
+                            <i class="fa fa-shipping-fast"></i>
+                            <span>Tramaco Express</span>
+                            <small style="color:var(--text-dim); font-size:.72rem;">24-48h nacional</small>
+                        </div>
+                        <div class="carrier-card" id="car-Cooperativa" onclick="selectCarrier('Cooperativa')">
+                            <i class="fa fa-handshake"></i>
+                            <span>Cooperativa</span>
+                            <small style="color:var(--text-dim); font-size:.72rem;">Oriente / local</small>
+                        </div>
+                    </div>
+                    <div id="agencyNameSection" style="display:none; margin-top:1rem;">
+                        <div class="form-group">
+                            <label>Nombre de la Agencia <span style="color:red">*</span></label>
+                            <input type="text" id="agencyName" class="form-control" placeholder="Ej: Trans Oriente, Putumayo...">
+                        </div>
+                    </div>
+                    <div id="shippingCostNote" style="margin-top:1.2rem; padding:.8rem 1rem; background:#f8fafc; border-radius:10px; font-size:.85rem;"></div>
+                </div>
+                <div class="step-nav">
+                    <button class="btn-back" onclick="goStep(1)"><i class="fa fa-arrow-left"></i> Atrás</button>
+                    <button class="btn-next" onclick="goStep(3)">Continuar <i class="fa fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Step 3: Coupon -->
+            <div class="step-panel" id="panel3">
+                <div class="checkout-card">
+                    <h3><i class="fa fa-tag" style="color:var(--primary);"></i> Cupón de Descuento</h3>
+
+                    <div id="couponAppliedBox" class="coupon-applied" style="display:none; margin-bottom:1rem;">
+                        <i class="fa fa-check-circle"></i>
+                        <span id="couponAppliedText">Cupón ECU10 aplicado — 10% descuento + envío gratis</span>
+                        <button onclick="removeCoupon()" style="margin-left:auto; background:none; border:none; color:#27ae60; cursor:pointer; font-size:.8rem;">✕ Quitar</button>
+                    </div>
+
+                    <div id="couponInputSection">
+                        <div class="coupon-input-row">
+                            <input type="text" id="couponInput" class="form-control" placeholder="Ingresa tu código (ej: ECU10)" style="text-transform:uppercase;">
+                            <button onclick="applyCoupon()">Aplicar</button>
+                        </div>
+                        <div id="couponMsg" style="font-size:.82rem; margin-top:.4rem;"></div>
+                    </div>
+
+                    <div id="couponSavings" style="display:none; margin-top:1.2rem; padding:1rem; background:#f0fff4; border-radius:12px; border:1px solid #b2dfdb;">
+                        <div style="font-size:.9rem; font-weight:700; color:#27ae60; margin-bottom:.3rem;"><i class="fa fa-piggy-bank"></i> Ahorro aplicado</div>
+                        <div style="font-size:.85rem; color:var(--text);" id="savingsDetail"></div>
+                    </div>
+                </div>
+                <div class="step-nav">
+                    <button class="btn-back" onclick="goStep(2)"><i class="fa fa-arrow-left"></i> Atrás</button>
+                    <button class="btn-next" onclick="goStep(4)">Continuar <i class="fa fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Step 4: Payment -->
+            <div class="step-panel" id="panel4">
+                <div class="checkout-card">
+                    <h3><i class="fa fa-credit-card" style="color:var(--primary);"></i> Método de Pago</h3>
+
+                    <div class="pay-methods">
+                        <div class="pay-method-card" id="pay-transferencia" onclick="selectPayMethod('transferencia')">
+                            <i class="fa fa-building-columns"></i>
+                            <span>Transferencia Bancaria</span>
+                        </div>
+                        <div class="pay-method-card disabled" title="Próximamente disponible">
+                            <div class="maintenance-badge">Mantenimiento</div>
+                            <i class="fa fa-credit-card"></i>
+                            <span>Tarjeta Crédito/Débito</span>
+                        </div>
+                        <div class="pay-method-card" id="pay-cripto" onclick="selectPayMethod('cripto')">
+                            <i class="fab fa-bitcoin"></i>
+                            <span>Criptomoneda</span>
+                        </div>
+                    </div>
+
+                    <!-- Transferencia detail -->
+                    <div class="pay-detail" id="detail-transferencia">
+                        <div id="bankList"></div>
+
+                        <div class="form-group" style="margin-top:1rem;">
+                            <label>Subir Comprobante <span class="optional-label">(imagen o PDF)</span></label>
+                            <div class="file-upload-area" onclick="document.getElementById('proofFile').click()">
+                                <i class="fa fa-cloud-upload-alt"></i>
+                                <p id="proofFileName">Clic para subir o arrastra aquí</p>
+                            </div>
+                            <input type="file" id="proofFile" accept="image/*,.pdf" onchange="handleProofFile(this)">
+                        </div>
+                        <div class="form-group">
+                            <label>O ingresa # de referencia / Nro. de transacción</label>
+                            <input type="text" id="txRef" class="form-control" placeholder="Ej: 12345678">
+                        </div>
+                    </div>
+
+                    <!-- Cripto detail -->
+                    <div class="pay-detail" id="detail-cripto">
+                        <div class="form-group">
+                            <label>Red / Moneda</label>
+                            <select id="cryptoNetwork" class="form-control" onchange="updateCryptoWallet()">
+                                <option value="">— Seleccionar —</option>
+                            </select>
+                        </div>
+                        <div id="cryptoWalletDisplay"></div>
+                        <div class="form-group">
+                            <label>TXID de la transacción <span class="optional-label">(opcional)</span></label>
+                            <input type="text" id="cryptoTxid" class="form-control" placeholder="Hash de la transacción">
+                        </div>
+                        <div class="form-group">
+                            <label>Subir captura de pantalla <span class="optional-label">(opcional)</span></label>
+                            <div class="file-upload-area" onclick="document.getElementById('cryptoFile').click()">
+                                <i class="fa fa-cloud-upload-alt"></i>
+                                <p id="cryptoFileName">Clic para subir comprobante</p>
+                            </div>
+                            <input type="file" id="cryptoFile" accept="image/*" onchange="handleCryptoFile(this)">
+                        </div>
+                    </div>
+                </div>
+                <div class="step-nav">
+                    <button class="btn-back" onclick="goStep(3)"><i class="fa fa-arrow-left"></i> Atrás</button>
+                    <button class="btn-next" id="btnConfirm" onclick="confirmOrder()">
+                        <i class="fa fa-lock"></i> Confirmar Orden
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Order Summary -->
+        <div class="order-summary">
+            <div class="summary-card">
+                <h3><i class="fa fa-receipt" style="color:var(--text-dim);"></i> Resumen del Pedido</h3>
+                <div id="summaryItems"></div>
+                <hr class="summary-divider">
+                <div id="couponChipSummary"></div>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="sumSubtotal">$0.00</span>
+                </div>
+                <div class="summary-row discount" id="sumDiscountRow" style="display:none;">
+                    <span><i class="fa fa-tag"></i> Descuento (cupón)</span>
+                    <span id="sumDiscount">-$0.00</span>
+                </div>
+                <div class="summary-row" id="sumShipRow">
+                    <span>Envío</span>
+                    <span id="sumShipping">$5.00</span>
+                </div>
+                <hr class="summary-divider">
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="sumTotal">$0.00</span>
+                </div>
+                <div style="margin-top:1rem; font-size:.75rem; color:var(--text-dim); display:flex; gap:.4rem; align-items:flex-start;">
+                    <i class="fa fa-shield-alt" style="color:#34c759; margin-top:2px;"></i>
+                    Tus datos están protegidos con SSL. Pagos procesados de forma segura.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-inner">
+            <div class="icon"><i class="fa fa-check-circle"></i></div>
+            <h2>¡Orden Creada!</h2>
+            <p>Tu pedido ha sido registrado. Te notificaremos por WhatsApp cuando tu pago sea verificado.</p>
+            <div class="order-id-box" id="successOrderId">EG-XXXX</div>
+            <div class="success-btns">
+                <button class="btn-wa" id="btnWhatsapp">
+                    <i class="fab fa-whatsapp"></i> Enviar comprobante
+                </button>
+                <button class="btn-track" id="btnTracking">
+                    Ver mi pedido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="/lib/supabase-client.js"></script>
+    <script src="/lib/cart.js"></script>
+    <script src="/lib/auth.js"></script>
+    <script>
+        // State
+        let currentStep = 1;
+        let couponCode = 'ECU10';
+        let couponData = null;    // { type, value, free_shipping }
+        let selectedCarrier = '';
+        let selectedPayMethod = '';
+        let shippingCost = 5.00;
+        let freeThreshold = 500;
+        let bankAccounts = [];
+        let cryptoWallets = [];
+        let proofFile = null;
+        let cryptoFile = null;
+        let userSession = null;
+        let savedAddresses = [];
+
+        async function init() {
+            userSession = await Auth.requireAuth('login.html');
+            if (!userSession) return;
+
+            if (Cart.isEmpty()) {
+                alert('Tu carrito está vacío.');
+                location.href = 'index.html';
+                return;
+            }
+
+            await loadSettings();
+            await loadUserData();
+            renderSummary();
+            // Auto-apply ECU10 on load
+            await applyCouponCode('ECU10', true);
+        }
+
+        async function loadSettings() {
+            try {
+                const res = await fetch('/api/admin/settings', {
+                    headers: { 'Authorization': 'Bearer ' + userSession.access_token }
+                });
+                // Settings are public read, but admin endpoint for admin key.
+                // Fallback: read directly from supabase anon
+                const { data } = await _supabase.from('settings').select('key, value');
+                if (data) {
+                    data.forEach(s => {
+                        if (s.key === 'free_shipping_threshold') freeThreshold = parseFloat(s.value) || 500;
+                        if (s.key === 'shipping_cost')           shippingCost  = parseFloat(s.value) || 5;
+                        if (s.key === 'bank_accounts')           bankAccounts  = Array.isArray(s.value) ? s.value : JSON.parse(s.value);
+                        if (s.key === 'crypto_wallets')          cryptoWallets = Array.isArray(s.value) ? s.value : JSON.parse(s.value);
+                    });
+                }
+            } catch (e) {
+                // Use defaults
+            }
+            renderBankList();
+            renderCryptoOptions();
+        }
+
+        async function loadUserData() {
+            try {
+                const res = await fetch('/api/me', {
+                    headers: { 'Authorization': 'Bearer ' + userSession.access_token }
+                });
+                const profile = await res.json();
+                if (profile.first_name) document.getElementById('shipFirst').value = profile.first_name;
+                if (profile.last_name)  document.getElementById('shipLast').value  = profile.last_name;
+                if (profile.phone)      document.getElementById('shipPhone').value  = profile.phone;
+                if (profile.cedula)     document.getElementById('shipCedula').value = profile.cedula;
+                if (profile.addresses && profile.addresses.length > 0) {
+                    savedAddresses = profile.addresses;
+                    const sel = document.getElementById('savedAddressSelect');
+                    profile.addresses.forEach((addr, i) => {
+                        const opt = document.createElement('option');
+                        opt.value = i;
+                        opt.textContent = `${addr.label || 'Dirección'} — ${addr.city}, ${addr.address1}`;
+                        sel.appendChild(opt);
+                        if (addr.is_default) { sel.value = i; fillSavedAddress(i); }
+                    });
+                    document.getElementById('savedAddressSection').style.display = 'block';
+                }
+            } catch (e) {}
+        }
+
+        function fillSavedAddress(idx) {
+            const addr = savedAddresses[parseInt(idx)];
+            if (!addr) return;
+            document.getElementById('shipProvince').value = addr.province || '';
+            document.getElementById('shipCity').value     = addr.city || '';
+            document.getElementById('shipAddr').value     = addr.address1 || '';
+            document.getElementById('shipRef').value      = addr.reference || '';
+        }
+
+        // Steps navigation
+        function goStep(n) {
+            if (n > currentStep && !validateStep(currentStep)) return;
+            currentStep = n;
+            document.querySelectorAll('.step-panel').forEach((p, i) => {
+                p.classList.toggle('active', i + 1 === n);
+            });
+            document.querySelectorAll('.step-item').forEach((s, i) => {
+                s.classList.toggle('active', i + 1 === n);
+                s.classList.toggle('done',   i + 1 < n);
+            });
+            renderSummary();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function validateStep(step) {
+            if (step === 1) {
+                const first = document.getElementById('shipFirst').value.trim();
+                const last  = document.getElementById('shipLast').value.trim();
+                const phone = document.getElementById('shipPhone').value.trim();
+                const prov  = document.getElementById('shipProvince').value.trim();
+                const city  = document.getElementById('shipCity').value.trim();
+                const addr  = document.getElementById('shipAddr').value.trim();
+                if (!first || !last || !phone || !prov || !city || !addr) {
+                    alert('Por favor completa todos los campos obligatorios de envío.');
+                    return false;
+                }
+            }
+            if (step === 2) {
+                if (!selectedCarrier) { alert('Selecciona un transportista.'); return false; }
+                if (selectedCarrier === 'Cooperativa' && !document.getElementById('agencyName').value.trim()) {
+                    alert('Ingresa el nombre de la agencia cooperativa.'); return false;
+                }
+            }
+            if (step === 4) {
+                if (!selectedPayMethod) { alert('Selecciona un método de pago.'); return false; }
+            }
+            return true;
+        }
+
+        function selectCarrier(carrier) {
+            selectedCarrier = carrier;
+            document.querySelectorAll('.carrier-card').forEach(c => c.classList.remove('selected'));
+            document.getElementById('car-' + carrier).classList.add('selected');
+            document.getElementById('agencyNameSection').style.display = carrier === 'Cooperativa' ? 'block' : 'none';
+            updateShippingCostNote();
+            renderSummary();
+        }
+
+        function updateShippingCostNote() {
+            const subtotal = Cart.subtotal();
+            const hasDiscount = couponData && couponData.free_shipping;
+            const isFree = hasDiscount || subtotal >= freeThreshold;
+            const note = document.getElementById('shippingCostNote');
+            note.innerHTML = isFree
+                ? `<i class="fa fa-check-circle" style="color:#34c759;"></i> <strong>¡Envío Gratis!</strong> ${hasDiscount ? 'Cupón ECU10 aplicado.' : `Tu pedido supera $${freeThreshold}.`}`
+                : `<i class="fa fa-info-circle" style="color:var(--accent);"></i> Costo de envío: <strong>$${shippingCost.toFixed(2)}</strong>`;
+        }
+
+        function selectPayMethod(method) {
+            selectedPayMethod = method;
+            document.querySelectorAll('.pay-method-card:not(.disabled)').forEach(c => c.classList.remove('selected'));
+            document.getElementById('pay-' + method).classList.add('selected');
+            document.querySelectorAll('.pay-detail').forEach(d => d.classList.remove('active'));
+            document.getElementById('detail-' + method).classList.add('active');
+        }
+
+        // Coupon
+        async function applyCoupon() {
+            const code = document.getElementById('couponInput').value.trim().toUpperCase();
+            if (!code) return;
+            await applyCouponCode(code, false);
+        }
+
+        async function applyCouponCode(code, silent) {
+            try {
+                const { data: c } = await _supabase
+                    .from('coupons')
+                    .select('*')
+                    .eq('code', code)
+                    .eq('is_active', true)
+                    .single();
+
+                if (!c) {
+                    if (!silent) {
+                        const msg = document.getElementById('couponMsg');
+                        msg.textContent = 'Cupón no válido o expirado.';
+                        msg.style.color = '#c0392b';
+                    }
+                    return;
+                }
+
+                const subtotal = Cart.subtotal();
+                if (c.min_subtotal && subtotal < c.min_subtotal) {
+                    if (!silent) {
+                        const msg = document.getElementById('couponMsg');
+                        msg.textContent = `El cupón requiere un mínimo de $${c.min_subtotal}.`;
+                        msg.style.color = '#c0392b';
+                    }
+                    return;
+                }
+
+                couponCode = code;
+                couponData = c;
+                document.getElementById('couponAppliedBox').style.display = 'flex';
+                document.getElementById('couponAppliedText').textContent =
+                    `Cupón ${code} aplicado — ${c.type === 'percent' ? c.value + '% descuento' : '$' + c.value + ' off'}${c.free_shipping ? ' + envío gratis' : ''}`;
+                document.getElementById('couponInputSection').style.display = 'none';
+                const msg = document.getElementById('couponMsg');
+                if (msg) { msg.textContent = ''; }
+                renderSummary();
+                updateShippingCostNote();
+            } catch (e) {
+                if (!silent) {
+                    const msg = document.getElementById('couponMsg');
+                    msg.textContent = 'Error validando el cupón.';
+                    msg.style.color = '#c0392b';
+                }
+            }
+        }
+
+        function removeCoupon() {
+            couponCode = '';
+            couponData = null;
+            document.getElementById('couponAppliedBox').style.display = 'none';
+            document.getElementById('couponInputSection').style.display = 'block';
+            document.getElementById('couponInput').value = '';
+            renderSummary();
+            updateShippingCostNote();
+        }
+
+        // Bank accounts rendering
+        function renderBankList() {
+            const container = document.getElementById('bankList');
+            if (!bankAccounts.length) {
+                container.innerHTML = '<p style="color:var(--text-dim); font-size:.85rem;">Cargando cuentas bancarias...</p>';
+                return;
+            }
+            container.innerHTML = bankAccounts.map((b, i) => `
+                <div class="bank-info-box" style="cursor:pointer; border:2px solid ${i===0 ? 'var(--primary)' : 'var(--border)'}; margin-bottom:.8rem;" onclick="selectBank(${i},this)">
+                    <h4><i class="fa fa-building-columns"></i> ${b.bank} — ${b.type}</h4>
+                    <div class="bank-row"><span>Número de cuenta</span><span class="bank-number">${b.number}</span></div>
+                    <div class="bank-row"><span>Beneficiario</span><span>${b.beneficiary}</span></div>
+                    ${b.cedula ? `<div class="bank-row"><span>C.I.</span><span>${b.cedula}</span></div>` : ''}
+                </div>`).join('');
+        }
+
+        function selectBank(idx, el) {
+            document.querySelectorAll('.bank-info-box').forEach(b => b.style.border = '1px solid var(--border)');
+            el.style.border = '2px solid var(--primary)';
+            window._selectedBankIdx = idx;
+        }
+        window._selectedBankIdx = 0;
+
+        // Crypto options rendering
+        function renderCryptoOptions() {
+            const sel = document.getElementById('cryptoNetwork');
+            cryptoWallets.forEach(w => {
+                if (!w.address) return;
+                const opt = document.createElement('option');
+                opt.value = w.network;
+                opt.textContent = w.network;
+                sel.appendChild(opt);
+            });
+        }
+
+        function updateCryptoWallet() {
+            const network = document.getElementById('cryptoNetwork').value;
+            const wallet = cryptoWallets.find(w => w.network === network);
+            const box = document.getElementById('cryptoWalletDisplay');
+            if (!wallet || !wallet.address) { box.innerHTML = ''; return; }
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(wallet.address)}`;
+            box.innerHTML = `
+                <div class="crypto-wallet-box">
+                    <div style="font-size:.78rem; font-weight:700; color:var(--text-dim); margin-bottom:.3rem;">Dirección ${network}</div>
+                    <img class="qr-img" src="${qrUrl}" alt="QR ${network}" onerror="this.style.display='none'">
+                    <div class="wallet-addr">${wallet.address}</div>
+                    <button onclick="navigator.clipboard.writeText('${wallet.address}').then(()=>this.textContent='✓ Copiado')"
+                        style="background:none; border:1px solid var(--border); border-radius:8px; padding:.3rem .8rem; font-size:.78rem; cursor:pointer; margin-top:.3rem;">
+                        <i class="fa fa-copy"></i> Copiar dirección
+                    </button>
+                </div>`;
+        }
+
+        function handleProofFile(input) {
+            proofFile = input.files[0];
+            document.getElementById('proofFileName').textContent = proofFile ? proofFile.name : 'Clic para subir';
+        }
+        function handleCryptoFile(input) {
+            cryptoFile = input.files[0];
+            document.getElementById('cryptoFileName').textContent = cryptoFile ? cryptoFile.name : 'Clic para subir';
+        }
+
+        // Summary rendering
+        function renderSummary() {
+            const items    = Cart.get();
+            const subtotal = Cart.subtotal();
+
+            // Items list
+            const itemsContainer = document.getElementById('summaryItems');
+            itemsContainer.innerHTML = items.map(item => `
+                <div class="summary-item">
+                    <img src="${item.image_url || item.image || 'https://via.placeholder.com/50'}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/50'">
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-qty">x${item.qty || 1}</div>
+                    </div>
+                    <div class="item-price">$${(item.price * (item.qty||1)).toFixed(2)}</div>
+                </div>`).join('');
+
+            // Coupon chip
+            const chip = document.getElementById('couponChipSummary');
+            chip.innerHTML = couponData ? `<div class="coupon-chip"><i class="fa fa-tag"></i> Cupón ${couponCode}</div>` : '';
+
+            // Discount
+            let discount = 0;
+            if (couponData) {
+                discount = couponData.type === 'percent'
+                    ? parseFloat((subtotal * couponData.value / 100).toFixed(2))
+                    : Math.min(couponData.value, subtotal);
+            }
+
+            // Shipping
+            const isFreeShipping = (couponData && couponData.free_shipping) || (subtotal - discount) >= freeThreshold;
+            const shipping = isFreeShipping ? 0 : shippingCost;
+            const total = subtotal - discount + shipping;
+
+            document.getElementById('sumSubtotal').textContent  = `$${subtotal.toFixed(2)}`;
+            document.getElementById('sumDiscount').textContent  = `-$${discount.toFixed(2)}`;
+            document.getElementById('sumDiscountRow').style.display = discount > 0 ? 'flex' : 'none';
+            document.getElementById('sumShipping').textContent  = isFreeShipping ? 'GRATIS' : `$${shipping.toFixed(2)}`;
+            document.getElementById('sumTotal').textContent     = `$${total.toFixed(2)}`;
+
+            // Savings detail in step 3
+            const savBox = document.getElementById('couponSavings');
+            if (couponData && discount > 0) {
+                savBox.style.display = 'block';
+                document.getElementById('savingsDetail').textContent =
+                    `Descuento: $${discount.toFixed(2)}${isFreeShipping ? ' · Envío: GRATIS' : ''}`;
+            } else {
+                savBox.style.display = 'none';
+            }
+        }
+
+        // Confirm order
+        async function confirmOrder() {
+            if (!validateStep(4)) return;
+
+            const btn = document.getElementById('btnConfirm');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Procesando...';
+
+            try {
+                let proofPath = '';
+
+                // Upload proof file to Supabase Storage if provided
+                const fileToUpload = selectedPayMethod === 'transferencia' ? proofFile : cryptoFile;
+                if (fileToUpload) {
+                    const ext = fileToUpload.name.split('.').pop();
+                    const fileName = `${userSession.user.id}/${Date.now()}.${ext}`;
+                    const { data: uploadData, error: uploadError } = await _supabase.storage
+                        .from('payment-proofs')
+                        .upload(fileName, fileToUpload, { contentType: fileToUpload.type });
+                    if (!uploadError && uploadData) proofPath = uploadData.path;
+                }
+
+                const bank = bankAccounts[window._selectedBankIdx || 0];
+                const shippingAddress = {
+                    firstName:  document.getElementById('shipFirst').value.trim(),
+                    lastName:   document.getElementById('shipLast').value.trim(),
+                    cedula:     document.getElementById('shipCedula').value.trim(),
+                    phone:      document.getElementById('shipPhone').value.trim(),
+                    province:   document.getElementById('shipProvince').value.trim(),
+                    city:       document.getElementById('shipCity').value.trim(),
+                    address1:   document.getElementById('shipAddr').value.trim(),
+                    reference:  document.getElementById('shipRef').value.trim()
+                };
+
+                const cartItems = Cart.get().map(i => ({ productId: i.id, qty: i.qty || 1 }));
+
+                const payload = {
+                    items:              cartItems,
+                    couponCode:         couponCode || '',
+                    carrier:            selectedCarrier,
+                    carrierAgencyName:  document.getElementById('agencyName')?.value.trim() || '',
+                    shippingAddress,
+                    paymentMethod:      selectedPayMethod,
+                    paymentProof: {
+                        bank:      bank ? bank.bank : '',
+                        txid:      (document.getElementById('txRef')?.value || document.getElementById('cryptoTxid')?.value || '').trim(),
+                        proofPath
+                    }
+                };
+
+                const res = await fetch('/api/orders/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + userSession.access_token
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await res.json();
+                if (!res.ok) throw new Error(result.error || 'Error desconocido');
+
+                // Success
+                Cart.clear();
+                const orderId = result.orderId;
+                document.getElementById('successOrderId').textContent = orderId;
+
+                const city = shippingAddress.city;
+                const total = result.total;
+                const waMsg = encodeURIComponent(
+                    `✅ *NUEVA ORDEN — ${orderId}*\n\n` +
+                    `👤 ${shippingAddress.firstName} ${shippingAddress.lastName}\n` +
+                    `📍 ${city}\n` +
+                    `💳 ${selectedPayMethod === 'transferencia' ? 'Transferencia' : 'Cripto'}\n` +
+                    `💰 Total: $${total.toFixed(2)}\n\n` +
+                    `Adjunto mi comprobante de pago.`
+                );
+                document.getElementById('btnWhatsapp').onclick = () =>
+                    window.open(`https://wa.me/593962609951?text=${waMsg}`, '_blank');
+                document.getElementById('btnTracking').onclick = () =>
+                    location.href = `tracking.html?id=${orderId}`;
+
+                document.getElementById('successModal').classList.add('show');
+
+            } catch (err) {
+                alert('Error creando la orden: ' + err.message);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa fa-lock"></i> Confirmar Orden';
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
