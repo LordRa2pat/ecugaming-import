@@ -3,10 +3,10 @@
 'use strict';
 
 const express = require('express');
-const multer  = require('multer');
-const fs      = require('fs');
-const path    = require('path');
-const cors    = require('cors');
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
@@ -35,6 +35,31 @@ if (SUPABASE_URL && SUPABASE_KEY) {
 }
 
 // ============================================================
+// SECURITY: IP Banning Middleware
+// ============================================================
+app.use(async (req, res, next) => {
+    if (!useSupabase) return next();
+
+    // Get real IP (handle proxies)
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    req.clientIp = ip;
+
+    try {
+        const { data: banned } = await supabase
+            .from('banned_ips')
+            .select('ip_address')
+            .eq('ip_address', ip)
+            .single();
+
+        if (banned) {
+            return res.status(403).json({ error: 'Tu acceso ha sido revocado por razones de seguridad.', code: 'IP_BANNED' });
+        }
+    } catch (e) { /* silent fail on select error */ }
+
+    next();
+});
+
+// ============================================================
 // JSON FALLBACK (read-only, for /api/stock when no Supabase)
 // ============================================================
 const DATA_DIR = path.join(__dirname, '../public/data');
@@ -49,16 +74,16 @@ const readJSON = (file) => {
 // Map old stock.json field names to new schema shape
 function mapLegacyProduct(p) {
     return {
-        id:          p.id,
-        name:        p.name,
-        category:    p.category,
-        price:       p.price,
-        sale_price:  p.old_price || null,
-        stock:       p.stock,
+        id: p.id,
+        name: p.name,
+        category: p.category,
+        price: p.price,
+        sale_price: p.old_price || null,
+        stock: p.stock,
         description: p.description || '',
-        image_url:   (!p.image || p.image.startsWith('data:')) ? null : p.image,
-        badge:       p.is_clearance ? 'Remate' : null,
-        is_active:   true
+        image_url: (!p.image || p.image.startsWith('data:')) ? null : p.image,
+        badge: p.is_clearance ? 'Remate' : null,
+        is_active: true
     };
 }
 
@@ -136,21 +161,21 @@ app.get('/api/stock', async (req, res) => {
                     }
                 }
                 return {
-                    id:          p.id,
-                    name:        p.name,
-                    category:    p.category?.name || 'General',
+                    id: p.id,
+                    name: p.name,
+                    category: p.category?.name || 'General',
                     category_id: p.category?.id,
-                    brand:       p.brand,
+                    brand: p.brand,
                     description: p.description,
-                    specs:       p.specs,
-                    price:       p.price,
-                    sale_price:  p.sale_price,
-                    old_price:   p.sale_price,  // backwards compat for n8n
-                    stock:       p.stock,
-                    badge:       p.badge,
+                    specs: p.specs,
+                    price: p.price,
+                    sale_price: p.sale_price,
+                    old_price: p.sale_price,  // backwards compat for n8n
+                    stock: p.stock,
+                    badge: p.badge,
                     image_url,
-                    image:       image_url,     // backwards compat
-                    is_active:   p.is_active
+                    image: image_url,     // backwards compat
+                    is_active: p.is_active
                 };
             });
             return res.json(mapped);
@@ -340,13 +365,13 @@ app.post('/api/orders/create', requireAuth(async (req, res) => {
             orderItemsData.push({
                 product_id: prod.id,
                 product_snapshot: {
-                    name:      prod.name,
-                    price:     unitPrice,
+                    name: prod.name,
+                    price: unitPrice,
                     image_url: prod.image_url,
-                    badge:     prod.badge
+                    badge: prod.badge
                 },
                 unit_price: unitPrice,
-                qty:        item.qty,
+                qty: item.qty,
                 line_total: lineTotal
             });
         }
@@ -392,30 +417,31 @@ app.post('/api/orders/create', requireAuth(async (req, res) => {
         const settingsMap = {};
         for (const s of (settings || [])) settingsMap[s.key] = s.value;
         const freeThreshold = parseFloat(settingsMap['free_shipping_threshold'] || 500);
-        const baseCost      = parseFloat(settingsMap['shipping_cost'] || 5);
+        const baseCost = parseFloat(settingsMap['shipping_cost'] || 5);
 
         const shippingTotal = (couponFreeShipping || (subtotal - discountTotal) >= freeThreshold) ? 0 : baseCost;
         const total = parseFloat((subtotal - discountTotal + shippingTotal).toFixed(2));
 
         // 4. Create order ID
         const orderId = 'EG-' + Date.now().toString(36).toUpperCase() +
-                        Math.random().toString(36).substr(2, 3).toUpperCase();
+            Math.random().toString(36).substr(2, 3).toUpperCase();
 
         // 5. Insert order
         const { error: orderError } = await supabase.from('orders').insert({
-            id:                 orderId,
-            user_id:            userId,
-            status:             'confirmando_pago',
-            payment_method:     paymentMethod,
-            payment_status:     'pending',
-            coupon_code:        validatedCouponCode,
-            discount_total:     discountTotal,
-            shipping_total:     shippingTotal,
+            id: orderId,
+            user_id: userId,
+            status: 'confirmando_pago',
+            payment_method: paymentMethod,
+            payment_status: 'pending',
+            coupon_code: validatedCouponCode,
+            discount_total: discountTotal,
+            shipping_total: shippingTotal,
             subtotal,
             total,
-            carrier,
+            carrier: carrier,
             carrier_agency_name: carrierAgencyName || '',
-            shipping_address:   shippingAddress
+            shipping_address: shippingAddress,
+            ip_address: req.clientIp
         });
         if (orderError) throw orderError;
 
@@ -460,19 +486,19 @@ app.post('/api/orders/create', requireAuth(async (req, res) => {
 
         // 9. Log initial status event
         await supabase.from('order_status_events').insert({
-            order_id:      orderId,
-            status:        'confirmando_pago',
-            note:          'Orden creada',
+            order_id: orderId,
+            status: 'confirmando_pago',
+            note: 'Orden creada',
             actor_user_id: userId
         });
 
         // 10. Save payment proof if provided
         if (paymentProof && (paymentProof.bank || paymentProof.txid || paymentProof.proofPath)) {
             await supabase.from('payment_proofs').insert({
-                order_id:   orderId,
-                method:     paymentMethod,
-                bank:       paymentProof.bank || '',
-                txid:       paymentProof.txid || '',
+                order_id: orderId,
+                method: paymentMethod,
+                bank: paymentProof.bank || '',
+                txid: paymentProof.txid || '',
                 proof_path: paymentProof.proofPath || ''
             });
         }
@@ -496,9 +522,9 @@ app.post('/api/orders/create', requireAuth(async (req, res) => {
 // ADMIN: GET /api/admin/orders
 // ============================================================
 app.get('/api/admin/orders', requireAdmin(async (req, res) => {
-    const page  = parseInt(req.query.page || 1);
+    const page = parseInt(req.query.page || 1);
     const limit = parseInt(req.query.limit || 50);
-    const from  = (page - 1) * limit;
+    const from = (page - 1) * limit;
     const status = req.query.status;
 
     let query = supabase
@@ -542,9 +568,9 @@ app.patch('/api/admin/orders/:id/status', requireAdmin(async (req, res) => {
     if (error) return res.status(400).json({ error: error.message });
 
     await supabase.from('order_status_events').insert({
-        order_id:      id,
+        order_id: id,
         status,
-        note:          note || '',
+        note: note || '',
         actor_user_id: req.user.id
     });
 
@@ -727,13 +753,79 @@ app.patch('/api/admin/settings', requireAdmin(async (req, res) => {
 }));
 
 // ============================================================
+// ADMIN: SECURITY & IP MANAGEMENT
+// ============================================================
+app.get('/api/admin/security/banned-ips', requireAdmin(async (req, res) => {
+    const { data, error } = await supabase.from('banned_ips').select('*').order('banned_at', { ascending: false });
+    if (error) return res.status(400).json({ error: error.message });
+    res.json(data);
+}));
+
+app.post('/api/admin/security/ban', requireAdmin(async (req, res) => {
+    const { ip, reason } = req.body;
+    if (!ip) return res.status(400).json({ error: 'IP requerida' });
+    const { data, error } = await supabase.from('banned_ips').insert({
+        ip_address: ip,
+        reason: reason || 'Comportamiento sospechoso',
+        banned_by: req.user.id
+    }).select().single();
+    if (error) return res.status(400).json({ error: error.message });
+    res.json(data);
+}));
+
+app.delete('/api/admin/security/unban/:ip', requireAdmin(async (req, res) => {
+    const { error } = await supabase.from('banned_ips').delete().eq('ip_address', req.params.ip);
+    if (error) return res.status(400).json({ error: error.message });
+    res.json({ ok: true });
+}));
+
+// ============================================================
+// ADMIN: ANALYTICS & AUDIT
+// ============================================================
+app.get('/api/admin/audit', requireAdmin(async (req, res) => {
+    const { data, error } = await supabase.from('admin_audit_logs').select('*').order('created_at', { ascending: false }).limit(100);
+    if (error) return res.status(400).json({ error: error.message });
+    res.json(data);
+}));
+
+app.get('/api/admin/analytics/stats', requireAdmin(async (req, res) => {
+    // Basic stats aggregation
+    const [{ count: totalOrders }, { count: totalProds }, { data: revenue }] = await Promise.all([
+        supabase.from('orders').select('*', { count: 'exact', head: true }),
+        supabase.from('products').select('*', { count: 'exact', head: true }),
+        supabase.from('orders').select('total').eq('status', 'recibido')
+    ]);
+    const totalRevenue = (revenue || []).reduce((acc, curr) => acc + Number(curr.total), 0);
+    res.json({ totalOrders, totalProds, totalRevenue });
+}));
+
+// ============================================================
+// ADMIN: USER MANAGEMENT
+// ============================================================
+app.get('/api/admin/users', requireAdmin(async (req, res) => {
+    const { data, error } = await supabase.from('profiles').select('*').order('created_at', { ascending: false });
+    if (error) return res.status(400).json({ error: error.message });
+    res.json(data);
+}));
+
+app.patch('/api/admin/users/:id', requireAdmin(async (req, res) => {
+    const { role, is_banned } = req.body;
+    const updates = {};
+    if (role) updates.role = role;
+    if (is_banned !== undefined) updates.is_banned = is_banned;
+    const { data, error } = await supabase.from('profiles').update(updates).eq('id', req.params.id).select().single();
+    if (error) return res.status(400).json({ error: error.message });
+    res.json(data);
+}));
+
+// ============================================================
 // Health check
 // ============================================================
 app.get('/api/health', (req, res) => {
     res.json({
-        status:    'ok',
-        version:   '3.0',
-        database:  useSupabase ? 'supabase' : 'json-fallback',
+        status: 'ok',
+        version: '3.5 (Mega Admin)',
+        database: useSupabase ? 'supabase' : 'json-fallback',
         timestamp: new Date().toISOString()
     });
 });
