@@ -376,8 +376,6 @@
         }
 
         function setup3DHero(item) {
-            document.getElementById('heroTitle').textContent = item.name;
-            document.getElementById('heroDesc').textContent = item.description || 'Tecnología premium garantizada.';
 
             const activePrice = item.sale_price ?? item.price;
             const hasPromo = item.sale_price && item.sale_price < item.price;

@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Métodos de Pago | Ecugaming Import</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.0.6">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .legal-container {
             max-width: 800px;
             margin: 100px auto 60px;
             padding: 3rem 5%;
-            background: #fff;
+            background: var(--card-bg);
             border-radius: 24px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-glass);
             border: 1px solid var(--border);
         }
         .legal-content h1 {
@@ -30,7 +30,7 @@
             margin-bottom: 2rem;
         }
         .legal-content h2 {
-            color: var(--primary);
+            color: #fff;
             margin-top: 2.5rem;
             margin-bottom: 1rem;
             font-size: 1.4rem;
@@ -56,7 +56,7 @@
             border-radius: 16px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            background: #fafafa;
+            background: rgba(255,255,255,0.03);
         }
         .payment-card-header {
             display: flex;
@@ -82,7 +82,7 @@
         .payment-card-title {
             font-weight: 800;
             font-size: 1.15rem;
-            color: var(--secondary);
+            color: #fff;
         }
         .payment-card-subtitle {
             font-size: 0.85rem;
@@ -129,7 +129,7 @@
             flex-shrink: 0;
         }
         .notice-box {
-            background: #f0fdf4;
+            background: rgba(34,197,94,0.07);
             border-left: 4px solid var(--accent);
             padding: 1.25rem 1.5rem;
             border-radius: 0 12px 12px 0;
@@ -138,7 +138,7 @@
             font-size: 0.95rem;
         }
         .notice-warning {
-            background: #fffbeb;
+            background: rgba(245,158,11,0.08);
             border-left-color: #f59e0b;
         }
         .footer-note {
@@ -184,7 +184,7 @@
                     <li><strong>Banco Guayaquil</strong> — Cuenta de Ahorros</li>
                 </ul>
                 <p>Los números de cuenta actualizados se muestran al seleccionar el banco en el paso de pago del checkout.</p>
-                <h3 style="font-size:1rem;font-weight:700;color:var(--secondary);margin:1rem 0 0.5rem;">Proceso paso a paso:</h3>
+                <h3 style="font-size:1rem;font-weight:700;color:#fff;margin:1rem 0 0.5rem;">Proceso paso a paso:</h3>
                 <ol class="step-list">
                     <li>Selecciona tu banco en el checkout y anota el número de cuenta y titular.</li>
                     <li>Realiza la transferencia o depósito desde tu banco (en línea, app o en ventanilla).</li>
@@ -213,7 +213,7 @@
                     <li><strong>USDT (TRC20)</strong> — Tether en la red TRON (comisiones bajas).</li>
                     <li><strong>Bitcoin (BTC)</strong> — Red Bitcoin estándar.</li>
                 </ul>
-                <h3 style="font-size:1rem;font-weight:700;color:var(--secondary);margin:1rem 0 0.5rem;">Proceso paso a paso:</h3>
+                <h3 style="font-size:1rem;font-weight:700;color:#fff;margin:1rem 0 0.5rem;">Proceso paso a paso:</h3>
                 <ol class="step-list">
                     <li>Selecciona la red de criptomoneda en el checkout.</li>
                     <li>Escanea el código QR o copia la dirección de wallet mostrada.</li>
