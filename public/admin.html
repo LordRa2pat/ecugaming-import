@@ -26,8 +26,6 @@
         }
 
         .admin-layout {
-            display: grid;
-            grid-template-columns: 280px 1fr;
             min-height: 100vh;
             background: #000;
         }
@@ -458,419 +456,425 @@
     </style>
 </head>
 
-<div class="admin-layout">
-    <aside class="admin-sidebar" id="mainSidebar">
-        <div class="sidebar-brand">Ecugaming <span>Import</span></div>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" id="mainSidebar">
+            <div class="sidebar-brand">Ecugaming <span>Import</span></div>
 
-        <div class="sidebar-group">Principal</div>
-        <button class="sidebar-item active" onclick="switchPanel('dashboard',this)"><i class="fa fa-th-large"></i>
-            Dashboard</button>
-        <button class="sidebar-item" onclick="switchPanel('products',this)"><i class="fa fa-box"></i>
-            Inventario</button>
-        <button class="sidebar-item" onclick="switchPanel('orders',this)"><i class="fa fa-shopping-cart"></i>
-            Ventas</button>
-        <button class="sidebar-item" onclick="switchPanel('customers',this)"><i class="fa fa-users"></i>
-            Clientes</button>
+            <div class="sidebar-group">Principal</div>
+            <button class="sidebar-item active" onclick="switchPanel('dashboard',this)"><i class="fa fa-th-large"></i>
+                Dashboard</button>
+            <button class="sidebar-item" onclick="switchPanel('products',this)"><i class="fa fa-box"></i>
+                Inventario</button>
+            <button class="sidebar-item" onclick="switchPanel('orders',this)"><i class="fa fa-shopping-cart"></i>
+                Ventas</button>
+            <button class="sidebar-item" onclick="switchPanel('customers',this)"><i class="fa fa-users"></i>
+                Clientes</button>
 
-        <div class="sidebar-group">Seguridad & Control</div>
-        <button class="sidebar-item" onclick="switchPanel('security',this)"><i class="fa fa-shield-alt"></i> Seguridad
-            (IP)</button>
-        <button class="sidebar-item" onclick="switchPanel('audit',this)"><i class="fa fa-history"></i>
-            Auditoría</button>
+            <div class="sidebar-group">Seguridad & Control</div>
+            <button class="sidebar-item" onclick="switchPanel('security',this)"><i class="fa fa-shield-alt"></i>
+                Seguridad
+                (IP)</button>
+            <button class="sidebar-item" onclick="switchPanel('audit',this)"><i class="fa fa-history"></i>
+                Auditoría</button>
 
-        <div class="sidebar-group">Marketing</div>
-        <button class="sidebar-item" onclick="switchPanel('coupons',this)"><i class="fa fa-ticket-alt"></i>
-            Cupones</button>
-        <button class="sidebar-item" onclick="switchPanel('marketing',this)"><i class="fa fa-ad"></i>
-            Banners/Promos</button>
-        <button class="sidebar-item" onclick="switchPanel('reviews',this)"><i class="fa fa-star"></i> Reseñas</button>
+            <div class="sidebar-group">Marketing</div>
+            <button class="sidebar-item" onclick="switchPanel('coupons',this)"><i class="fa fa-ticket-alt"></i>
+                Cupones</button>
+            <button class="sidebar-item" onclick="switchPanel('marketing',this)"><i class="fa fa-ad"></i>
+                Banners/Promos</button>
+            <button class="sidebar-item" onclick="switchPanel('reviews',this)"><i class="fa fa-star"></i>
+                Reseñas</button>
 
-        <div class="sidebar-group">Gestión & Media</div>
-        <button class="sidebar-item" onclick="switchPanel('media',this)"><i class="fa fa-images"></i>
-            Multimedia</button>
-        <button class="sidebar-item" onclick="switchPanel('content',this)"><i class="fa fa-file-alt"></i> Contenido /
-            Blog</button>
-        <button class="sidebar-item" onclick="switchPanel('logistics',this)"><i class="fa fa-truck"></i>
-            Logística</button>
+            <div class="sidebar-group">Gestión & Media</div>
+            <button class="sidebar-item" onclick="switchPanel('media',this)"><i class="fa fa-images"></i>
+                Multimedia</button>
+            <button class="sidebar-item" onclick="switchPanel('content',this)"><i class="fa fa-file-alt"></i> Contenido
+                /
+                Blog</button>
+            <button class="sidebar-item" onclick="switchPanel('logistics',this)"><i class="fa fa-truck"></i>
+                Logística</button>
 
-        <div class="sidebar-group">Configuración</div>
-        <button class="sidebar-item" onclick="switchPanel('finance',this)"><i class="fa fa-university"></i>
-            Finanzas</button>
-        <button class="sidebar-item" onclick="switchPanel('automation',this)"><i class="fa fa-robot"></i> n8n
-            Automation</button>
-        <button class="sidebar-item" onclick="switchPanel('team',this)"><i class="fa fa-user-shield"></i> Equipo
-            Admin</button>
-        <button class="sidebar-item" onclick="switchPanel('settings',this)"><i class="fa fa-cog"></i> Ajustes
-            SEO</button>
+            <div class="sidebar-group">Configuración</div>
+            <button class="sidebar-item" onclick="switchPanel('finance',this)"><i class="fa fa-university"></i>
+                Finanzas</button>
+            <button class="sidebar-item" onclick="switchPanel('automation',this)"><i class="fa fa-robot"></i> n8n
+                Automation</button>
+            <button class="sidebar-item" onclick="switchPanel('team',this)"><i class="fa fa-user-shield"></i> Equipo
+                Admin</button>
+            <button class="sidebar-item" onclick="switchPanel('settings',this)"><i class="fa fa-cog"></i> Ajustes
+                SEO</button>
 
-        <div style="margin-top:auto; padding:1rem;">
-            <button class="sidebar-item" onclick="signOutAdmin()" style="color:#ff6b6b;"><i
-                    class="fa fa-sign-out-alt"></i> Cerrar Sesión</button>
-        </div>
-    </aside>
+            <div style="margin-top:auto; padding:1rem;">
+                <button class="sidebar-item" onclick="signOutAdmin()" style="color:#ff6b6b;"><i
+                        class="fa fa-sign-out-alt"></i> Cerrar Sesión</button>
+            </div>
+        </aside>
 
-    <div class="admin-content">
-        <!-- Dashboard -->
-        <div class="admin-panel active" id="panel-dashboard">
-            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Dashboard</h2>
-            <div class="stats-grid">
-                <div class="stat-card accent">
-                    <div class="stat-label">Stock Activo</div>
-                    <div class="stat-value" id="statProds">—</div>
+        <div class="admin-content">
+            <!-- Dashboard -->
+            <div class="admin-panel active" id="panel-dashboard">
+                <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card accent">
+                        <div class="stat-label">Stock Activo</div>
+                        <div class="stat-value" id="statProds">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Órdenes Totales</div>
+                        <div class="stat-value" id="statOrders">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Ventas Hoy</div>
+                        <div class="stat-value" id="statTodaySales">$0</div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Órdenes Totales</div>
-                    <div class="stat-value" id="statOrders">—</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Ventas Hoy</div>
-                    <div class="stat-value" id="statTodaySales">$0</div>
-                </div>
             </div>
-        </div>
 
-        <!-- Security -->
-        <div class="admin-panel" id="panel-security">
-            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Seguridad & IPs</h2>
-            <div class="admin-card">
-                <div class="table-search">
-                    <input type="text" id="ipBanInput" placeholder="IP a bloquear...">
-                    <button class="btn-action primary" onclick="banIp()">Bloquear</button>
-                </div>
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>IP</th>
-                            <th>Motivo</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bannedIpsBody"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Users -->
-        <div class="admin-panel" id="panel-customers">
-            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Gestión de Clientes</h2>
-            <div class="admin-card">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Email</th>
-                            <th>IP</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody id="usersBody"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Audit -->
-        <div class="admin-panel" id="panel-audit">
-            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Auditoría</h2>
-            <div class="admin-card">
-                <table class="admin-table">
-                    <tbody id="auditLogsBody"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Marketing -->
-        <div class="admin-panel" id="panel-marketing">
-            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Marketing</h2>
-            <div class="admin-card">
-                <p>Configura tus banners publicitarios y cupones especiales.</p>
-            </div>
-        </div>
-
-        <!-- Finance -->
-        <div class="admin-panel" id="panel-finance">
-            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Liquidación y Finanzas
-            </h2>
-            <div class="stat-card accent">
-                <div class="stat-label">Neto Acumulado</div>
-                <div class="stat-value" id="statFinRevenue">$0.00</div>
-            </div>
-        </div>
-
-        <!-- Otros Panels (Media, Content, etc. se cargan dinámicamente o son placeholders) -->
-        <div class="admin-panel" id="panel-media">
-            <h2 class="panel-title">Multimedia</h2>
-            <div class="admin-card">Galería de imágenes compartida.</div>
-        </div>
-        <div class="admin-panel" id="panel-automation">
-            <h2 class="panel-title">n8n Hub</h2>
-            <div class="admin-card">Conexión con automatizaciones activa.</div>
-        </div>
-        <div class="admin-panel" id="panel-team">
-            <h2 class="panel-title">Equipo</h2>
-            <div class="admin-card">Control de accesos administrativo.</div>
-        </div>
-
-        <!-- Re-adding original Products & Orders panels for consistency -->
-        <div class="admin-panel" id="panel-products">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
-                <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7;">Productos</h2>
-                <button class="btn-action primary" onclick="openProductModal()"><i class="fa fa-plus"></i>
-                    Nuevo</button>
-            </div>
-            <div class="admin-card">
-                <div style="overflow-x:auto;">
+            <!-- Security -->
+            <div class="admin-panel" id="panel-security">
+                <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Seguridad & IPs</h2>
+                <div class="admin-card">
+                    <div class="table-search">
+                        <input type="text" id="ipBanInput" placeholder="IP a bloquear...">
+                        <button class="btn-action primary" onclick="banIp()">Bloquear</button>
+                    </div>
                     <table class="admin-table">
                         <thead>
                             <tr>
-                                <th>Img</th>
+                                <th>IP</th>
+                                <th>Motivo</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bannedIpsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Users -->
+            <div class="admin-panel" id="panel-customers">
+                <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Gestión de Clientes
+                </h2>
+                <div class="admin-card">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
                                 <th>Nombre</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Acciones</th>
+                                <th>Email</th>
+                                <th>IP</th>
+                                <th>Acción</th>
                             </tr>
                         </thead>
-                        <tbody id="productsBody"></tbody>
+                        <tbody id="usersBody"></tbody>
                     </table>
                 </div>
             </div>
-        </div>
 
-        <div class="admin-panel" id="panel-orders">
-            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Pedidos</h2>
-            <div class="admin-card">
-                <div style="overflow-x:auto;">
+            <!-- Audit -->
+            <div class="admin-panel" id="panel-audit">
+                <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Auditoría</h2>
+                <div class="admin-card">
                     <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Cliente</th>
-                                <th>Total</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ordersBody"></tbody>
+                        <tbody id="auditLogsBody"></tbody>
                     </table>
                 </div>
             </div>
-        </div>
 
-        <div class="admin-panel" id="panel-coupons">
-            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Cupones</h2>
-            <div class="admin-card">
-                <table class="admin-table">
-                    <tbody id="couponsBody"></tbody>
-                </table>
+            <!-- Marketing -->
+            <div class="admin-panel" id="panel-marketing">
+                <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Marketing</h2>
+                <div class="admin-card">
+                    <p>Configura tus banners publicitarios y cupones especiales.</p>
+                </div>
             </div>
-        </div>
 
-        <div class="admin-panel" id="panel-settings">
-            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Ajustes</h2>
-            <div class="admin-card">
-                <p>Configuración general de la tienda, envíos y WhatsApp.</p>
+            <!-- Finance -->
+            <div class="admin-panel" id="panel-finance">
+                <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Liquidación y
+                    Finanzas
+                </h2>
+                <div class="stat-card accent">
+                    <div class="stat-label">Neto Acumulado</div>
+                    <div class="stat-value" id="statFinRevenue">$0.00</div>
+                </div>
+            </div>
+
+            <!-- Otros Panels (Media, Content, etc. se cargan dinámicamente o son placeholders) -->
+            <div class="admin-panel" id="panel-media">
+                <h2 class="panel-title">Multimedia</h2>
+                <div class="admin-card">Galería de imágenes compartida.</div>
+            </div>
+            <div class="admin-panel" id="panel-automation">
+                <h2 class="panel-title">n8n Hub</h2>
+                <div class="admin-card">Conexión con automatizaciones activa.</div>
+            </div>
+            <div class="admin-panel" id="panel-team">
+                <h2 class="panel-title">Equipo</h2>
+                <div class="admin-card">Control de accesos administrativo.</div>
+            </div>
+
+            <!-- Re-adding original Products & Orders panels for consistency -->
+            <div class="admin-panel" id="panel-products">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+                    <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7;">Productos</h2>
+                    <button class="btn-action primary" onclick="openProductModal()"><i class="fa fa-plus"></i>
+                        Nuevo</button>
+                </div>
+                <div class="admin-card">
+                    <div style="overflow-x:auto;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Img</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-panel" id="panel-orders">
+                <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Pedidos</h2>
+                <div class="admin-card">
+                    <div style="overflow-x:auto;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-panel" id="panel-coupons">
+                <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Cupones</h2>
+                <div class="admin-card">
+                    <table class="admin-table">
+                        <tbody id="couponsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="admin-panel" id="panel-settings">
+                <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Ajustes</h2>
+                <div class="admin-card">
+                    <p>Configuración general de la tienda, envíos y WhatsApp.</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Product Modal -->
-<div class="modal-overlay" id="productModal">
-    <div class="modal-box">
-        <button class="modal-close" onclick="closeModal('productModal')">&times;</button>
-        <h3 id="productModalTitle">Nuevo Producto</h3>
-        <input type="hidden" id="prodId">
-        <div class="form-row-2">
-            <div class="form-group"><label>Nombre *</label><input type="text" id="prodName" class="form-control">
+    <!-- Product Modal -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('productModal')">&times;</button>
+            <h3 id="productModalTitle">Nuevo Producto</h3>
+            <input type="hidden" id="prodId">
+            <div class="form-row-2">
+                <div class="form-group"><label>Nombre *</label><input type="text" id="prodName" class="form-control">
+                </div>
+                <div class="form-group"><label>Marca</label><input type="text" id="prodBrand" class="form-control">
+                </div>
             </div>
-            <div class="form-group"><label>Marca</label><input type="text" id="prodBrand" class="form-control">
+            <div class="form-row-2">
+                <div class="form-group"><label>Categoría</label><select id="prodCategory" class="form-control"></select>
+                </div>
+                <div class="form-group"><label>Badge</label>
+                    <select id="prodBadge" class="form-control">
+                        <option value="">Sin badge</option>
+                        <option value="Súper OFERTA">Súper OFERTA</option>
+                        <option value="Remate">Remate</option>
+                        <option value="Nuevo">Nuevo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row-2">
+                <div class="form-group"><label>Precio *</label><input type="number" id="prodPrice" class="form-control"
+                        min="0" step="0.01"></div>
+                <div class="form-group"><label>Precio oferta</label><input type="number" id="prodSalePrice"
+                        class="form-control" min="0" step="0.01"></div>
+            </div>
+            <div class="form-row-2">
+                <div class="form-group"><label>Stock</label><input type="number" id="prodStock" class="form-control"
+                        min="0"></div>
+                <div class="form-group"><label>Activo</label>
+                    <select id="prodActive" class="form-control">
+                        <option value="true">Sí</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group"><label>Descripción</label><textarea id="prodDesc" class="form-control"
+                    style="min-height:70px;"></textarea></div>
+            <div id="prodImagesSection" style="display:none;">
+                <div class="form-group">
+                    <label>Imágenes (Storage)</label>
+                    <div class="img-gallery" id="prodImgGallery"></div>
+                    <input type="file" id="newImageFile" accept="image/*" style="display:none;"
+                        onchange="uploadProductImage()">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel-modal" onclick="closeModal('productModal')">Cancelar</button>
+                <button class="btn-save" id="btnSaveProd" onclick="saveProduct()"><i class="fa fa-save"></i>
+                    Guardar</button>
             </div>
         </div>
-        <div class="form-row-2">
-            <div class="form-group"><label>Categoría</label><select id="prodCategory" class="form-control"></select>
-            </div>
-            <div class="form-group"><label>Badge</label>
-                <select id="prodBadge" class="form-control">
-                    <option value="">Sin badge</option>
-                    <option value="Súper OFERTA">Súper OFERTA</option>
-                    <option value="Remate">Remate</option>
-                    <option value="Nuevo">Nuevo</option>
+    </div>
+
+    <!-- Status Modal -->
+    <div class="modal-overlay" id="statusModal">
+        <div class="modal-box" style="max-width:440px;">
+            <button class="modal-close" onclick="closeModal('statusModal')">&times;</button>
+            <h3>Actualizar Estado</h3>
+            <input type="hidden" id="statusOrderId">
+            <div class="form-group"><label>Orden</label><input id="statusOrderLabel" class="form-control" disabled
+                    style="opacity:.6;"></div>
+            <div class="form-group"><label>Nuevo Estado *</label>
+                <select id="statusSelect" class="form-control">
+                    <option value="confirmando_pago">Confirmando Pago</option>
+                    <option value="orden_confirmada">Orden Confirmada</option>
+                    <option value="empacando">Empacando</option>
+                    <option value="enviado">Enviado</option>
+                    <option value="recibido">Recibido</option>
+                    <option value="cancelado">Cancelado</option>
                 </select>
             </div>
-        </div>
-        <div class="form-row-2">
-            <div class="form-group"><label>Precio *</label><input type="number" id="prodPrice" class="form-control"
-                    min="0" step="0.01"></div>
-            <div class="form-group"><label>Precio oferta</label><input type="number" id="prodSalePrice"
-                    class="form-control" min="0" step="0.01"></div>
-        </div>
-        <div class="form-row-2">
-            <div class="form-group"><label>Stock</label><input type="number" id="prodStock" class="form-control"
-                    min="0"></div>
-            <div class="form-group"><label>Activo</label>
-                <select id="prodActive" class="form-control">
-                    <option value="true">Sí</option>
-                    <option value="false">No</option>
-                </select>
+            <div class="form-group"><label>Código de guía (tracking)</label><input type="text" id="trackingCodeInput"
+                    class="form-control" placeholder="Ej: 1234567890ABC"></div>
+            <div class="form-group"><label>Nota interna</label><textarea id="statusNote" class="form-control"
+                    style="min-height:60px;"></textarea></div>
+            <div class="modal-footer">
+                <button class="btn-cancel-modal" onclick="closeModal('statusModal')">Cancelar</button>
+                <button class="btn-save" onclick="updateOrderStatus()"><i class="fa fa-check"></i> Actualizar</button>
             </div>
         </div>
-        <div class="form-group"><label>Descripción</label><textarea id="prodDesc" class="form-control"
-                style="min-height:70px;"></textarea></div>
-        <div id="prodImagesSection" style="display:none;">
-            <div class="form-group">
-                <label>Imágenes (Storage)</label>
-                <div class="img-gallery" id="prodImgGallery"></div>
-                <input type="file" id="newImageFile" accept="image/*" style="display:none;"
-                    onchange="uploadProductImage()">
+    </div>
+
+    <!-- Coupon Modal -->
+    <div class="modal-overlay" id="couponModal">
+        <div class="modal-box" style="max-width:460px;">
+            <button class="modal-close" onclick="closeModal('couponModal')">&times;</button>
+            <h3 id="couponModalTitle">Nuevo Cupón</h3>
+            <input type="hidden" id="couponId">
+            <div class="form-row-2">
+                <div class="form-group"><label>Código *</label><input type="text" id="couponCode" class="form-control"
+                        style="text-transform:uppercase;"></div>
+                <div class="form-group"><label>Tipo *</label>
+                    <select id="couponType" class="form-control">
+                        <option value="percent">Porcentaje (%)</option>
+                        <option value="fixed">Fijo ($)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row-2">
+                <div class="form-group"><label>Valor *</label><input type="number" id="couponValue" class="form-control"
+                        min="0" step="0.01"></div>
+                <div class="form-group"><label>Min. subtotal ($)</label><input type="number" id="couponMin"
+                        class="form-control" min="0"></div>
+            </div>
+            <div class="form-row-2">
+                <div class="form-group"><label>Válido desde</label><input type="datetime-local" id="couponStarts"
+                        class="form-control"></div>
+                <div class="form-group"><label>Válido hasta</label><input type="datetime-local" id="couponEnds"
+                        class="form-control"></div>
+            </div>
+            <div class="form-group"><label>Máx. usos</label><input type="number" id="couponMaxUses" class="form-control"
+                    placeholder="vacío = ilimitado" min="1"></div>
+            <div style="display:flex; gap:1.5rem; margin-bottom:1rem;">
+                <label
+                    style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-size:.85rem; color:#d0d0d8;"><input
+                        type="checkbox" id="couponFreeShip"> Envío gratis</label>
+                <label
+                    style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-size:.85rem; color:#d0d0d8;"><input
+                        type="checkbox" id="couponActive" checked> Activo</label>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel-modal" onclick="closeModal('couponModal')">Cancelar</button>
+                <button class="btn-save" onclick="saveCoupon()"><i class="fa fa-save"></i> Guardar</button>
             </div>
         </div>
-        <div class="modal-footer">
-            <button class="btn-cancel-modal" onclick="closeModal('productModal')">Cancelar</button>
-            <button class="btn-save" id="btnSaveProd" onclick="saveProduct()"><i class="fa fa-save"></i>
-                Guardar</button>
-        </div>
     </div>
-</div>
 
-<!-- Status Modal -->
-<div class="modal-overlay" id="statusModal">
-    <div class="modal-box" style="max-width:440px;">
-        <button class="modal-close" onclick="closeModal('statusModal')">&times;</button>
-        <h3>Actualizar Estado</h3>
-        <input type="hidden" id="statusOrderId">
-        <div class="form-group"><label>Orden</label><input id="statusOrderLabel" class="form-control" disabled
-                style="opacity:.6;"></div>
-        <div class="form-group"><label>Nuevo Estado *</label>
-            <select id="statusSelect" class="form-control">
-                <option value="confirmando_pago">Confirmando Pago</option>
-                <option value="orden_confirmada">Orden Confirmada</option>
-                <option value="empacando">Empacando</option>
-                <option value="enviado">Enviado</option>
-                <option value="recibido">Recibido</option>
-                <option value="cancelado">Cancelado</option>
-            </select>
+    <!-- Order Detail Slide Panel -->
+    <div class="order-detail-panel" id="orderDetailPanel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+            <h3 style="font-weight:800; color:#f5f5f7; margin:0;">Detalle de Orden</h3>
+            <button class="btn-action" onclick="closeOrderDetail()"><i class="fa fa-times"></i></button>
         </div>
-        <div class="form-group"><label>Código de guía (tracking)</label><input type="text" id="trackingCodeInput"
-                class="form-control" placeholder="Ej: 1234567890ABC"></div>
-        <div class="form-group"><label>Nota interna</label><textarea id="statusNote" class="form-control"
-                style="min-height:60px;"></textarea></div>
-        <div class="modal-footer">
-            <button class="btn-cancel-modal" onclick="closeModal('statusModal')">Cancelar</button>
-            <button class="btn-save" onclick="updateOrderStatus()"><i class="fa fa-check"></i> Actualizar</button>
-        </div>
+        <div id="orderDetailContent"></div>
     </div>
-</div>
 
-<!-- Coupon Modal -->
-<div class="modal-overlay" id="couponModal">
-    <div class="modal-box" style="max-width:460px;">
-        <button class="modal-close" onclick="closeModal('couponModal')">&times;</button>
-        <h3 id="couponModalTitle">Nuevo Cupón</h3>
-        <input type="hidden" id="couponId">
-        <div class="form-row-2">
-            <div class="form-group"><label>Código *</label><input type="text" id="couponCode" class="form-control"
-                    style="text-transform:uppercase;"></div>
-            <div class="form-group"><label>Tipo *</label>
-                <select id="couponType" class="form-control">
-                    <option value="percent">Porcentaje (%)</option>
-                    <option value="fixed">Fijo ($)</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-row-2">
-            <div class="form-group"><label>Valor *</label><input type="number" id="couponValue" class="form-control"
-                    min="0" step="0.01"></div>
-            <div class="form-group"><label>Min. subtotal ($)</label><input type="number" id="couponMin"
-                    class="form-control" min="0"></div>
-        </div>
-        <div class="form-row-2">
-            <div class="form-group"><label>Válido desde</label><input type="datetime-local" id="couponStarts"
-                    class="form-control"></div>
-            <div class="form-group"><label>Válido hasta</label><input type="datetime-local" id="couponEnds"
-                    class="form-control"></div>
-        </div>
-        <div class="form-group"><label>Máx. usos</label><input type="number" id="couponMaxUses" class="form-control"
-                placeholder="vacío = ilimitado" min="1"></div>
-        <div style="display:flex; gap:1.5rem; margin-bottom:1rem;">
-            <label
-                style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-size:.85rem; color:#d0d0d8;"><input
-                    type="checkbox" id="couponFreeShip"> Envío gratis</label>
-            <label
-                style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-size:.85rem; color:#d0d0d8;"><input
-                    type="checkbox" id="couponActive" checked> Activo</label>
-        </div>
-        <div class="modal-footer">
-            <button class="btn-cancel-modal" onclick="closeModal('couponModal')">Cancelar</button>
-            <button class="btn-save" onclick="saveCoupon()"><i class="fa fa-save"></i> Guardar</button>
-        </div>
-    </div>
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="/lib/supabase-client.js?v=1.0.4"></script>
+    <script src="/lib/auth.js?v=1.0.4"></script>
+    <script>
+        let adminToken = '';
+        let allProducts = [];
+        let allCoupons = [];
+        let categories = [];
+        let currentProductId = null;
 
-<!-- Order Detail Slide Panel -->
-<div class="order-detail-panel" id="orderDetailPanel">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
-        <h3 style="font-weight:800; color:#f5f5f7; margin:0;">Detalle de Orden</h3>
-        <button class="btn-action" onclick="closeOrderDetail()"><i class="fa fa-times"></i></button>
-    </div>
-    <div id="orderDetailContent"></div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="/lib/supabase-client.js?v=1.0.4"></script>
-<script src="/lib/auth.js?v=1.0.4"></script>
-<script>
-    let adminToken = '';
-    let allProducts = [];
-    let allCoupons = [];
-    let categories = [];
-    let currentProductId = null;
-
-    async function init() {
-        adminToken = await Auth.requireAdmin();
-        if (!adminToken) return;
-        loadDashboard();
-        loadCategories();
-    }
-
-    async function apiFetch(url, opts = {}) {
-        return fetch(url, {
-            ...opts,
-            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken, ...(opts.headers || {}) }
-        });
-    }
-
-    function switchPanel(name, btn) {
-        document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
-        document.getElementById('panel-' + name).classList.add('active');
-        if (btn) btn.classList.add('active');
-
-        switch (name) {
-            case 'products': loadProducts(); break;
-            case 'orders': loadOrders(); break;
-            case 'coupons': loadCoupons(); break;
-            case 'settings': loadSettings(); break;
-            case 'security': loadBannedIps(); break;
-            case 'audit': loadAuditLogs(); break;
-            case 'customers': loadUsers(); break;
+        async function init() {
+            adminToken = await Auth.requireAdmin();
+            if (!adminToken) return;
+            loadDashboard();
+            loadCategories();
         }
-    }
 
-    async function signOutAdmin() { await _supabase.auth.signOut(); location.href = 'login.html'; }
+        async function apiFetch(url, opts = {}) {
+            return fetch(url, {
+                ...opts,
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken, ...(opts.headers || {}) }
+            });
+        }
 
-    // Dashboard
-    async function loadDashboard() {
-        try {
-            const [pr, or] = await Promise.all([apiFetch('/api/admin/products'), apiFetch('/api/admin/orders?limit=100')]);
-            const prods = await pr.json();
-            const data = await or.json();
-            const orders = data.orders || [];
+        function switchPanel(name, btn) {
+            document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
+            document.getElementById('panel-' + name).classList.add('active');
+            if (btn) btn.classList.add('active');
 
-            document.getElementById('statProds').textContent = (prods || []).filter(p => p.is_active).length;
-            document.getElementById('statOrders').textContent = data.total || 0;
+            switch (name) {
+                case 'products': loadProducts(); break;
+                case 'orders': loadOrders(); break;
+                case 'coupons': loadCoupons(); break;
+                case 'settings': loadSettings(); break;
+                case 'security': loadBannedIps(); break;
+                case 'audit': loadAuditLogs(); break;
+                case 'customers': loadUsers(); break;
+            }
+        }
 
-            const recent = orders.slice(0, 8);
-            document.getElementById('recentOrders').innerHTML = recent.length
-                ? `<table class="admin-table"><thead><tr><th>ID</th><th>Cliente</th><th>Total</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody>${recent.map(o => `<tr>
+        async function signOutAdmin() { await _supabase.auth.signOut(); location.href = 'login.html'; }
+
+        // Dashboard
+        async function loadDashboard() {
+            try {
+                const [pr, or] = await Promise.all([apiFetch('/api/admin/products'), apiFetch('/api/admin/orders?limit=100')]);
+                const prods = await pr.json();
+                const data = await or.json();
+                const orders = data.orders || [];
+
+                document.getElementById('statProds').textContent = (prods || []).filter(p => p.is_active).length;
+                document.getElementById('statOrders').textContent = data.total || 0;
+
+                const recent = orders.slice(0, 8);
+                document.getElementById('recentOrders').innerHTML = recent.length
+                    ? `<table class="admin-table"><thead><tr><th>ID</th><th>Cliente</th><th>Total</th><th>Estado</th><th>Fecha</th><th></th></tr></thead><tbody>${recent.map(o => `<tr>
                                 <td style="font-weight:700;">${o.id}</td>
                                 <td>${o.customer?.first_name || ''} ${o.customer?.last_name || ''}</td>
                                 <td>$${Number(o.total).toFixed(2)}</td>
@@ -878,38 +882,38 @@
                                 <td>${new Date(o.created_at).toLocaleDateString('es-EC')}</td>
                                 <td><button class="btn-action" onclick="showOrderDetail('${o.id}')">Ver</button></td>
                             </tr>`).join('')}</tbody></table>`
-                : '<p style="color:#9999a8; text-align:center; padding:2rem;">Sin pedidos aún.</p>';
-        } catch (e) { console.error("Error loading dashboard:", e); }
-    }
+                    : '<p style="color:#9999a8; text-align:center; padding:2rem;">Sin pedidos aún.</p>';
+            } catch (e) { console.error("Error loading dashboard:", e); }
+        }
 
-    // Products
-    async function loadProducts() {
-        const res = await apiFetch('/api/admin/products');
-        allProducts = await res.json();
-        renderProductsTable(allProducts);
-    }
+        // Products
+        async function loadProducts() {
+            const res = await apiFetch('/api/admin/products');
+            allProducts = await res.json();
+            renderProductsTable(allProducts);
+        }
 
-    async function loadCategories() {
-        const { data } = await _supabase.from('categories').select('id,name').order('sort');
-        categories = data || [];
-        const sel = document.getElementById('prodCategory');
-        sel.innerHTML = '<option value="">Sin categoría</option>';
-        categories.forEach(c => { const o = document.createElement('option'); o.value = c.id; o.textContent = c.name; sel.appendChild(o); });
-    }
+        async function loadCategories() {
+            const { data } = await _supabase.from('categories').select('id,name').order('sort');
+            categories = data || [];
+            const sel = document.getElementById('prodCategory');
+            sel.innerHTML = '<option value="">Sin categoría</option>';
+            categories.forEach(c => { const o = document.createElement('option'); o.value = c.id; o.textContent = c.name; sel.appendChild(o); });
+        }
 
-    function filterProducts() {
-        const q = document.getElementById('prodSearch').value.toLowerCase();
-        renderProductsTable(allProducts.filter(p => p.name.toLowerCase().includes(q) || (p.category?.name || '').toLowerCase().includes(q)));
-    }
+        function filterProducts() {
+            const q = document.getElementById('prodSearch').value.toLowerCase();
+            renderProductsTable(allProducts.filter(p => p.name.toLowerCase().includes(q) || (p.category?.name || '').toLowerCase().includes(q)));
+        }
 
-    function renderProductsTable(products) {
-        const tbody = document.getElementById('productsBody');
-        if (!products.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:#9999a8; padding:2rem;">Sin productos.</td></tr>'; return; }
-        tbody.innerHTML = products.map(p => {
-            const sp = p.images?.[0]?.storage_path;
-            const imgUrl = sp ? (sp.startsWith('http') ? sp : `${SUPABASE_URL}/storage/v1/object/public/product-images/${sp}`) : 'https://via.placeholder.com/40';
-            const ap = p.sale_price ?? p.price;
-            return `<tr>
+        function renderProductsTable(products) {
+            const tbody = document.getElementById('productsBody');
+            if (!products.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:#9999a8; padding:2rem;">Sin productos.</td></tr>'; return; }
+            tbody.innerHTML = products.map(p => {
+                const sp = p.images?.[0]?.storage_path;
+                const imgUrl = sp ? (sp.startsWith('http') ? sp : `${SUPABASE_URL}/storage/v1/object/public/product-images/${sp}`) : 'https://via.placeholder.com/40';
+                const ap = p.sale_price ?? p.price;
+                return `<tr>
                     <td><img class="product-thumb" src="${imgUrl}" alt="" onerror="this.src='https://via.placeholder.com/40'"></td>
                     <td style="font-weight:700; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.name}</td>
                     <td>${p.category?.name || '—'}</td>
@@ -922,136 +926,136 @@
                         <button class="btn-action danger" onclick='toggleProduct("${p.id}",${!p.is_active})'>${p.is_active ? 'Desactivar' : 'Activar'}</button>
                     </td>
                 </tr>`;
-        }).join('');
-    }
-
-    function openProductModal() {
-        currentProductId = null;
-        document.getElementById('productModalTitle').textContent = 'Nuevo Producto';
-        ['prodId', 'prodName', 'prodBrand', 'prodDesc', 'prodPrice', 'prodSalePrice', 'prodStock'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('prodBadge').value = '';
-        document.getElementById('prodActive').value = 'true';
-        document.getElementById('prodCategory').value = '';
-        document.getElementById('prodImagesSection').style.display = 'none';
-        openModal('productModal');
-    }
-
-    async function editProduct(id) {
-        currentProductId = id;
-        const p = allProducts.find(x => x.id === id);
-        if (!p) return;
-        document.getElementById('productModalTitle').textContent = 'Editar Producto';
-        document.getElementById('prodId').value = p.id;
-        document.getElementById('prodName').value = p.name;
-        document.getElementById('prodBrand').value = p.brand || '';
-        document.getElementById('prodDesc').value = p.description || '';
-        document.getElementById('prodPrice').value = p.price;
-        document.getElementById('prodSalePrice').value = p.sale_price || '';
-        document.getElementById('prodStock').value = p.stock;
-        document.getElementById('prodBadge').value = p.badge || '';
-        document.getElementById('prodActive').value = String(p.is_active);
-        document.getElementById('prodCategory').value = p.category?.id || '';
-        renderProductImages(p);
-        document.getElementById('prodImagesSection').style.display = 'block';
-        openModal('productModal');
-    }
-
-    function renderProductImages(p) {
-        const gallery = document.getElementById('prodImgGallery');
-        const thumbs = (p.images || []).map(img => {
-            const url = img.storage_path.startsWith('http') ? img.storage_path : `${SUPABASE_URL}/storage/v1/object/public/product-images/${img.storage_path}`;
-            return `<div class="img-thumb-wrap"><img class="img-thumb" src="${url}" onerror="this.src='https://via.placeholder.com/70'"><button class="img-del-btn" onclick="deleteProductImage('${img.id}','${p.id}')">✕</button></div>`;
-        }).join('');
-        gallery.innerHTML = thumbs + `<div class="upload-trigger" onclick="document.getElementById('newImageFile').click()"><i class="fa fa-plus"></i></div>`;
-    }
-
-    async function saveProduct() {
-        const id = document.getElementById('prodId').value;
-        const name = document.getElementById('prodName').value.trim();
-        const price = parseFloat(document.getElementById('prodPrice').value);
-        if (!name || isNaN(price)) { alert('Nombre y precio son requeridos.'); return; }
-        const btn = document.getElementById('btnSaveProd');
-        btn.disabled = true;
-        const payload = {
-            name, price,
-            brand: document.getElementById('prodBrand').value.trim(),
-            description: document.getElementById('prodDesc').value.trim(),
-            sale_price: parseFloat(document.getElementById('prodSalePrice').value) || null,
-            stock: parseInt(document.getElementById('prodStock').value) || 0,
-            badge: document.getElementById('prodBadge').value || null,
-            is_active: document.getElementById('prodActive').value === 'true',
-            category_id: document.getElementById('prodCategory').value || null
-        };
-
-        try {
-            const res = id
-                ? await apiFetch(`/api/admin/products/${id}`, { method: 'PATCH', body: JSON.stringify(payload) })
-                : await apiFetch('/api/admin/products', { method: 'POST', body: JSON.stringify(payload) });
-
-            if (res.ok) {
-                const savedData = await res.json();
-                await loadProducts();
-                if (typeof showToast !== 'undefined') showToast('Producto guardado ✓'); else alert('Producto guardado ✓');
-
-                if (!id) {
-                    // Switch to edit mode to allow image upload
-                    document.getElementById('productModalTitle').textContent = 'Editar Producto (Agrega fotos)';
-                    document.getElementById('prodId').value = savedData.id;
-                    currentProductId = savedData.id;
-                    document.getElementById('prodImagesSection').style.display = 'block';
-                    renderProductImages(savedData);
-                } else {
-                    closeModal('productModal');
-                }
-            } else {
-                const e = await res.json();
-                alert('Error: ' + (e.error || 'Desconocido'));
-            }
-        } catch (err) {
-            console.error(err);
-            alert('Error al guardar el producto.');
-        } finally {
-            btn.disabled = false;
+            }).join('');
         }
-    }
 
-    async function uploadProductImage() {
-        const file = document.getElementById('newImageFile').files[0];
-        if (!file || !currentProductId) return;
-        const fd = new FormData();
-        fd.append('image', file);
-        const res = await fetch(`/api/admin/products/${currentProductId}/images`, {
-            method: 'POST', headers: { 'Authorization': 'Bearer ' + adminToken }, body: fd
-        });
-        if (res.ok) { await loadProducts(); const p = allProducts.find(x => x.id === currentProductId); if (p) renderProductImages(p); }
-        else { const e = await res.json(); alert('Error imagen: ' + e.error); }
-        document.getElementById('newImageFile').value = '';
-    }
+        function openProductModal() {
+            currentProductId = null;
+            document.getElementById('productModalTitle').textContent = 'Nuevo Producto';
+            ['prodId', 'prodName', 'prodBrand', 'prodDesc', 'prodPrice', 'prodSalePrice', 'prodStock'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('prodBadge').value = '';
+            document.getElementById('prodActive').value = 'true';
+            document.getElementById('prodCategory').value = '';
+            document.getElementById('prodImagesSection').style.display = 'none';
+            openModal('productModal');
+        }
 
-    async function deleteProductImage(imageId, productId) {
-        if (!confirm('¿Eliminar imagen?')) return;
-        await apiFetch(`/api/admin/products/${productId}/images/${imageId}`, { method: 'DELETE' });
-        await loadProducts();
-        const p = allProducts.find(x => x.id === productId);
-        if (p) renderProductImages(p);
-    }
+        async function editProduct(id) {
+            currentProductId = id;
+            const p = allProducts.find(x => x.id === id);
+            if (!p) return;
+            document.getElementById('productModalTitle').textContent = 'Editar Producto';
+            document.getElementById('prodId').value = p.id;
+            document.getElementById('prodName').value = p.name;
+            document.getElementById('prodBrand').value = p.brand || '';
+            document.getElementById('prodDesc').value = p.description || '';
+            document.getElementById('prodPrice').value = p.price;
+            document.getElementById('prodSalePrice').value = p.sale_price || '';
+            document.getElementById('prodStock').value = p.stock;
+            document.getElementById('prodBadge').value = p.badge || '';
+            document.getElementById('prodActive').value = String(p.is_active);
+            document.getElementById('prodCategory').value = p.category?.id || '';
+            renderProductImages(p);
+            document.getElementById('prodImagesSection').style.display = 'block';
+            openModal('productModal');
+        }
 
-    async function toggleProduct(id, active) {
-        await apiFetch(`/api/admin/products/${id}`, { method: 'PATCH', body: JSON.stringify({ is_active: active }) });
-        await loadProducts();
-    }
+        function renderProductImages(p) {
+            const gallery = document.getElementById('prodImgGallery');
+            const thumbs = (p.images || []).map(img => {
+                const url = img.storage_path.startsWith('http') ? img.storage_path : `${SUPABASE_URL}/storage/v1/object/public/product-images/${img.storage_path}`;
+                return `<div class="img-thumb-wrap"><img class="img-thumb" src="${url}" onerror="this.src='https://via.placeholder.com/70'"><button class="img-del-btn" onclick="deleteProductImage('${img.id}','${p.id}')">✕</button></div>`;
+            }).join('');
+            gallery.innerHTML = thumbs + `<div class="upload-trigger" onclick="document.getElementById('newImageFile').click()"><i class="fa fa-plus"></i></div>`;
+        }
 
-    // Orders
-    async function loadOrders() {
-        const status = document.getElementById('orderStatusFilter')?.value || '';
-        const res = await apiFetch('/api/admin/orders?limit=100' + (status ? '&status=' + status : ''));
-        const data = await res.json();
-        const orders = data.orders || [];
-        const tbody = document.getElementById('ordersBody');
-        if (!orders.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#9999a8;padding:2rem;">Sin pedidos.</td></tr>'; return; }
-        tbody.innerHTML = orders.map(o => {
-            const addr = o.shipping_address || {};
-            return `<tr>
+        async function saveProduct() {
+            const id = document.getElementById('prodId').value;
+            const name = document.getElementById('prodName').value.trim();
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            if (!name || isNaN(price)) { alert('Nombre y precio son requeridos.'); return; }
+            const btn = document.getElementById('btnSaveProd');
+            btn.disabled = true;
+            const payload = {
+                name, price,
+                brand: document.getElementById('prodBrand').value.trim(),
+                description: document.getElementById('prodDesc').value.trim(),
+                sale_price: parseFloat(document.getElementById('prodSalePrice').value) || null,
+                stock: parseInt(document.getElementById('prodStock').value) || 0,
+                badge: document.getElementById('prodBadge').value || null,
+                is_active: document.getElementById('prodActive').value === 'true',
+                category_id: document.getElementById('prodCategory').value || null
+            };
+
+            try {
+                const res = id
+                    ? await apiFetch(`/api/admin/products/${id}`, { method: 'PATCH', body: JSON.stringify(payload) })
+                    : await apiFetch('/api/admin/products', { method: 'POST', body: JSON.stringify(payload) });
+
+                if (res.ok) {
+                    const savedData = await res.json();
+                    await loadProducts();
+                    if (typeof showToast !== 'undefined') showToast('Producto guardado ✓'); else alert('Producto guardado ✓');
+
+                    if (!id) {
+                        // Switch to edit mode to allow image upload
+                        document.getElementById('productModalTitle').textContent = 'Editar Producto (Agrega fotos)';
+                        document.getElementById('prodId').value = savedData.id;
+                        currentProductId = savedData.id;
+                        document.getElementById('prodImagesSection').style.display = 'block';
+                        renderProductImages(savedData);
+                    } else {
+                        closeModal('productModal');
+                    }
+                } else {
+                    const e = await res.json();
+                    alert('Error: ' + (e.error || 'Desconocido'));
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error al guardar el producto.');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function uploadProductImage() {
+            const file = document.getElementById('newImageFile').files[0];
+            if (!file || !currentProductId) return;
+            const fd = new FormData();
+            fd.append('image', file);
+            const res = await fetch(`/api/admin/products/${currentProductId}/images`, {
+                method: 'POST', headers: { 'Authorization': 'Bearer ' + adminToken }, body: fd
+            });
+            if (res.ok) { await loadProducts(); const p = allProducts.find(x => x.id === currentProductId); if (p) renderProductImages(p); }
+            else { const e = await res.json(); alert('Error imagen: ' + e.error); }
+            document.getElementById('newImageFile').value = '';
+        }
+
+        async function deleteProductImage(imageId, productId) {
+            if (!confirm('¿Eliminar imagen?')) return;
+            await apiFetch(`/api/admin/products/${productId}/images/${imageId}`, { method: 'DELETE' });
+            await loadProducts();
+            const p = allProducts.find(x => x.id === productId);
+            if (p) renderProductImages(p);
+        }
+
+        async function toggleProduct(id, active) {
+            await apiFetch(`/api/admin/products/${id}`, { method: 'PATCH', body: JSON.stringify({ is_active: active }) });
+            await loadProducts();
+        }
+
+        // Orders
+        async function loadOrders() {
+            const status = document.getElementById('orderStatusFilter')?.value || '';
+            const res = await apiFetch('/api/admin/orders?limit=100' + (status ? '&status=' + status : ''));
+            const data = await res.json();
+            const orders = data.orders || [];
+            const tbody = document.getElementById('ordersBody');
+            if (!orders.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#9999a8;padding:2rem;">Sin pedidos.</td></tr>'; return; }
+            tbody.innerHTML = orders.map(o => {
+                const addr = o.shipping_address || {};
+                return `<tr>
                     <td style="font-weight:700;">${o.id}</td>
                     <td>${o.customer?.first_name || '—'} ${o.customer?.last_name || ''}<br><span style="font-size:.72rem;color:#9999a8;">${o.customer?.email || ''}</span></td>
                     <td>${addr.city || '—'}</td>
@@ -1064,35 +1068,35 @@
                         <button class="btn-action primary" onclick="openStatusModal('${o.id}','${o.status}','${o.tracking_code || ''}')">Estado</button>
                     </td>
                 </tr>`;
-        }).join('');
-    }
+            }).join('');
+        }
 
-    async function showOrderDetail(orderId) {
-        const panel = document.getElementById('orderDetailPanel');
-        panel.classList.add('open');
-        document.getElementById('orderDetailContent').innerHTML = '<div class="loading-spinner"><i class="fa fa-spinner fa-spin fa-2x"></i></div>';
-        const res = await apiFetch(`/api/admin/orders/${orderId}`);
-        const order = await res.json();
-        if (!res.ok) { document.getElementById('orderDetailContent').innerHTML = `<p style="color:#ff6b6b;">${order.error}</p>`; return; }
+        async function showOrderDetail(orderId) {
+            const panel = document.getElementById('orderDetailPanel');
+            panel.classList.add('open');
+            document.getElementById('orderDetailContent').innerHTML = '<div class="loading-spinner"><i class="fa fa-spinner fa-spin fa-2x"></i></div>';
+            const res = await apiFetch(`/api/admin/orders/${orderId}`);
+            const order = await res.json();
+            if (!res.ok) { document.getElementById('orderDetailContent').innerHTML = `<p style="color:#ff6b6b;">${order.error}</p>`; return; }
 
-        const addr = order.shipping_address || {};
-        const SS = ['confirmando_pago', 'orden_confirmada', 'empacando', 'enviado', 'recibido'];
-        const labels = { confirmando_pago: 'Confirmando pago', orden_confirmada: 'Confirmada', empacando: 'Empacando', enviado: 'Enviado', recibido: 'Recibido' };
-        const curIdx = SS.indexOf(order.status);
+            const addr = order.shipping_address || {};
+            const SS = ['confirmando_pago', 'orden_confirmada', 'empacando', 'enviado', 'recibido'];
+            const labels = { confirmando_pago: 'Confirmando pago', orden_confirmada: 'Confirmada', empacando: 'Empacando', enviado: 'Enviado', recibido: 'Recibido' };
+            const curIdx = SS.indexOf(order.status);
 
-        const timeline = SS.map((s, i) => {
-            const ev = (order.events || []).find(e => e.status === s);
-            const state = i < curIdx ? 'done' : i === curIdx ? 'current' : '';
-            const color = state === 'current' ? 'var(--primary)' : state === 'done' ? '#34c759' : '#9999a8';
-            return `<li class="tl-item"><div class="tl-dot ${state}"><i class="fa fa-circle" style="font-size:.35rem;"></i></div>
+            const timeline = SS.map((s, i) => {
+                const ev = (order.events || []).find(e => e.status === s);
+                const state = i < curIdx ? 'done' : i === curIdx ? 'current' : '';
+                const color = state === 'current' ? 'var(--primary)' : state === 'done' ? '#34c759' : '#9999a8';
+                return `<li class="tl-item"><div class="tl-dot ${state}"><i class="fa fa-circle" style="font-size:.35rem;"></i></div>
                     <div><div style="font-size:.82rem; font-weight:700; color:${color};">${labels[s]}</div>
                     ${ev ? `<div style="font-size:.72rem; color:#9999a8;">${new Date(ev.created_at).toLocaleString('es-EC')}</div>${ev.note ? `<div style="font-size:.72rem; color:#9999a8; font-style:italic;">${ev.note}</div>` : ''}` : ''}</div></li>`;
-        }).join('');
+            }).join('');
 
-        const items = (order.items || []).map(i => `<div style="display:flex;gap:.7rem;align-items:center;padding:.5rem 0;border-bottom:1px solid #1e1e28;"><img src="${i.product_snapshot?.image_url || 'https://via.placeholder.com/40'}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;" onerror="this.src='https://via.placeholder.com/40'"><div style="flex:1;"><div style="font-size:.82rem;font-weight:700;">${i.product_snapshot?.name || '—'}</div><div style="font-size:.72rem;color:#9999a8;">x${i.qty}</div></div><div style="font-size:.85rem;font-weight:800;">$${Number(i.line_total).toFixed(2)}</div></div>`).join('');
-        const proofs = (order.proofs || []).map(p => `<div style="font-size:.8rem;color:#d0d0d8;padding:.4rem 0;">${p.method} · ${p.bank || p.txid || ''}${p.proof_path ? `<a href="${SUPABASE_URL}/storage/v1/object/public/payment-proofs/${p.proof_path}" target="_blank" style="color:var(--primary);margin-left:.5rem;"><i class="fa fa-eye"></i> Ver</a>` : ''}</div>`).join('') || '<div style="color:#9999a8;font-size:.8rem;">Sin comprobante</div>';
+            const items = (order.items || []).map(i => `<div style="display:flex;gap:.7rem;align-items:center;padding:.5rem 0;border-bottom:1px solid #1e1e28;"><img src="${i.product_snapshot?.image_url || 'https://via.placeholder.com/40'}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;" onerror="this.src='https://via.placeholder.com/40'"><div style="flex:1;"><div style="font-size:.82rem;font-weight:700;">${i.product_snapshot?.name || '—'}</div><div style="font-size:.72rem;color:#9999a8;">x${i.qty}</div></div><div style="font-size:.85rem;font-weight:800;">$${Number(i.line_total).toFixed(2)}</div></div>`).join('');
+            const proofs = (order.proofs || []).map(p => `<div style="font-size:.8rem;color:#d0d0d8;padding:.4rem 0;">${p.method} · ${p.bank || p.txid || ''}${p.proof_path ? `<a href="${SUPABASE_URL}/storage/v1/object/public/payment-proofs/${p.proof_path}" target="_blank" style="color:var(--primary);margin-left:.5rem;"><i class="fa fa-eye"></i> Ver</a>` : ''}</div>`).join('') || '<div style="color:#9999a8;font-size:.8rem;">Sin comprobante</div>';
 
-        document.getElementById('orderDetailContent').innerHTML = `
+            document.getElementById('orderDetailContent').innerHTML = `
                 <div style="margin-bottom:1rem;"><div style="font-size:1rem;font-weight:800;color:#f5f5f7;">${order.id}</div><div style="font-size:.75rem;color:#9999a8;">${new Date(order.created_at).toLocaleString('es-EC')}</div><span class="status-chip s-${order.status}" style="margin-top:.5rem;display:inline-block;">${statusLabel(order.status)}</span></div>
                 <div style="background:#1a1a22;border-radius:12px;padding:1rem;margin-bottom:1rem;font-size:.82rem;"><div style="font-weight:700;color:#f5f5f7;margin-bottom:.5rem;">Envío</div><div>${addr.firstName || ''} ${addr.lastName || ''} · ${addr.phone || ''}</div><div style="color:#9999a8;">${addr.address1 || ''}, ${addr.city || ''}, ${addr.province || ''}</div>${order.carrier ? `<div style="margin-top:.3rem;"><i class="fa fa-truck"></i> ${order.carrier}${order.carrier_agency_name ? ' · ' + order.carrier_agency_name : ''}</div>` : ''}${order.tracking_code ? `<div style="color:var(--primary);font-weight:700;margin-top:.3rem;"><i class="fa fa-box"></i> Guía: ${order.tracking_code}</div>` : ''}</div>
                 <div style="margin-bottom:1rem;">${items}</div>
@@ -1100,40 +1104,40 @@
                 <div style="margin-bottom:1rem;"><div style="font-size:.82rem;font-weight:700;color:#f5f5f7;margin-bottom:.5rem;">Comprobante</div>${proofs}</div>
                 <div><div style="font-size:.82rem;font-weight:700;color:#f5f5f7;margin-bottom:.5rem;">Timeline</div><ul class="timeline">${timeline}</ul></div>
                 <button class="btn-action primary" style="width:100%;margin-top:1rem;" onclick="openStatusModal('${order.id}','${order.status}','${order.tracking_code || ''}')"><i class="fa fa-edit"></i> Cambiar Estado</button>`;
-    }
+        }
 
-    function closeOrderDetail() { document.getElementById('orderDetailPanel').classList.remove('open'); }
+        function closeOrderDetail() { document.getElementById('orderDetailPanel').classList.remove('open'); }
 
-    function openStatusModal(orderId, currentStatus, tracking) {
-        document.getElementById('statusOrderId').value = orderId;
-        document.getElementById('statusOrderLabel').value = orderId;
-        document.getElementById('statusSelect').value = currentStatus;
-        document.getElementById('trackingCodeInput').value = tracking || '';
-        document.getElementById('statusNote').value = '';
-        openModal('statusModal');
-    }
+        function openStatusModal(orderId, currentStatus, tracking) {
+            document.getElementById('statusOrderId').value = orderId;
+            document.getElementById('statusOrderLabel').value = orderId;
+            document.getElementById('statusSelect').value = currentStatus;
+            document.getElementById('trackingCodeInput').value = tracking || '';
+            document.getElementById('statusNote').value = '';
+            openModal('statusModal');
+        }
 
-    async function updateOrderStatus() {
-        const id = document.getElementById('statusOrderId').value;
-        const status = document.getElementById('statusSelect').value;
-        const note = document.getElementById('statusNote').value.trim();
-        const track = document.getElementById('trackingCodeInput').value.trim();
-        const res = await apiFetch(`/api/admin/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status, note, trackingCode: track }) });
-        if (res.ok) {
-            closeModal('statusModal');
-            loadOrders();
-            if (document.getElementById('orderDetailPanel').classList.contains('open')) showOrderDetail(id);
-            showToast('Estado actualizado ✓');
-        } else { const e = await res.json(); alert('Error: ' + e.error); }
-    }
+        async function updateOrderStatus() {
+            const id = document.getElementById('statusOrderId').value;
+            const status = document.getElementById('statusSelect').value;
+            const note = document.getElementById('statusNote').value.trim();
+            const track = document.getElementById('trackingCodeInput').value.trim();
+            const res = await apiFetch(`/api/admin/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status, note, trackingCode: track }) });
+            if (res.ok) {
+                closeModal('statusModal');
+                loadOrders();
+                if (document.getElementById('orderDetailPanel').classList.contains('open')) showOrderDetail(id);
+                showToast('Estado actualizado ✓');
+            } else { const e = await res.json(); alert('Error: ' + e.error); }
+        }
 
-    // Coupons
-    async function loadCoupons() {
-        const res = await apiFetch('/api/admin/coupons');
-        allCoupons = await res.json();
-        const tbody = document.getElementById('couponsBody');
-        if (!allCoupons.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#9999a8;padding:2rem;">Sin cupones.</td></tr>'; return; }
-        tbody.innerHTML = allCoupons.map(c => `<tr>
+        // Coupons
+        async function loadCoupons() {
+            const res = await apiFetch('/api/admin/coupons');
+            allCoupons = await res.json();
+            const tbody = document.getElementById('couponsBody');
+            if (!allCoupons.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#9999a8;padding:2rem;">Sin cupones.</td></tr>'; return; }
+            tbody.innerHTML = allCoupons.map(c => `<tr>
                 <td style="font-weight:800;font-family:monospace;color:var(--primary);">${c.code}</td>
                 <td>${c.type}</td>
                 <td>${c.type === 'percent' ? c.value + '%' : '$' + c.value}</td>
@@ -1143,149 +1147,149 @@
                 <td><span class="status-chip ${c.is_active ? 's-recibido' : 's-cancelado'}">${c.is_active ? 'Activo' : 'Inactivo'}</span></td>
                 <td><button class="btn-action" onclick='editCoupon("${c.id}")'>Editar</button></td>
             </tr>`).join('');
-    }
+        }
 
-    function openCouponModal() {
-        document.getElementById('couponModalTitle').textContent = 'Nuevo Cupón';
-        ['couponId', 'couponCode', 'couponValue', 'couponMin', 'couponMaxUses', 'couponStarts', 'couponEnds'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('couponType').value = 'percent';
-        document.getElementById('couponFreeShip').checked = false;
-        document.getElementById('couponActive').checked = true;
-        openModal('couponModal');
-    }
+        function openCouponModal() {
+            document.getElementById('couponModalTitle').textContent = 'Nuevo Cupón';
+            ['couponId', 'couponCode', 'couponValue', 'couponMin', 'couponMaxUses', 'couponStarts', 'couponEnds'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('couponType').value = 'percent';
+            document.getElementById('couponFreeShip').checked = false;
+            document.getElementById('couponActive').checked = true;
+            openModal('couponModal');
+        }
 
-    function editCoupon(id) {
-        const c = allCoupons.find(x => x.id === id);
-        if (!c) return;
-        document.getElementById('couponModalTitle').textContent = 'Editar Cupón';
-        document.getElementById('couponId').value = c.id;
-        document.getElementById('couponCode').value = c.code;
-        document.getElementById('couponType').value = c.type;
-        document.getElementById('couponValue').value = c.value;
-        document.getElementById('couponMin').value = c.min_subtotal || '';
-        document.getElementById('couponMaxUses').value = c.max_redemptions || '';
-        document.getElementById('couponStarts').value = c.starts_at ? c.starts_at.slice(0, 16) : '';
-        document.getElementById('couponEnds').value = c.ends_at ? c.ends_at.slice(0, 16) : '';
-        document.getElementById('couponFreeShip').checked = c.free_shipping;
-        document.getElementById('couponActive').checked = c.is_active;
-        openModal('couponModal');
-    }
+        function editCoupon(id) {
+            const c = allCoupons.find(x => x.id === id);
+            if (!c) return;
+            document.getElementById('couponModalTitle').textContent = 'Editar Cupón';
+            document.getElementById('couponId').value = c.id;
+            document.getElementById('couponCode').value = c.code;
+            document.getElementById('couponType').value = c.type;
+            document.getElementById('couponValue').value = c.value;
+            document.getElementById('couponMin').value = c.min_subtotal || '';
+            document.getElementById('couponMaxUses').value = c.max_redemptions || '';
+            document.getElementById('couponStarts').value = c.starts_at ? c.starts_at.slice(0, 16) : '';
+            document.getElementById('couponEnds').value = c.ends_at ? c.ends_at.slice(0, 16) : '';
+            document.getElementById('couponFreeShip').checked = c.free_shipping;
+            document.getElementById('couponActive').checked = c.is_active;
+            openModal('couponModal');
+        }
 
-    async function saveCoupon() {
-        const id = document.getElementById('couponId').value;
-        const code = document.getElementById('couponCode').value.trim().toUpperCase();
-        const value = parseFloat(document.getElementById('couponValue').value);
-        if (!code || isNaN(value)) { alert('Código y valor son requeridos.'); return; }
-        const payload = {
-            code, value,
-            type: document.getElementById('couponType').value,
-            free_shipping: document.getElementById('couponFreeShip').checked,
-            is_active: document.getElementById('couponActive').checked,
-            min_subtotal: parseFloat(document.getElementById('couponMin').value) || 0,
-            max_redemptions: parseInt(document.getElementById('couponMaxUses').value) || null,
-            starts_at: document.getElementById('couponStarts').value || null,
-            ends_at: document.getElementById('couponEnds').value || null
-        };
-        const res = id
-            ? await apiFetch(`/api/admin/coupons/${id}`, { method: 'PATCH', body: JSON.stringify(payload) })
-            : await apiFetch('/api/admin/coupons', { method: 'POST', body: JSON.stringify(payload) });
-        if (res.ok) { closeModal('couponModal'); loadCoupons(); showToast('Cupón guardado ✓'); }
-        else { const e = await res.json(); alert('Error: ' + e.error); }
-    }
+        async function saveCoupon() {
+            const id = document.getElementById('couponId').value;
+            const code = document.getElementById('couponCode').value.trim().toUpperCase();
+            const value = parseFloat(document.getElementById('couponValue').value);
+            if (!code || isNaN(value)) { alert('Código y valor son requeridos.'); return; }
+            const payload = {
+                code, value,
+                type: document.getElementById('couponType').value,
+                free_shipping: document.getElementById('couponFreeShip').checked,
+                is_active: document.getElementById('couponActive').checked,
+                min_subtotal: parseFloat(document.getElementById('couponMin').value) || 0,
+                max_redemptions: parseInt(document.getElementById('couponMaxUses').value) || null,
+                starts_at: document.getElementById('couponStarts').value || null,
+                ends_at: document.getElementById('couponEnds').value || null
+            };
+            const res = id
+                ? await apiFetch(`/api/admin/coupons/${id}`, { method: 'PATCH', body: JSON.stringify(payload) })
+                : await apiFetch('/api/admin/coupons', { method: 'POST', body: JSON.stringify(payload) });
+            if (res.ok) { closeModal('couponModal'); loadCoupons(); showToast('Cupón guardado ✓'); }
+            else { const e = await res.json(); alert('Error: ' + e.error); }
+        }
 
-    // Settings
-    async function loadSettings() {
-        const { data } = await _supabase.from('settings').select('*');
-        const map = {};
-        (data || []).forEach(s => { map[s.key] = s.value; });
-        ['free_shipping_threshold', 'shipping_cost', 'whatsapp', 'shipping_topbar_text'].forEach(key => {
-            const el = document.getElementById('set-' + key);
-            if (el) el.value = typeof map[key] === 'string' ? map[key].replace(/^"|"$/g, '') : (map[key] ?? '');
+        // Settings
+        async function loadSettings() {
+            const { data } = await _supabase.from('settings').select('*');
+            const map = {};
+            (data || []).forEach(s => { map[s.key] = s.value; });
+            ['free_shipping_threshold', 'shipping_cost', 'whatsapp', 'shipping_topbar_text'].forEach(key => {
+                const el = document.getElementById('set-' + key);
+                if (el) el.value = typeof map[key] === 'string' ? map[key].replace(/^"|"$/g, '') : (map[key] ?? '');
+            });
+            ['bank_accounts', 'crypto_wallets'].forEach(key => {
+                const el = document.getElementById('set-' + key);
+                if (el) el.value = JSON.stringify(map[key] || [], null, 2);
+            });
+        }
+
+        async function saveSetting(key, value) {
+            const res = await apiFetch('/api/admin/settings', { method: 'PATCH', body: JSON.stringify({ key, value }) });
+            if (res.ok) showToast('Guardado ✓');
+            else { const e = await res.json(); alert('Error: ' + e.error); }
+        }
+
+        async function saveJsonSetting(key) {
+            try {
+                const value = JSON.parse(document.getElementById('set-' + key).value);
+                await saveSetting(key, value);
+            } catch { alert('JSON inválido. Revisa la sintaxis.'); }
+        }
+
+        // Utils
+        function statusLabel(s) {
+            return { confirmando_pago: 'Confirmando pago', orden_confirmada: 'Confirmada', empacando: 'Empacando', enviado: 'Enviado', recibido: 'Recibido', cancelado: 'Cancelado' }[s] || s;
+        }
+        function openModal(id) { document.getElementById(id).classList.add('show'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.textContent = msg;
+            t.style.cssText = 'position:fixed;bottom:2rem;right:2rem;background:#34c759;color:#fff;padding:.8rem 1.4rem;border-radius:12px;font-weight:700;z-index:99999;';
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 2500);
+        }
+
+        document.querySelectorAll('.modal-overlay').forEach(el => {
+            el.addEventListener('click', e => { if (e.target === el) el.classList.remove('show'); });
         });
-        ['bank_accounts', 'crypto_wallets'].forEach(key => {
-            const el = document.getElementById('set-' + key);
-            if (el) el.value = JSON.stringify(map[key] || [], null, 2);
-        });
-    }
 
-    async function saveSetting(key, value) {
-        const res = await apiFetch('/api/admin/settings', { method: 'PATCH', body: JSON.stringify({ key, value }) });
-        if (res.ok) showToast('Guardado ✓');
-        else { const e = await res.json(); alert('Error: ' + e.error); }
-    }
-
-    async function saveJsonSetting(key) {
-        try {
-            const value = JSON.parse(document.getElementById('set-' + key).value);
-            await saveSetting(key, value);
-        } catch { alert('JSON inválido. Revisa la sintaxis.'); }
-    }
-
-    // Utils
-    function statusLabel(s) {
-        return { confirmando_pago: 'Confirmando pago', orden_confirmada: 'Confirmada', empacando: 'Empacando', enviado: 'Enviado', recibido: 'Recibido', cancelado: 'Cancelado' }[s] || s;
-    }
-    function openModal(id) { document.getElementById(id).classList.add('show'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
-    function showToast(msg) {
-        const t = document.createElement('div');
-        t.textContent = msg;
-        t.style.cssText = 'position:fixed;bottom:2rem;right:2rem;background:#34c759;color:#fff;padding:.8rem 1.4rem;border-radius:12px;font-weight:700;z-index:99999;';
-        document.body.appendChild(t);
-        setTimeout(() => t.remove(), 2500);
-    }
-
-    document.querySelectorAll('.modal-overlay').forEach(el => {
-        el.addEventListener('click', e => { if (e.target === el) el.classList.remove('show'); });
-    });
-
-    // Security & Audit
-    async function loadBannedIps() {
-        const res = await apiFetch('/api/admin/security/banned-ips');
-        const data = await res.json();
-        const tbody = document.getElementById('bannedIpsBody');
-        tbody.innerHTML = data.map(ip => `<tr>
+        // Security & Audit
+        async function loadBannedIps() {
+            const res = await apiFetch('/api/admin/security/banned-ips');
+            const data = await res.json();
+            const tbody = document.getElementById('bannedIpsBody');
+            tbody.innerHTML = data.map(ip => `<tr>
             <td style="font-weight:700;">${ip.ip_address}</td>
             <td style="color:#9999a8;">${ip.reason}</td>
             <td>${new Date(ip.banned_at).toLocaleString()}</td>
             <td>${ip.banned_by || 'Sistema'}</td>
             <td><button class="btn-action" onclick="unbanIp('${ip.ip_address}')"><i class="fa fa-unlock"></i> Desbloquear</button></td>
         </tr>`).join('') || '<tr><td colspan="5" style="text-align:center;padding:2rem;color:#9999a8;">No hay IPs baneadas.</td></tr>';
-    }
+        }
 
-    async function banIp() {
-        const ip = document.getElementById('ipBanInput').value.trim();
-        const reason = document.getElementById('ipBanReason').value.trim();
-        if (!ip) return;
-        const res = await apiFetch('/api/admin/security/ban', { method: 'POST', body: JSON.stringify({ ip, reason }) });
-        if (res.ok) { showToast('IP Baneada ✓'); loadBannedIps(); document.getElementById('ipBanInput').value = ''; }
-        else { const e = await res.json(); alert('Error: ' + e.error); }
-    }
+        async function banIp() {
+            const ip = document.getElementById('ipBanInput').value.trim();
+            const reason = document.getElementById('ipBanReason').value.trim();
+            if (!ip) return;
+            const res = await apiFetch('/api/admin/security/ban', { method: 'POST', body: JSON.stringify({ ip, reason }) });
+            if (res.ok) { showToast('IP Baneada ✓'); loadBannedIps(); document.getElementById('ipBanInput').value = ''; }
+            else { const e = await res.json(); alert('Error: ' + e.error); }
+        }
 
-    async function unbanIp(ip) {
-        if (!confirm(`¿Desbloquear IP ${ip}?`)) return;
-        const res = await apiFetch(`/api/admin/security/unban/${ip}`, { method: 'DELETE' });
-        if (res.ok) { showToast('IP Desbloqueda ✓'); loadBannedIps(); }
-    }
+        async function unbanIp(ip) {
+            if (!confirm(`¿Desbloquear IP ${ip}?`)) return;
+            const res = await apiFetch(`/api/admin/security/unban/${ip}`, { method: 'DELETE' });
+            if (res.ok) { showToast('IP Desbloqueda ✓'); loadBannedIps(); }
+        }
 
-    async function loadAuditLogs() {
-        const res = await apiFetch('/api/admin/audit');
-        const data = await res.json();
-        const tbody = document.getElementById('auditLogsBody');
-        tbody.innerHTML = data.map(log => `<tr>
+        async function loadAuditLogs() {
+            const res = await apiFetch('/api/admin/audit');
+            const data = await res.json();
+            const tbody = document.getElementById('auditLogsBody');
+            tbody.innerHTML = data.map(log => `<tr>
             <td>${new Date(log.created_at).toLocaleString()}</td>
             <td style="font-weight:700;">${log.admin_id}</td>
             <td><span class="status-chip ${log.action === 'BAN' ? 's-cancelado' : 's-recibido'}">${log.action}</span></td>
             <td style="text-transform:uppercase;font-size:.7rem;">${log.entity}</td>
             <td style="font-family:monospace;font-size:.75rem;">${log.entity_id}</td>
         </tr>`).join('') || '<tr><td colspan="5" style="text-align:center;padding:2rem;color:#9999a8;">No hay registros.</td></tr>';
-    }
+        }
 
-    async function loadUsers() {
-        const res = await apiFetch('/api/admin/users');
-        const data = await res.json();
-        const tbody = document.getElementById('usersBody');
-        tbody.innerHTML = data.map(u => `<tr>
+        async function loadUsers() {
+            const res = await apiFetch('/api/admin/users');
+            const data = await res.json();
+            const tbody = document.getElementById('usersBody');
+            tbody.innerHTML = data.map(u => `<tr>
             <td style="font-weight:700;">${u.first_name} ${u.last_name}</td>
             <td style="color:#d0d0d8;">${u.email}</td>
             <td><span class="status-chip ${u.role === 'admin' ? 's-enviado' : 's-confirmada'}">${u.role}</span></td>
@@ -1293,15 +1297,15 @@
             <td>${u.is_banned ? '<span class="status-chip s-cancelado">BANEADO</span>' : '<span class="status-chip s-recibido">ACTIVO</span>'}</td>
             <td><button class="btn-action" onclick="toggleUserBan('${u.id}', ${!u.is_banned})">${u.is_banned ? 'Desbanear' : 'Banear'}</button></td>
         </tr>`).join('');
-    }
+        }
 
-    async function toggleUserBan(id, ban) {
-        const res = await apiFetch(`/api/admin/users/${id}`, { method: 'PATCH', body: JSON.stringify({ is_banned: ban }) });
-        if (res.ok) { showToast('Estado usuario actualizado ✓'); loadUsers(); }
-    }
+        async function toggleUserBan(id, ban) {
+            const res = await apiFetch(`/api/admin/users/${id}`, { method: 'PATCH', body: JSON.stringify({ is_banned: ban }) });
+            if (res.ok) { showToast('Estado usuario actualizado ✓'); loadUsers(); }
+        }
 
-    init();
-</script>
+        init();
+    </script>
 </body>
 
 </html>

@@ -5,30 +5,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Devoluciones | Ecugaming Import</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.0.4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .legal-container {
             max-width: 800px;
             margin: 100px auto 60px;
             padding: 3rem 5%;
-            background: #fff;
+            background: var(--card-bg);
             border-radius: 24px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-glass);
             border: 1px solid var(--border);
         }
+
         .legal-content h1 {
             color: var(--secondary);
             margin-bottom: 0.5rem;
             font-size: 2.2rem;
             font-weight: 900;
         }
-        .legal-content h1 i { color: var(--primary); margin-right: 0.75rem; }
+
+        .legal-content h1 i {
+            color: var(--primary);
+            margin-right: 0.75rem;
+        }
+
         .legal-content .last-updated {
             font-size: 0.85rem;
             color: var(--text-dim);
             margin-bottom: 2rem;
         }
+
         .legal-content h2 {
             color: var(--primary);
             margin-top: 2.5rem;
@@ -38,18 +45,24 @@
             align-items: center;
             gap: 0.75rem;
         }
+
         .legal-content p {
             color: var(--text);
             margin-bottom: 1rem;
             line-height: 1.8;
             font-size: 1rem;
         }
+
         .legal-content ul {
             margin-left: 2rem;
             margin-bottom: 1.5rem;
             color: var(--text-dim);
         }
-        .legal-content li { margin-bottom: 0.5rem; line-height: 1.7; }
+
+        .legal-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
 
         .policy-grid {
             display: grid;
@@ -57,19 +70,22 @@
             gap: 1rem;
             margin: 1.5rem 0;
         }
+
         .policy-box {
             border-radius: 14px;
             padding: 1.25rem;
-            border: 1.5px solid;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.03);
         }
+
         .policy-box.covered {
-            background: #f0fdf4;
-            border-color: #86efac;
+            border-color: #34c759;
         }
+
         .policy-box.not-covered {
-            background: #fef2f2;
-            border-color: #fca5a5;
+            border-color: #ff6b6b;
         }
+
         .policy-box-title {
             font-weight: 800;
             font-size: 0.95rem;
@@ -78,13 +94,24 @@
             align-items: center;
             gap: 0.5rem;
         }
-        .policy-box.covered .policy-box-title { color: #15803d; }
-        .policy-box.not-covered .policy-box-title { color: #dc2626; }
+
+        .policy-box.covered .policy-box-title {
+            color: #15803d;
+        }
+
+        .policy-box.not-covered .policy-box-title {
+            color: #dc2626;
+        }
+
         .policy-box ul {
             margin-left: 1.2rem;
             margin-bottom: 0;
         }
-        .policy-box li { font-size: 0.9rem; margin-bottom: 0.4rem; }
+
+        .policy-box li {
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+        }
 
         .timeline-process {
             counter-reset: process;
@@ -92,6 +119,7 @@
             padding: 0;
             margin: 1.5rem 0;
         }
+
         .timeline-process li {
             counter-increment: process;
             display: flex;
@@ -100,6 +128,7 @@
             margin-bottom: 1.25rem;
             position: relative;
         }
+
         .timeline-process li::before {
             content: counter(process);
             min-width: 32px;
@@ -114,12 +143,14 @@
             font-size: 0.9rem;
             flex-shrink: 0;
         }
+
         .timeline-process .step-content strong {
             display: block;
             color: var(--secondary);
             font-weight: 700;
             margin-bottom: 0.2rem;
         }
+
         .timeline-process .step-content p {
             margin: 0;
             font-size: 0.93rem;
@@ -127,18 +158,20 @@
         }
 
         .notice-box {
-            background: #f0fdf4;
-            border-left: 4px solid var(--accent);
+            background: rgba(255, 140, 0, 0.05);
+            border-left: 4px solid var(--primary);
             padding: 1.25rem 1.5rem;
             border-radius: 0 12px 12px 0;
             margin: 1.5rem 0;
-            color: var(--text);
+            color: var(--white);
             font-size: 0.95rem;
         }
+
         .notice-warning {
-            background: #fffbeb;
-            border-left-color: #f59e0b;
+            background: rgba(255, 107, 107, 0.1);
+            border-left-color: #ff6b6b;
         }
+
         .footer-note {
             margin-top: 3rem;
             padding-top: 2rem;
@@ -147,8 +180,11 @@
             color: var(--text-dim);
             font-size: 0.9rem;
         }
+
         @media (max-width: 600px) {
-            .policy-grid { grid-template-columns: 1fr; }
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -157,8 +193,8 @@
     <header>
         <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
         <div class="nav-actions">
-            <button class="btn-secondary" style="margin:0;padding:0.5rem 1.5rem;"
-                onclick="location.href='index.html'">← Tienda</button>
+            <button class="btn-secondary" style="margin:0;padding:0.5rem 1.5rem;" onclick="location.href='index.html'">←
+                Tienda</button>
         </div>
     </header>
 
@@ -167,14 +203,19 @@
             <h1><i class="fa fa-rotate-left"></i>Política de Devoluciones</h1>
             <p class="last-updated">Última actualización: Marzo 2026</p>
 
-            <p>En <strong>Ecugaming Import</strong> nos esforzamos por ofrecer productos de la más alta calidad. Sin embargo, entendemos que pueden surgir inconvenientes. Esta política detalla cuándo aplica una devolución o cambio, los plazos y el proceso.</p>
+            <p>En <strong>Ecugaming Import</strong> nos esforzamos por ofrecer productos de la más alta calidad. Sin
+                embargo, entendemos que pueden surgir inconvenientes. Esta política detalla cuándo aplica una devolución
+                o cambio, los plazos y el proceso.</p>
 
             <h2><i class="fa fa-calendar-check"></i>Plazos</h2>
             <ul>
-                <li><strong>Defecto de fábrica al momento de entrega:</strong> 7 días calendario desde la recepción del producto.</li>
-                <li><strong>Garantía de fábrica (falla técnica posterior):</strong> 12 meses desde la fecha de compra, según las condiciones del fabricante.</li>
+                <li><strong>Defecto de fábrica al momento de entrega:</strong> 7 días calendario desde la recepción del
+                    producto.</li>
+                <li><strong>Garantía de fábrica (falla técnica posterior):</strong> 12 meses desde la fecha de compra,
+                    según las condiciones del fabricante.</li>
                 <li><strong>Producto incorrecto enviado:</strong> 5 días calendario desde la recepción.</li>
-                <li><strong>Cambio de opinión / arrepentimiento:</strong> No aplica — todos los productos son electrónicos y de alto valor.</li>
+                <li><strong>Cambio de opinión / arrepentimiento:</strong> No aplica — todos los productos son
+                    electrónicos y de alto valor.</li>
             </ul>
 
             <h2><i class="fa fa-circle-check"></i>¿Qué Cubre y Qué No Cubre?</h2>
@@ -204,7 +245,8 @@
 
             <div class="notice-box notice-warning">
                 <i class="fa fa-triangle-exclamation" style="color:#f59e0b;margin-right:0.5rem;"></i>
-                Los daños causados por instalación de software no oficial (ROMs, emuladores no compatibles) anulan la garantía de fábrica.
+                Los daños causados por instalación de software no oficial (ROMs, emuladores no compatibles) anulan la
+                garantía de fábrica.
             </div>
 
             <h2><i class="fa fa-list-check"></i>Proceso de Devolución o Cambio</h2>
@@ -212,41 +254,51 @@
                 <li>
                     <div class="step-content">
                         <strong>Contáctanos por WhatsApp</strong>
-                        <p>Envía un mensaje al <strong>099 435 6877</strong> con tu número de orden (EG-XXXXXXXX), descripción del problema y fotos/video del defecto.</p>
+                        <p>Envía un mensaje al <strong>099 435 6877</strong> con tu número de orden (EG-XXXXXXXX),
+                            descripción del problema y fotos/video del defecto.</p>
                     </div>
                 </li>
                 <li>
                     <div class="step-content">
                         <strong>Evaluación del caso</strong>
-                        <p>Nuestro equipo técnico revisará la evidencia enviada en máximo <strong>24 horas hábiles</strong> y te informará si aplica la garantía.</p>
+                        <p>Nuestro equipo técnico revisará la evidencia enviada en máximo <strong>24 horas
+                                hábiles</strong> y te informará si aplica la garantía.</p>
                     </div>
                 </li>
                 <li>
                     <div class="step-content">
                         <strong>Envío del producto</strong>
-                        <p>Si se aprueba la devolución, te proporcionaremos instrucciones para enviar el producto. El costo de envío de regreso corre por cuenta de Ecugaming Import si el defecto es confirmado.</p>
+                        <p>Si se aprueba la devolución, te proporcionaremos instrucciones para enviar el producto. El
+                            costo de envío de regreso corre por cuenta de Ecugaming Import si el defecto es confirmado.
+                        </p>
                     </div>
                 </li>
                 <li>
                     <div class="step-content">
                         <strong>Inspección técnica</strong>
-                        <p>Al recibir el producto, nuestro técnico lo evalúa en un plazo de <strong>3 días hábiles</strong>.</p>
+                        <p>Al recibir el producto, nuestro técnico lo evalúa en un plazo de <strong>3 días
+                                hábiles</strong>.</p>
                     </div>
                 </li>
                 <li>
                     <div class="step-content">
                         <strong>Resolución</strong>
-                        <p>Según el caso: <strong>a)</strong> Reposición con producto igual o equivalente, <strong>b)</strong> Reparación del equipo, o <strong>c)</strong> Reembolso total al método de pago original (3–5 días hábiles).</p>
+                        <p>Según el caso: <strong>a)</strong> Reposición con producto igual o equivalente,
+                            <strong>b)</strong> Reparación del equipo, o <strong>c)</strong> Reembolso total al método
+                            de pago original (3–5 días hábiles).</p>
                     </div>
                 </li>
             </ol>
 
             <h2><i class="fa fa-truck"></i>Devoluciones por Daño en Transporte</h2>
-            <p>Si tu producto llega visiblemente dañado (caja rota, equipo golpeado), <strong>no lo firmes como recibido</strong> y toma fotos inmediatamente. Notifícanos el mismo día por WhatsApp. Gestionaremos el seguro de carga con la transportadora y repondremos tu equipo sin costo adicional.</p>
+            <p>Si tu producto llega visiblemente dañado (caja rota, equipo golpeado), <strong>no lo firmes como
+                    recibido</strong> y toma fotos inmediatamente. Notifícanos el mismo día por WhatsApp. Gestionaremos
+                el seguro de carga con la transportadora y repondremos tu equipo sin costo adicional.</p>
 
             <div class="notice-box">
                 <i class="fa fa-info-circle" style="color:var(--accent);margin-right:0.5rem;"></i>
-                Todos nuestros paquetes viajan con seguro básico de carga. En caso de pérdida total en tránsito, Ecugaming Import iniciará el proceso de reclamación a la transportadora y te mantendrá informado.
+                Todos nuestros paquetes viajan con seguro básico de carga. En caso de pérdida total en tránsito,
+                Ecugaming Import iniciará el proceso de reclamación a la transportadora y te mantendrá informado.
             </div>
 
             <h2><i class="fa fa-money-bill-transfer"></i>Reembolsos</h2>

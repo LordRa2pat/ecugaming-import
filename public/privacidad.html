@@ -5,77 +5,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Privacidad | Ecugaming Import</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.0.4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .legal-container {
             max-width: 800px;
             margin: 100px auto 60px;
             padding: 3rem 5%;
-            background: #fff;
+            background: var(--card-bg);
             border-radius: 24px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-glass);
             border: 1px solid var(--border);
         }
+
         .legal-content h1 {
             color: var(--secondary);
             margin-bottom: 0.5rem;
             font-size: 2.2rem;
             font-weight: 900;
         }
-        .legal-content h1 i { color: var(--primary); margin-right: 0.75rem; }
+
+        .legal-content h1 i {
+            color: var(--primary);
+            margin-right: 0.75rem;
+        }
+
         .legal-content .last-updated {
             font-size: 0.85rem;
             color: var(--text-dim);
             margin-bottom: 2rem;
         }
+
         .legal-content h2 {
             color: var(--primary);
             margin-top: 2rem;
             margin-bottom: 1rem;
             font-size: 1.4rem;
         }
+
         .legal-content p {
             color: var(--text);
             margin-bottom: 1rem;
             line-height: 1.8;
             font-size: 1rem;
         }
+
         .legal-content ul {
             margin-left: 2rem;
             margin-bottom: 1.5rem;
             color: var(--text-dim);
         }
-        .legal-content li { margin-bottom: 0.5rem; line-height: 1.7; }
+
+        .legal-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
+
         .notice-box {
-            background: #f0fdf4;
-            border-left: 4px solid var(--accent);
+            background: rgba(255, 140, 0, 0.05);
+            border-left: 4px solid var(--primary);
             padding: 1.25rem 1.5rem;
             border-radius: 0 12px 12px 0;
             margin: 1.5rem 0;
-            color: var(--text);
+            color: var(--white);
             font-size: 0.95rem;
         }
+
         .data-table {
             width: 100%;
             border-collapse: collapse;
             margin: 1.5rem 0;
             font-size: 0.95rem;
         }
+
         .data-table th {
-            background: #f8fafc;
-            color: var(--secondary);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--white);
             font-weight: 700;
             padding: 0.75rem 1rem;
             text-align: left;
             border-bottom: 2px solid var(--border);
         }
+
         .data-table td {
             padding: 0.7rem 1rem;
             border-bottom: 1px solid var(--border);
             color: var(--text);
         }
-        .data-table tr:hover td { background: #fafafa; }
+
+        .data-table tr:hover td {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
         .footer-note {
             margin-top: 3rem;
             padding-top: 2rem;
@@ -91,8 +112,8 @@
     <header>
         <div class="logo" onclick="location.href='index.html'">Ecugaming <span>Import</span></div>
         <div class="nav-actions">
-            <button class="btn-secondary" style="margin:0;padding:0.5rem 1.5rem;"
-                onclick="location.href='index.html'">← Tienda</button>
+            <button class="btn-secondary" style="margin:0;padding:0.5rem 1.5rem;" onclick="location.href='index.html'">←
+                Tienda</button>
         </div>
     </header>
 
@@ -101,10 +122,13 @@
             <h1><i class="fa fa-shield-halved"></i>Política de Privacidad</h1>
             <p class="last-updated">Última actualización: Marzo 2026</p>
 
-            <p>En <strong>Ecugaming Import</strong> ("nosotros", "nuestra tienda") nos comprometemos a proteger la privacidad de tus datos personales. Esta política explica qué información recopilamos, cómo la usamos y cuáles son tus derechos.</p>
+            <p>En <strong>Ecugaming Import</strong> ("nosotros", "nuestra tienda") nos comprometemos a proteger la
+                privacidad de tus datos personales. Esta política explica qué información recopilamos, cómo la usamos y
+                cuáles son tus derechos.</p>
 
             <h2>1. Responsable del Tratamiento de Datos</h2>
-            <p>Ecugaming Import, con operaciones en Lago Agrio, Sucumbíos, Ecuador. Para consultas sobre privacidad, contáctanos vía WhatsApp al <strong>099 435 6877</strong>.</p>
+            <p>Ecugaming Import, con operaciones en Lago Agrio, Sucumbíos, Ecuador. Para consultas sobre privacidad,
+                contáctanos vía WhatsApp al <strong>099 435 6877</strong>.</p>
 
             <h2>2. Datos que Recopilamos</h2>
             <table class="data-table">
@@ -139,7 +163,8 @@
                 </tbody>
             </table>
 
-            <p><strong>No recopilamos</strong> datos de tarjetas de crédito/débito (el módulo de tarjetas está en mantenimiento). Tampoco vendemos ni cedemos tus datos a terceros con fines comerciales.</p>
+            <p><strong>No recopilamos</strong> datos de tarjetas de crédito/débito (el módulo de tarjetas está en
+                mantenimiento). Tampoco vendemos ni cedemos tus datos a terceros con fines comerciales.</p>
 
             <h2>3. Cómo Usamos tus Datos</h2>
             <ul>
@@ -151,11 +176,14 @@
             </ul>
 
             <h2>4. Almacenamiento y Seguridad</h2>
-            <p>Tus datos se almacenan en servidores seguros provistos por <strong>Supabase</strong> (infraestructura en la nube con cifrado en reposo y en tránsito). Los comprobantes de pago se guardan en almacenamiento privado, accesible únicamente por nuestro equipo.</p>
+            <p>Tus datos se almacenan en servidores seguros provistos por <strong>Supabase</strong> (infraestructura en
+                la nube con cifrado en reposo y en tránsito). Los comprobantes de pago se guardan en almacenamiento
+                privado, accesible únicamente por nuestro equipo.</p>
 
             <div class="notice-box">
                 <i class="fa fa-lock" style="color:var(--accent);margin-right:0.5rem;"></i>
-                Las contraseñas de usuario están cifradas con <strong>bcrypt</strong> y nunca son accesibles en texto plano, ni siquiera por nuestro equipo.
+                Las contraseñas de usuario están cifradas con <strong>bcrypt</strong> y nunca son accesibles en texto
+                plano, ni siquiera por nuestro equipo.
             </div>
 
             <h2>5. Cookies y Almacenamiento Local</h2>
@@ -167,19 +195,25 @@
             <p>No utilizamos cookies de rastreo de terceros ni publicidad.</p>
 
             <h2>6. Tus Derechos</h2>
-            <p>De acuerdo con la Ley Orgánica de Protección de Datos Personales del Ecuador (LOPDP), tienes derecho a:</p>
+            <p>De acuerdo con la Ley Orgánica de Protección de Datos Personales del Ecuador (LOPDP), tienes derecho a:
+            </p>
             <ul>
                 <li><strong>Acceso:</strong> Consultar los datos que tenemos sobre ti desde tu panel "Mi Cuenta".</li>
-                <li><strong>Rectificación:</strong> Actualizar tu nombre, teléfono o dirección en cualquier momento.</li>
-                <li><strong>Eliminación:</strong> Solicitar la eliminación de tu cuenta y datos enviando un mensaje a nuestro WhatsApp.</li>
+                <li><strong>Rectificación:</strong> Actualizar tu nombre, teléfono o dirección en cualquier momento.
+                </li>
+                <li><strong>Eliminación:</strong> Solicitar la eliminación de tu cuenta y datos enviando un mensaje a
+                    nuestro WhatsApp.</li>
                 <li><strong>Portabilidad:</strong> Solicitar una copia de tus datos en formato CSV.</li>
             </ul>
 
             <h2>7. Datos de Menores</h2>
-            <p>Nuestros servicios están dirigidos a personas mayores de 18 años. No recopilamos intencionalmente datos de menores de edad. Si eres padre/madre y crees que tu hijo registró una cuenta, contáctanos para eliminar los datos.</p>
+            <p>Nuestros servicios están dirigidos a personas mayores de 18 años. No recopilamos intencionalmente datos
+                de menores de edad. Si eres padre/madre y crees que tu hijo registró una cuenta, contáctanos para
+                eliminar los datos.</p>
 
             <h2>8. Cambios a Esta Política</h2>
-            <p>Podemos actualizar esta política ocasionalmente. Cuando lo hagamos, actualizaremos la fecha en la parte superior. Te notificaremos por WhatsApp si los cambios son significativos.</p>
+            <p>Podemos actualizar esta política ocasionalmente. Cuando lo hagamos, actualizaremos la fecha en la parte
+                superior. Te notificaremos por WhatsApp si los cambios son significativos.</p>
 
             <div class="footer-note">
                 Ecugaming Import — Lago Agrio, Sucumbíos, Ecuador<br>
