@@ -12,8 +12,8 @@
 (function () {
   // ⚠️ Replace these with your actual Supabase project values
   // These are PUBLIC values — the anon key is safe to include in frontend code
-  const SUPABASE_URL     = 'https://YOUR_PROJECT_REF.supabase.co';
-  const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY_HERE';
+  const SUPABASE_URL = 'https://dpomkchvjpdkndkksphy.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwb21rY2h2anBka25ka2tzcGh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0OTQ4OTgsImV4cCI6MjA4ODA3MDg5OH0.tqjYkOI9O42Bh2pA83yRiPn7_Q457B9-VcwWeL9A_rM';
 
   if (typeof supabase === 'undefined') {
     console.error('[EG] Supabase CDN not loaded. Add the CDN script before supabase-client.js');
@@ -22,8 +22,8 @@
 
   const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     auth: {
-      persistSession:    true,
-      autoRefreshToken:  true,
+      persistSession: true,
+      autoRefreshToken: true,
       detectSessionInUrl: true
     }
   });
