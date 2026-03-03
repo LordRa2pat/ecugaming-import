@@ -176,12 +176,15 @@ async function notifyN8N(payload) {
 
     if (host && user && pass && payload.customerEmail) {
         try {
+            // Use SMTP_IP (pre-resolved IP) to bypass Vercel Lambda DNS EBUSY.
+            // tls.servername must be the real hostname so TLS cert validates correctly.
+            const smtpHost = process.env.SMTP_IP || host;
             const transporter = nodemailer.createTransport({
-                host,
+                host: smtpHost,
                 port: parseInt(process.env.SMTP_PORT || '465'),
                 secure: true,   // SSL/TLS on port 465
                 auth: { user, pass },
-                tls: { rejectUnauthorized: true },
+                tls: { rejectUnauthorized: true, servername: host },
             });
             await transporter.sendMail({
                 from: `"Ecu Gaming Import" <${from}>`,
