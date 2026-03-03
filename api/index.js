@@ -993,10 +993,11 @@ app.get('/api/test-email', async (req, res) => {
         const pass = process.env.SMTP_PASS;
         const from = process.env.SMTP_FROM || user;
 
+        const smtpHost = process.env.SMTP_IP || host;
         const transporter = nodemailer.createTransport({
-            host, port: 465, secure: true,
+            host: smtpHost, port: 465, secure: true,
             auth: { user, pass },
-            tls: { rejectUnauthorized: true },
+            tls: { rejectUnauthorized: true, servername: host },
         });
 
         await transporter.verify();
