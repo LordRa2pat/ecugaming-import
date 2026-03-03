@@ -88,6 +88,37 @@ function mapLegacyProduct(p) {
 }
 
 // ============================================================
+// INPUT SANITIZATION
+// ============================================================
+function sanitize(str, maxLen = 200) {
+    if (typeof str !== 'string') return '';
+    return str
+        .replace(/[<>"'`]/g, '')    // strip HTML/JS injection chars
+        .replace(/[\r\n]/g, ' ')   // strip newlines — prevents email header injection
+        .trim()
+        .slice(0, maxLen);
+}
+
+// ============================================================
+// N8N ORDER NOTIFICATION (fire-and-forget, does not block response)
+// ============================================================
+async function notifyN8N(payload) {
+    const url = process.env.N8N_ORDER_WEBHOOK_URL;
+    const key = process.env.N8N_API_KEY;
+    if (!url || !key) return;
+    try {
+        await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-api-key': key },
+            body: JSON.stringify(payload),
+            signal: AbortSignal.timeout(5000),
+        });
+    } catch (e) {
+        console.error('[n8n notify]', e.message);
+    }
+}
+
+// ============================================================
 // JWT / AUTH HELPERS
 // ============================================================
 async function verifyToken(req) {
@@ -327,6 +358,18 @@ app.post('/api/orders/create', requireAuth(async (req, res) => {
         return res.status(400).json({ error: 'Método de pago inválido' });
     }
 
+    // Sanitize all free-text fields to prevent injection
+    const safeAddress = {
+        firstName: sanitize(shippingAddress?.firstName),
+        lastName:  sanitize(shippingAddress?.lastName),
+        cedula:    sanitize(shippingAddress?.cedula, 20),
+        phone:     sanitize(shippingAddress?.phone, 20),
+        province:  sanitize(shippingAddress?.province),
+        city:      sanitize(shippingAddress?.city),
+        address1:  sanitize(shippingAddress?.address1),
+        reference: sanitize(shippingAddress?.reference),
+    };
+
     try {
         // 1. Validate stock and gather product data
         const productIds = items.map(i => i.productId);
@@ -440,7 +483,7 @@ app.post('/api/orders/create', requireAuth(async (req, res) => {
             total,
             carrier: carrier,
             carrier_agency_name: carrierAgencyName || '',
-            shipping_address: shippingAddress,
+            shipping_address: safeAddress,
             ip_address: req.clientIp
         });
         if (orderError) throw orderError;
@@ -494,6 +537,19 @@ app.post('/api/orders/create', requireAuth(async (req, res) => {
                 proof_path: paymentProof.proofPath || ''
             });
         }
+
+        // 11. Notify n8n → triggers "Orden Generada" email to customer
+        const firstItem = orderItemsData[0];
+        notifyN8N({
+            orderId,
+            customerName: `${safeAddress.firstName} ${safeAddress.lastName}`,
+            customerEmail: req.user.email,
+            productName: sanitize(firstItem?.product_snapshot?.name || 'Tu pedido'),
+            carrier: sanitize(carrier),
+            total: parseFloat(total).toFixed(2),
+            paymentMethod: sanitize(paymentMethod),
+            timestamp: new Date().toISOString(),
+        });
 
         res.json({
             orderId,
