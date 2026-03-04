@@ -364,7 +364,7 @@
         }
 
         Auth.updateAuthUI();
-        loadProduct();
+        window._supabaseReady.then(() => loadProduct());
     </script>
 </body>
 

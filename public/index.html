@@ -287,8 +287,8 @@
                 </button>
             </div>
 
-            <!-- ⚡ SUPER PROMOCIONES — always highlighted -->
-            <div class="cat-item" style="margin-left:auto;">
+            <!-- ⚡ SUPER PROMOCIONES — always highlighted, pinned right -->
+            <div class="cat-item" style="margin-left:8px; flex-shrink:0;">
                 <button class="cat-btn-promo" id="promoCatBtn" onclick="filterSub('Promos','⚡ Super Promociones')">
                     <i class="fa fa-bolt"></i> SUPER PROMOCIONES
                 </button>
@@ -493,10 +493,26 @@
             renderCartUI();
         }
 
+        // Category sort order — iPhones appear first, then consolas, then the rest
+        const CAT_ORDER = ['iphone','consolas','accesorios','laptop','juegos','general','retro'];
+        function catRank(p) {
+            const c = (p.category || '').toLowerCase();
+            const idx = CAT_ORDER.findIndex(k => c.includes(k));
+            return idx === -1 ? 99 : idx;
+        }
+
         async function fetchStock() {
             try {
                 const res = await fetch('/api/stock');
-                allProducts = await res.json();
+                const raw = await res.json();
+
+                // Sort: badge products first (promos), then by category order
+                allProducts = raw.sort((a, b) => {
+                    const aPromo = a.badge ? 0 : 1;
+                    const bPromo = b.badge ? 0 : 1;
+                    if (aPromo !== bPromo) return aPromo - bPromo;
+                    return catRank(a) - catRank(b);
+                });
                 curProducts = [...allProducts];
 
                 const heroItem = allProducts.find(p => p.badge) || allProducts[0];
