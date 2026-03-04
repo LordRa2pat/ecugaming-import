@@ -68,7 +68,7 @@ const html = `<!DOCTYPE html>
           </table>
 
           <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;color:#44445a;text-align:center;">
-            &#128274; Comunicaci&#243;n cifrada &#183; Enviado con Proton Mail
+            &#128274; Comunicaci&#243;n segura y cifrada
           </p>
         </td>
       </tr>
@@ -94,11 +94,11 @@ async function send() {
 
     const info = await transporter.sendMail({
       from: `"Ecu Gaming Import" <${process.env.SMTP_FROM}>`,
-      to: 'pelixd@gmail.com',
+      to: 'ecugamingimport@gmail.com',
       subject: '✅ Prueba de correo — Ecu Gaming Import',
       html,
       headers: {
-        'X-Mailer': 'EcuNotify-1.0',
+        'X-Mailer': 'Mailer/2.0',
         'Precedence': 'bulk',
         'Auto-Submitted': 'auto-generated',
       },
