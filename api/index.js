@@ -541,10 +541,11 @@ app.post('/api/orders/create', requireAuth(async (req, res) => {
             });
         }
 
-        // 11. Notify n8n → triggers "Orden Generada" email to customer
+        // 11. Notify n8n → triggers order email to customer
         const firstItem = orderItemsData[0];
         notifyN8N({
             orderId,
+            status: 'confirmando_pago',
             customerName: `${safeAddress.firstName} ${safeAddress.lastName}`,
             customerEmail: req.user.email,
             productName: sanitize(firstItem?.product_snapshot?.name || 'Tu pedido'),
@@ -976,6 +977,7 @@ app.post('/api/admin/orders/:id/send-email', requireAdmin(async (req, res) => {
 
     await notifyN8N({
         orderId: order.id,
+        status: order.status || 'confirmando_pago',
         customerName: `${order.shipping_address?.firstName || order.customer?.first_name || ''} ${order.shipping_address?.lastName || order.customer?.last_name || ''}`.trim(),
         customerEmail,
         productName: sanitize(firstItem?.product_snapshot?.name || 'Tu pedido'),
