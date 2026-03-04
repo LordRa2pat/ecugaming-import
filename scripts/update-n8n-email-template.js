@@ -69,12 +69,17 @@ function apiRequest(method, urlPath, body) {
 
     console.log('Updating node: "' + emailNode.name + '"');
 
+    // emailSend v2.1:
+    // - HTML body goes in 'html' field (not 'message')
+    // - Prefix with '=' so n8n evaluates {{ }} expressions inside the HTML
+    // - Subject: '=' prefix ONCE at start, then {{ }} blocks (no second '=' before each block)
     emailNode.parameters = Object.assign({}, emailNode.parameters, {
         fromEmail: 'Ecu Gaming Import <soporte@ecugamingimport.top>',
         toEmail: '={{ $json.body.customerEmail }}',
-        subject: '={{ {\'confirmando_pago\':\'Orden Generada\',\'orden_confirmada\':\'Pago Confirmado ✅\',\'empacando\':\'Pedido en Preparacion 📦\',\'enviado\':\'Pedido Enviado 🚀\',\'recibido\':\'Pedido Entregado 🎉\',\'cancelado\':\'Orden Cancelada\'}[$json.body.status] || \'Notificacion de Orden\' }} #={{ $json.body.orderId }} - Ecu Gaming Import',
+        subject: "={{ {'confirmando_pago':'Orden Generada','orden_confirmada':'Pago Confirmado','empacando':'Pedido en Preparacion','enviado':'Pedido Enviado','recibido':'Pedido Entregado','cancelado':'Orden Cancelada'}[$json.body.status] || 'Notificacion de Orden' }} #{{ $json.body.orderId }} - Ecu Gaming Import",
         emailFormat: 'html',
-        message: EMAIL_HTML,
+        html: '=' + EMAIL_HTML,  // '=' prefix enables {{ }} expression evaluation within HTML
+        message: '',             // clear legacy field
         options: {
             appendAttribution: false
         }

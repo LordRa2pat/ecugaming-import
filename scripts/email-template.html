@@ -3,25 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ecu Gaming Import</title>
 </head>
 <body style="margin:0;padding:0;background:#0f0f17;font-family:'Segoe UI',Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#0f0f17;padding:32px 16px;">
 <tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0" style="background:#1a1a2e;border-radius:20px;overflow:hidden;border:1px solid #2a2a3e;max-width:600px;">
+<table width="600" cellpadding="0" cellspacing="0" style="background:#1a1a2e;border-radius:20px;overflow:hidden;border:1px solid #2a2a3e;max-width:600px;width:100%;">
 
   <!-- HEADER -->
   <tr><td style="background:linear-gradient(135deg,#6c63ff 0%,#a855f7 100%);padding:36px 40px;text-align:center;">
-    <div style="font-size:36px;margin-bottom:8px;">🎮</div>
-    <h1 style="color:#fff;margin:0;font-size:26px;font-weight:900;letter-spacing:-0.5px;">Ecu Gaming Import</h1>
+    <p style="margin:0 0 8px;font-size:36px;">🎮</p>
+    <h1 style="color:#ffffff;margin:0;font-size:26px;font-weight:900;">Ecu Gaming Import</h1>
     <p style="color:rgba(255,255,255,0.8);margin:6px 0 0;font-size:14px;">ecugamingimport.online</p>
   </td></tr>
 
   <!-- STATUS BADGE -->
   <tr><td style="padding:28px 40px 0;text-align:center;">
-    <div style="display:inline-block;background:={{ {'confirmando_pago':'rgba(245,158,11,0.15)','orden_confirmada':'rgba(16,185,129,0.15)','empacando':'rgba(59,130,246,0.15)','enviado':'rgba(139,92,246,0.15)','recibido':'rgba(16,185,129,0.15)','cancelado':'rgba(239,68,68,0.15)'}[$json.body.status] || 'rgba(245,158,11,0.15)' }};border:1px solid ={{ {'confirmando_pago':'#f59e0b','orden_confirmada':'#10b981','empacando':'#3b82f6','enviado':'#8b5cf6','recibido':'#10b981','cancelado':'#ef4444'}[$json.body.status] || '#f59e0b' }};border-radius:50px;padding:10px 24px;">
-      <span style="font-size:20px;">={{ {'confirmando_pago':'🟠','orden_confirmada':'✅','empacando':'📦','enviado':'🚀','recibido':'🎉','cancelado':'❌'}[$json.body.status] || '🟠' }}</span>
-      <span style="color:={{ {'confirmando_pago':'#f59e0b','orden_confirmada':'#10b981','empacando':'#3b82f6','enviado':'#8b5cf6','recibido':'#10b981','cancelado':'#ef4444'}[$json.body.status] || '#f59e0b' }};font-weight:800;font-size:16px;margin-left:8px;">={{ {'confirmando_pago':'Pendiente de Pago','orden_confirmada':'Pago Confirmado','empacando':'Preparando tu Pedido','enviado':'Pedido Enviado','recibido':'Pedido Entregado','cancelado':'Orden Cancelada'}[$json.body.status] || 'Orden Generada' }}</span>
+    <div style="display:inline-block;background:rgba(168,85,247,0.15);border:1px solid #a855f7;border-radius:50px;padding:12px 28px;">
+      <span style="font-size:22px;">{{ {'confirmando_pago':'🟠','orden_confirmada':'✅','empacando':'📦','enviado':'🚀','recibido':'🎉','cancelado':'❌'}[$json.body.status] || '🟠' }}</span>
+      <span style="color:#a855f7;font-weight:800;font-size:16px;margin-left:8px;">{{ {'confirmando_pago':'Pendiente de Pago','orden_confirmada':'Pago Confirmado','empacando':'Preparando tu Pedido','enviado':'Pedido Enviado','recibido':'Pedido Entregado','cancelado':'Orden Cancelada'}[$json.body.status] || 'Orden Generada' }}</span>
     </div>
   </td></tr>
 
@@ -30,11 +29,21 @@
 
     <!-- Greeting -->
     <p style="color:#c8c8d4;margin:0 0 16px;font-size:15px;line-height:1.6;">
-      Hola <strong style="color:#fff;">={{ $json.body.customerName }}</strong>,
+      Hola <strong style="color:#ffffff;">{{ $json.body.customerName }}</strong>,
     </p>
+
+    <!-- Status message -->
     <p style="color:#c8c8d4;margin:0 0 28px;font-size:15px;line-height:1.6;">
-      ={{ {'confirmando_pago':'Recibimos tu orden para <strong style=&apos;color:#fff;&apos;>' + $json.body.productName + '</strong>. Por favor realiza el pago para que podamos procesar tu envío en las próximas 24 horas.','orden_confirmada':'¡Excelente! Tu pago fue verificado. La orden de <strong style=&apos;color:#fff;&apos;>' + $json.body.productName + '</strong> está siendo procesada.','empacando':'Tu pedido de <strong style=&apos;color:#fff;&apos;>' + $json.body.productName + '</strong> está siendo empacado con cuidado. Pronto estará listo para envío.','enviado':'¡Tu pedido de <strong style=&apos;color:#fff;&apos;>' + $json.body.productName + '</strong> está en camino! El transportista lo entregará pronto.','recibido':'¡Gracias por tu compra de <strong style=&apos;color:#fff;&apos;>' + $json.body.productName + '</strong>! Esperamos que lo disfrutes al máximo.','cancelado':'Tu orden de <strong style=&apos;color:#fff;&apos;>' + $json.body.productName + '</strong> fue cancelada. Si tienes dudas contáctanos.'}[$json.body.status] || ('Hemos generado tu orden de <strong style=&apos;color:#fff;&apos;>' + $json.body.productName + '</strong>.') }}
+      {{ {'confirmando_pago':'Recibimos tu orden. Para completar el proceso, realiza el pago y envíanos el comprobante. Tu pedido será procesado en las próximas 24 horas.','orden_confirmada':'¡Tu pago fue verificado exitosamente! Estamos preparando tu orden para su despacho.','empacando':'Tu pedido está siendo empacado con mucho cuidado. Pronto estará listo para ser enviado.','enviado':'¡Tu pedido está en camino! El transportista lo entregará en los próximos días.','recibido':'¡Gracias por tu compra! Esperamos que disfrutes tu producto. Si tienes algún problema, contáctanos.','cancelado':'Tu orden fue cancelada. Si tienes alguna duda o deseas hacer un nuevo pedido, contáctanos por WhatsApp.'}[$json.body.status] || 'Tu orden ha sido registrada en nuestro sistema.' }}
     </p>
+
+    <!-- Product highlight -->
+    <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px;">
+      <tr><td style="background:#2a2a3e;border-radius:12px;padding:16px 20px;">
+        <p style="margin:0 0 4px;color:#888;font-size:11px;text-transform:uppercase;font-weight:800;letter-spacing:0.08em;">Producto</p>
+        <p style="margin:0;color:#ffffff;font-size:15px;font-weight:700;">{{ $json.body.productName }}</p>
+      </td></tr>
+    </table>
 
     <!-- Order Details Box -->
     <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:24px;">
@@ -42,43 +51,47 @@
         <p style="margin:0 0 14px;color:#888;font-size:11px;text-transform:uppercase;font-weight:800;letter-spacing:0.08em;">Detalle de la Orden</p>
         <table width="100%" cellpadding="6" cellspacing="0">
           <tr>
-            <td style="color:#888;font-size:13px;">N° de Orden:</td>
-            <td style="color:#fff;font-size:13px;font-weight:800;text-align:right;font-family:monospace;">={{ $json.body.orderId }}</td>
+            <td style="color:#888;font-size:13px;border-bottom:1px solid #2a2a3e;padding-bottom:8px;">N&#176; de Orden:</td>
+            <td style="color:#ffffff;font-size:13px;font-weight:800;text-align:right;font-family:monospace;border-bottom:1px solid #2a2a3e;padding-bottom:8px;">{{ $json.body.orderId }}</td>
           </tr>
           <tr>
-            <td style="color:#888;font-size:13px;padding-top:4px;">Total:</td>
-            <td style="color:#a855f7;font-size:18px;font-weight:900;text-align:right;">$={{ $json.body.total }}</td>
+            <td style="color:#888;font-size:13px;padding-top:8px;border-bottom:1px solid #2a2a3e;padding-bottom:8px;">Total:</td>
+            <td style="color:#a855f7;font-size:18px;font-weight:900;text-align:right;border-bottom:1px solid #2a2a3e;padding-bottom:8px;">${{ $json.body.total }}</td>
           </tr>
           <tr>
-            <td style="color:#888;font-size:13px;padding-top:4px;">Transportista:</td>
-            <td style="color:#fff;font-size:13px;text-align:right;">={{ $json.body.carrier || '—' }}</td>
+            <td style="color:#888;font-size:13px;padding-top:8px;border-bottom:1px solid #2a2a3e;padding-bottom:8px;">Transportista:</td>
+            <td style="color:#ffffff;font-size:13px;text-align:right;border-bottom:1px solid #2a2a3e;padding-bottom:8px;">{{ $json.body.carrier || '—' }}</td>
           </tr>
           <tr>
-            <td style="color:#888;font-size:13px;padding-top:4px;">Método de Pago:</td>
-            <td style="color:#fff;font-size:13px;text-align:right;">={{ $json.body.paymentMethod || '—' }}</td>
+            <td style="color:#888;font-size:13px;padding-top:8px;">M&#233;todo de Pago:</td>
+            <td style="color:#ffffff;font-size:13px;text-align:right;padding-top:8px;">{{ $json.body.paymentMethod || '—' }}</td>
           </tr>
         </table>
       </td></tr>
     </table>
 
-    <!-- WhatsApp CTA — only for payment pending -->
-    ={{ ($json.body.status === 'confirmando_pago' || !$json.body.status) ? '<table cellpadding="0" cellspacing="0" style="margin:0 auto 24px;"><tr><td style="background:linear-gradient(135deg,#6c63ff,#a855f7);border-radius:50px;padding:14px 32px;text-align:center;"><a href=&quot;https://wa.me/593962609951&quot; style=&quot;color:#fff;font-weight:700;font-size:15px;text-decoration:none;&quot;>📱 Enviar Comprobante por WhatsApp</a></td></tr></table>' : '' }}
+    <!-- WhatsApp CTA — shown for all statuses -->
+    <table cellpadding="0" cellspacing="0" style="margin:0 auto 24px;width:100%;">
+      <tr><td style="background:linear-gradient(135deg,#6c63ff,#a855f7);border-radius:50px;padding:14px 32px;text-align:center;">
+        <a href="https://wa.me/593962609951" style="color:#ffffff;font-weight:700;font-size:15px;text-decoration:none;display:block;">&#128241; Contactar por WhatsApp</a>
+      </td></tr>
+    </table>
 
-    <!-- Links -->
-    <p style="color:#555;font-size:12px;text-align:center;margin:24px 0 0;line-height:1.8;">
-      <a href="https://ecugamingimport.online/terminos" style="color:#a855f7;text-decoration:none;">Términos y Condiciones</a>
-      &nbsp;·&nbsp;
+    <!-- Policy links -->
+    <p style="color:#555;font-size:12px;text-align:center;margin:20px 0 0;line-height:1.8;">
+      <a href="https://ecugamingimport.online/terminos" style="color:#a855f7;text-decoration:none;">T&#233;rminos y Condiciones</a>
+      &nbsp;&middot;&nbsp;
       <a href="https://ecugamingimport.online/devoluciones" style="color:#a855f7;text-decoration:none;">Devoluciones</a>
-      &nbsp;·&nbsp;
-      <a href="https://wa.me/593962609951" style="color:#a855f7;text-decoration:none;">Soporte WhatsApp</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://wa.me/593962609951" style="color:#a855f7;text-decoration:none;">Soporte</a>
     </p>
 
   </td></tr>
 
-  <!-- FOOTER BAR -->
+  <!-- FOOTER -->
   <tr><td style="background:#0d0d14;padding:20px 40px;text-align:center;border-top:1px solid #2a2a3e;">
-    <p style="color:#333;font-size:11px;margin:0;">© 2025 Ecu Gaming Import · Ecuador</p>
-    <p style="color:#333;font-size:10px;margin:4px 0 0;">Este correo fue generado automáticamente, no respondas a este mensaje.</p>
+    <p style="color:#444;font-size:11px;margin:0;">&#169; 2025 Ecu Gaming Import &middot; Ecuador</p>
+    <p style="color:#333;font-size:10px;margin:4px 0 0;">Este correo fue generado autom&#225;ticamente, no respondas a este mensaje.</p>
   </td></tr>
 
 </table>

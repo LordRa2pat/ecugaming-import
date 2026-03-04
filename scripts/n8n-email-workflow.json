@@ -1,0 +1,120 @@
+{
+  "name": "Order Email Notification",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "order-notification",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000001",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [200, 300],
+      "webhookId": "order-notification"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-001",
+              "leftValue": "={{ $json.headers['x-api-key'] }}",
+              "rightValue": "4ea73ff3370525701b10f43b051fb2f545f1847f16744f05afbae8af68dff726",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0002-0002-0002-000000000002",
+      "name": "Validate API Key",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"ok\": false, \"error\": \"Unauthorized\" }",
+        "options": {
+          "responseCode": 401
+        }
+      },
+      "id": "a1b2c3d4-0003-0003-0003-000000000003",
+      "name": "Unauthorized",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [660, 480]
+    },
+    {
+      "parameters": {
+        "fromEmail": "Ecu Gaming Import <soporte@ecugamingimport.top>",
+        "toEmail": "={{ $json.body.customerEmail }}",
+        "subject": "=Orden Generada #{{ $json.body.orderId }} - Ecu Gaming Import",
+        "emailFormat": "html",
+        "message": "=<!DOCTYPE html>\n<html lang=\"es\">\n<head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head>\n<body style=\"margin:0;padding:0;background:#0f0f17;font-family:'Segoe UI',Arial,sans-serif;\">\n  <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background:#0f0f17;padding:40px 20px;\">\n    <tr><td align=\"center\">\n      <table width=\"600\" cellpadding=\"0\" cellspacing=\"0\" style=\"background:#1a1a2e;border-radius:16px;overflow:hidden;border:1px solid #2a2a3e;max-width:600px;\">\n        <tr><td style=\"background:linear-gradient(135deg,#6c63ff,#a855f7);padding:32px 40px;text-align:center;\">\n          <h1 style=\"color:#fff;margin:0;font-size:24px;font-weight:800;\">Ecu Gaming Import</h1>\n          <p style=\"color:rgba(255,255,255,0.85);margin:8px 0 0;font-size:14px;\">Tu orden fue generada exitosamente</p>\n        </td></tr>\n        <tr><td style=\"padding:40px;\">\n          <p style=\"color:#c8c8d4;margin:0 0 20px;font-size:15px;\">Hola <strong style=\"color:#fff;\">{{ $json.body.customerName }}</strong>,</p>\n          <p style=\"color:#c8c8d4;margin:0 0 24px;font-size:15px;line-height:1.6;\">\n            Gracias por elegir <strong style=\"color:#a855f7;\">Ecu Gaming Import</strong>. Hemos generado tu orden para:\n            <strong style=\"color:#fff;\">{{ $json.body.productName }}</strong>.\n          </p>\n          <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"margin-bottom:24px;\">\n            <tr><td style=\"background:#2a2a3e;border-radius:12px;padding:20px;\">\n              <p style=\"margin:0 0 8px;color:#888;font-size:12px;text-transform:uppercase;font-weight:700;\">Estado Actual</p>\n              <p style=\"margin:0;font-size:18px;\">🟠 <strong style=\"color:#f59e0b;\">Pendiente de Pago</strong></p>\n            </td></tr>\n          </table>\n          <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"margin-bottom:24px;\">\n            <tr><td style=\"background:#1e1e30;border-radius:12px;padding:20px;border:1px solid #2a2a3e;\">\n              <p style=\"margin:0 0 12px;color:#888;font-size:12px;text-transform:uppercase;font-weight:700;\">Detalle de la Orden</p>\n              <table width=\"100%\" cellpadding=\"4\" cellspacing=\"0\">\n                <tr><td style=\"color:#888;font-size:13px;\">N° de Orden:</td><td style=\"color:#fff;font-size:13px;font-weight:700;text-align:right;\">{{ $json.body.orderId }}</td></tr>\n                <tr><td style=\"color:#888;font-size:13px;\">Total:</td><td style=\"color:#a855f7;font-size:16px;font-weight:800;text-align:right;\">${{ $json.body.total }}</td></tr>\n                <tr><td style=\"color:#888;font-size:13px;\">Envío por:</td><td style=\"color:#fff;font-size:13px;text-align:right;\">{{ $json.body.carrier }}</td></tr>\n                <tr><td style=\"color:#888;font-size:13px;\">Método de Pago:</td><td style=\"color:#fff;font-size:13px;text-align:right;\">{{ $json.body.paymentMethod }}</td></tr>\n              </table>\n            </td></tr>\n          </table>\n          <p style=\"color:#c8c8d4;margin:0 0 20px;font-size:15px;line-height:1.6;\">\n            Para procesar tu envío en las próximas 24 horas, realiza el depósito o transferencia y adjunta el comprobante por WhatsApp.\n          </p>\n          <table cellpadding=\"0\" cellspacing=\"0\" style=\"margin:24px auto;\">\n            <tr><td style=\"background:#6c63ff;border-radius:980px;padding:14px 32px;text-align:center;\">\n              <a href=\"https://wa.me/593962609951\" style=\"color:#fff;font-weight:700;font-size:15px;text-decoration:none;\">📱 Enviar Comprobante por WhatsApp</a>\n            </td></tr>\n          </table>\n          <p style=\"color:#666;font-size:12px;text-align:center;margin:24px 0 0;line-height:1.6;\">\n            Tu compra está protegida por nuestras políticas.<br>\n            <a href=\"https://ecugamingimport.online/terminos\" style=\"color:#a855f7;\">Términos y Condiciones</a> ·\n            <a href=\"https://ecugamingimport.online/devoluciones\" style=\"color:#a855f7;\">Devoluciones</a>\n          </p>\n        </td></tr>\n        <tr><td style=\"background:#0f0f17;padding:20px;text-align:center;\">\n          <p style=\"color:#444;font-size:11px;margin:0;\">© 2025 Ecu Gaming Import · Ecuador · No responder a este correo</p>\n        </td></tr>\n      </table>\n    </td></tr>\n  </table>\n</body>\n</html>",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0004-0004-0004-000000000004",
+      "name": "Send Order Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [660, 300],
+      "credentials": {
+        "smtp": {
+          "id": "smtp-spacemail",
+          "name": "Spacemail SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"ok\": true }",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "a1b2c3d4-0005-0005-0005-000000000005",
+      "name": "Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [880, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [{ "node": "Validate API Key", "type": "main", "index": 0 }]
+      ]
+    },
+    "Validate API Key": {
+      "main": [
+        [{ "node": "Send Order Email", "type": "main", "index": 0 }],
+        [{ "node": "Unauthorized", "type": "main", "index": 0 }]
+      ]
+    },
+    "Send Order Email": {
+      "main": [
+        [{ "node": "Success", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "pinData": {}
+}
