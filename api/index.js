@@ -100,118 +100,23 @@ function sanitize(str, maxLen = 200) {
 }
 
 // ============================================================
-// EMAIL — ORDER NOTIFICATION (fire-and-forget via SMTP)
+// EMAIL — ORDER NOTIFICATION (fire-and-forget via n8n)
+// n8n at easypanel sends SMTP so the server IP is hidden from headers
 // ============================================================
-const nodemailer = require('nodemailer');
-const dns = require('dns');
-// Use Google DNS to avoid serverless DNS EBUSY issues with SMTP hostnames
-dns.setDefaultResultOrder('ipv4first');
-try { dns.setServers(['8.8.8.8', '1.1.1.1']); } catch (_) {}
-
-function buildOrderEmail(p) {
-    return `<!DOCTYPE html>
-<html lang="es">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#0f0f17;font-family:'Segoe UI',Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0f0f17;padding:40px 20px;">
-    <tr><td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="background:#1a1a2e;border-radius:16px;overflow:hidden;border:1px solid #2a2a3e;max-width:600px;">
-        <tr><td style="background:linear-gradient(135deg,#6c63ff,#a855f7);padding:32px 40px;text-align:center;">
-          <h1 style="color:#fff;margin:0;font-size:24px;font-weight:800;">Ecu Gaming Import</h1>
-          <p style="color:rgba(255,255,255,0.85);margin:8px 0 0;font-size:14px;">Tu orden fue generada exitosamente</p>
-        </td></tr>
-        <tr><td style="padding:40px;">
-          <p style="color:#c8c8d4;margin:0 0 20px;font-size:15px;">Hola <strong style="color:#fff;">${p.customerName}</strong>,</p>
-          <p style="color:#c8c8d4;margin:0 0 24px;font-size:15px;line-height:1.6;">
-            Gracias por elegir <strong style="color:#a855f7;">Ecu Gaming Import</strong>. Hemos generado tu orden para:
-            <strong style="color:#fff;">${p.productName}</strong>.
-          </p>
-          <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:24px;">
-            <tr><td style="background:#2a2a3e;border-radius:12px;padding:20px;">
-              <p style="margin:0 0 8px;color:#888;font-size:12px;text-transform:uppercase;font-weight:700;">Estado Actual</p>
-              <p style="margin:0;font-size:18px;">🟠 <strong style="color:#f59e0b;">Pendiente de Pago</strong></p>
-            </td></tr>
-          </table>
-          <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:24px;">
-            <tr><td style="background:#1e1e30;border-radius:12px;padding:20px;border:1px solid #2a2a3e;">
-              <p style="margin:0 0 12px;color:#888;font-size:12px;text-transform:uppercase;font-weight:700;">Detalle de la Orden</p>
-              <table width="100%" cellpadding="4" cellspacing="0">
-                <tr><td style="color:#888;font-size:13px;">N° de Orden:</td><td style="color:#fff;font-size:13px;font-weight:700;text-align:right;">${p.orderId}</td></tr>
-                <tr><td style="color:#888;font-size:13px;">Total:</td><td style="color:#a855f7;font-size:16px;font-weight:800;text-align:right;">$${p.total}</td></tr>
-                <tr><td style="color:#888;font-size:13px;">Envío por:</td><td style="color:#fff;font-size:13px;text-align:right;">${p.carrier}</td></tr>
-                <tr><td style="color:#888;font-size:13px;">Método de Pago:</td><td style="color:#fff;font-size:13px;text-align:right;">${p.paymentMethod}</td></tr>
-              </table>
-            </td></tr>
-          </table>
-          <p style="color:#c8c8d4;margin:0 0 20px;font-size:15px;line-height:1.6;">
-            Para procesar tu envío en las próximas 24 horas, realiza el depósito o transferencia y adjunta el comprobante por WhatsApp.
-          </p>
-          <table cellpadding="0" cellspacing="0" style="margin:24px auto;">
-            <tr><td style="background:#6c63ff;border-radius:980px;padding:14px 32px;text-align:center;">
-              <a href="https://wa.me/593962609951" style="color:#fff;font-weight:700;font-size:15px;text-decoration:none;">📱 Enviar Comprobante por WhatsApp</a>
-            </td></tr>
-          </table>
-          <p style="color:#666;font-size:12px;text-align:center;margin:24px 0 0;line-height:1.6;">
-            Tu compra está protegida por nuestras políticas.<br>
-            <a href="https://ecugamingimport.online/terminos" style="color:#a855f7;">Términos y Condiciones</a> ·
-            <a href="https://ecugamingimport.online/devoluciones" style="color:#a855f7;">Devoluciones</a>
-          </p>
-        </td></tr>
-        <tr><td style="background:#0f0f17;padding:20px;text-align:center;">
-          <p style="color:#444;font-size:11px;margin:0;">© 2025 Ecu Gaming Import · Ecuador · No responder a este correo</p>
-        </td></tr>
-      </table>
-    </td></tr>
-  </table>
-</body>
-</html>`;
-}
-
 async function notifyN8N(payload) {
-    // Primary: send email directly via SMTP (Spaceship)
-    const host = process.env.SMTP_HOST;
-    const user = process.env.SMTP_USER;
-    const pass = process.env.SMTP_PASS;
-    const from = process.env.SMTP_FROM || user;
-
-    if (host && user && pass && payload.customerEmail) {
-        try {
-            // Use SMTP_IP (pre-resolved IP) to bypass Vercel Lambda DNS EBUSY.
-            // tls.servername must be the real hostname so TLS cert validates correctly.
-            const smtpHost = process.env.SMTP_IP || host;
-            const transporter = nodemailer.createTransport({
-                host: smtpHost,
-                port: parseInt(process.env.SMTP_PORT || '465'),
-                secure: true,   // SSL/TLS on port 465
-                auth: { user, pass },
-                tls: { rejectUnauthorized: true, servername: host },
-            });
-            await transporter.sendMail({
-                from: `"Ecu Gaming Import" <${from}>`,
-                to: payload.customerEmail,
-                subject: `Orden Generada #${payload.orderId} - Ecu Gaming Import`,
-                html: buildOrderEmail(payload),
-            });
-            console.log(`[email] sent to ${payload.customerEmail} for order ${payload.orderId}`);
-        } catch (e) {
-            console.error('[email] SMTP error:', e.message);
-        }
-    }
-
-    // Secondary: also notify n8n if configured (for logging/future automations)
     const url = process.env.N8N_ORDER_WEBHOOK_URL;
     const key = process.env.N8N_API_KEY;
-    if (url && key) {
-        try {
-            await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'x-api-key': key },
-                body: JSON.stringify(payload),
-                signal: AbortSignal.timeout(5000),
-            });
-        } catch (e) {
-            console.error('[n8n notify]', e.message);
-        }
+    if (!url || !key) return;
+    try {
+        await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-api-key': key },
+            body: JSON.stringify(payload),
+            signal: AbortSignal.timeout(5000),
+        });
+        console.log(`[n8n] order notification sent for ${payload.orderId}`);
+    } catch (e) {
+        console.error('[n8n notify]', e.message);
     }
 }
 
@@ -964,9 +869,8 @@ app.patch('/api/admin/users/:id', requireAdmin(async (req, res) => {
 }));
 
 // ============================================================
-// TEST EMAIL (temporary — remove after confirming email works)
-// Protected with N8N_API_KEY so only admin can call it
-// Usage: GET /api/test-email?to=pelixd@gmail.com&key=YOUR_KEY
+// TEST EMAIL — triggers n8n workflow with a sample order
+// Usage: GET /api/test-email?to=you@example.com&key=YOUR_N8N_API_KEY
 // ============================================================
 app.get('/api/test-email', async (req, res) => {
     const { to, key } = req.query;
@@ -975,42 +879,27 @@ app.get('/api/test-email', async (req, res) => {
     }
     if (!to) return res.status(400).json({ error: 'Missing ?to= param' });
 
+    const url = process.env.N8N_ORDER_WEBHOOK_URL;
+    if (!url) return res.status(500).json({ error: 'N8N_ORDER_WEBHOOK_URL not set' });
+
     try {
-        const testPayload = {
-            orderId: 'EG-TEST-001',
-            customerName: 'Cliente de Prueba',
-            customerEmail: to,
-            productName: 'PlayStation 5 Slim - Edición Disco (1TB)',
-            carrier: 'Servientrega',
-            total: '649.00',
-            paymentMethod: 'transferencia',
-            timestamp: new Date().toISOString(),
-        };
-
-        const host = process.env.SMTP_HOST;
-        const user = process.env.SMTP_USER;
-        const pass = process.env.SMTP_PASS;
-        const from = process.env.SMTP_FROM || user;
-
-        const smtpHost = process.env.SMTP_IP || host;
-        const smtpPort = parseInt(process.env.SMTP_PORT || '587');
-        const transporter = nodemailer.createTransport({
-            host: smtpHost,
-            port: smtpPort,
-            secure: smtpPort === 465,   // true for 465, false for 587 (STARTTLS)
-            auth: { user, pass },
-            tls: { rejectUnauthorized: false, servername: host },
+        const resp = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.N8N_API_KEY },
+            body: JSON.stringify({
+                orderId: 'EG-TEST-001',
+                customerName: 'Cliente de Prueba',
+                customerEmail: to,
+                productName: 'PlayStation 5 Slim - Edición Disco (1TB)',
+                carrier: 'Servientrega',
+                total: '649.00',
+                paymentMethod: 'transferencia',
+                timestamp: new Date().toISOString(),
+            }),
+            signal: AbortSignal.timeout(10000),
         });
-
-        await transporter.verify();
-        const info = await transporter.sendMail({
-            from: `"Ecu Gaming Import" <${from}>`,
-            to,
-            subject: `[TEST] Orden Generada #${testPayload.orderId} - Ecu Gaming Import`,
-            html: buildOrderEmail(testPayload),
-        });
-
-        res.json({ ok: true, messageId: info.messageId, response: info.response });
+        const body = await resp.json().catch(() => ({}));
+        res.json({ ok: body.ok ?? resp.ok, status: resp.status, n8n: body });
     } catch (e) {
         res.status(500).json({ ok: false, error: e.message });
     }
