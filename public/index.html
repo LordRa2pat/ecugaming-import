@@ -8,112 +8,125 @@
     <link rel="stylesheet" href="style.css?v=1.0.8">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <style>
-        /* Global Background for Index */
-        body {
-            background: var(--bg-light);
-            color: var(--text);
-        }
-
-        /* Badge section tags */
-        .badge-tag {
-            display: inline-block;
-            font-size: .7rem;
-            font-weight: 800;
-            padding: 2px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: .05em;
-        }
-
-        .badge-oferta {
-            background: rgba(255, 45, 85, 0.15);
-            color: #ff2d55;
-            border: 1px solid rgba(255, 45, 85, 0.3);
-        }
-
-        .badge-remate {
-            background: rgba(255, 149, 0, 0.15);
-            color: #ff9500;
-            border: 1px solid rgba(255, 149, 0, 0.3);
-        }
-
-        .badge-nuevo {
-            background: rgba(52, 199, 89, 0.15);
-            color: #34c759;
-            border: 1px solid rgba(52, 199, 89, 0.3);
-        }
-
-        /* News section */
-        #newsSection {
-            padding: 60px 5% 40px;
-        }
-
-        #newsSection h2 {
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-bottom: 30px;
-            color: var(--text);
-        }
+        body { background: var(--bg-light); color: var(--text); }
 
         /* Header Overrides */
-        header {
-            background: rgba(10, 10, 11, 0.8);
-            border-bottom: 1px solid var(--border);
-        }
+        header { background: rgba(10,10,11,0.9); border-bottom: 1px solid var(--border); }
+        header .logo, header .nav-actions i, header .nav-actions a { color: var(--text); }
+        .search-container input { background: rgba(255,255,255,0.08); color: #fff; }
 
-        header .logo,
-        header .nav-actions i,
-        header .nav-actions a {
-            color: var(--text);
-        }
+        /* ── BADGE TAGS ────────────────────────────── */
+        .badge-tag { display:inline-block; font-size:.7rem; font-weight:800; padding:2px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:.05em; }
+        .badge-oferta { background:rgba(255,45,85,.15); color:#ff2d55; border:1px solid rgba(255,45,85,.3); }
+        .badge-remate { background:rgba(255,149,0,.15); color:#ff9500; border:1px solid rgba(255,149,0,.3); }
+        .badge-nuevo  { background:rgba(52,199,89,.15); color:#34c759; border:1px solid rgba(52,199,89,.3); }
 
-        .search-container input {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
+        /* ── SUBCATEGORY NAV ────────────────────────── */
+        .cat-nav-wrap {
+            position: sticky; top: 48px; z-index: 200;
+            background: var(--bg-light); border-bottom: 1px solid var(--border);
+            padding: 0 5%; overflow: visible;
         }
-
-        /* Categories Bar Overrides */
-        .categories-container {
-            background: var(--bg-light);
-            border-bottom: 1px solid var(--border);
-            top: 48px !important;
+        .cat-nav {
+            display: flex; align-items: stretch; gap: 2px;
+            height: 44px; overflow-x: auto; scrollbar-width: none;
         }
-
-        .category-pill {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-dim);
+        .cat-nav::-webkit-scrollbar { display: none; }
+        .cat-item { position: relative; display: flex; align-items: stretch; }
+        .cat-btn {
+            display: flex; align-items: center; gap: 5px;
+            padding: 0 14px; border: none; background: none;
+            color: var(--text-dim); font-size: .84rem; font-weight: 700;
+            cursor: pointer; transition: color .2s; white-space: nowrap;
+            border-bottom: 2px solid transparent;
         }
+        .cat-btn:hover, .cat-btn.active { color: var(--text); border-bottom-color: var(--primary); }
+        .cat-btn .caret { font-size: .6rem; margin-top: 1px; opacity: .6; }
 
-        /* Catalog Section Overrides */
+        /* Dropdown */
+        .cat-dropdown {
+            display: none; position: absolute; top: 100%; left: 0;
+            min-width: 210px; background: #1a1a26;
+            border: 1px solid var(--border); border-radius: 14px;
+            padding: 8px; box-shadow: 0 12px 40px rgba(0,0,0,.5);
+            z-index: 500;
+        }
+        .cat-item:hover > .cat-dropdown { display: block; }
+        .cat-dropdown a {
+            display: flex; align-items: center; gap: 8px;
+            padding: 9px 12px; border-radius: 9px;
+            color: var(--text-dim); font-size: .83rem; font-weight: 600;
+            text-decoration: none; transition: .15s; cursor: pointer;
+        }
+        .cat-dropdown a:hover { background: rgba(255,140,0,.12); color: var(--primary); }
+        .cat-dropdown a i { width: 16px; text-align: center; font-size: .9rem; }
+        .cat-dd-sep { height: 1px; background: var(--border); margin: 6px 0; }
+
+        /* ── PROMO SLIDER ───────────────────────────── */
+        #promoSliderSection {
+            padding: 28px 5% 0;
+        }
+        .promo-slider-hdr {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .promo-slider-hdr h2 {
+            font-size: 1.3rem; font-weight: 900; display: flex; align-items: center; gap: .5rem;
+        }
+        .swiper-promo { width: 100%; overflow: hidden; border-radius: 18px; }
+        .swiper-promo .swiper-slide {
+            border-radius: 18px; overflow: hidden;
+            background: var(--card-bg); border: 1px solid var(--border);
+            display: flex; align-items: center; gap: 0;
+            height: 180px; cursor: pointer;
+            transition: border-color .25s;
+        }
+        .swiper-promo .swiper-slide:hover { border-color: var(--primary); }
+        .slide-img {
+            width: 160px; height: 180px; flex-shrink: 0;
+            background: #111; display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .slide-img img { width: 100%; height: 100%; object-fit: contain; padding: 12px; }
+        .slide-info {
+            flex: 1; padding: 16px 20px; display: flex; flex-direction: column; gap: 6px;
+        }
+        .slide-info .s-cat { font-size: .72rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; }
+        .slide-info .s-name { font-size: 1rem; font-weight: 800; color: var(--text); line-height: 1.2; }
+        .slide-info .s-price { font-size: 1.4rem; font-weight: 900; color: var(--primary); }
+        .slide-info .s-old   { font-size: .85rem; color: var(--text-dim); text-decoration: line-through; }
+        .slide-info .s-badge { align-self: flex-start; }
+        .swiper-promo .swiper-pagination-bullet { background: var(--text-dim); }
+        .swiper-promo .swiper-pagination-bullet-active { background: var(--primary); }
+        .swiper-promo .swiper-button-next,
+        .swiper-promo .swiper-button-prev { color: var(--primary); }
+
+        /* ── CATALOG ────────────────────────────────── */
         .catalog-section {
-            background: var(--bg-light) !important;
-            margin-top: 0 !important;
-            padding-top: 2rem;
+            background: var(--bg-light) !important; margin-top: 0 !important; padding-top: 2rem;
         }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-glass);
+        #catalogTitle {
+            font-size: 1.2rem; font-weight: 900; padding: 0 5% 12px;
+            color: var(--text); display: flex; align-items: center; gap: .5rem;
         }
+        .card { background: var(--card-bg); border: 1px solid var(--border); box-shadow: var(--shadow-glass); }
+        .card:hover { border-color: var(--primary); }
+        .card-name { color: var(--text); }
+        /* Image placeholder fallback */
+        .card-img-placeholder { background: #111; }
 
-        .card:hover {
-            border-color: var(--primary);
-        }
+        /* ── NEWS ───────────────────────────────────── */
+        #newsSection { padding: 60px 5% 40px; }
+        #newsSection h2 { font-size: 1.8rem; font-weight: 900; margin-bottom: 30px; color: var(--text); }
 
-        .card-name {
-            color: var(--text);
-        }
+        /* ── FOOTER ─────────────────────────────────── */
+        footer { background: #050505 !important; border-top: 1px solid var(--border); }
+        footer .logo { color: #fff; }
 
-        /* Footer Overrides */
-        footer {
-            background: #050505 !important;
-            border-top: 1px solid var(--border);
-        }
-
-        footer .logo {
-            color: #fff;
+        @media(max-width:600px) {
+            .slide-img { width: 110px; }
+            .slide-info .s-name { font-size: .88rem; }
         }
     </style>
 </head>
@@ -166,30 +179,100 @@
         </div>
     </section>
 
-    <!-- Categories Bar -->
-    <div class="categories-container" id="categoryNav" style="top:44px;">
-        <div class="categories">
-            <button class="category-pill active" onclick="filterCategory('All',event)">Todos</button>
-            <button class="category-pill" onclick="filterCategory('iPhone',event)">iPhone</button>
-            <button class="category-pill" onclick="filterCategory('Consolas',event)">Consolas</button>
-            <button class="category-pill" onclick="filterCategory('Juegos',event)">Juegos</button>
-            <button class="category-pill" onclick="filterCategory('Accesorios',event)">Accesorios</button>
-        </div>
-    </div>
+    <!-- ── CATEGORY NAV WITH DROPDOWNS ─────────────────────── -->
+    <nav class="cat-nav-wrap" id="categoryNav">
+        <div class="cat-nav">
+            <!-- Todos -->
+            <div class="cat-item">
+                <button class="cat-btn active" onclick="filterSub('All','Todos')">
+                    <i class="fa fa-th"></i> Todos
+                </button>
+            </div>
 
-    <!-- Promo Section (badge products) — was missing, now exists -->
-    <section id="promoSection" class="fade-in" style="display:none; padding:0 5% 10px; animation-delay: 0.4s;">
-        <h2
-            style="font-size:1.4rem; font-weight:800; padding:30px 0 16px; display:flex; align-items:center; gap:.5rem;">
-            <i class="fa fa-bolt" style="color:#ff9500;"></i> Ofertas Destacadas
-        </h2>
-        <div id="promoCatalog" class="grid"></div>
+            <!-- iPhones -->
+            <div class="cat-item">
+                <button class="cat-btn" onclick="filterSub('iPhone','iPhones')">
+                    <i class="fab fa-apple"></i> iPhones
+                </button>
+            </div>
+
+            <!-- Consolas ▾ -->
+            <div class="cat-item">
+                <button class="cat-btn">
+                    <i class="fa fa-gamepad"></i> Consolas <span class="caret">▼</span>
+                </button>
+                <div class="cat-dropdown">
+                    <a onclick="filterSub('Consolas','Todas las Consolas')"><i class="fa fa-gamepad"></i> Todas las Consolas</a>
+                    <div class="cat-dd-sep"></div>
+                    <a onclick="filterSub('PS5','PlayStation 5')"><i class="fab fa-playstation"></i> PlayStation 5</a>
+                    <a onclick="filterSub('PS4','PlayStation 4')"><i class="fab fa-playstation"></i> PlayStation 4</a>
+                    <div class="cat-dd-sep"></div>
+                    <a onclick="filterSub('Xbox Series','Xbox Series X|S')"><i class="fab fa-xbox"></i> Xbox Series X|S</a>
+                    <a onclick="filterSub('Xbox One','Xbox One')"><i class="fab fa-xbox"></i> Xbox One</a>
+                    <div class="cat-dd-sep"></div>
+                    <a onclick="filterSub('Nintendo Switch','Nintendo Switch')"><i class="fa fa-circle-nodes"></i> Nintendo Switch</a>
+                    <a onclick="filterSub('Steam Deck','Steam Deck')"><i class="fab fa-steam"></i> Steam Deck</a>
+                    <div class="cat-dd-sep"></div>
+                    <a onclick="filterSub('Retro','Consolas Retro')"><i class="fa fa-clock-rotate-left"></i> Consolas Retro</a>
+                    <a onclick="filterSub('Accesorios Consola','Accesorios')"><i class="fa fa-plug"></i> Accesorios</a>
+                </div>
+            </div>
+
+            <!-- Juegos ▾ -->
+            <div class="cat-item">
+                <button class="cat-btn" onclick="filterSub('Juegos','Todos los Juegos')">
+                    <i class="fa fa-dice"></i> Juegos <span class="caret">▼</span>
+                </button>
+                <div class="cat-dropdown">
+                    <a onclick="filterSub('Juegos','Todos los Juegos')"><i class="fa fa-dice"></i> Todos los Juegos</a>
+                    <div class="cat-dd-sep"></div>
+                    <a onclick="filterSub('Juegos PS5','Juegos PS5')"><i class="fab fa-playstation"></i> Juegos PlayStation 5</a>
+                    <a onclick="filterSub('Juegos PS4','Juegos PS4')"><i class="fab fa-playstation"></i> Juegos PlayStation 4</a>
+                    <a onclick="filterSub('Juegos PS3','Juegos PS3')"><i class="fab fa-playstation"></i> Juegos PlayStation 3</a>
+                    <div class="cat-dd-sep"></div>
+                    <a onclick="filterSub('Juegos Xbox Series','Juegos Xbox Series')"><i class="fab fa-xbox"></i> Juegos Xbox Series</a>
+                    <a onclick="filterSub('Juegos Xbox One','Juegos Xbox One')"><i class="fab fa-xbox"></i> Juegos Xbox One</a>
+                    <a onclick="filterSub('Juegos Xbox 360','Juegos Xbox 360')"><i class="fab fa-xbox"></i> Juegos Xbox 360</a>
+                    <div class="cat-dd-sep"></div>
+                    <a onclick="filterSub('Juegos Nintendo Switch','Juegos Nintendo Switch')"><i class="fa fa-circle-nodes"></i> Juegos Nintendo Switch</a>
+                    <a onclick="filterSub('Juegos PC','Juegos PC')"><i class="fab fa-steam"></i> Juegos PC / Steam</a>
+                </div>
+            </div>
+
+            <!-- Accesorios -->
+            <div class="cat-item">
+                <button class="cat-btn" onclick="filterSub('Accesorios','Accesorios')">
+                    <i class="fa fa-headphones"></i> Accesorios
+                </button>
+            </div>
+
+            <!-- Laptops -->
+            <div class="cat-item">
+                <button class="cat-btn" onclick="filterSub('Laptop','Laptops')">
+                    <i class="fa fa-laptop"></i> Laptops
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ── PROMOTIONS SLIDER ───────────────────────────────── -->
+    <section id="promoSliderSection" style="display:none;">
+        <div class="promo-slider-hdr">
+            <h2><i class="fa fa-bolt" style="color:#ff9500;"></i> Super Promociones</h2>
+            <span style="font-size:.82rem; color:var(--text-dim);">Desliza para ver más <i class="fa fa-arrow-right"></i></span>
+        </div>
+        <div class="swiper swiper-promo" id="promoSwiper">
+            <div class="swiper-wrapper" id="sliderCards"></div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
     </section>
 
-    <!-- Main Catalog Section -->
-    <main class="catalog-section fade-in" id="catalogStart"
-        style="background:#fff; border-radius:30px; margin-top:-30px; position:relative; z-index:100; animation-delay: 0.6s;">
-        <div id="catalog" class="grid" style="padding:40px 0;">
+    <!-- ── CATALOG ─────────────────────────────────────────── -->
+    <div id="catalogTitle" style="display:none;"></div>
+    <main class="catalog-section fade-in" id="catalogStart" style="padding-top: 1rem;">
+        <div id="catalog" class="grid" style="padding: 0 0 40px;">
             <!-- Products injected by JS -->
         </div>
     </main>
@@ -242,13 +325,101 @@
 
     <!-- Supabase + libs -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-    <script src="/lib/supabase-client.js?v=1.0.8"></script>
-    <script src="/lib/cart.js?v=1.0.8"></script>
-    <script src="/lib/auth.js?v=1.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="/lib/supabase-client.js?v=1.0.9"></script>
+    <script src="/lib/cart.js?v=1.0.9"></script>
+    <script src="/lib/auth.js?v=1.0.9"></script>
 
     <script>
         let allProducts = [];
         let curProducts = [];
+        let promoSwiper = null;
+
+        // ── Platform keyword mapping for game subcategories ──────────────
+        // Games not matched default to PlayStation (majority of catalog)
+        const XBOX_GAMES = ['Call of Duty','Halo','Forza','Gears','Sea of Thieves','Grounded'];
+        const NINTENDO_GAMES = ['Mario','Zelda','Pokemon','Splatoon','Animal Crossing','Metroid','Kirby','Donkey Kong'];
+        const PC_GAMES = ['Palworld','Baldur\'s Gate','Overwatch','Diablo','World of Warcraft'];
+        const PS3_GAMES = ['Tekken 7 - Legendary','BioShock: The Collection'];
+        // Console keyword filters
+        const RETRO_KEYWORDS = ['game boy','3ds','ps vita','sega genesis','retro console','3do','neo geo'];
+        const PS5_CONSOLE = ['playstation 5','ps5','ps5 slim','ps5 pro'];
+        const PS4_CONSOLE = ['playstation 4','ps4','ps4 pro'];
+
+        function getPlatform(p) {
+            const n = p.name.toLowerCase();
+            const cat = (p.category || '').toLowerCase();
+            if (cat === 'juegos' || cat.includes('juego')) {
+                if (XBOX_GAMES.some(k => n.includes(k.toLowerCase()))) return 'xbox';
+                if (NINTENDO_GAMES.some(k => n.includes(k.toLowerCase()))) return 'nintendo';
+                if (PC_GAMES.some(k => n.includes(k.toLowerCase()))) return 'pc';
+                if (PS3_GAMES.some(k => n.includes(k.toLowerCase()))) return 'ps3';
+                return 'playstation'; // default — most games are PS4/PS5
+            }
+            if (cat === 'consolas' || cat === 'retro') {
+                if (RETRO_KEYWORDS.some(k => n.includes(k))) return 'retro';
+                if (n.includes('xbox series')) return 'xboxseries';
+                if (n.includes('xbox one')) return 'xboxone';
+                if (n.includes('xbox')) return 'xbox';
+                if (n.includes('nintendo switch')) return 'switch';
+                if (n.includes('3ds') || n.includes('game boy') || n.includes('vita') || n.includes('sega') || n.includes('retro')) return 'retro';
+                if (n.includes('steam deck')) return 'steamdeck';
+                if (PS5_CONSOLE.some(k => n.includes(k))) return 'ps5';
+                if (PS4_CONSOLE.some(k => n.includes(k))) return 'ps4';
+            }
+            return cat;
+        }
+
+        // ── Filter by subcategory key ────────────────────────────────────
+        function filterSub(key, label) {
+            // Update active button
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            event && event.currentTarget && event.currentTarget.classList.add('active');
+
+            let filtered;
+            switch (key) {
+                case 'All':         filtered = allProducts; break;
+                case 'iPhone':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('iphone')); break;
+                case 'Consolas':    filtered = allProducts.filter(p => ['consolas','retro','general'].includes((p.category||'').toLowerCase())); break;
+                case 'PS5':         filtered = allProducts.filter(p => getPlatform(p) === 'ps5'); break;
+                case 'PS4':         filtered = allProducts.filter(p => getPlatform(p) === 'ps4'); break;
+                case 'Xbox Series': filtered = allProducts.filter(p => getPlatform(p) === 'xboxseries'); break;
+                case 'Xbox One':    filtered = allProducts.filter(p => getPlatform(p) === 'xboxone'); break;
+                case 'Nintendo Switch': filtered = allProducts.filter(p => getPlatform(p) === 'switch'); break;
+                case 'Steam Deck':  filtered = allProducts.filter(p => getPlatform(p) === 'steamdeck'); break;
+                case 'Retro':       filtered = allProducts.filter(p => getPlatform(p) === 'retro'); break;
+                case 'Accesorios Consola': filtered = allProducts.filter(p => {
+                    const n = p.name.toLowerCase();
+                    return ['dualsense','controller','headset','charging','camera','remote','portal','vr2','ssd expansion','console cover','funda'].some(k => n.includes(k));
+                }); break;
+                case 'Juegos':          filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('juego')); break;
+                case 'Juegos PS5':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('juego') && ['ps3','xbox','nintendo','pc'].indexOf(getPlatform(p)) === -1); break;
+                case 'Juegos PS4':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('juego') && getPlatform(p) === 'playstation'); break;
+                case 'Juegos PS3':      filtered = allProducts.filter(p => getPlatform(p) === 'ps3'); break;
+                case 'Juegos Xbox Series':
+                case 'Juegos Xbox One':
+                case 'Juegos Xbox 360': filtered = allProducts.filter(p => getPlatform(p) === 'xbox'); break;
+                case 'Juegos Nintendo Switch': filtered = allProducts.filter(p => getPlatform(p) === 'nintendo'); break;
+                case 'Juegos PC':       filtered = allProducts.filter(p => getPlatform(p) === 'pc'); break;
+                case 'Accesorios':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('accesorio')); break;
+                case 'Laptop':          filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('laptop')); break;
+                default:                filtered = allProducts.filter(p => (p.name+' '+(p.category||'')).toLowerCase().includes(key.toLowerCase())); break;
+            }
+
+            curProducts = filtered;
+            // Title
+            const titleEl = document.getElementById('catalogTitle');
+            if (key === 'All') {
+                titleEl.style.display = 'none';
+            } else {
+                titleEl.style.display = 'flex';
+                titleEl.innerHTML = `<i class="fa fa-filter" style="color:var(--primary);font-size:.9rem;"></i> ${label} <span style="color:var(--text-dim);font-weight:400;font-size:.9rem;">(${filtered.length})</span>`;
+            }
+            // Hide slider when filtering
+            document.getElementById('promoSliderSection').style.display = key === 'All' ? 'block' : 'none';
+            renderCards(filtered, 'catalog');
+            document.getElementById('catalogStart').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
         async function init() {
             await fetchStock();
@@ -262,20 +433,59 @@
                 allProducts = await res.json();
                 curProducts = [...allProducts];
 
-                // Hero: pick first badge product or first product
                 const heroItem = allProducts.find(p => p.badge) || allProducts[0];
                 if (heroItem) setup3DHero(heroItem);
 
-                // Promo section: products with a badge
+                // Build promo slider from badge products
                 const promos = allProducts.filter(p => p.badge);
                 if (promos.length > 0) {
-                    document.getElementById('promoSection').style.display = 'block';
-                    renderCards(promos.slice(0, 6), 'promoCatalog');
+                    buildPromoSlider(promos);
+                    document.getElementById('promoSliderSection').style.display = 'block';
                 }
 
-                renderCards(allProducts.slice(0, 9), 'catalog');
+                renderCards(allProducts, 'catalog');
                 fetchNews();
             } catch (err) { console.error('Error fetching stock:', err); }
+        }
+
+        function buildPromoSlider(items) {
+            const wrapper = document.getElementById('sliderCards');
+            wrapper.innerHTML = '';
+            items.forEach(item => {
+                const price = item.sale_price ?? item.price;
+                const hasOld = item.sale_price && item.sale_price < item.price;
+                const img = item.image_url || item.image || '';
+                const slide = document.createElement('div');
+                slide.className = 'swiper-slide';
+                slide.onclick = () => location.href = `/product?id=${item.id}`;
+                slide.innerHTML = `
+                    <div class="slide-img">
+                        <img src="${img}" alt="${item.name}"
+                            onerror="this.parentElement.innerHTML='<i class=\\'fa fa-gamepad\\' style=\\'font-size:2.5rem;color:#333;\\'></i>'">
+                    </div>
+                    <div class="slide-info">
+                        <div class="s-cat">${item.category || ''}</div>
+                        <div class="s-badge">${badgeHTML(item.badge)}</div>
+                        <div class="s-name">${item.name}</div>
+                        <div class="s-price">$${Number(price).toFixed(2)}</div>
+                        ${hasOld ? `<div class="s-old">$${Number(item.price).toFixed(2)}</div>` : ''}
+                    </div>`;
+                wrapper.appendChild(slide);
+            });
+
+            if (promoSwiper) { promoSwiper.destroy(true, true); }
+            promoSwiper = new Swiper('#promoSwiper', {
+                slidesPerView: 1,
+                spaceBetween: 16,
+                loop: items.length > 3,
+                autoplay: { delay: 3500, disableOnInteraction: false },
+                pagination: { el: '.swiper-pagination', clickable: true },
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                breakpoints: {
+                    640:  { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                }
+            });
         }
 
         async function fetchNews() {
@@ -283,53 +493,48 @@
                 const res = await fetch('https://n8n-n8n.tlsfxv.easypanel.host/webhook/get-news');
                 if (!res.ok) throw new Error('No news');
                 const newsData = await res.json();
-                const container = document.getElementById('newsContainer');
-                if (!Array.isArray(newsData) || newsData.length === 0) throw new Error('Empty');
-
+                if (!Array.isArray(newsData) || newsData.length === 0) return;
                 document.getElementById('newsSection').style.display = 'block';
+                const container = document.getElementById('newsContainer');
                 container.innerHTML = '';
                 newsData.forEach((news, idx) => {
                     const card = document.createElement('div');
                     card.className = 'card';
                     card.style.animation = `slideIn 0.5s ease backwards ${idx * 0.1}s`;
                     card.innerHTML = `
-                        <div style="width:100%; height:150px; background:#f8fafc; border-radius:12px; margin-bottom:1rem; overflow:hidden;">
-                            <img src="${news.image || ''}" style="width:100%; height:100%; object-fit:cover;"
-                                onerror="this.src='https://via.placeholder.com/300x150?text=Noticia+Gamer'">
+                        <div style="width:100%;height:150px;background:#111;border-radius:12px;margin-bottom:1rem;overflow:hidden;">
+                            <img src="${news.image||''}" style="width:100%;height:100%;object-fit:cover;"
+                                onerror="this.style.display='none'">
                         </div>
-                        <h3 style="font-size:1rem; font-weight:700; margin-bottom:.5rem; line-height:1.2; color:var(--secondary);">${news.title || ''}</h3>
-                        <p style="font-size:.8rem; color:var(--text-dim);">${news.summary || news.contentSnippet || 'Actualización tecnológica...'}</p>
-                        <a href="${news.link || '#'}" target="_blank" style="margin-top:1rem; display:inline-block; font-size:.85rem; color:var(--primary); font-weight:700; text-decoration:none;">Leer más <i class="fa fa-arrow-right"></i></a>`;
+                        <h3 style="font-size:1rem;font-weight:700;margin-bottom:.5rem;line-height:1.2;color:var(--text);">${news.title||''}</h3>
+                        <p style="font-size:.8rem;color:var(--text-dim);">${news.summary||news.contentSnippet||'Actualización tecnológica...'}</p>
+                        <a href="${news.link||'#'}" target="_blank" style="margin-top:1rem;display:inline-block;font-size:.85rem;color:var(--primary);font-weight:700;text-decoration:none;">Leer más <i class="fa fa-arrow-right"></i></a>`;
                     container.appendChild(card);
                 });
-            } catch (err) {
-                // News section stays hidden if fetch fails — no error shown to user
-            }
+            } catch (_) {}
         }
 
         function setup3DHero(item) {
-
             const activePrice = item.sale_price ?? item.price;
             const hasPromo = item.sale_price && item.sale_price < item.price;
-            const imgSrc = item.image_url || item.image || 'https://via.placeholder.com/400';
-
+            const imgSrc = item.image_url || item.image || '';
             const heroCard = document.getElementById('hero3dCard');
             heroCard.innerHTML = `
-                <div class="card-img-placeholder" style="background:transparent; height:300px; padding:0;">
-                    <img src="${imgSrc}" style="transform:translateZ(50px) scale(1.1); filter:drop-shadow(0 20px 20px rgba(0,0,0,.3)); max-height:280px; object-fit:contain;">
+                <div class="card-img-placeholder" style="background:transparent;height:300px;padding:0;">
+                    <img src="${imgSrc}" style="transform:translateZ(50px) scale(1.1);filter:drop-shadow(0 20px 20px rgba(0,0,0,.3));max-height:280px;object-fit:contain;"
+                        onerror="this.style.display='none'">
                 </div>
-                <div style="background:var(--card-bg); padding:1.5rem; border-radius:16px; margin-top:-2rem; position:relative; z-index:10; transform:translateZ(30px); text-align:left; box-shadow:0 10px 30px rgba(0,0,0,.1);">
-                    <div style="font-weight:900; font-size:2.2rem; color:var(--primary); line-height:1;">$${Number(activePrice).toFixed(2)}</div>
-                    ${hasPromo ? `<div style="text-decoration:line-through; color:var(--text-dim); font-size:1rem;">$${Number(item.price).toFixed(2)}</div>` : ''}
+                <div style="background:var(--card-bg);padding:1.5rem;border-radius:16px;margin-top:-2rem;position:relative;z-index:10;transform:translateZ(30px);text-align:left;box-shadow:0 10px 30px rgba(0,0,0,.3);">
+                    <div style="font-weight:900;font-size:2.2rem;color:var(--primary);line-height:1;">$${Number(activePrice).toFixed(2)}</div>
+                    ${hasPromo ? `<div style="text-decoration:line-through;color:var(--text-dim);font-size:1rem;">$${Number(item.price).toFixed(2)}</div>` : ''}
                     <button class="btn-buy" style="margin-top:1rem;" onclick="addToCart('${item.id}')">¡Lo quiero ahora!</button>
                 </div>`;
-
             const scene = document.querySelector('.scene-3d');
             scene.addEventListener('mousemove', (e) => {
                 const rect = scene.getBoundingClientRect();
                 const x = (e.clientX - rect.left) / rect.width - .5;
                 const y = ((e.clientY - rect.top) / rect.height - .5) * -1;
-                heroCard.style.transform = `rotateY(${x * 15}deg) rotateX(${y * 15}deg)`;
+                heroCard.style.transform = `rotateY(${x*15}deg) rotateX(${y*15}deg)`;
             });
             scene.addEventListener('mouseleave', () => {
                 heroCard.style.transform = 'rotateY(0deg) rotateX(0deg)';
@@ -339,7 +544,7 @@
         function badgeHTML(badge) {
             if (!badge) return '';
             const cls = badge === 'Súper OFERTA' ? 'badge-oferta' : badge === 'Remate' ? 'badge-remate' : 'badge-nuevo';
-            return `<div class="badge-tag ${cls}">${badge}</div>`;
+            return `<span class="badge-tag ${cls}">${badge}</span>`;
         }
 
         function createCardHTML(item) {
@@ -347,25 +552,23 @@
             const hasPromo = item.sale_price && item.sale_price < item.price;
             const imgSrc = item.image_url || item.image;
             const imgTag = imgSrc
-                ? `<img src="${imgSrc}" alt="${item.name}" style="width:100%; height:100%; object-fit:contain; border-radius:12px;" onerror="this.style.display='none'">`
-                : `<i class="fa fa-image"></i>`;
-
+                ? `<img src="${imgSrc}" alt="${item.name}" style="width:100%;height:100%;object-fit:contain;border-radius:12px;"
+                    onerror="this.outerHTML='<i class=\\'fa fa-gamepad\\' style=\\'font-size:2.5rem;color:#333;\\'></i>'">`
+                : `<i class="fa fa-gamepad" style="font-size:2.5rem;color:#333;"></i>`;
             return `
-                <div class="card-tag">${item.category || ''}</div>
+                <div class="card-tag">${item.category||''}</div>
                 ${badgeHTML(item.badge)}
-                <div class="card-img-placeholder" onclick="location.href='/product?id=${item.id}'" style="cursor:pointer;">
-                    ${imgTag}
-                </div>
+                <div class="card-img-placeholder" onclick="location.href='/product?id=${item.id}'" style="cursor:pointer;">${imgTag}</div>
                 <h3 class="card-name" onclick="location.href='/product?id=${item.id}'" style="cursor:pointer;">${item.name}</h3>
                 <div class="price-container">
                     <div class="card-price">$${Number(activePrice).toFixed(2)}</div>
                     ${hasPromo ? `<div class="card-old-price">$${Number(item.price).toFixed(2)}</div>` : ''}
                 </div>
-                <p class="card-desc">${item.description || 'Tecnología premium garantizada. Envío seguro a todo el país.'}</p>
-                <div style="display:flex; gap:.5rem;">
+                <p class="card-desc">${item.description||'Tecnología premium garantizada. Envío seguro a todo el país.'}</p>
+                <div style="display:flex;gap:.5rem;">
                     ${item.stock > 0
-                    ? `<button class="btn-buy" onclick="addToCart('${item.id}')"><i class="fa fa-cart-plus"></i></button>`
-                    : `<button class="btn-secondary" disabled style="opacity:.5;">Agotado</button>`}
+                        ? `<button class="btn-buy" onclick="addToCart('${item.id}')"><i class="fa fa-cart-plus"></i></button>`
+                        : `<button class="btn-secondary" disabled style="opacity:.5;">Agotado</button>`}
                     <button class="btn-secondary" style="margin-top:0;" onclick="location.href='/product?id=${item.id}'">Ver</button>
                 </div>`;
         }
@@ -373,7 +576,9 @@
         function renderCards(items, containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            container.innerHTML = items.length ? '' : '<p style="grid-column:1/-1; text-align:center; color:var(--text-dim);">No hay productos.</p>';
+            container.innerHTML = items.length
+                ? ''
+                : '<p style="grid-column:1/-1;text-align:center;color:var(--text-dim);padding:3rem 0;">No hay productos en esta categoría.</p>';
             items.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -384,33 +589,27 @@
 
         function handleSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allProducts.filter(p =>
-                p.name.toLowerCase().includes(query) ||
-                (p.category || '').toLowerCase().includes(query)
-            );
-            renderCards(filtered.slice(0, 18), 'catalog');
-            document.getElementById('promoSection').style.display = query ? 'none' : (allProducts.some(p => p.badge) ? 'block' : 'none');
-        }
-
-        function filterCategory(cat, e) {
-            document.querySelectorAll('.category-pill').forEach(b => b.classList.remove('active'));
-            if (e && e.target) e.target.classList.add('active');
-
-            if (cat === 'All') {
-                curProducts = [...allProducts];
-                document.getElementById('promoSection').style.display = allProducts.some(p => p.badge) ? 'block' : 'none';
-            } else {
-                curProducts = allProducts.filter(p => (p.category || '').toLowerCase().includes(cat.toLowerCase()));
-                document.getElementById('promoSection').style.display = 'none';
+            if (!query) {
+                renderCards(allProducts, 'catalog');
+                document.getElementById('promoSliderSection').style.display = 'block';
+                document.getElementById('catalogTitle').style.display = 'none';
+                return;
             }
-            renderCards(curProducts.slice(0, 18), 'catalog');
+            const filtered = allProducts.filter(p =>
+                p.name.toLowerCase().includes(query) || (p.category||'').toLowerCase().includes(query)
+            );
+            document.getElementById('promoSliderSection').style.display = 'none';
+            document.getElementById('catalogTitle').style.display = 'flex';
+            document.getElementById('catalogTitle').innerHTML =
+                `<i class="fa fa-search" style="color:var(--primary);font-size:.9rem;"></i> Resultados: "${query}" <span style="color:var(--text-dim);font-weight:400;font-size:.9rem;">(${filtered.length})</span>`;
+            renderCards(filtered, 'catalog');
         }
 
         function scrollToCatalog() {
             document.getElementById('catalogStart').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // --- Cart ---
+        // ── Cart ──────────────────────────────────────────────────────────
         function addToCart(id) {
             const product = allProducts.find(p => p.id === id);
             if (!product) return;
@@ -418,36 +617,31 @@
             renderCartUI();
             toggleCart(true);
         }
-
-        function removeFromCart(idx) {
-            Cart.remove(idx);
-            renderCartUI();
-        }
+        function removeFromCart(idx) { Cart.remove(idx); renderCartUI(); }
 
         function renderCartUI() {
             const items = Cart.get();
             const itemsCont = document.getElementById('cartItems');
             itemsCont.innerHTML = items.length
                 ? ''
-                : '<p style="color:var(--text-dim); text-align:center; margin-top:2rem;">Tu carrito está vacío.</p>';
-
+                : '<p style="color:var(--text-dim);text-align:center;margin-top:2rem;">Tu carrito está vacío.</p>';
             items.forEach((item, idx) => {
                 const div = document.createElement('div');
                 div.className = 'cart-item';
-                const imgSrc = item.image_url || item.image || 'https://via.placeholder.com/50';
+                const imgSrc = item.image_url || item.image || '';
                 div.innerHTML = `
-                    <div style="display:flex; gap:1rem; align-items:center;">
-                        <img src="${imgSrc}" style="width:50px; height:50px; object-fit:cover; border-radius:8px;" onerror="this.src='https://via.placeholder.com/50'">
+                    <div style="display:flex;gap:1rem;align-items:center;">
+                        <img src="${imgSrc}" style="width:50px;height:50px;object-fit:cover;border-radius:8px;background:#111;"
+                            onerror="this.style.display='none'">
                         <div>
-                            <div style="font-weight:700; font-size:.9rem; color:var(--text);">${item.name}</div>
-                            <div style="color:var(--primary); font-size:.95rem; font-weight:800;">$${Number(item.price).toFixed(2)}</div>
-                            <div style="color:var(--text-dim); font-size:.75rem;">Cant: ${item.qty || 1}</div>
+                            <div style="font-weight:700;font-size:.9rem;color:var(--text);">${item.name}</div>
+                            <div style="color:var(--primary);font-size:.95rem;font-weight:800;">$${Number(item.price).toFixed(2)}</div>
+                            <div style="color:var(--text-dim);font-size:.75rem;">Cant: ${item.qty||1}</div>
                         </div>
                     </div>
-                    <i class="fa fa-trash" style="color:#ef4444; cursor:pointer; padding:.5rem;" onclick="removeFromCart(${idx})"></i>`;
+                    <i class="fa fa-trash" style="color:#ef4444;cursor:pointer;padding:.5rem;" onclick="removeFromCart(${idx})"></i>`;
                 itemsCont.appendChild(div);
             });
-
             document.getElementById('cartTotalText').textContent = `$${Cart.subtotal().toFixed(2)}`;
         }
 
@@ -458,17 +652,12 @@
         async function handleCheckout() {
             if (Cart.isEmpty()) return alert('El carrito está vacío.');
             const session = await _supabase.auth.getSession();
-            if (!session.data.session) {
-                location.href = '/login?redirect=/checkout';
-                return;
-            }
+            if (!session.data.session) { location.href = '/login?redirect=/checkout'; return; }
             toggleCart(false);
             location.href = '/checkout';
         }
 
-        // Listen to cart updates from other scripts
         document.addEventListener('cart:updated', renderCartUI);
-
         init();
     </script>
 </body>

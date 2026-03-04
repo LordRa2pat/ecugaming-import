@@ -8,14 +8,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: var(--bg-light); }
+        body { background: var(--bg-light); color: var(--text); }
         .checkout-layout {
             display: grid;
             grid-template-columns: 1fr 380px;
             gap: 2rem;
             max-width: 1100px;
             margin: 0 auto;
-            padding: 2rem 1.5rem 4rem;
+            padding: 72px 1.5rem 4rem; /* 48px header + 24px gap */
         }
         @media(max-width:860px){ .checkout-layout{ grid-template-columns:1fr; } .order-summary{ order:-1; } }
 
@@ -23,11 +23,12 @@
         .steps-bar {
             display: flex; gap: 0; margin-bottom: 2rem;
             border-bottom: 2px solid var(--border); padding-bottom: 1rem;
+            overflow-x: auto;
         }
         .step-item {
             display: flex; align-items: center; gap: .5rem;
             font-size: .82rem; font-weight: 700; color: var(--text-dim);
-            padding: 0 1rem; cursor: pointer;
+            padding: 0 1rem; cursor: pointer; white-space: nowrap;
         }
         .step-item.active { color: var(--primary); }
         .step-item.done   { color: #34c759; }
@@ -38,18 +39,18 @@
         }
         .step-item.done .step-num { background: #34c759; border-color: #34c759; color: #fff; }
         .step-item.active .step-num { background: var(--primary); border-color: var(--primary); color: #fff; }
-        .step-sep { color: var(--border); font-size: 1.1rem; line-height: 1; }
+        .step-sep { color: var(--text-dim); font-size: 1.1rem; line-height: 1; padding: 0 4px; }
 
         /* Panels */
         .step-panel { display: none; }
         .step-panel.active { display: block; }
         .checkout-card {
-            background: #fff; border-radius: 20px;
+            background: var(--card-bg); border-radius: 20px;
             border: 1px solid var(--border); padding: 2rem;
         }
         .checkout-card h3 {
             font-size: 1.1rem; font-weight: 800; margin-bottom: 1.4rem;
-            display: flex; align-items: center; gap: .5rem;
+            display: flex; align-items: center; gap: .5rem; color: var(--text);
         }
         .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
         @media(max-width:500px){ .form-row-2 { grid-template-columns: 1fr; } }
@@ -57,9 +58,12 @@
         .form-group label { display: block; margin-bottom: .3rem; font-size: .85rem; font-weight: 600; color: var(--text-dim); }
         .form-control {
             width: 100%; padding: .85rem 1rem; border: 1.5px solid var(--border);
-            border-radius: 10px; font-size: .95rem; transition: .2s; box-sizing: border-box; background: #fafafa;
+            border-radius: 10px; font-size: .95rem; transition: .2s; box-sizing: border-box;
+            background: rgba(255,255,255,0.06); color: var(--text);
         }
-        .form-control:focus { border-color: var(--primary); outline: none; background: #fff; }
+        .form-control::placeholder { color: rgba(255,255,255,0.25); }
+        .form-control:focus { border-color: var(--primary); outline: none; background: rgba(255,255,255,0.10); }
+        .form-control option { background: #1a1a2e; color: var(--text); }
         .optional-label { font-size: .75rem; color: var(--text-dim); margin-left: .4rem; }
 
         /* Carrier selection */
@@ -67,10 +71,10 @@
         @media(max-width:500px){ .carrier-options { grid-template-columns: 1fr; } }
         .carrier-card {
             border: 2px solid var(--border); border-radius: 14px; padding: 1rem;
-            cursor: pointer; text-align: center; transition: .2s;
+            cursor: pointer; text-align: center; transition: .2s; background: rgba(255,255,255,0.03);
         }
         .carrier-card:hover   { border-color: var(--accent); }
-        .carrier-card.selected { border-color: var(--primary); background: #fff8f0; }
+        .carrier-card.selected { border-color: var(--primary); background: rgba(255,140,0,0.10); }
         .carrier-card i { font-size: 1.6rem; color: var(--text-dim); margin-bottom: .5rem; display: block; }
         .carrier-card.selected i { color: var(--primary); }
         .carrier-card span { font-size: .82rem; font-weight: 700; color: var(--text); display: block; }
@@ -92,9 +96,10 @@
         .pay-method-card {
             border: 2px solid var(--border); border-radius: 14px; padding: 1rem .8rem;
             cursor: pointer; text-align: center; transition: .2s; position: relative;
+            background: rgba(255,255,255,0.03);
         }
         .pay-method-card:hover:not(.disabled)   { border-color: var(--accent); }
-        .pay-method-card.selected               { border-color: var(--primary); background: #fff8f0; }
+        .pay-method-card.selected               { border-color: var(--primary); background: rgba(255,140,0,0.10); }
         .pay-method-card.disabled               { opacity: .55; cursor: not-allowed; }
         .pay-method-card i { font-size: 1.5rem; color: var(--text-dim); margin-bottom: .4rem; display: block; }
         .pay-method-card.selected i { color: var(--primary); }
@@ -109,10 +114,10 @@
 
         /* Bank account info box */
         .bank-info-box {
-            background: #f8fafc; border: 1px solid var(--border); border-radius: 14px;
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 14px;
             padding: 1.2rem; margin-bottom: 1.2rem;
         }
-        .bank-info-box h4 { font-size: .88rem; font-weight: 800; margin-bottom: .7rem; color: var(--secondary); }
+        .bank-info-box h4 { font-size: .88rem; font-weight: 800; margin-bottom: .7rem; color: var(--text); }
         .bank-row { display: flex; justify-content: space-between; align-items: center; padding: .3rem 0; }
         .bank-row span:first-child { font-size: .82rem; color: var(--text-dim); }
         .bank-row span:last-child  { font-size: .88rem; font-weight: 700; color: var(--text); }
@@ -120,12 +125,12 @@
 
         /* Crypto */
         .crypto-wallet-box {
-            background: #f8fafc; border: 1.5px dashed var(--border); border-radius: 14px;
+            background: rgba(255,255,255,0.04); border: 1.5px dashed var(--border); border-radius: 14px;
             padding: 1.2rem; margin-bottom: 1.2rem; text-align: center;
         }
         .crypto-wallet-box .wallet-addr {
-            font-size: .78rem; font-weight: 700; background: #fff; border: 1px solid var(--border);
-            border-radius: 8px; padding: .5rem .8rem; margin: .5rem 0; word-break: break-all; text-align: left;
+            font-size: .78rem; font-weight: 700; background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+            border-radius: 8px; padding: .5rem .8rem; margin: .5rem 0; word-break: break-all; text-align: left; color: var(--text);
         }
         .crypto-wallet-box img.qr-img { width: 120px; height: 120px; margin: .5rem auto; display: block; }
 
@@ -134,50 +139,56 @@
             border: 2px dashed var(--border); border-radius: 12px; padding: 1.2rem;
             text-align: center; cursor: pointer; transition: .2s;
         }
-        .file-upload-area:hover { border-color: var(--primary); background: #fff8f0; }
+        .file-upload-area:hover { border-color: var(--primary); background: rgba(255,140,0,0.05); }
         .file-upload-area i { font-size: 1.8rem; color: var(--text-dim); }
         .file-upload-area p { font-size: .82rem; color: var(--text-dim); margin: .4rem 0 0; }
         #proofFile, #cryptoFile { display: none; }
 
+        /* Shipping cost note */
+        #shippingCostNote { background: rgba(255,255,255,0.05); color: var(--text-dim); border-radius: 10px; }
+
         /* Step navigation buttons */
         .step-nav { display: flex; gap: .8rem; margin-top: 1.5rem; }
-        .btn-back { background: var(--bg-light); color: var(--text); border: 1.5px solid var(--border); border-radius: 12px; padding: .9rem 1.4rem; font-weight: 700; cursor: pointer; transition: .2s; }
-        .btn-back:hover { background: #e8e8ed; }
+        .btn-back { background: rgba(255,255,255,0.06); color: var(--text); border: 1.5px solid var(--border); border-radius: 12px; padding: .9rem 1.4rem; font-weight: 700; cursor: pointer; transition: .2s; }
+        .btn-back:hover { background: rgba(255,255,255,0.12); }
         .btn-next { background: var(--primary); color: #fff; border: none; border-radius: 12px; padding: .9rem 1.8rem; font-weight: 800; cursor: pointer; transition: .2s; flex: 1; }
         .btn-next:hover { opacity: .88; }
         .btn-next:disabled { opacity: .5; cursor: not-allowed; }
 
         /* Order Summary Sidebar */
-        .order-summary { position: sticky; top: 80px; }
-        .summary-card { background: #fff; border-radius: 20px; border: 1px solid var(--border); padding: 1.5rem; }
-        .summary-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 1.2rem; }
-        .summary-item { display: flex; gap: 1rem; align-items: flex-start; padding: .7rem 0; border-bottom: 1px solid #f0f0f5; }
+        .order-summary { position: sticky; top: 68px; }
+        .summary-card { background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border); padding: 1.5rem; }
+        .summary-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 1.2rem; color: var(--text); }
+        .summary-item { display: flex; gap: 1rem; align-items: flex-start; padding: .7rem 0; border-bottom: 1px solid var(--border); }
         .summary-item:last-child { border-bottom: none; }
-        .summary-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+        .summary-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; flex-shrink: 0; background: rgba(255,255,255,0.05); }
         .summary-item .item-info { flex: 1; }
         .summary-item .item-name { font-size: .85rem; font-weight: 700; color: var(--text); line-height: 1.2; }
         .summary-item .item-qty  { font-size: .75rem; color: var(--text-dim); }
         .summary-item .item-price { font-size: .9rem; font-weight: 800; color: var(--text); white-space: nowrap; }
         .summary-divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
-        .summary-row { display: flex; justify-content: space-between; font-size: .88rem; margin-bottom: .5rem; }
-        .summary-row.discount { color: #27ae60; font-weight: 700; }
+        .summary-row { display: flex; justify-content: space-between; font-size: .88rem; margin-bottom: .5rem; color: var(--text-dim); }
+        .summary-row.discount { color: #34c759; font-weight: 700; }
         .summary-row.total { font-size: 1.1rem; font-weight: 900; color: var(--text); margin-top: .5rem; }
         .coupon-chip { display: inline-flex; align-items: center; gap: .4rem; background: rgba(52,199,89,0.12); color: #34c759; border: 1px solid rgba(52,199,89,0.3); border-radius: 20px; font-size: .78rem; font-weight: 700; padding: .3rem .8rem; margin-bottom: .8rem; }
 
+        /* SSL badge */
+        .ssl-note { font-size: .78rem; color: var(--text-dim); display: flex; align-items: center; gap: .4rem; margin-top: .8rem; }
+
         /* Success modal */
         .success-modal {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5);
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7);
             z-index: 9999; justify-content: center; align-items: center;
         }
         .success-modal.show { display: flex; }
         .success-inner {
-            background: #fff; border-radius: 24px; padding: 2.5rem;
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; padding: 2.5rem;
             text-align: center; max-width: 480px; width: 90%; animation: fadeIn .3s;
         }
         .success-inner .icon { font-size: 3.5rem; color: #34c759; margin-bottom: 1rem; }
-        .success-inner h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: .5rem; }
+        .success-inner h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: .5rem; color: var(--text); }
         .success-inner p  { color: var(--text-dim); font-size: .95rem; margin-bottom: 1.5rem; }
-        .order-id-box { background: var(--bg-light); border-radius: 12px; padding: .8rem 1.2rem; font-size: 1.1rem; font-weight: 800; margin-bottom: 1.5rem; }
+        .order-id-box { background: rgba(255,255,255,0.06); border-radius: 12px; padding: .8rem 1.2rem; font-size: 1.1rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--text); }
         .success-btns { display: flex; gap: .8rem; flex-wrap: wrap; justify-content: center; }
         .btn-wa { background: #25d366; color: #fff; border: none; border-radius: 12px; padding: .9rem 1.5rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: .5rem; }
         .btn-track { background: var(--primary); color: #fff; border: none; border-radius: 12px; padding: .9rem 1.5rem; font-weight: 700; cursor: pointer; }
@@ -297,7 +308,7 @@
                             <input type="text" id="agencyName" class="form-control" placeholder="Ej: Trans Oriente, Putumayo...">
                         </div>
                     </div>
-                    <div id="shippingCostNote" style="margin-top:1.2rem; padding:.8rem 1rem; background:#f8fafc; border-radius:10px; font-size:.85rem;"></div>
+                    <div id="shippingCostNote" style="margin-top:1.2rem; padding:.8rem 1rem; border-radius:10px; font-size:.85rem;"></div>
                 </div>
                 <div class="step-nav">
                     <button class="btn-back" onclick="goStep(1)"><i class="fa fa-arrow-left"></i> Atrás</button>
