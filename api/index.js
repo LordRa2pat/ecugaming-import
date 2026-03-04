@@ -136,6 +136,10 @@ async function verifyToken(req) {
         .eq('id', user.id)
         .single();
     if (profile?.is_banned) return null; // banned users get treated as unauthenticated
+    // Update last_ip non-blocking (fire & forget)
+    if (req.clientIp) {
+        supabase.from('profiles').update({ last_ip: req.clientIp }).eq('id', user.id).then(() => {});
+    }
     return { ...user, role: profile?.role || 'customer', profile };
 }
 
@@ -868,6 +872,17 @@ app.patch('/api/admin/users/:id', requireAdmin(async (req, res) => {
     const { data, error } = await supabase.from('profiles').update(updates).eq('id', req.params.id).select().single();
     if (error) return res.status(400).json({ error: error.message });
     res.json(data);
+}));
+
+app.post('/api/admin/users/:id/reset-password', requireAdmin(async (req, res) => {
+    const { data: profile, error: pe } = await supabase.from('profiles').select('email').eq('id', req.params.id).single();
+    if (pe || !profile) return res.status(404).json({ error: 'Usuario no encontrado' });
+    const { data, error } = await supabase.auth.admin.generateLink({
+        type: 'recovery',
+        email: profile.email,
+    });
+    if (error) return res.status(400).json({ error: error.message });
+    res.json({ ok: true, link: data.properties?.action_link });
 }));
 
 // ============================================================
