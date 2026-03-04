@@ -92,13 +92,13 @@
 
         /* Dropdown */
         .cat-dropdown {
-            display: none; position: absolute; top: 100%; left: 0;
+            display: none; position: fixed;
             min-width: 210px; background: #1a1a26;
             border: 1px solid var(--border); border-radius: 14px;
             padding: 8px; box-shadow: 0 12px 40px rgba(0,0,0,.5);
-            z-index: 500;
+            z-index: 9999;
         }
-        .cat-item:hover > .cat-dropdown { display: block; }
+        .cat-dropdown.dd-open { display: block; }
         .cat-dropdown a {
             display: flex; align-items: center; gap: 8px;
             padding: 9px 12px; border-radius: 9px;
@@ -798,6 +798,28 @@
         }
 
         document.addEventListener('cart:updated', renderCartUI);
+
+        // ── Dropdown toggle (fixed positioning to escape overflow clipping) ──
+        document.querySelectorAll('.cat-item').forEach(item => {
+            const btn = item.querySelector('.cat-btn');
+            const dd  = item.querySelector('.cat-dropdown');
+            if (!btn || !dd) return;
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                const wasOpen = dd.classList.contains('dd-open');
+                document.querySelectorAll('.cat-dropdown').forEach(d => d.classList.remove('dd-open'));
+                if (!wasOpen) {
+                    const rect = btn.getBoundingClientRect();
+                    dd.style.top  = (rect.bottom + 4) + 'px';
+                    dd.style.left = rect.left + 'px';
+                    dd.classList.add('dd-open');
+                }
+            });
+        });
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.cat-dropdown').forEach(d => d.classList.remove('dd-open'));
+        });
+
         init();
     </script>
 </body>
