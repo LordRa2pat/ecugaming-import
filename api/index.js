@@ -191,7 +191,6 @@ async function notifyN8N(payload) {
                 to: payload.customerEmail,
                 subject: `Orden Generada #${payload.orderId} - Ecu Gaming Import`,
                 html: buildOrderEmail(payload),
-                headers: { 'X-Mailer': 'EcuGaming-Mailer' },
             });
             console.log(`[email] sent to ${payload.customerEmail} for order ${payload.orderId}`);
         } catch (e) {
@@ -1009,7 +1008,6 @@ app.get('/api/test-email', async (req, res) => {
             to,
             subject: `[TEST] Orden Generada #${testPayload.orderId} - Ecu Gaming Import`,
             html: buildOrderEmail(testPayload),
-            headers: { 'X-Mailer': 'EcuGaming-Mailer' },
         });
 
         res.json({ ok: true, messageId: info.messageId, response: info.response });
