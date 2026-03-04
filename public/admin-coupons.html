@@ -378,12 +378,12 @@
         <div class="section-title"><i class="fa fa-calendar-alt"></i> Vigencia</div>
         <div class="form-row">
             <div class="form-group">
-                <label>Fecha inicio</label>
-                <input type="datetime-local" id="couponStartsAt" class="form-control">
+                <label>Fecha inicio <small style="color:#52525b;">(opcional)</small></label>
+                <input type="date" id="couponStartsAt" class="form-control">
             </div>
             <div class="form-group">
-                <label>Fecha vencimiento</label>
-                <input type="datetime-local" id="couponEndsAt" class="form-control">
+                <label>Fecha vencimiento <small style="color:#52525b;">(opcional)</small></label>
+                <input type="date" id="couponEndsAt" class="form-control">
             </div>
         </div>
 
@@ -513,8 +513,8 @@
         document.getElementById('couponFreeShipping').checked = !!c.free_shipping;
         document.getElementById('couponMinSubtotal').value = c.min_subtotal || '';
         document.getElementById('couponMaxRedemptions').value = c.max_redemptions || '';
-        document.getElementById('couponStartsAt').value = c.starts_at ? toLocalInput(c.starts_at) : '';
-        document.getElementById('couponEndsAt').value = c.ends_at ? toLocalInput(c.ends_at) : '';
+        document.getElementById('couponStartsAt').value = c.starts_at ? c.starts_at.slice(0, 10) : '';
+        document.getElementById('couponEndsAt').value = c.ends_at ? c.ends_at.slice(0, 10) : '';
         document.getElementById('couponModalTitle').textContent = `Editar Cupón — ${c.code}`;
         document.getElementById('couponModal').classList.add('active');
     }
@@ -538,8 +538,10 @@
         const free_shipping = document.getElementById('couponFreeShipping').checked;
         const min_subtotal = parseFloat(document.getElementById('couponMinSubtotal').value) || 0;
         const max_redemptions = parseInt(document.getElementById('couponMaxRedemptions').value) || null;
-        const starts_at = document.getElementById('couponStartsAt').value || null;
-        const ends_at = document.getElementById('couponEndsAt').value || null;
+        const startsRaw = document.getElementById('couponStartsAt').value;
+        const endsRaw = document.getElementById('couponEndsAt').value;
+        const starts_at = startsRaw ? startsRaw + 'T00:00:00' : null;
+        const ends_at = endsRaw ? endsRaw + 'T23:59:59' : null;
 
         if (!code || isNaN(value)) {
             alert('Código y valor son obligatorios.');
