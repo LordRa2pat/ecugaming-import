@@ -752,7 +752,7 @@ app.delete('/api/admin/products/:productId/images/:imageId', requireAdmin(async 
 // ADMIN: COUPONS
 // ============================================================
 app.get('/api/admin/coupons', requireAdmin(async (req, res) => {
-    const { data, error } = await supabase.from('coupons').select('*').order('created_at', { ascending: false });
+    const { data, error } = await supabase.from('coupons').select('*').order('starts_at', { ascending: false });
     if (error) return res.status(400).json({ error: error.message });
     res.json(data || []);
 }));
