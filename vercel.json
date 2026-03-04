@@ -19,6 +19,7 @@
         { "source": "/privacidad", "destination": "/privacidad.html" },
         { "source": "/pagos", "destination": "/pagos.html" },
         { "source": "/devoluciones", "destination": "/devoluciones.html" },
-        { "source": "/credito", "destination": "/credito.html" }
+        { "source": "/credito", "destination": "/credito.html" },
+        { "source": "/solicitud-credito", "destination": "/solicitud-credito.html" }
     ]
 }

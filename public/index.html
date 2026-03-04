@@ -44,6 +44,40 @@
         }
         .cat-btn:hover, .cat-btn.active { color: var(--text); border-bottom-color: var(--primary); }
         .cat-btn .caret { font-size: .6rem; margin-top: 1px; opacity: .6; }
+        /* SUPER PROMOCIONES pill */
+        .cat-btn-promo {
+            display: flex; align-items: center; gap: 6px;
+            padding: 5px 14px; border: none; border-radius: 980px;
+            background: linear-gradient(135deg, rgba(255,149,0,.18), rgba(255,45,85,.18));
+            border: 1px solid rgba(255,149,0,.45);
+            color: #ff9500; font-size: .82rem; font-weight: 800;
+            cursor: pointer; white-space: nowrap;
+            box-shadow: 0 0 12px rgba(255,149,0,.25);
+            animation: promoGlow 2.5s ease-in-out infinite;
+            transition: transform .15s;
+            align-self: center; margin-left: 6px;
+        }
+        .cat-btn-promo:hover { transform: scale(1.04); }
+        .cat-btn-promo.active { background: linear-gradient(135deg, rgba(255,149,0,.35), rgba(255,45,85,.35)); box-shadow: 0 0 20px rgba(255,149,0,.5); }
+        @keyframes promoGlow {
+            0%,100% { box-shadow: 0 0 8px rgba(255,149,0,.25); }
+            50%      { box-shadow: 0 0 20px rgba(255,149,0,.55); }
+        }
+
+        /* ── PAGINATION ─────────────────────────────── */
+        .pagination-bar {
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; padding: 24px 5% 40px;
+        }
+        .pag-btn {
+            display: flex; align-items: center; gap: 6px;
+            padding: 9px 22px; border-radius: 980px; border: 1.5px solid var(--border);
+            background: var(--card-bg); color: var(--text); font-size: .84rem; font-weight: 700;
+            cursor: pointer; transition: .18s;
+        }
+        .pag-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+        .pag-btn:disabled { opacity: .35; cursor: default; }
+        .pag-info { color: var(--text-dim); font-size: .82rem; font-weight: 600; min-width: 80px; text-align: center; }
 
         /* Dropdown */
         .cat-dropdown {
@@ -252,6 +286,13 @@
                     <i class="fa fa-laptop"></i> Laptops
                 </button>
             </div>
+
+            <!-- ⚡ SUPER PROMOCIONES — always highlighted -->
+            <div class="cat-item" style="margin-left:auto;">
+                <button class="cat-btn-promo" id="promoCatBtn" onclick="filterSub('Promos','⚡ Super Promociones')">
+                    <i class="fa fa-bolt"></i> SUPER PROMOCIONES
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -272,8 +313,18 @@
     <!-- ── CATALOG ─────────────────────────────────────────── -->
     <div id="catalogTitle" style="display:none;"></div>
     <main class="catalog-section fade-in" id="catalogStart" style="padding-top: 1rem;">
-        <div id="catalog" class="grid" style="padding: 0 0 40px;">
+        <div id="catalog" class="grid" style="padding: 0 0 0;">
             <!-- Products injected by JS -->
+        </div>
+        <!-- Pagination -->
+        <div class="pagination-bar" id="paginationBar" style="display:none;">
+            <button class="pag-btn" id="pagPrev" onclick="changePage(-1)">
+                <i class="fa fa-arrow-left"></i> Anterior
+            </button>
+            <span class="pag-info" id="pagInfo"></span>
+            <button class="pag-btn" id="pagNext" onclick="changePage(1)">
+                Siguiente <i class="fa fa-arrow-right"></i>
+            </button>
         </div>
     </main>
 
@@ -334,6 +385,8 @@
         let allProducts = [];
         let curProducts = [];
         let promoSwiper = null;
+        let currentPage = 1;
+        const PAGE_SIZE = 12;
 
         // ── Platform keyword mapping for game subcategories ──────────────
         // Games not matched default to PlayStation (majority of catalog)
@@ -372,13 +425,19 @@
 
         // ── Filter by subcategory key ────────────────────────────────────
         function filterSub(key, label) {
-            // Update active button
+            // Update active buttons
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            event && event.currentTarget && event.currentTarget.classList.add('active');
+            document.getElementById('promoCatBtn').classList.remove('active');
+            if (key === 'Promos') {
+                document.getElementById('promoCatBtn').classList.add('active');
+            } else if (event && event.currentTarget && event.currentTarget.classList.contains('cat-btn')) {
+                event.currentTarget.classList.add('active');
+            }
 
             let filtered;
             switch (key) {
                 case 'All':         filtered = allProducts; break;
+                case 'Promos':      filtered = allProducts.filter(p => p.badge); break;
                 case 'iPhone':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('iphone')); break;
                 case 'Consolas':    filtered = allProducts.filter(p => ['consolas','retro','general'].includes((p.category||'').toLowerCase())); break;
                 case 'PS5':         filtered = allProducts.filter(p => getPlatform(p) === 'ps5'); break;
@@ -407,6 +466,7 @@
             }
 
             curProducts = filtered;
+            currentPage = 1;
             // Title
             const titleEl = document.getElementById('catalogTitle');
             if (key === 'All') {
@@ -415,9 +475,15 @@
                 titleEl.style.display = 'flex';
                 titleEl.innerHTML = `<i class="fa fa-filter" style="color:var(--primary);font-size:.9rem;"></i> ${label} <span style="color:var(--text-dim);font-weight:400;font-size:.9rem;">(${filtered.length})</span>`;
             }
-            // Hide slider when filtering
-            document.getElementById('promoSliderSection').style.display = key === 'All' ? 'block' : 'none';
+            // Hide slider when filtering (show for All or Promos — Promos shows promo slider)
+            document.getElementById('promoSliderSection').style.display = (key === 'All' || key === 'Promos') ? 'block' : 'none';
             renderCards(filtered, 'catalog');
+            document.getElementById('catalogStart').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function changePage(delta) {
+            currentPage += delta;
+            renderCards(curProducts, 'catalog');
             document.getElementById('catalogStart').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
@@ -576,20 +642,39 @@
         function renderCards(items, containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            container.innerHTML = items.length
+
+            const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
+            if (currentPage > totalPages) currentPage = totalPages;
+            const start = (currentPage - 1) * PAGE_SIZE;
+            const pageItems = items.slice(start, start + PAGE_SIZE);
+
+            container.innerHTML = pageItems.length
                 ? ''
                 : '<p style="grid-column:1/-1;text-align:center;color:var(--text-dim);padding:3rem 0;">No hay productos en esta categoría.</p>';
-            items.forEach(item => {
+            pageItems.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = createCardHTML(item);
                 container.appendChild(card);
             });
+
+            // Pagination bar
+            const bar = document.getElementById('paginationBar');
+            if (items.length > PAGE_SIZE) {
+                bar.style.display = 'flex';
+                document.getElementById('pagInfo').textContent = `Pág. ${currentPage} / ${totalPages}`;
+                document.getElementById('pagPrev').disabled = currentPage <= 1;
+                document.getElementById('pagNext').disabled = currentPage >= totalPages;
+            } else {
+                bar.style.display = 'none';
+            }
         }
 
         function handleSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase();
+            currentPage = 1;
             if (!query) {
+                curProducts = allProducts;
                 renderCards(allProducts, 'catalog');
                 document.getElementById('promoSliderSection').style.display = 'block';
                 document.getElementById('catalogTitle').style.display = 'none';
@@ -598,6 +683,7 @@
             const filtered = allProducts.filter(p =>
                 p.name.toLowerCase().includes(query) || (p.category||'').toLowerCase().includes(query)
             );
+            curProducts = filtered;
             document.getElementById('promoSliderSection').style.display = 'none';
             document.getElementById('catalogTitle').style.display = 'flex';
             document.getElementById('catalogTitle').innerHTML =
