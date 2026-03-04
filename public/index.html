@@ -23,6 +23,17 @@
         .badge-remate { background:rgba(255,149,0,.15); color:#ff9500; border:1px solid rgba(255,149,0,.3); }
         .badge-nuevo  { background:rgba(52,199,89,.15); color:#34c759; border:1px solid rgba(52,199,89,.3); }
 
+        /* ── PLATFORM BADGES ────────────────────────── */
+        .plat-badge { display:inline-flex; align-items:center; gap:3px; font-size:9px; font-weight:900; padding:3px 7px; border-radius:5px; text-transform:uppercase; letter-spacing:.06em; flex-shrink:0; }
+        .plat-ps5      { background:#003087; color:#fff; }
+        .plat-ps4      { background:#00439c; color:#fff; }
+        .plat-ps3      { background:#1a1a3e; color:#aaa; }
+        .plat-xbox     { background:#107c10; color:#fff; }
+        .plat-nintendo { background:#e60012; color:#fff; }
+        .plat-pc       { background:#1b2838; color:#66c0f4; }
+        .plat-multi    { background:#333; color:#ccc; }
+        .card-meta { display:flex; align-items:center; gap:5px; margin-bottom:4px; flex-wrap:wrap; }
+
         /* ── SUBCATEGORY NAV ────────────────────────── */
         .cat-nav-wrap {
             position: sticky; top: 48px; z-index: 200;
@@ -399,38 +410,53 @@
         const PAGE_SIZE = 12;
 
         // ── Platform keyword mapping for game subcategories ──────────────
-        // Games not matched default to PlayStation (majority of catalog)
-        const XBOX_GAMES = ['Call of Duty','Halo','Forza','Gears','Sea of Thieves','Grounded'];
-        const NINTENDO_GAMES = ['Mario','Zelda','Pokemon','Splatoon','Animal Crossing','Metroid','Kirby','Donkey Kong'];
-        const PC_GAMES = ['Palworld','Baldur\'s Gate','Overwatch','Diablo','World of Warcraft'];
-        const PS3_GAMES = ['Tekken 7 - Legendary','BioShock: The Collection'];
-        // Console keyword filters
-        const RETRO_KEYWORDS = ['game boy','3ds','ps vita','sega genesis','retro console','3do','neo geo'];
-        const PS5_CONSOLE = ['playstation 5','ps5','ps5 slim','ps5 pro'];
-        const PS4_CONSOLE = ['playstation 4','ps4','ps4 pro'];
+        const XBOX_GAMES = ['call of duty','halo','forza','gears','sea of thieves','grounded'];
+        const NINTENDO_GAMES = ['mario','zelda','pokemon','pokémon','splatoon','animal crossing','metroid','kirby','donkey kong'];
+        const PC_GAMES = ['palworld','baldur\'s gate','overwatch','diablo','world of warcraft'];
+        const PS3_GAMES = ['tekken 7 - legendary','bioshock: the collection'];
+        const PS5_EXCLUSIVES = ['spider-man 2','spider man 2','returnal','ratchet & clank: rift apart','ratchet & clank rift apart',
+            'demon\'s souls','rise of the ronin','final fantasy xvi','final fantasy vii rebirth',
+            'dragon\'s dogma 2','stellar blade','astro\'s playroom'];
+        const RETRO_KEYWORDS = ['game boy','3ds','ps vita','sega','retro console','3do','neo geo'];
 
         function getPlatform(p) {
             const n = p.name.toLowerCase();
             const cat = (p.category || '').toLowerCase();
-            if (cat === 'juegos' || cat.includes('juego')) {
-                if (XBOX_GAMES.some(k => n.includes(k.toLowerCase()))) return 'xbox';
-                if (NINTENDO_GAMES.some(k => n.includes(k.toLowerCase()))) return 'nintendo';
-                if (PC_GAMES.some(k => n.includes(k.toLowerCase()))) return 'pc';
-                if (PS3_GAMES.some(k => n.includes(k.toLowerCase()))) return 'ps3';
-                return 'playstation'; // default — most games are PS4/PS5
+            // Explicit platform tag in product name — highest priority
+            if (n.includes('(ps5)') || n.match(/\bps5\b/)) return 'ps5';
+            if (n.includes('(ps4)') || n.match(/\bps4\b/)) return 'ps4';
+            if (n.includes('(xbox)') || n.includes('xbox series x') || n.includes('xbox series s')) return 'xboxseries';
+            if (n.includes('xbox one')) return 'xboxone';
+            if (n.includes('xbox')) return 'xbox';
+            if (n.includes('nintendo switch') || n.includes('switch oled') || n.includes('switch lite')) return 'switch';
+            if (n.includes('steam deck')) return 'steamdeck';
+            if (n.includes('playstation 5')) return 'ps5';
+            if (n.includes('playstation 4')) return 'ps4';
+            if (RETRO_KEYWORDS.some(k => n.includes(k))) return 'retro';
+
+            if (cat.includes('juego')) {
+                if (PS5_EXCLUSIVES.some(k => n.includes(k))) return 'ps5';
+                if (XBOX_GAMES.some(k => n.includes(k))) return 'xbox';
+                if (NINTENDO_GAMES.some(k => n.includes(k))) return 'nintendo';
+                if (PC_GAMES.some(k => n.includes(k))) return 'pc';
+                if (PS3_GAMES.some(k => n.includes(k))) return 'ps3';
+                return 'ps4'; // default — most cross-gen titles sold as PS4
             }
-            if (cat === 'consolas' || cat === 'retro') {
-                if (RETRO_KEYWORDS.some(k => n.includes(k))) return 'retro';
-                if (n.includes('xbox series')) return 'xboxseries';
-                if (n.includes('xbox one')) return 'xboxone';
-                if (n.includes('xbox')) return 'xbox';
-                if (n.includes('nintendo switch')) return 'switch';
-                if (n.includes('3ds') || n.includes('game boy') || n.includes('vita') || n.includes('sega') || n.includes('retro')) return 'retro';
-                if (n.includes('steam deck')) return 'steamdeck';
-                if (PS5_CONSOLE.some(k => n.includes(k))) return 'ps5';
-                if (PS4_CONSOLE.some(k => n.includes(k))) return 'ps4';
-            }
-            return cat;
+            return ''; // no badge for iPhones, laptops, accessories
+        }
+
+        function platformBadgeHTML(p) {
+            const plat = getPlatform(p);
+            const MAP = {
+                ps5: ['PS5','plat-ps5'], ps4: ['PS4','plat-ps4'], ps3: ['PS3','plat-ps3'],
+                xbox: ['Xbox','plat-xbox'], xboxseries: ['Xbox Series','plat-xbox'], xboxone: ['Xbox One','plat-xbox'],
+                nintendo: ['Nintendo','plat-nintendo'], switch: ['Switch','plat-nintendo'],
+                pc: ['PC','plat-pc'], steamdeck: ['Steam Deck','plat-pc'],
+                retro: ['Retro','plat-multi'],
+            };
+            if (!MAP[plat]) return '';
+            const [label, cls] = MAP[plat];
+            return `<span class="plat-badge ${cls}">${label}</span>`;
         }
 
         // ── Filter by subcategory key ────────────────────────────────────
@@ -449,7 +475,7 @@
                 case 'All':         filtered = allProducts; break;
                 case 'Promos':      filtered = allProducts.filter(p => p.badge); break;
                 case 'iPhone':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('iphone')); break;
-                case 'Consolas':    filtered = allProducts.filter(p => ['consolas','retro','general'].includes((p.category||'').toLowerCase())); break;
+                case 'Consolas':    filtered = allProducts.filter(p => ['consolas','retro'].includes((p.category||'').toLowerCase())); break;
                 case 'PS5':         filtered = allProducts.filter(p => getPlatform(p) === 'ps5'); break;
                 case 'PS4':         filtered = allProducts.filter(p => getPlatform(p) === 'ps4'); break;
                 case 'Xbox Series': filtered = allProducts.filter(p => getPlatform(p) === 'xboxseries'); break;
@@ -462,8 +488,8 @@
                     return ['dualsense','controller','headset','charging','camera','remote','portal','vr2','ssd expansion','console cover','funda'].some(k => n.includes(k));
                 }); break;
                 case 'Juegos':          filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('juego')); break;
-                case 'Juegos PS5':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('juego') && ['ps3','xbox','nintendo','pc'].indexOf(getPlatform(p)) === -1); break;
-                case 'Juegos PS4':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('juego') && getPlatform(p) === 'playstation'); break;
+                case 'Juegos PS5':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('juego') && getPlatform(p) === 'ps5'); break;
+                case 'Juegos PS4':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('juego') && getPlatform(p) === 'ps4'); break;
                 case 'Juegos PS3':      filtered = allProducts.filter(p => getPlatform(p) === 'ps3'); break;
                 case 'Juegos Xbox Series':
                 case 'Juegos Xbox One':
@@ -647,10 +673,12 @@
                 ? `<img src="${imgSrc}" alt="${item.name}" style="width:100%;height:100%;object-fit:contain;border-radius:12px;"
                     onerror="this.outerHTML='<i class=\\'fa fa-gamepad\\' style=\\'font-size:2.5rem;color:#333;\\'></i>'">`
                 : `<i class="fa fa-gamepad" style="font-size:2.5rem;color:#333;"></i>`;
+            const platBadge = platformBadgeHTML(item);
             return `
                 <div class="card-tag">${item.category||''}</div>
                 ${badgeHTML(item.badge)}
                 <div class="card-img-placeholder" onclick="location.href='/product?id=${item.id}'" style="cursor:pointer;">${imgTag}</div>
+                ${platBadge ? `<div class="card-meta">${platBadge}</div>` : ''}
                 <h3 class="card-name" onclick="location.href='/product?id=${item.id}'" style="cursor:pointer;">${item.name}</h3>
                 <div class="price-container">
                     <div class="card-price">$${Number(activePrice).toFixed(2)}</div>
