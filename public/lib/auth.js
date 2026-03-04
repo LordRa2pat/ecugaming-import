@@ -2,20 +2,20 @@
  * auth.js
  * Auth utilities for all frontend pages.
  * Requires supabase-client.js to be loaded first.
+ * All methods await window._supabaseReady before using _supabase.
  */
 
 const Auth = {
-  /**
-   * Get the current session (or null if not logged in)
-   */
+  async _ready() {
+    return window._supabaseReady;
+  },
+
   async getSession() {
+    await this._ready();
     const { data: { session } } = await _supabase.auth.getSession();
     return session;
   },
 
-  /**
-   * Get current user + profile merged together, or null
-   */
   async getUser() {
     const session = await this.getSession();
     if (!session) return null;
@@ -27,10 +27,6 @@ const Auth = {
     return profile ? { ...session.user, ...profile, token: session.access_token } : null;
   },
 
-  /**
-   * Ensure user is logged in. If not, redirect to login page.
-   * Returns session if logged in, null (and redirects) if not.
-   */
   async requireAuth(redirectTo = '/login') {
     const session = await this.getSession();
     if (!session) {
@@ -40,10 +36,6 @@ const Auth = {
     return session;
   },
 
-  /**
-   * Ensure user is an admin. Redirects if not authenticated or not admin.
-   * Returns the session access token for API calls.
-   */
   async requireAdmin() {
     const session = await this.getSession();
     if (!session) {
@@ -63,18 +55,12 @@ const Auth = {
     return session.access_token;
   },
 
-  /**
-   * Sign out and redirect to home
-   */
   async signOut() {
+    await this._ready();
     await _supabase.auth.signOut();
     location.href = '/';
   },
 
-  /**
-   * Update the auth header UI element (if present on page).
-   * Looks for #authArea element and renders login link or user menu.
-   */
   async updateAuthUI() {
     const el = document.getElementById('authArea');
     if (!el) return;

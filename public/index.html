@@ -490,7 +490,7 @@
 
         async function fetchNews() {
             try {
-                const res = await fetch('https://n8n-n8n.tlsfxv.easypanel.host/webhook/get-news');
+                const res = await fetch('/api/news');
                 if (!res.ok) throw new Error('No news');
                 const newsData = await res.json();
                 if (!Array.isArray(newsData) || newsData.length === 0) return;

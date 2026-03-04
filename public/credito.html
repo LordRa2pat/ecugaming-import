@@ -406,18 +406,15 @@
                     fechaRegistro: new Date().toISOString()
                 };
 
-                // The generic n8n webhook URL
-                const WEBHOOK_URL = 'https://n8n-n8n.tlsfxv.easypanel.host/webhook/solicitud-credito';
-
-                // We try a no-cors request or just standard JSON post
+                // Route through backend to hide n8n server URL from source
                 try {
-                    await fetch(WEBHOOK_URL, {
+                    await fetch('/api/credit-check', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
                 } catch (webhookErr) {
-                    console.warn("Webhook CORS or reachability issue, continuing to success screen assuming n8n config will handle it later.", webhookErr);
+                    console.warn("Credit check proxy issue, continuing to success screen.", webhookErr);
                 }
 
                 // Show Success

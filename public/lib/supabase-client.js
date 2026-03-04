@@ -1,34 +1,40 @@
 /**
  * supabase-client.js
- * Browser Supabase client — uses anon key (safe to expose in frontend).
- * Security is enforced by RLS policies in the database.
+ * Loads Supabase config from the backend (/api/config) so credentials
+ * never appear in static source files.
  *
  * Usage in HTML:
  *   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
  *   <script src="/lib/supabase-client.js"></script>
- *   Then use: window._supabase.auth.signIn(...), etc.
+ *   Then use: await window._supabaseReady; window._supabase.auth.signIn(...)
  */
 
-(function () {
-  // ⚠️ Replace these with your actual Supabase project values
-  // These are PUBLIC values — the anon key is safe to include in frontend code
-  const SUPABASE_URL = 'https://dpomkchvjpdkndkksphy.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwb21rY2h2anBka25ka2tzcGh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0OTQ4OTgsImV4cCI6MjA4ODA3MDg5OH0.tqjYkOI9O42Bh2pA83yRiPn7_Q457B9-VcwWeL9A_rM';
-
+window._supabaseReady = (async function () {
   if (typeof supabase === 'undefined') {
     console.error('[EG] Supabase CDN not loaded. Add the CDN script before supabase-client.js');
-    return;
+    return null;
   }
 
-  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true
+  try {
+    const cfg = await fetch('/api/config').then(r => r.json());
+    if (!cfg || !cfg.supabaseUrl || !cfg.supabaseAnonKey) {
+      console.error('[EG] /api/config returned invalid config');
+      return null;
     }
-  });
 
-  // Expose globally
-  window._supabase = client;
-  window.SUPABASE_URL = SUPABASE_URL;
+    const client = supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    });
+
+    window._supabase = client;
+    window.SUPABASE_URL = cfg.supabaseUrl;
+    return client;
+  } catch (e) {
+    console.error('[EG] Failed to load config:', e.message);
+    return null;
+  }
 })();

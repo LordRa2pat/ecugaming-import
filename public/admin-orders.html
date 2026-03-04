@@ -347,6 +347,7 @@
                                 <th>Total</th>
                                 <th>Estado</th>
                                 <th>Pago</th>
+                                <th>IP</th>
                                 <th>Fecha</th>
                                 <th>Acciones</th>
                             </tr>
@@ -399,7 +400,6 @@
     <script src="/lib/auth.js?v=1.0.6"></script>
     <script>
         let adminToken = '';
-        const SUPABASE_URL = window.SUPABASE_URL || 'https://dpomkchvjpdkndkksphy.supabase.co';
 
         async function init() {
             adminToken = await Auth.requireAdmin();
@@ -425,7 +425,11 @@
             const data = await res.json();
             const orders = data.orders || [];
             const tbody = document.getElementById('ordersBody');
-            tbody.innerHTML = orders.map(o => `
+            tbody.innerHTML = orders.map(o => {
+                const ip = o.ip_address || o.customer?.last_ip || '—';
+                const isBanned = o.customer?.is_banned;
+                const customerId = o.customer?.id || '';
+                return `
                 <tr>
                     <td style="font-weight:700;">${o.id}</td>
                     <td>${o.customer?.first_name || '—'} ${o.customer?.last_name || ''}</td>
@@ -433,13 +437,18 @@
                     <td style="font-weight:700;">$${Number(o.total).toFixed(2)}</td>
                     <td><span class="status-chip s-${o.status}">${statusLabel(o.status)}</span></td>
                     <td><span class="status-chip payment-${o.payment_status}">${o.payment_status}</span></td>
+                    <td style="font-size:0.75rem; color:var(--text-dim);">${ip}</td>
                     <td>${new Date(o.created_at).toLocaleDateString()}</td>
-                    <td style="display:flex; gap:.3rem;">
+                    <td style="display:flex; gap:.3rem; flex-wrap:wrap;">
                         <button class="btn-action" onclick="showOrderDetail('${o.id}')">Ver</button>
                         <button class="btn-action primary" onclick="openStatusModal('${o.id}','${o.status}','${o.tracking_code || ''}')">Estado</button>
+                        <button class="btn-action" style="background:#6c63ff" title="Enviar email al cliente" onclick="sendOrderEmail('${o.id}')">✉</button>
+                        ${ip !== '—' ? `<button class="btn-action" style="background:#dc2626" title="Banear IP ${ip}" onclick="banIp('${ip}')">⛔ IP</button>` : ''}
+                        ${customerId && !isBanned ? `<button class="btn-action" style="background:#7c2d12" title="Banear usuario" onclick="banUser('${customerId}')">🚫 User</button>` : ''}
+                        ${customerId && isBanned ? `<button class="btn-action" style="background:#166534" title="Desbanear usuario" onclick="unbanUser('${customerId}')">✅ User</button>` : ''}
                     </td>
-                </tr>
-            `).join('');
+                </tr>`;
+            }).join('');
         }
 
         async function showOrderDetail(id) {
@@ -450,24 +459,44 @@
             const o = await res.json();
             const itemsHtml = (o.items || []).map(i => `
                 <div style="display:flex; gap:1rem; padding:0.5rem 0; border-bottom:1px solid #2c2c2e;">
-                    <img src="${i.product_snapshot?.image_url}" style="width:40px; height:40px; border-radius:6px; object-fit:cover;">
+                    <img src="${i.product_snapshot?.image_url || ''}" style="width:40px; height:40px; border-radius:6px; object-fit:cover; background:#111;">
                     <div style="flex:1;">
-                        <div style="font-size:0.85rem; font-weight:700; color:white;">${i.product_snapshot?.name}</div>
+                        <div style="font-size:0.85rem; font-weight:700; color:white;">${i.product_snapshot?.name || '—'}</div>
                         <div style="font-size:0.75rem; color:var(--text-dim);">x${i.qty}</div>
                     </div>
                     <div style="font-weight:700; color:white;">$${i.line_total}</div>
                 </div>
             `).join('');
 
+            const ip = o.ip_address || '—';
+            const customerId = o.customer?.id || '';
+            const isBanned = o.customer?.is_banned;
+            const customerEmail = o.customer?.email || '—';
+
             document.getElementById('orderDetailContent').innerHTML = `
-                <div style="margin-bottom:1.5rem; background:#2c2c2e; padding:1rem; border-radius:12px;">
-                    <div style="color:var(--primary); font-weight:800; font-size:1.1rem; margin-bottom:0.5rem;">Ciente: ${o.shipping_address?.firstName} ${o.shipping_address?.lastName}</div>
-                    <div style="color:white; font-size:0.85rem;">${o.shipping_address?.phone}</div>
-                    <div style="color:var(--text-dim); font-size:0.85rem; margin-top:0.5rem;">${o.shipping_address?.address1}</div>
+                <div style="margin-bottom:1rem; background:#2c2c2e; padding:1rem; border-radius:12px;">
+                    <div style="color:var(--primary); font-weight:800; font-size:1.1rem; margin-bottom:0.5rem;">
+                        ${o.shipping_address?.firstName || ''} ${o.shipping_address?.lastName || ''}
+                    </div>
+                    <div style="color:white; font-size:0.85rem;">${o.shipping_address?.phone || '—'}</div>
+                    <div style="color:var(--text-dim); font-size:0.85rem; margin-top:0.25rem;">${o.shipping_address?.address1 || '—'}</div>
+                    <div style="color:var(--text-dim); font-size:0.8rem; margin-top:0.25rem;">Email: ${customerEmail}</div>
+                    <div style="color:var(--text-dim); font-size:0.8rem; margin-top:0.25rem;">IP: <span style="font-family:monospace;color:#a78bfa">${ip}</span></div>
+                </div>
+                <div style="display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap;">
+                    <button class="btn-action" style="background:#6c63ff;flex:1;" onclick="sendOrderEmail('${o.id}')">
+                        ✉ Enviar Email al Cliente
+                    </button>
+                    ${ip !== '—' ? `<button class="btn-action" style="background:#dc2626;" onclick="banIp('${ip}')">⛔ Banear IP</button>` : ''}
+                    ${customerId && !isBanned ? `<button class="btn-action" style="background:#7c2d12;" onclick="banUser('${customerId}')">🚫 Banear Usuario</button>` : ''}
+                    ${customerId && isBanned ? `<button class="btn-action" style="background:#166534;" onclick="unbanUser('${customerId}')">✅ Desbanear</button>` : ''}
                 </div>
                 <div>${itemsHtml}</div>
-                <div style="margin-top:1.5rem; text-align:right;">
-                    <div style="color:var(--text-dim); font-size:0.9rem;">Subtotal: $${o.subtotal}</div>
+                <div style="margin-top:1.5rem;">
+                    <div style="color:var(--text-dim); font-size:0.85rem;">Transportista: ${o.carrier || '—'}${o.carrier_agency_name ? ' — ' + o.carrier_agency_name : ''}</div>
+                    <div style="color:var(--text-dim); font-size:0.85rem; margin-top:0.2rem;">Método de pago: ${o.payment_method || '—'}</div>
+                    <div style="color:var(--text-dim); font-size:0.9rem; margin-top:0.5rem;">Subtotal: $${o.subtotal}</div>
+                    ${o.discount_total > 0 ? `<div style="color:#34d399; font-size:0.9rem;">Descuento: -$${o.discount_total}</div>` : ''}
                     <div style="color:white; font-size:1.2rem; font-weight:900; margin-top:0.2rem;">Total: $${o.total}</div>
                 </div>
             `;
@@ -491,6 +520,73 @@
 
         function statusLabel(s) {
             return { confirmando_pago: 'Pendiente', orden_confirmada: 'Confirmada', empacando: 'Empacando', enviado: 'Enviado', recibido: 'Recibido', cancelado: 'Cancelado' }[s] || s;
+        }
+
+        async function sendOrderEmail(orderId) {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = 'Enviando...';
+            try {
+                const res = await apiFetch(`/api/admin/orders/${orderId}/send-email`, { method: 'POST' });
+                const data = await res.json();
+                if (data.ok) {
+                    btn.textContent = '✓ Enviado';
+                    btn.style.background = '#166534';
+                } else {
+                    alert('Error: ' + (data.error || 'No se pudo enviar'));
+                    btn.disabled = false;
+                    btn.textContent = '✉ Enviar Email al Cliente';
+                }
+            } catch (e) {
+                alert('Error de conexión');
+                btn.disabled = false;
+                btn.textContent = '✉ Enviar Email al Cliente';
+            }
+        }
+
+        async function banIp(ip) {
+            const reason = prompt(`Razón para banear IP ${ip}:`, 'Comportamiento sospechoso');
+            if (reason === null) return;
+            const res = await apiFetch('/api/admin/security/ban', {
+                method: 'POST',
+                body: JSON.stringify({ ip, reason })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alert(`✓ IP ${ip} baneada`);
+                loadOrders();
+            } else {
+                alert('Error: ' + (data.error || 'No se pudo banear'));
+            }
+        }
+
+        async function banUser(userId) {
+            if (!confirm('¿Banear este usuario? No podrá iniciar sesión ni hacer pedidos.')) return;
+            const res = await apiFetch(`/api/admin/users/${userId}`, {
+                method: 'PATCH',
+                body: JSON.stringify({ is_banned: true })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alert('✓ Usuario baneado');
+                loadOrders();
+            } else {
+                alert('Error: ' + (data.error || 'No se pudo banear'));
+            }
+        }
+
+        async function unbanUser(userId) {
+            const res = await apiFetch(`/api/admin/users/${userId}`, {
+                method: 'PATCH',
+                body: JSON.stringify({ is_banned: false })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alert('✓ Usuario desbaneado');
+                loadOrders();
+            } else {
+                alert('Error: ' + (data.error || 'No se pudo desbanear'));
+            }
         }
 
         init();

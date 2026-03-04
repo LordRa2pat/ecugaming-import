@@ -132,9 +132,10 @@ async function verifyToken(req) {
     if (error || !user) return null;
     const { data: profile } = await supabase
         .from('profiles')
-        .select('role, first_name, last_name')
+        .select('role, first_name, last_name, is_banned')
         .eq('id', user.id)
         .single();
+    if (profile?.is_banned) return null; // banned users get treated as unauthenticated
     return { ...user, role: profile?.role || 'customer', profile };
 }
 
@@ -583,9 +584,9 @@ app.get('/api/admin/orders', requireAdmin(async (req, res) => {
             id, status, payment_method, payment_status,
             subtotal, discount_total, shipping_total, total,
             coupon_code, carrier, carrier_agency_name,
-            tracking_code, shipping_address, notes,
+            tracking_code, shipping_address, ip_address, notes,
             created_at, updated_at,
-            customer:profiles(first_name, last_name, email, phone)
+            customer:profiles(id, first_name, last_name, email, phone, is_banned, last_ip)
         `, { count: 'exact' })
         .order('created_at', { ascending: false })
         .range(from, from + limit - 1);
@@ -904,6 +905,88 @@ app.get('/api/test-email', async (req, res) => {
         res.status(500).json({ ok: false, error: e.message });
     }
 });
+
+// ============================================================
+// PUBLIC: GET /api/news — proxies n8n news webhook (hides server URL)
+// ============================================================
+app.get('/api/news', async (req, res) => {
+    const url = process.env.N8N_NEWS_WEBHOOK_URL;
+    if (!url) return res.json([]);
+    try {
+        const r = await fetch(url, { signal: AbortSignal.timeout(5000) });
+        const data = await r.json().catch(() => []);
+        res.json(data);
+    } catch (e) {
+        res.json([]);
+    }
+});
+
+// ============================================================
+// PUBLIC: POST /api/credit-check — proxies n8n credit form webhook
+// ============================================================
+app.post('/api/credit-check', async (req, res) => {
+    const url = process.env.N8N_CREDIT_WEBHOOK_URL;
+    if (!url) return res.json({ ok: true }); // fail silently — form still shows success
+    try {
+        await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(req.body),
+            signal: AbortSignal.timeout(5000),
+        });
+    } catch (e) {
+        console.error('[credit-check]', e.message);
+    }
+    res.json({ ok: true });
+});
+
+// ============================================================
+// PUBLIC: GET /api/config — serves public Supabase config
+// Keeps credentials out of static HTML/JS source files
+// ============================================================
+app.get('/api/config', (req, res) => {
+    res.json({
+        supabaseUrl: process.env.SUPABASE_URL || '',
+        supabaseAnonKey: process.env.SUPABASE_ANON_KEY || ''
+    });
+});
+
+// ============================================================
+// ADMIN: POST /api/admin/orders/:id/send-email
+// Manually trigger the n8n order notification email
+// ============================================================
+app.post('/api/admin/orders/:id/send-email', requireAdmin(async (req, res) => {
+    const { data: order, error } = await supabase
+        .from('orders')
+        .select(`*, customer:profiles(first_name, last_name, email)`)
+        .eq('id', req.params.id)
+        .single();
+
+    if (error || !order) return res.status(404).json({ error: 'Orden no encontrada' });
+
+    const { data: items } = await supabase
+        .from('order_items')
+        .select('product_snapshot, qty')
+        .eq('order_id', req.params.id)
+        .limit(1);
+
+    const firstItem = items?.[0];
+    const customerEmail = order.customer?.email || order.shipping_address?.email;
+    if (!customerEmail) return res.status(400).json({ error: 'El cliente no tiene email registrado' });
+
+    await notifyN8N({
+        orderId: order.id,
+        customerName: `${order.shipping_address?.firstName || order.customer?.first_name || ''} ${order.shipping_address?.lastName || order.customer?.last_name || ''}`.trim(),
+        customerEmail,
+        productName: sanitize(firstItem?.product_snapshot?.name || 'Tu pedido'),
+        carrier: sanitize(order.carrier || ''),
+        total: parseFloat(order.total || 0).toFixed(2),
+        paymentMethod: sanitize(order.payment_method || ''),
+        timestamp: new Date().toISOString(),
+    });
+
+    res.json({ ok: true, sentTo: customerEmail });
+}));
 
 // ============================================================
 // Health check
