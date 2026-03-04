@@ -60,7 +60,7 @@
     },
     {
       "parameters": {
-        "fromEmail": "Ecu Gaming Import <soporte@ecugamingimport.top>",
+        "fromEmail": "Ecu Gaming Import <ventas@ecugamingimport.top>",
         "toEmail": "={{ $json.body.customerEmail }}",
         "subject": "=Orden #{{ $json.body.orderId }} generada — Ecu Gaming Import",
         "emailFormat": "html",
@@ -87,7 +87,7 @@
               },
               {
                 "name": "List-Unsubscribe",
-                "value": "<mailto:soporte@ecugamingimport.top?subject=unsubscribe>"
+                "value": "<mailto:ventas@ecugamingimport.top?subject=unsubscribe>"
               },
               {
                 "name": "List-Unsubscribe-Post",
