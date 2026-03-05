@@ -824,8 +824,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-    <script src="/lib/supabase-client.js?v=1.1.0"></script>
-    <script src="/lib/auth.js?v=1.1.0"></script>
+    <script src="/lib/supabase-client.js?v=1.2.0"></script>
+    <script src="/lib/auth.js?v=1.2.0"></script>
     <script>
         let adminToken = '';
         let allOrders = [];
@@ -854,7 +854,7 @@
 
         // ── Init ──────────────────────────────────────────────
         async function init() {
-            showBanner('<i class="fa fa-circle-notch fa-spin"></i> Verificando sesión...', 'info');
+            showBanner('<i class="fa fa-circle-notch fa-spin"></i> Paso 1/4 — Conectando con Supabase...', 'info');
             try {
                 ['statTotal','statRevenue','statPending','statAvg'].forEach(id => {
                     const el = document.getElementById(id);
@@ -863,17 +863,23 @@
 
                 // Step 1: wait for Supabase to initialize
                 const client = await window._supabaseReady;
-                if (!client) throw new Error('No se pudo conectar con Supabase. Verifica /api/config.');
+                if (!client) throw new Error('Supabase no pudo inicializarse. Verifica que /api/config devuelva supabaseUrl y supabaseAnonKey.');
 
-                showBanner('<i class="fa fa-circle-notch fa-spin"></i> Verificando permisos de admin...', 'info');
+                showBanner('<i class="fa fa-circle-notch fa-spin"></i> Paso 2/4 — Verificando sesión admin...', 'info');
 
                 // Step 2: get admin token
                 adminToken = await Auth.requireAdmin();
                 if (!adminToken) return; // redirected to login
 
-                showBanner('<i class="fa fa-circle-notch fa-spin"></i> Cargando órdenes...', 'info');
+                showBanner('<i class="fa fa-circle-notch fa-spin"></i> Paso 3/4 — Probando conexión a API...', 'info');
 
-                // Step 3: tab click handlers
+                // Step 3: sanity-check the API with a lightweight call
+                const healthRes = await fetch('/api/health');
+                if (!healthRes.ok) throw new Error(`API no responde (${healthRes.status}). Verifica el servidor.`);
+
+                showBanner('<i class="fa fa-circle-notch fa-spin"></i> Paso 4/4 — Cargando órdenes...', 'info');
+
+                // Step 4: tab click handlers
                 document.querySelectorAll('.filter-tab').forEach(btn => {
                     btn.addEventListener('click', () => {
                         document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
@@ -889,7 +895,7 @@
 
             } catch (err) {
                 console.error('[admin-orders] init error:', err);
-                showBanner(`<i class="fa fa-exclamation-triangle"></i> Error: ${err.message}`, 'error');
+                showBanner(`<i class="fa fa-exclamation-triangle"></i> ${err.message}`, 'error');
                 ['statTotal','statRevenue','statPending','statAvg'].forEach(id => {
                     const el = document.getElementById(id);
                     if (el) { el.textContent = '—'; el.style.opacity = '1'; }
@@ -919,13 +925,17 @@
                 const res = await apiFetch('/api/admin/orders?limit=500');
 
                 if (!res.ok) {
-                    const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
-                    if (res.status === 401 || res.status === 403) {
-                        showBanner('<i class="fa fa-lock"></i> Sesión expirada o sin permisos de admin.', 'error');
-                        document.getElementById('ordersBody').innerHTML = '';
-                        return;
+                    const errBody = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+                    const errMsg = errBody.error || `HTTP ${res.status}`;
+                    if (res.status === 401) {
+                        showBanner(`<i class="fa fa-lock"></i> Sin autenticación (401): ${errMsg} — vuelve a iniciar sesión.`, 'error');
+                    } else if (res.status === 403) {
+                        showBanner(`<i class="fa fa-lock"></i> Sin permiso admin (403): ${errMsg}`, 'error');
+                    } else {
+                        showBanner(`<i class="fa fa-exclamation-triangle"></i> Error API (${res.status}): ${errMsg}`, 'error');
                     }
-                    throw new Error(err.error || `Error HTTP ${res.status}`);
+                    document.getElementById('ordersBody').innerHTML = '';
+                    return;
                 }
 
                 const data = await res.json();

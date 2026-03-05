@@ -234,11 +234,26 @@ async function verifyToken(req) {
     const token = header.split(' ')[1];
     const { data: { user }, error } = await supabase.auth.getUser(token);
     if (error || !user) return null;
-    const { data: profile } = await supabase
+
+    // Try full select first; fall back to minimal select if optional columns don't exist yet
+    let profile = null;
+    const { data: fullProfile, error: fullErr } = await supabase
         .from('profiles')
         .select('role, first_name, last_name, is_banned')
         .eq('id', user.id)
         .single();
+    if (!fullErr) {
+        profile = fullProfile;
+    } else {
+        console.warn('[verifyToken] full profile select failed, trying minimal:', fullErr.message);
+        const { data: minProfile } = await supabase
+            .from('profiles')
+            .select('role, first_name, last_name')
+            .eq('id', user.id)
+            .single();
+        profile = minProfile;
+    }
+
     if (profile?.is_banned) return null; // banned users get treated as unauthenticated
     // Update last_ip non-blocking (fire & forget)
     if (req.clientIp) {
