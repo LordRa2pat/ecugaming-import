@@ -407,11 +407,21 @@
 
             <div class="admin-card">
                 <div class="card-title"><i class="fa fa-building-columns"></i> Cuentas Bancarias (JSON)</div>
-                <div class="section-hint">Formato: [{"bank":"Banco Pichincha","type":"Ahorro","number":"123456","beneficiary":"Nombre","cedula":"1234567890"}]</div>
+                <div class="section-hint">Formato: [{"bank":"Banco Pichincha","type":"Ahorro","number":"123456","beneficiary":"Nombre","cedula":"1234567890","email":"ventas@ejemplo.com"}]</div>
                 <div class="form-group">
                     <textarea id="set-bank_accounts" class="form-control"
                         style="min-height:160px; font-family:monospace; font-size:12px; resize:vertical;"
                         oninput="markModified(this, 'bank_accounts')"></textarea>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="card-title"><i class="fab fa-paypal"></i> PayPal</div>
+                <div class="form-group">
+                    <label>Email de PayPal</label>
+                    <input type="email" id="set-paypal_email" class="form-control" placeholder="ventas@ejemplo.com"
+                        oninput="markModified(this, 'paypal_email')">
+                    <div class="section-hint">Este correo se mostrará a los clientes que elijan pagar por PayPal.</div>
                 </div>
             </div>
 
@@ -508,7 +518,7 @@
     const SIMPLE_KEYS   = ['store_name', 'whatsapp', 'notification_email', 'announcement_text',
                            'tax_rate', 'max_cart_qty', 'shipping_cost', 'free_shipping_threshold',
                            'meta_title', 'meta_description', 'instagram_url', 'facebook_url',
-                           'tiktok_url', 'currency'];
+                           'tiktok_url', 'currency', 'paypal_email'];
     const JSON_KEYS     = ['bank_accounts', 'crypto_wallets'];
     const BOOL_KEYS     = ['maintenance_mode'];
     const ALL_KEYS      = [...SIMPLE_KEYS, ...JSON_KEYS, ...BOOL_KEYS];

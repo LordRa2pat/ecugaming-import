@@ -772,7 +772,9 @@
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
             <h3 style="font-weight:800; color:#f5f5f7; margin:0;">Detalle de Orden</h3>
             <div style="display:flex; gap:0.5rem;">
-                <!-- Feature 10: Print button -->
+                <button class="btn-action" onclick="generateInvoice()" title="Generar factura" style="background:#166534; color:#fff;">
+                    <i class="fa fa-file-invoice"></i>
+                </button>
                 <button class="btn-action" onclick="printOrder()" title="Imprimir orden">
                     <i class="fa fa-print"></i>
                 </button>
@@ -1179,7 +1181,10 @@
             }
         }
 
+        let _currentOrder = null;
+
         function renderOrderDetail(o) {
+            _currentOrder = o;
             const itemsHtml = (o.items || []).map(i => `
                 <div style="display:flex; gap:1rem; padding:0.5rem 0; border-bottom:1px solid #2c2c2e;">
                     <img src="${i.product_snapshot?.image_url || ''}" style="width:40px; height:40px; border-radius:6px; object-fit:cover; background:#111;" onerror="this.style.display='none'">
@@ -1295,6 +1300,153 @@
         // ── Feature 10: Print Order ───────────────────────────
         function printOrder() {
             window.print();
+        }
+
+        // ── Generar Factura ───────────────────────────────────
+        function generateInvoice() {
+            const o = _currentOrder;
+            if (!o) return;
+            const sa = o.shipping_address || {};
+            const date = new Date(o.created_at).toLocaleDateString('es-EC', { day:'2-digit', month:'long', year:'numeric' });
+            const statusLabels = {
+                confirmando_pago: 'Confirmando Pago',
+                orden_confirmada: 'Orden Confirmada',
+                empacando: 'Empacando',
+                enviado: 'Enviado',
+                recibido: 'Recibido',
+                cancelado: 'Cancelado'
+            };
+            const itemsRows = (o.items || []).map(i => `
+                <tr>
+                    <td style="padding:10px 8px; border-bottom:1px solid #e5e7eb;">${i.product_snapshot?.name || '—'}</td>
+                    <td style="padding:10px 8px; border-bottom:1px solid #e5e7eb; text-align:center;">${i.qty}</td>
+                    <td style="padding:10px 8px; border-bottom:1px solid #e5e7eb; text-align:right;">$${parseFloat(i.product_snapshot?.price || 0).toFixed(2)}</td>
+                    <td style="padding:10px 8px; border-bottom:1px solid #e5e7eb; text-align:right; font-weight:700;">$${parseFloat(i.line_total || 0).toFixed(2)}</td>
+                </tr>`).join('');
+
+            const html = `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Factura ${o.id}</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #111; font-size: 14px; }
+        .page { max-width: 800px; margin: 0 auto; padding: 40px; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; border-bottom: 3px solid #ff8c00; padding-bottom: 24px; }
+        .brand { font-size: 24px; font-weight: 900; color: #111; }
+        .brand span { color: #ff8c00; }
+        .brand-sub { font-size: 12px; color: #555; margin-top: 4px; }
+        .invoice-label { text-align: right; }
+        .invoice-label h2 { font-size: 28px; font-weight: 900; color: #ff8c00; letter-spacing: -0.5px; }
+        .invoice-label p { font-size: 12px; color: #555; margin-top: 4px; }
+        .invoice-label .order-id { font-size: 16px; font-weight: 700; color: #111; margin-top: 6px; }
+        .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+        .info-box { background: #f9fafb; border-radius: 8px; padding: 16px; }
+        .info-box h4 { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: #888; margin-bottom: 10px; }
+        .info-box p { font-size: 13px; color: #111; margin-bottom: 4px; }
+        .info-box p strong { font-weight: 700; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+        thead tr { background: #ff8c00; color: #fff; }
+        thead th { padding: 10px 8px; text-align: left; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
+        thead th:last-child, thead th:nth-child(3), thead th:nth-child(2) { text-align: right; }
+        thead th:nth-child(2) { text-align: center; }
+        tbody tr:nth-child(even) { background: #f9fafb; }
+        .totals { display: flex; justify-content: flex-end; margin-bottom: 32px; }
+        .totals-box { width: 280px; }
+        .tot-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: #555; border-bottom: 1px solid #f0f0f0; }
+        .tot-row.total { font-size: 18px; font-weight: 900; color: #111; border-bottom: none; padding-top: 12px; }
+        .tot-row.discount { color: #16a34a; }
+        .status-badge { display: inline-block; background: #fff3e0; color: #ff8c00; border: 1px solid #ffcc80; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 700; margin-left: 8px; }
+        .footer { border-top: 1px solid #e5e7eb; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .footer p { font-size: 11px; color: #888; }
+        .footer .thanks { font-size: 13px; font-weight: 700; color: #ff8c00; }
+        @media print { .page { padding: 20px; } }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="header">
+        <div>
+            <div class="brand">Ecugaming <span>Import</span></div>
+            <div class="brand-sub">ventas@ecugamingimport.online</div>
+            <div class="brand-sub">www.ecugamingimport.online</div>
+        </div>
+        <div class="invoice-label">
+            <h2>FACTURA</h2>
+            <div class="order-id">${o.id}</div>
+            <p>Fecha: ${date}</p>
+            <p>Estado: <span class="status-badge">${statusLabels[o.status] || o.status}</span></p>
+        </div>
+    </div>
+
+    <div class="grid2">
+        <div class="info-box">
+            <h4>Datos del Cliente</h4>
+            <p><strong>${sa.firstName || ''} ${sa.lastName || ''}</strong></p>
+            <p>${o.customer?.email || '—'}</p>
+            <p>Tel: ${sa.phone || '—'}</p>
+            ${sa.cedula ? `<p>C.I.: ${sa.cedula}</p>` : ''}
+        </div>
+        <div class="info-box">
+            <h4>Dirección de Envío</h4>
+            <p>${sa.address1 || '—'}</p>
+            <p>${sa.city || ''}, ${sa.province || ''}</p>
+            ${sa.reference ? `<p>Ref: ${sa.reference}</p>` : ''}
+            <p style="margin-top:8px; font-size:12px; color:#555;">Transportista: <strong>${o.carrier || '—'}${o.carrier_agency_name ? ' — ' + o.carrier_agency_name : ''}</strong></p>
+            ${o.tracking_code ? `<p style="font-size:12px; color:#0070c0;">Tracking: <strong>${o.tracking_code}</strong></p>` : ''}
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th style="text-align:center;">Cant.</th>
+                <th style="text-align:right;">P. Unitario</th>
+                <th style="text-align:right;">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>${itemsRows}</tbody>
+    </table>
+
+    <div class="totals">
+        <div class="totals-box">
+            <div class="tot-row"><span>Subtotal</span><span>$${parseFloat(o.subtotal || 0).toFixed(2)}</span></div>
+            ${parseFloat(o.discount_total || 0) > 0 ? `<div class="tot-row discount"><span>Descuento${o.coupon_code ? ' (' + o.coupon_code + ')' : ''}</span><span>-$${parseFloat(o.discount_total).toFixed(2)}</span></div>` : ''}
+            <div class="tot-row"><span>Envío</span><span>${parseFloat(o.shipping_cost || 0) === 0 ? 'GRATIS' : '$' + parseFloat(o.shipping_cost || 0).toFixed(2)}</span></div>
+            <div class="tot-row total"><span>TOTAL</span><span>$${parseFloat(o.total || 0).toFixed(2)}</span></div>
+        </div>
+    </div>
+
+    <div class="grid2" style="margin-bottom:32px;">
+        <div class="info-box">
+            <h4>Método de Pago</h4>
+            <p><strong>${o.payment_method || '—'}</strong></p>
+            ${o.payment_proof?.bank ? `<p>Banco: ${o.payment_proof.bank}</p>` : ''}
+            ${o.payment_proof?.txid ? `<p>Ref: ${o.payment_proof.txid}</p>` : ''}
+        </div>
+        <div class="info-box">
+            <h4>Notas</h4>
+            <p style="color:#555;">${o.status_note || 'Sin notas'}</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div>
+            <p>Este documento es un comprobante de compra.</p>
+            <p>Soporte: ventas@ecugamingimport.online | WhatsApp disponible</p>
+        </div>
+        <div class="thanks">¡Gracias por tu compra!</div>
+    </div>
+</div>
+<script>window.onload = () => window.print();</script>
+</body>
+</html>`;
+
+            const w = window.open('', '_blank', 'width=900,height=700');
+            w.document.write(html);
+            w.document.close();
         }
 
         // ── Status Modal ──────────────────────────────────────

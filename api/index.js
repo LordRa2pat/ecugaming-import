@@ -8,6 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const upload = multer({ storage: multer.memoryStorage() }); // store in memory, upload to Storage
@@ -100,11 +101,114 @@ function sanitize(str, maxLen = 200) {
 }
 
 // ============================================================
-// EMAIL — ORDER NOTIFICATION (fire-and-forget via n8n)
-// n8n at easypanel sends SMTP so the server IP is hidden from headers
+// EMAIL — DIRECT SMTP (nodemailer) — primary method
+// ============================================================
+const smtpTransporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST || 'mail.spacemail.com',
+    port: parseInt(process.env.SMTP_PORT || '587'),
+    secure: false,
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+    },
+    tls: { rejectUnauthorized: false },
+});
+
+const STATUS_LABELS_ES = {
+    confirmando_pago: 'Confirmando Pago',
+    orden_confirmada: 'Orden Confirmada',
+    empacando: 'Empacando',
+    enviado: 'Enviado',
+    recibido: 'Entregado',
+    cancelado: 'Cancelado',
+};
+
+function buildOrderEmailHtml(p) {
+    const statusLabel = STATUS_LABELS_ES[p.status] || p.status || 'Confirmando Pago';
+    const statusColor = p.status === 'cancelado' ? '#dc2626'
+        : p.status === 'recibido' ? '#16a34a'
+        : p.status === 'enviado' ? '#0070ba'
+        : '#ff8c00';
+    const trackingHtml = p.trackingCode
+        ? `<tr><td style="padding:8px 0; color:#555; font-size:14px;">Código de seguimiento</td><td style="padding:8px 0; font-weight:700; color:#0070ba; font-size:14px;">${p.trackingCode}</td></tr>`
+        : '';
+    return `<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f4f4f5;font-family:'Helvetica Neue',Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 0;">
+<tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.08);">
+  <!-- Header -->
+  <tr><td style="background:#111;padding:28px 36px;">
+    <span style="font-size:22px;font-weight:900;color:#fff;">Ecugaming <span style="color:#ff8c00;">Import</span></span>
+  </td></tr>
+  <!-- Status banner -->
+  <tr><td style="background:${statusColor};padding:18px 36px;text-align:center;">
+    <span style="color:#fff;font-size:18px;font-weight:800;">Estado de tu orden: ${statusLabel}</span>
+  </td></tr>
+  <!-- Body -->
+  <tr><td style="padding:32px 36px;">
+    <p style="font-size:16px;color:#111;margin:0 0 8px;">Hola, <strong>${p.customerName || 'Cliente'}</strong> 👋</p>
+    <p style="font-size:14px;color:#555;margin:0 0 24px;">Aquí tienes el estado actualizado de tu pedido en Ecugaming Import.</p>
+    <!-- Order box -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;border-radius:12px;padding:20px;margin-bottom:24px;">
+      <tr><td style="padding:8px 0;color:#555;font-size:14px;">Número de orden</td>
+          <td style="padding:8px 0;font-weight:800;color:#111;font-size:16px;">${p.orderId}</td></tr>
+      <tr><td style="padding:8px 0;color:#555;font-size:14px;">Producto</td>
+          <td style="padding:8px 0;font-weight:700;color:#111;font-size:14px;">${p.productName || 'Tu pedido'}</td></tr>
+      <tr><td style="padding:8px 0;color:#555;font-size:14px;">Total</td>
+          <td style="padding:8px 0;font-weight:800;color:#ff8c00;font-size:16px;">$${p.total}</td></tr>
+      <tr><td style="padding:8px 0;color:#555;font-size:14px;">Transportista</td>
+          <td style="padding:8px 0;font-weight:700;color:#111;font-size:14px;">${p.carrier || '—'}</td></tr>
+      <tr><td style="padding:8px 0;color:#555;font-size:14px;">Método de pago</td>
+          <td style="padding:8px 0;font-weight:700;color:#111;font-size:14px;">${p.paymentMethod || '—'}</td></tr>
+      ${trackingHtml}
+    </table>
+    ${p.statusNote ? `<div style="background:#fff3e0;border-left:4px solid #ff8c00;border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:24px;font-size:14px;color:#555;"><strong>Nota:</strong> ${p.statusNote}</div>` : ''}
+    <!-- CTA -->
+    <div style="text-align:center;margin:28px 0;">
+      <a href="https://ecugamingimport.online/tracking?id=${p.orderId}"
+         style="background:#ff8c00;color:#fff;text-decoration:none;padding:14px 32px;border-radius:50px;font-weight:800;font-size:15px;display:inline-block;">
+        Ver estado de mi pedido
+      </a>
+    </div>
+    <p style="font-size:13px;color:#888;text-align:center;margin:0;">¿Tienes dudas? Escríbenos por WhatsApp o a <a href="mailto:ventas@ecugamingimport.online" style="color:#ff8c00;">ventas@ecugamingimport.online</a></p>
+  </td></tr>
+  <!-- Footer -->
+  <tr><td style="background:#f4f4f5;padding:16px 36px;text-align:center;">
+    <span style="font-size:12px;color:#aaa;">© 2026 Ecugaming Import · Ecuador</span>
+  </td></tr>
+</table>
+</td></tr>
+</table>
+</body></html>`;
+}
+
+async function sendOrderEmail(payload) {
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+        console.warn('[email] SMTP not configured, skipping');
+        return;
+    }
+    const statusLabel = STATUS_LABELS_ES[payload.status] || payload.status || 'actualizado';
+    try {
+        await smtpTransporter.sendMail({
+            from: `"Ecugaming Import" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
+            to: payload.customerEmail,
+            subject: `Tu orden ${payload.orderId} — ${statusLabel}`,
+            html: buildOrderEmailHtml(payload),
+        });
+        console.log(`[email] sent to ${payload.customerEmail} for ${payload.orderId}`);
+    } catch (e) {
+        console.error('[email] SMTP error:', e.message);
+    }
+}
+
+// ============================================================
+// EMAIL — ORDER NOTIFICATION (fire-and-forget via n8n) — kept as secondary
 // ============================================================
 async function notifyN8N(payload) {
-    const url = process.env.N8N_ORDER_WEBHOOK_URL;
+    const url = (process.env.N8N_ORDER_WEBHOOK_URL || '').trim();
     const key = process.env.N8N_API_KEY;
     if (!url || !key) return;
     try {
@@ -114,7 +218,7 @@ async function notifyN8N(payload) {
             body: JSON.stringify(payload),
             signal: AbortSignal.timeout(5000),
         });
-        console.log(`[n8n] order notification sent for ${payload.orderId}`);
+        console.log(`[n8n] webhook sent for ${payload.orderId}`);
     } catch (e) {
         console.error('[n8n notify]', e.message);
     }
@@ -545,9 +649,9 @@ app.post('/api/orders/create', requireAuth(async (req, res) => {
             });
         }
 
-        // 11. Notify n8n → triggers order email to customer
+        // 11. Send order confirmation email directly via SMTP
         const firstItem = orderItemsData[0];
-        notifyN8N({
+        sendOrderEmail({
             orderId,
             status: 'confirmando_pago',
             customerName: `${safeAddress.firstName} ${safeAddress.lastName}`,
@@ -629,6 +733,32 @@ app.patch('/api/admin/orders/:id/status', requireAdmin(async (req, res) => {
         note: note || '',
         actor_user_id: req.user.id
     });
+
+    // Send status update email to customer (fire-and-forget)
+    const { data: orderFull } = await supabase
+        .from('orders')
+        .select('*, customer:profiles(first_name, last_name, email)')
+        .eq('id', id)
+        .single();
+    if (orderFull) {
+        const { data: items } = await supabase
+            .from('order_items').select('product_snapshot, qty').eq('order_id', id).limit(1);
+        const customerEmail = orderFull.customer?.email || orderFull.shipping_address?.email;
+        if (customerEmail) {
+            sendOrderEmail({
+                orderId: id,
+                status,
+                customerName: `${orderFull.shipping_address?.firstName || orderFull.customer?.first_name || ''} ${orderFull.shipping_address?.lastName || orderFull.customer?.last_name || ''}`.trim(),
+                customerEmail,
+                productName: items?.[0]?.product_snapshot?.name || 'Tu pedido',
+                carrier: orderFull.carrier || '',
+                total: parseFloat(orderFull.total || 0).toFixed(2),
+                paymentMethod: orderFull.payment_method || '',
+                trackingCode: trackingCode || orderFull.tracking_code || '',
+                statusNote: note || '',
+            });
+        }
+    }
 
     res.json(data);
 }));
@@ -886,7 +1016,7 @@ app.post('/api/admin/users/:id/reset-password', requireAdmin(async (req, res) =>
 }));
 
 // ============================================================
-// TEST EMAIL — triggers n8n workflow with a sample order
+// TEST EMAIL — sends a test email directly via SMTP
 // Usage: GET /api/test-email?to=you@example.com&key=YOUR_N8N_API_KEY
 // ============================================================
 app.get('/api/test-email', async (req, res) => {
@@ -896,27 +1026,20 @@ app.get('/api/test-email', async (req, res) => {
     }
     if (!to) return res.status(400).json({ error: 'Missing ?to= param' });
 
-    const url = process.env.N8N_ORDER_WEBHOOK_URL;
-    if (!url) return res.status(500).json({ error: 'N8N_ORDER_WEBHOOK_URL not set' });
-
     try {
-        const resp = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.N8N_API_KEY },
-            body: JSON.stringify({
-                orderId: 'EG-TEST-001',
-                customerName: 'Cliente de Prueba',
-                customerEmail: to,
-                productName: 'PlayStation 5 Slim - Edición Disco (1TB)',
-                carrier: 'Servientrega',
-                total: '649.00',
-                paymentMethod: 'transferencia',
-                timestamp: new Date().toISOString(),
-            }),
-            signal: AbortSignal.timeout(10000),
+        await sendOrderEmail({
+            orderId: 'EG-TEST-001',
+            status: 'orden_confirmada',
+            customerName: 'Cliente de Prueba',
+            customerEmail: to,
+            productName: 'PlayStation 5 Slim - Edición Disco (1TB)',
+            carrier: 'Servientrega',
+            total: '649.00',
+            paymentMethod: 'Transferencia Bancaria',
+            trackingCode: '',
+            statusNote: 'Este es un correo de prueba del sistema.',
         });
-        const body = await resp.json().catch(() => ({}));
-        res.json({ ok: body.ok ?? resp.ok, status: resp.status, n8n: body });
+        res.json({ ok: true, sentTo: to, method: 'smtp' });
     } catch (e) {
         res.status(500).json({ ok: false, error: e.message });
     }
@@ -990,7 +1113,7 @@ app.post('/api/admin/orders/:id/send-email', requireAdmin(async (req, res) => {
     const customerEmail = order.customer?.email || order.shipping_address?.email;
     if (!customerEmail) return res.status(400).json({ error: 'El cliente no tiene email registrado' });
 
-    await notifyN8N({
+    await sendOrderEmail({
         orderId: order.id,
         status: order.status || 'confirmando_pago',
         customerName: `${order.shipping_address?.firstName || order.customer?.first_name || ''} ${order.shipping_address?.lastName || order.customer?.last_name || ''}`.trim(),
@@ -999,6 +1122,8 @@ app.post('/api/admin/orders/:id/send-email', requireAdmin(async (req, res) => {
         carrier: sanitize(order.carrier || ''),
         total: parseFloat(order.total || 0).toFixed(2),
         paymentMethod: sanitize(order.payment_method || ''),
+        trackingCode: order.tracking_code || '',
+        statusNote: order.status_note || '',
         timestamp: new Date().toISOString(),
     });
 

@@ -240,8 +240,15 @@
     <header>
         <div class="logo" onclick="location.href='/'">Ecugaming <span>Import</span></div>
         <div style="flex:1;"></div>
-        <div style="display:flex; align-items:center; gap:.5rem; font-size:.85rem; color:var(--text-dim);">
-            <i class="fa fa-lock" style="color:#34c759;"></i> Pago seguro
+        <div style="display:flex; align-items:center; gap:1.2rem;">
+            <div style="display:flex; align-items:center; gap:.5rem; font-size:.85rem; color:var(--text-dim);">
+                <i class="fa fa-lock" style="color:#34c759;"></i> Pago seguro
+            </div>
+            <div onclick="location.href='/'" style="position:relative; cursor:pointer;" title="Ver carrito">
+                <i class="fa fa-shopping-bag" style="font-size:1.2rem; color:var(--text);"></i>
+                <span id="checkoutCartBadge"
+                    style="position:absolute; top:-5px; right:-8px; background:var(--accent); color:#fff; font-size:10px; padding:2px 5px; border-radius:50%; font-weight:800; display:none;">0</span>
+            </div>
         </div>
     </header>
 
@@ -404,14 +411,18 @@
                             <i class="fa fa-building-columns"></i>
                             <span>Transferencia Bancaria</span>
                         </div>
-                        <div class="pay-method-card disabled" title="Próximamente disponible">
-                            <div class="maintenance-badge">Mantenimiento</div>
-                            <i class="fa fa-credit-card"></i>
+                        <div class="pay-method-card disabled" title="Próximamente disponible" onclick="alert('Pago con tarjeta próximamente disponible. Por favor usa Transferencia Bancaria, PayPal o Criptomoneda.')">
+                            <div class="maintenance-badge">Próximamente</div>
+                            <img src="https://i.ytimg.com/vi/10ulVRJsVtA/maxresdefault.jpg" alt="Visa/Mastercard" style="height:24px; object-fit:contain; margin-bottom:.4rem; opacity:.5;">
                             <span>Tarjeta Crédito/Débito</span>
                         </div>
                         <div class="pay-method-card" id="pay-cripto" onclick="selectPayMethod('cripto')">
                             <i class="fab fa-bitcoin"></i>
                             <span>Criptomoneda</span>
+                        </div>
+                        <div class="pay-method-card" id="pay-paypal" onclick="selectPayMethod('paypal')">
+                            <img src="https://www.citypng.com/public/uploads/preview/transparent-hd-paypal-logo-701751694777788ilpzr3lary.png" alt="PayPal" style="height:28px; object-fit:contain;">
+                            <span>PayPal</span>
                         </div>
                     </div>
 
@@ -430,6 +441,34 @@
                         <div class="form-group">
                             <label>O ingresa # de referencia / Nro. de transacción</label>
                             <input type="text" id="txRef" class="form-control" placeholder="Ej: 12345678">
+                        </div>
+                    </div>
+
+                    <!-- PayPal detail -->
+                    <div class="pay-detail" id="detail-paypal">
+                        <div class="bank-info-box" style="border:2px solid #0070ba; text-align:center; padding:1.5rem;">
+                            <img src="https://www.citypng.com/public/uploads/preview/transparent-hd-paypal-logo-701751694777788ilpzr3lary.png" alt="PayPal" style="height:36px; margin-bottom:.8rem;">
+                            <div style="font-size:.85rem; color:var(--text-dim); margin-bottom:.3rem;">Enviar pago a:</div>
+                            <div class="bank-number" id="paypalEmailDisplay" style="font-size:1rem; margin-bottom:1.2rem;">—</div>
+                            <button id="btnPayWithPaypal" onclick="openPaypalPayment()"
+                                style="background:#0070ba; color:#fff; border:none; border-radius:50px; padding:.85rem 2rem; font-size:1rem; font-weight:800; cursor:pointer; width:100%; display:flex; align-items:center; justify-content:center; gap:.6rem; transition:.2s;"
+                                onmouseover="this.style.background='#005ea6'" onmouseout="this.style.background='#0070ba'">
+                                <img src="https://www.citypng.com/public/uploads/preview/transparent-hd-paypal-logo-701751694777788ilpzr3lary.png" alt="" style="height:18px; filter:brightness(10);">
+                                Pagar con PayPal
+                            </button>
+                            <div style="font-size:.75rem; color:var(--text-dim); margin-top:.8rem;">Se abrirá PayPal para completar el pago. Vuelve aquí y sube la captura.</div>
+                        </div>
+                        <div class="form-group" style="margin-top:1rem;">
+                            <label>Subir captura del pago <span class="optional-label">(imagen)</span></label>
+                            <div class="file-upload-area" onclick="document.getElementById('paypalFile').click()">
+                                <i class="fa fa-cloud-upload-alt"></i>
+                                <p id="paypalFileName">Clic para subir o arrastra aquí</p>
+                            </div>
+                            <input type="file" id="paypalFile" accept="image/*,.pdf" onchange="handlePaypalFile(this)">
+                        </div>
+                        <div class="form-group">
+                            <label>ID de transacción PayPal <span class="optional-label">(opcional)</span></label>
+                            <input type="text" id="paypalTxid" class="form-control" placeholder="Ej: 5XY12345AB678901C">
                         </div>
                     </div>
 
@@ -532,6 +571,18 @@
     <script src="/lib/cart.js"></script>
     <script src="/lib/auth.js"></script>
     <script>
+        // Cart badge in header
+        (function() {
+            const badge = document.getElementById('checkoutCartBadge');
+            function updateBadge() {
+                const count = (typeof Cart !== 'undefined') ? Cart.count() : 0;
+                badge.textContent = count;
+                badge.style.display = count > 0 ? '' : 'none';
+            }
+            document.addEventListener('cart:updated', updateBadge);
+            document.addEventListener('DOMContentLoaded', updateBadge);
+        })();
+
         // State
         let currentStep = 1;
         let couponCode = '';
@@ -542,6 +593,7 @@
         let freeThreshold = 500;
         let bankAccounts = [];
         let cryptoWallets = [];
+        let paypalEmail = '';
         let proofFile = null;
         let cryptoFile = null;
         let userSession = null;
@@ -576,6 +628,7 @@
                         if (s.key === 'shipping_cost')           shippingCost  = parseFloat(s.value) || 5;
                         if (s.key === 'bank_accounts')           bankAccounts  = Array.isArray(s.value) ? s.value : JSON.parse(s.value);
                         if (s.key === 'crypto_wallets')          cryptoWallets = Array.isArray(s.value) ? s.value : JSON.parse(s.value);
+                        if (s.key === 'paypal_email')            paypalEmail   = s.value || '';
                     });
                 }
             } catch (e) {
@@ -583,6 +636,7 @@
             }
             renderBankList();
             renderCryptoOptions();
+            renderPaypalDetail();
         }
 
         async function loadUserData() {
@@ -750,6 +804,32 @@
             updateShippingCostNote();
         }
 
+        // PayPal rendering
+        let paypalFile = null;
+        function renderPaypalDetail() {
+            const el = document.getElementById('paypalEmailDisplay');
+            if (el) el.textContent = paypalEmail || 'No configurado';
+        }
+        function handlePaypalFile(input) {
+            paypalFile = input.files[0] || null;
+            document.getElementById('paypalFileName').textContent = paypalFile ? paypalFile.name : 'Clic para subir o arrastra aquí';
+        }
+        function openPaypalPayment() {
+            if (!paypalEmail) { alert('No hay email de PayPal configurado. Contacta al vendedor.'); return; }
+            const subtotal = Cart.subtotal();
+            const isFree = (couponData && couponData.free_shipping) || subtotal >= freeThreshold;
+            const shipping = isFree ? 0 : shippingCost;
+            let discount = 0;
+            if (couponData) {
+                discount = couponData.type === 'percent'
+                    ? parseFloat((subtotal * couponData.value / 100).toFixed(2))
+                    : Math.min(couponData.value, subtotal);
+            }
+            const total = (subtotal - discount + shipping).toFixed(2);
+            const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(paypalEmail)}&amount=${total}&currency_code=USD&item_name=${encodeURIComponent('Compra EcuGaming Import')}&no_note=1`;
+            window.open(url, '_blank');
+        }
+
         // Bank accounts rendering
         function renderBankList() {
             const container = document.getElementById('bankList');
@@ -763,6 +843,7 @@
                     <div class="bank-row"><span>Número de cuenta</span><span class="bank-number">${b.number}</span></div>
                     <div class="bank-row"><span>Beneficiario</span><span>${b.beneficiary}</span></div>
                     ${b.cedula ? `<div class="bank-row"><span>C.I.</span><span>${b.cedula}</span></div>` : ''}
+                    ${b.email ? `<div class="bank-row"><span>Correo</span><span>${b.email}</span></div>` : ''}
                 </div>`).join('');
         }
 
@@ -875,7 +956,9 @@
                 let proofPath = '';
 
                 // Upload proof file to Supabase Storage if provided
-                const fileToUpload = selectedPayMethod === 'transferencia' ? proofFile : cryptoFile;
+                const fileToUpload = selectedPayMethod === 'transferencia' ? proofFile
+                    : selectedPayMethod === 'paypal' ? paypalFile
+                    : cryptoFile;
                 if (fileToUpload) {
                     const ext = fileToUpload.name.split('.').pop();
                     const fileName = `${userSession.user.id}/${Date.now()}.${ext}`;
@@ -907,8 +990,8 @@
                     shippingAddress,
                     paymentMethod:      selectedPayMethod,
                     paymentProof: {
-                        bank:      bank ? bank.bank : '',
-                        txid:      (document.getElementById('txRef')?.value || document.getElementById('cryptoTxid')?.value || '').trim(),
+                        bank:      selectedPayMethod === 'paypal' ? ('PayPal: ' + paypalEmail) : (bank ? bank.bank : ''),
+                        txid:      (document.getElementById('txRef')?.value || document.getElementById('cryptoTxid')?.value || document.getElementById('paypalTxid')?.value || '').trim(),
                         proofPath
                     }
                 };
@@ -936,7 +1019,7 @@
                     `✅ *NUEVA ORDEN — ${orderId}*\n\n` +
                     `👤 ${shippingAddress.firstName} ${shippingAddress.lastName}\n` +
                     `📍 ${city}\n` +
-                    `💳 ${selectedPayMethod === 'transferencia' ? 'Transferencia' : 'Cripto'}\n` +
+                    `💳 ${selectedPayMethod === 'transferencia' ? 'Transferencia' : selectedPayMethod === 'paypal' ? 'PayPal' : 'Cripto'}\n` +
                     `💰 Total: $${total.toFixed(2)}\n\n` +
                     `Adjunto mi comprobante de pago.`
                 );
