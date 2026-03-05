@@ -76,6 +76,10 @@
             transition: .2s; box-sizing: border-box;
         }
         .cr-input:focus { outline: none; border-color: #a855f7; box-shadow: 0 0 0 3px rgba(168,85,247,.15); }
+        /* Feature 1: Dark select dropdowns */
+        select.cr-input { background-color: #1c1c1e; color: #f5f5f7; -webkit-appearance: none; appearance: none; }
+        select.cr-input option { background: #1c1c1e !important; color: #f5f5f7 !important; }
+        select.cr-input optgroup { background: #1c1c1e; color: #a855f7; }
         .cr-input-group { margin-bottom: 12px; }
         .cr-input-group label { display: block; font-size: .78rem; font-weight: 700; color: var(--text-dim); margin-bottom: 5px; }
         .cr-input-group .cr-input-wrap { position: relative; }
@@ -251,6 +255,32 @@
         .cr-loader { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:999; align-items:center; justify-content:center; flex-direction:column; gap:12px; }
         .cr-loader.visible { display:flex; }
         .cr-loader p { color:#fff; font-weight:700; }
+
+        /* Feature 4: Empty / loading states */
+        .cr-empty-state {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 3rem 1.5rem; text-align: center; color: var(--text-dim);
+        }
+        .cr-empty-state i { font-size: 2.5rem; margin-bottom: .75rem; opacity: .5; }
+        .cr-empty-state p { font-size: .88rem; margin: 0; }
+        .cr-catalog-loading { text-align:center; padding: 1rem; color: var(--text-dim); font-size:.85rem; }
+
+        /* Feature 2: Print button styling */
+        .btn-print {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px; border-radius: 12px;
+            background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.12);
+            color: var(--text-dim); font-weight: 800; font-size: .88rem;
+            cursor: pointer; transition: .2s;
+        }
+        .btn-print:hover { background: rgba(255,255,255,.12); color: var(--text); }
+
+        @media print {
+            .cr-header, .cr-title-band, .cr-left, .cr-loader { display: none !important; }
+            .cr-layout { display: block; }
+            .cr-right { padding: 0; }
+            .cert-card { border: 1px solid #ccc; border-radius: 0; }
+        }
     </style>
 </head>
 <body>
@@ -391,8 +421,16 @@
                     <button class="btn-pdf" onclick="generatePDF()">
                         <i class="fa fa-file-pdf"></i> Exportar Certificado PDF
                     </button>
+                    <!-- Feature 2: Print/PDF button -->
+                    <button class="btn-print" onclick="printSimulation()">
+                        <i class="fa fa-print"></i> Imprimir / Guardar como PDF
+                    </button>
+                    <!-- Feature 3: WhatsApp share simulation -->
+                    <button class="btn-wa" onclick="shareSimulationWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> Compartir Simulación por WhatsApp
+                    </button>
                     <button class="btn-wa" onclick="sendWhatsApp()">
-                        <i class="fab fa-whatsapp"></i> Enviar Solicitud por WhatsApp
+                        <i class="fab fa-whatsapp"></i> Enviar Solicitud Formal
                     </button>
                     <button class="btn-reset" onclick="resetForm()">
                         <i class="fa fa-rotate-left"></i> Nueva Consulta
@@ -586,6 +624,11 @@
 
     // ── CATALOG FROM API ──────────────────────────────────────────
     async function loadCatalog() {
+        // Feature 4: Loading state
+        const sel = document.getElementById('inProduct');
+        sel.innerHTML = '<option value="" disabled selected>⏳ Cargando catálogo...</option>';
+        sel.disabled = true;
+
         try {
             const res = await fetch('/api/stock');
             if (!res.ok) throw new Error();
@@ -601,8 +644,16 @@
             ];
         }
 
-        const sel = document.getElementById('inProduct');
-        sel.innerHTML = '<option value="">— Selecciona un producto —</option>';
+        const sel2 = document.getElementById('inProduct');
+        sel2.disabled = false;
+
+        // Feature 4: Empty state if no products
+        if (!catalogProducts || catalogProducts.length === 0) {
+            sel2.innerHTML = '<option value="" disabled selected>⚠ Sin productos disponibles</option>';
+            return;
+        }
+
+        sel2.innerHTML = '<option value="">— Selecciona un producto —</option>';
 
         // Group by category
         const groups = {};
@@ -618,10 +669,12 @@
             items.forEach(p => {
                 const op = document.createElement('option');
                 op.value = p.id;
+                op.style.background = '#1c1c1e';
+                op.style.color = '#f5f5f7';
                 op.textContent = `${p.name} — $${Number(p.price).toFixed(2)}`;
                 og.appendChild(op);
             });
-            sel.appendChild(og);
+            sel2.appendChild(og);
         });
     }
 
@@ -691,6 +744,14 @@
     function buildPlansTable(financed, selectedMonths) {
         const tbody = document.getElementById('plansTbody');
         tbody.innerHTML = '';
+        // Feature 4: Empty state when no amount entered
+        if (financed <= 0) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1.5rem; color:var(--text-dim); font-size:.82rem;">
+                <i class="fa fa-calculator" style="font-size:1.5rem; display:block; margin-bottom:.5rem; opacity:.4;"></i>
+                Ingresa el precio del producto y la entrada para ver los planes disponibles
+            </td></tr>`;
+            return;
+        }
         PLANS.forEach(p => {
             const total = financed * p.factor;
             const cuota = total / p.months;
@@ -710,7 +771,12 @@
     function buildAmortTable(financed, plan, months, grace) {
         const tbody = document.getElementById('amortTbody');
         tbody.innerHTML = '';
-        if (financed <= 0 || months <= 0) return;
+        if (financed <= 0 || months <= 0) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1rem; color:var(--text-dim); font-size:.78rem; opacity:.6;">
+                Tabla de amortización aparecerá aquí
+            </td></tr>`;
+            return;
+        }
 
         const totalPay = financed * plan.factor;
         const cuota = totalPay / months;
@@ -861,6 +927,39 @@ Por favor confirmar disponibilidad y condiciones. Gracias.`
                 fechaRegistro: new Date().toISOString()
             })
         }).catch(() => {});
+    }
+
+    // ── PRINT SIMULATION (Feature 2) ─────────────────────────────
+    function printSimulation() {
+        window.print();
+    }
+
+    // ── WHATSAPP SHARE SIMULATION (Feature 3) ────────────────────
+    function shareSimulationWhatsApp() {
+        const price  = parseFloat(document.getElementById('inPrice').value) || 0;
+        const down   = parseFloat(document.getElementById('inDown').value) || 0;
+        const plan   = document.getElementById('inPlan').value;
+        const pName  = selectedProduct ? selectedProduct.name
+            : (document.getElementById('inProduct').options[document.getElementById('inProduct').selectedIndex]?.text || '—');
+        const financed = Math.max(0, price - down);
+        const planObj  = PLANS.find(p => p.months === parseInt(plan)) || PLANS[3];
+        const totalPay = financed * planObj.factor;
+        const cuota    = plan > 0 ? (totalPay / parseInt(plan)) : 0;
+
+        const msg = encodeURIComponent(
+`🎮 *SIMULACIÓN DE CRÉDITO — Ecugaming Import*
+
+🛒 *Producto:* ${pName}
+💵 *Precio:* $${price.toFixed(2)}
+💳 *Entrada:* $${down.toFixed(2)}
+🏦 *Monto a financiar:* $${financed.toFixed(2)}
+📅 *Plan:* ${plan} meses
+💰 *Cuota mensual estimada:* $${cuota.toFixed(2)}/mes
+📊 *Total a pagar:* $${(totalPay + down).toFixed(2)}
+
+¿Te interesa solicitar este crédito? Escríbenos para más información.`
+        );
+        window.open(`https://wa.me/593962609951?text=${msg}`, '_blank');
     }
 
     // ── PDF GENERATION ───────────────────────────────────────────

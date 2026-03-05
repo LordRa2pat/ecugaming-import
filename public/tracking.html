@@ -258,7 +258,33 @@
         <div id="trackError" style="color:#dc2626;font-size:0.9rem;margin-bottom:1rem;display:none;"></div>
 
         <div id="trackingResult" class="tracking-result"></div>
+
+        <!-- Features 1+2: Share buttons (shown after tracking result loads) -->
+        <div id="shareActions" style="display:none; margin-top:1.5rem; display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center;">
+            <button onclick="copyTrackingLink()" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#e2e2e7;font-size:.82rem;font-weight:700;cursor:pointer;">
+                <i class="fa fa-copy"></i> Copiar enlace
+            </button>
+            <a id="waShareBtn" href="#" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:10px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);color:#25d366;font-size:.82rem;font-weight:700;text-decoration:none;">
+                <i class="fab fa-whatsapp"></i> Compartir por WhatsApp
+            </a>
+        </div>
+        <div id="copyToast" style="display:none;text-align:center;margin-top:.6rem;font-size:.78rem;color:#34c759;font-weight:700;">✓ Enlace copiado al portapapeles</div>
     </div>
+
+    <script>
+        function copyTrackingLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                document.getElementById('copyToast').style.display = 'block';
+                setTimeout(() => document.getElementById('copyToast').style.display = 'none', 2500);
+            });
+        }
+        function showShareActions(orderId) {
+            const url = `${location.origin}/tracking?id=${orderId}`;
+            document.getElementById('waShareBtn').href = `https://wa.me/?text=${encodeURIComponent('Sigue mi pedido Ecugaming aquí: ' + url)}`;
+            document.getElementById('shareActions').style.display = 'flex';
+        }
+    </script>
 
     <script>
         const STATUS_META = {
@@ -310,6 +336,7 @@
                     return;
                 }
                 renderOrder(data);
+                if (typeof showShareActions === 'function') showShareActions(id);
             } catch (err) {
                 errEl.textContent = 'Error de conexión. Por favor intenta nuevamente.';
                 errEl.style.display = 'block';

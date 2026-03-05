@@ -159,6 +159,13 @@
             </button>
         </form>
 
+        <!-- Feature 5: Forgot password -->
+        <div style="text-align:center; margin:.8rem 0 .5rem;">
+            <button onclick="handleForgotPassword()" style="background:none;border:none;color:var(--text-dim);font-size:.83rem;cursor:pointer;text-decoration:underline;">
+                ¿Olvidaste tu contraseña?
+            </button>
+        </div>
+
         <div class="auth-footer">
             ¿No tienes cuenta? <a href="/register">Regístrate Hoy</a>
         </div>
@@ -191,6 +198,17 @@
             successEl.textContent = msg;
             successEl.style.display = 'block';
             errorEl.style.display = 'none';
+        }
+
+        async function handleForgotPassword() {
+            const email = document.getElementById('logEmail').value.trim();
+            if (!email) { showError('Ingresa tu correo primero para restablecer la contraseña.'); return; }
+            errorEl.style.display = 'none';
+            const { error } = await _supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: location.origin + '/account'
+            });
+            if (error) showError(error.message);
+            else showSuccess('✓ Revisa tu correo — te enviamos un enlace para restablecer tu contraseña.');
         }
 
         form.addEventListener('submit', async (e) => {

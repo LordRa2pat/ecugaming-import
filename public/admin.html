@@ -15,10 +15,7 @@
             font-feature-settings: "cv11", "ss01";
         }
 
-        .admin-layout {
-            min-height: 100vh;
-            background: #000;
-        }
+        .admin-layout { min-height: 100vh; background: #000; }
 
         .admin-sidebar {
             background: #050505;
@@ -29,59 +26,35 @@
             gap: 0.2rem;
             overflow-y: auto;
             position: fixed;
-            left: 0;
-            top: 0;
-            height: 100vh;
-            width: 280px;
+            left: 0; top: 0;
+            height: 100vh; width: 280px;
             z-index: 1100;
         }
 
         .sidebar-brand {
             padding: 0 1rem 2rem;
-            font-size: 1.2rem;
-            font-weight: 900;
+            font-size: 1.2rem; font-weight: 900;
             color: var(--white);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: flex; align-items: center; gap: 10px;
         }
-
-        .sidebar-brand span {
-            color: var(--primary);
-        }
+        .sidebar-brand span { color: var(--primary); }
 
         .sidebar-group {
-            font-size: 10px;
-            font-weight: 800;
-            color: var(--text-dim);
-            text-transform: uppercase;
+            font-size: 10px; font-weight: 800;
+            color: var(--text-dim); text-transform: uppercase;
             letter-spacing: 0.1em;
             margin: 1.5rem 1rem 0.5rem;
         }
 
         .sidebar-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 16px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 13.5px;
-            font-weight: 500;
-            color: #a1a1aa;
-            text-decoration: none;
-            transition: 0.2s;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 16px; border-radius: 10px;
+            cursor: pointer; font-size: 13.5px; font-weight: 500;
+            color: #a1a1aa; text-decoration: none;
+            transition: 0.2s; border: none; background: none;
+            width: 100%; text-align: left;
         }
-
-        .sidebar-item:hover {
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--white);
-        }
-
+        .sidebar-item:hover { background: rgba(255,255,255,0.04); color: var(--white); }
         .sidebar-item.active {
             background: var(--primary) !important;
             color: #fff !important;
@@ -99,77 +72,246 @@
         .sidebar-item-danger:hover { background: rgba(255,107,107,.1) !important; color: #ff8080 !important; }
 
         .admin-content {
-            padding: 2.5rem;
+            padding: 0;
             overflow-x: auto;
             background: var(--bg-light);
             margin-left: 280px;
             min-height: 100vh;
         }
 
+        /* ── ALERT BANNER ── */
+        #alertBanner {
+            display: none;
+            background: linear-gradient(90deg, rgba(255,140,0,.18), rgba(255,45,85,.12));
+            border-bottom: 1px solid rgba(255,140,0,.35);
+            padding: 10px 2.5rem;
+            font-size: .85rem; font-weight: 700; color: #ff9500;
+            display: flex; align-items: center; gap: 10px;
+        }
+        #alertBanner a { color: #ffb347; margin-left: 6px; text-decoration: underline; cursor: pointer; }
+
+        .content-inner { padding: 2.5rem; }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        .page-header h2 { font-size: 1.3rem; font-weight: 800; color: #f5f5f7; margin: 0; }
+
+        /* ── STAT GRID ── */
         .stat-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .stat-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            border-radius: 18px;
+            padding: 1.3rem 1.5rem;
+            display: flex; flex-direction: column; gap: 0.4rem;
+            position: relative; overflow: hidden;
         }
-
+        .stat-card::before {
+            content: ''; position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: var(--primary);
+            opacity: 0;
+        }
+        .stat-card.highlight::before { opacity: 1; }
         .stat-card .label {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--text-dim);
-            text-transform: uppercase;
+            font-size: 0.75rem; font-weight: 700;
+            color: var(--text-dim); text-transform: uppercase; letter-spacing: .05em;
         }
-
         .stat-card .value {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--white);
+            font-size: 1.8rem; font-weight: 900; color: var(--white);
+        }
+        .stat-card .value.urgent { color: #ff9500; }
+        .stat-card .sub { font-size: .75rem; color: var(--text-dim); }
+        .stat-icon {
+            position: absolute; right: 1rem; top: 1rem;
+            font-size: 1.4rem; opacity: .12;
         }
 
+        /* ── ADMIN CARD ── */
         .admin-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 20px;
+            border-radius: 18px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             box-shadow: var(--shadow-glass);
         }
+        .admin-card h3 {
+            color: white; margin-bottom: 1.2rem;
+            font-size: .95rem; font-weight: 800;
+            display: flex; align-items: center; gap: 8px;
+        }
 
+        /* ── ADMIN TABLE ── */
         .admin-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
             font-size: 13px;
         }
-
         .admin-table th {
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--text-dim);
-            font-weight: 600;
-            text-align: left;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.02);
+            color: var(--text-dim); font-weight: 600;
+            text-align: left; font-size: 11px;
+            text-transform: uppercase; letter-spacing: 0.05em;
             border-bottom: 1px solid var(--border);
         }
-
         .admin-table td {
-            padding: 14px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            color: #e2e2e7;
-            vertical-align: middle;
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: #e2e2e7; vertical-align: middle;
         }
+        .admin-table tr.clickable { cursor: pointer; transition: background .15s; }
+        .admin-table tr.clickable:hover td { background: rgba(255,140,0,.06); }
+
+        /* ── STATUS CHIPS ── */
+        .chip {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 10px; font-weight: 800; padding: 3px 9px;
+            border-radius: 20px; text-transform: uppercase; letter-spacing: .05em;
+            white-space: nowrap;
+        }
+        .chip-orange { background: rgba(255,149,0,.15); color: #ff9500; border: 1px solid rgba(255,149,0,.3); }
+        .chip-blue   { background: rgba(10,132,255,.15); color: #0a84ff; border: 1px solid rgba(10,132,255,.3); }
+        .chip-green  { background: rgba(52,199,89,.15);  color: #34c759; border: 1px solid rgba(52,199,89,.3); }
+        .chip-red    { background: rgba(255,69,58,.15);  color: #ff453a; border: 1px solid rgba(255,69,58,.3); }
+        .chip-gray   { background: rgba(255,255,255,.08); color: #aaa; border: 1px solid rgba(255,255,255,.12); }
+
+        /* ── QUICK ACTIONS ── */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: .75rem;
+        }
+        .qa-btn {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 8px; padding: 16px 12px; border-radius: 14px;
+            background: rgba(255,255,255,.04);
+            border: 1px solid var(--border);
+            color: var(--text); text-decoration: none;
+            font-size: .8rem; font-weight: 700;
+            cursor: pointer; transition: .18s;
+        }
+        .qa-btn:hover { background: rgba(255,140,0,.1); border-color: rgba(255,140,0,.3); color: var(--primary); }
+        .qa-btn i { font-size: 1.4rem; color: var(--primary); }
+
+        /* ── STOCK ALERTS ── */
+        .stock-list { display: flex; flex-wrap: wrap; gap: .5rem; }
+        .stock-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,69,58,.1); border: 1px solid rgba(255,69,58,.25);
+            border-radius: 980px; padding: 4px 12px;
+            font-size: .78rem; font-weight: 700;
+        }
+        .stock-pill .cnt {
+            background: #ff453a; color: #fff;
+            border-radius: 20px; padding: 1px 7px;
+            font-size: .72rem; font-weight: 900;
+        }
+        .stock-pill .name { color: #e2e2e7; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        /* ── TOP PRODUCTS ── */
+        .top-prod-row {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+        }
+        .top-prod-row:last-child { border-bottom: none; }
+        .top-prod-rank {
+            width: 24px; height: 24px; border-radius: 50%;
+            background: rgba(255,140,0,.15); color: var(--primary);
+            font-size: .75rem; font-weight: 900;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .top-prod-name { flex: 1; font-size: .83rem; color: #e2e2e7; font-weight: 600; }
+        .top-prod-qty { font-size: .8rem; font-weight: 800; color: var(--primary); }
+
+        /* ── STATUS BARS ── */
+        .status-bars { display: flex; flex-direction: column; gap: .6rem; }
+        .status-bar-row { display: flex; align-items: center; gap: 10px; }
+        .status-bar-label { font-size: .76rem; font-weight: 700; color: #aaa; width: 150px; flex-shrink: 0; }
+        .status-bar-track {
+            flex: 1; height: 6px; border-radius: 3px;
+            background: rgba(255,255,255,.08);
+            overflow: hidden;
+        }
+        .status-bar-fill {
+            height: 100%; border-radius: 3px; transition: width .6s ease;
+        }
+        .status-bar-count { font-size: .76rem; font-weight: 800; color: #e2e2e7; width: 28px; text-align: right; }
+
+        /* ── TOGGLE TABS ── */
+        .tab-toggle {
+            display: inline-flex; background: rgba(255,255,255,.05);
+            border-radius: 8px; padding: 3px; gap: 2px;
+        }
+        .tab-toggle button {
+            padding: 5px 14px; border-radius: 6px; border: none;
+            background: none; color: var(--text-dim);
+            font-size: .78rem; font-weight: 700; cursor: pointer; transition: .15s;
+        }
+        .tab-toggle button.active {
+            background: var(--primary); color: #fff;
+        }
+
+        /* ── CUSTOMERS LIST ── */
+        .cust-row {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+        }
+        .cust-row:last-child { border-bottom: none; }
+        .cust-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: rgba(255,140,0,.2); color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: .8rem; font-weight: 900; flex-shrink: 0;
+        }
+        .cust-info { flex: 1; }
+        .cust-name { font-size: .83rem; font-weight: 700; color: #e2e2e7; }
+        .cust-email { font-size: .72rem; color: var(--text-dim); }
+        .cust-date { font-size: .72rem; color: var(--text-dim); }
+
+        /* ── TWO COLUMN GRID ── */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+        /* ── CSV BTN ── */
+        .btn-export {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 7px 16px; border-radius: 8px;
+            background: rgba(255,255,255,.06); border: 1px solid var(--border);
+            color: var(--text-dim); font-size: .78rem; font-weight: 700;
+            cursor: pointer; transition: .15s; text-decoration: none;
+        }
+        .btn-export:hover { background: rgba(255,140,0,.1); color: var(--primary); border-color: rgba(255,140,0,.3); }
+
+        /* ── VER TODOS LINK ── */
+        .ver-todos {
+            display: block; text-align: center; margin-top: 1rem;
+            color: var(--primary); font-size: .82rem; font-weight: 700;
+            text-decoration: none; opacity: .7; transition: .15s;
+        }
+        .ver-todos:hover { opacity: 1; }
+
+        /* ── COUPON STATS ── */
+        .coupon-stat-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+            font-size: .82rem;
+        }
+        .coupon-stat-row:last-child { border-bottom: none; }
+        .coupon-code { font-weight: 800; color: var(--primary); font-family: monospace; font-size: .85rem; }
+        .coupon-uses { color: var(--text-dim); }
     </style>
 </head>
 
@@ -188,33 +330,153 @@
             <div class="sidebar-group">Configuración</div>
             <a href="admin-settings.html" class="sidebar-item"><i class="fa fa-cog"></i> Ajustes</a>
             <div class="sidebar-footer">
-                <button class="sidebar-item sidebar-item-danger" onclick="signOutAdmin()"><i
-                        class="fa fa-sign-out-alt"></i> Cerrar Sesión</button>
+                <button class="sidebar-item sidebar-item-danger" onclick="signOutAdmin()">
+                    <i class="fa fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
             </div>
         </aside>
 
         <div class="admin-content">
-            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Panel de Control</h2>
-
-            <div class="stat-grid">
-                <div class="stat-card">
-                    <div class="label">Ventas Totales</div>
-                    <div class="value" id="statOrders">--</div>
-                </div>
-                <div class="stat-card">
-                    <div class="label">Productos Activos</div>
-                    <div class="value" id="statProds">--</div>
-                </div>
-                <div class="stat-card">
-                    <div class="label">Nuevos Clientes</div>
-                    <div class="value" id="statUsers">--</div>
-                </div>
+            <!-- Feature 11: Alert banner for pending orders -->
+            <div id="alertBanner" style="display:none;">
+                <i class="fa fa-exclamation-circle"></i>
+                <span id="alertMsg">Tienes pedidos pendientes sin atender</span>
+                <a href="admin-orders.html">Ver ahora →</a>
             </div>
 
-            <div class="admin-card">
-                <h3 style="color:white; margin-bottom:1.5rem; font-size:1rem;">Pedidos Recientes</h3>
-                <div style="overflow-x:auto;" id="recentOrders">
-                    <p style="color:#9999a8; text-align:center; padding:2rem;">Cargando datos...</p>
+            <div class="content-inner">
+                <div class="page-header">
+                    <h2>Panel de Control</h2>
+                    <!-- Feature 14: Export CSV -->
+                    <button class="btn-export" onclick="exportCSV()">
+                        <i class="fa fa-download"></i> Exportar CSV
+                    </button>
+                </div>
+
+                <!-- Features 1-3: 6 stat cards total (3 original + 3 new) -->
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <i class="fa fa-shopping-cart stat-icon"></i>
+                        <div class="label">Ventas Totales</div>
+                        <div class="value" id="statOrders">--</div>
+                        <div class="sub">todos los pedidos</div>
+                    </div>
+                    <div class="stat-card highlight">
+                        <i class="fa fa-dollar-sign stat-icon"></i>
+                        <div class="label">Ingresos Totales</div>
+                        <div class="value" id="statRevenue">--</div>
+                        <div class="sub">suma de todos los pedidos</div>
+                    </div>
+                    <div class="stat-card" id="cardPending">
+                        <i class="fa fa-clock stat-icon"></i>
+                        <div class="label">Pedidos Pendientes</div>
+                        <div class="value" id="statPending">--</div>
+                        <div class="sub">confirmando pago</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fa fa-chart-line stat-icon"></i>
+                        <div class="label">Ticket Promedio</div>
+                        <div class="value" id="statAvg">--</div>
+                        <div class="sub">por pedido</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fa fa-box stat-icon"></i>
+                        <div class="label">Productos Activos</div>
+                        <div class="value" id="statProds">--</div>
+                        <div class="sub">en catálogo</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fa fa-users stat-icon"></i>
+                        <div class="label">Clientes Registrados</div>
+                        <div class="value" id="statUsers">--</div>
+                        <div class="sub">cuentas activas</div>
+                    </div>
+                </div>
+
+                <!-- Feature 6: Quick actions -->
+                <div class="admin-card">
+                    <h3><i class="fa fa-bolt" style="color:var(--primary)"></i> Acciones Rápidas</h3>
+                    <div class="quick-actions">
+                        <a href="admin-products.html?action=new" class="qa-btn">
+                            <i class="fa fa-plus-circle"></i> Nuevo Producto
+                        </a>
+                        <a href="admin-orders.html?status=confirmando_pago" class="qa-btn">
+                            <i class="fa fa-clock"></i> Ver Pendientes
+                        </a>
+                        <a href="admin-coupons.html" class="qa-btn">
+                            <i class="fa fa-ticket-alt"></i> Cupones
+                        </a>
+                        <a href="admin-customers.html" class="qa-btn">
+                            <i class="fa fa-users"></i> Clientes
+                        </a>
+                        <a href="admin-settings.html" class="qa-btn">
+                            <i class="fa fa-cog"></i> Ajustes
+                        </a>
+                        <a href="index.html" target="_blank" class="qa-btn">
+                            <i class="fa fa-store"></i> Ver Tienda
+                        </a>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <!-- Feature 4: Low stock alerts -->
+                    <div class="admin-card">
+                        <h3><i class="fa fa-exclamation-triangle" style="color:#ff453a"></i> Alertas de Stock Bajo</h3>
+                        <div id="stockAlerts">
+                            <p style="color:#9999a8; font-size:.82rem;">Cargando...</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 12: Coupon stats -->
+                    <div class="admin-card">
+                        <h3><i class="fa fa-ticket-alt" style="color:var(--primary)"></i> Cupones Activos</h3>
+                        <div id="couponStats">
+                            <p style="color:#9999a8; font-size:.82rem;">Cargando...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <!-- Feature 5: Top 5 products -->
+                    <div class="admin-card">
+                        <h3><i class="fa fa-trophy" style="color:#ff9500"></i> Top 5 Productos</h3>
+                        <div id="topProducts">
+                            <p style="color:#9999a8; font-size:.82rem;">Cargando...</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 15: Status distribution bars -->
+                    <div class="admin-card">
+                        <h3><i class="fa fa-chart-bar" style="color:var(--primary)"></i> Pedidos por Estado</h3>
+                        <div id="statusBars">
+                            <p style="color:#9999a8; font-size:.82rem;">Cargando...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 7-10: Recent orders with status chips, clickable rows, toggle, ver todos -->
+                <div class="admin-card">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem;">
+                        <h3 style="margin:0;"><i class="fa fa-list" style="color:var(--primary)"></i> Pedidos Recientes</h3>
+                        <!-- Feature 10: Hoy / 7 días toggle -->
+                        <div class="tab-toggle">
+                            <button id="toggleHoy" class="active" onclick="setOrderFilter('hoy')">Hoy</button>
+                            <button id="toggle7d" onclick="setOrderFilter('7d')">7 días</button>
+                        </div>
+                    </div>
+                    <div style="overflow-x:auto;" id="recentOrders">
+                        <p style="color:#9999a8; text-align:center; padding:2rem;">Cargando datos...</p>
+                    </div>
+                    <!-- Feature 9: Ver todos link -->
+                    <a href="admin-orders.html" class="ver-todos">Ver todos los pedidos →</a>
+                </div>
+
+                <!-- Feature 13: Recent customers -->
+                <div class="admin-card">
+                    <h3><i class="fa fa-user-plus" style="color:#34c759"></i> Últimos Clientes</h3>
+                    <div id="recentCustomers">
+                        <p style="color:#9999a8; font-size:.82rem;">Cargando...</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -225,6 +487,9 @@
     <script src="/lib/auth.js?v=1.0.6"></script>
     <script>
         let adminToken = '';
+        let allOrders = [];
+        let orderFilter = 'hoy';
+
         async function init() {
             adminToken = await Auth.requireAdmin();
             if (!adminToken) return;
@@ -240,30 +505,243 @@
 
         async function signOutAdmin() { await _supabase.auth.signOut(); location.href = 'login.html'; }
 
+        function statusChip(status) {
+            const map = {
+                'confirmando_pago':  ['chip-orange', 'Confirmando Pago'],
+                'orden_confirmada':  ['chip-blue',   'Confirmada'],
+                'empacando':         ['chip-blue',   'Empacando'],
+                'enviado':           ['chip-blue',   'Enviado'],
+                'recibido':          ['chip-green',  'Recibido'],
+                'cancelado':         ['chip-red',    'Cancelado'],
+            };
+            const [cls, label] = map[status] || ['chip-gray', status || 'Sin estado'];
+            return `<span class="chip ${cls}">${label}</span>`;
+        }
+
+        function setOrderFilter(f) {
+            orderFilter = f;
+            document.getElementById('toggleHoy').classList.toggle('active', f === 'hoy');
+            document.getElementById('toggle7d').classList.toggle('active', f === '7d');
+            renderRecentOrders();
+        }
+
+        function renderRecentOrders() {
+            const now = new Date();
+            const cutoff = orderFilter === 'hoy'
+                ? new Date(now.getFullYear(), now.getMonth(), now.getDate())
+                : new Date(now - 7 * 24 * 3600 * 1000);
+
+            const filtered = allOrders.filter(o => new Date(o.created_at) >= cutoff);
+            const el = document.getElementById('recentOrders');
+            if (!filtered.length) {
+                el.innerHTML = `<p style="color:#9999a8; text-align:center; padding:1.5rem;">Sin pedidos en este período.</p>`;
+                return;
+            }
+
+            el.innerHTML = `<table class="admin-table">
+                <thead><tr>
+                    <th>ID</th><th>Cliente</th><th>Total</th><th>Estado</th><th>Fecha</th>
+                </tr></thead>
+                <tbody>
+                ${filtered.slice(0, 10).map(o => `<tr class="clickable" onclick="location.href='admin-orders.html'">
+                    <td style="font-weight:800; font-family:monospace;">${o.id}</td>
+                    <td>${o.customer?.first_name || ''} ${o.customer?.last_name || ''}</td>
+                    <td style="font-weight:800; color:var(--primary);">$${Number(o.total).toFixed(2)}</td>
+                    <td>${statusChip(o.status)}</td>
+                    <td>${new Date(o.created_at).toLocaleDateString('es-EC')}</td>
+                </tr>`).join('')}
+                </tbody>
+            </table>`;
+        }
+
+        function renderStockAlerts(prods) {
+            const low = prods.filter(p => p.is_active && p.stock <= 5);
+            const el = document.getElementById('stockAlerts');
+            if (!low.length) {
+                el.innerHTML = `<p style="color:#34c759; font-size:.82rem; font-weight:700;">✓ Todo el stock está bien</p>`;
+                return;
+            }
+            el.innerHTML = `<div class="stock-list">${
+                low.sort((a,b) => a.stock - b.stock).map(p =>
+                    `<div class="stock-pill">
+                        <span class="name">${p.name}</span>
+                        <span class="cnt">${p.stock}</span>
+                    </div>`
+                ).join('')
+            }</div>`;
+        }
+
+        function renderTopProducts(orders) {
+            const counts = {};
+            for (const o of orders) {
+                for (const item of (o.items || [])) {
+                    const name = item.product_snapshot?.name || 'Desconocido';
+                    counts[name] = (counts[name] || 0) + (item.qty || 1);
+                }
+            }
+            const top5 = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,5);
+            const el = document.getElementById('topProducts');
+            if (!top5.length) {
+                el.innerHTML = `<p style="color:#9999a8; font-size:.82rem;">Sin datos de ventas aún.</p>`;
+                return;
+            }
+            el.innerHTML = top5.map(([name, qty], i) =>
+                `<div class="top-prod-row">
+                    <div class="top-prod-rank">${i+1}</div>
+                    <div class="top-prod-name">${name}</div>
+                    <div class="top-prod-qty">${qty} uds</div>
+                </div>`
+            ).join('');
+        }
+
+        function renderStatusBars(orders) {
+            const statuses = ['confirmando_pago','orden_confirmada','empacando','enviado','recibido','cancelado'];
+            const labels = {
+                'confirmando_pago': 'Confirmando pago',
+                'orden_confirmada': 'Orden confirmada',
+                'empacando': 'Empacando',
+                'enviado': 'Enviado',
+                'recibido': 'Recibido',
+                'cancelado': 'Cancelado',
+            };
+            const colors = {
+                'confirmando_pago': '#ff9500',
+                'orden_confirmada': '#0a84ff',
+                'empacando': '#5e5ce6',
+                'enviado': '#32ade6',
+                'recibido': '#34c759',
+                'cancelado': '#ff453a',
+            };
+            const counts = {};
+            for (const o of orders) counts[o.status] = (counts[o.status] || 0) + 1;
+            const max = Math.max(...Object.values(counts), 1);
+
+            document.getElementById('statusBars').innerHTML = `<div class="status-bars">${
+                statuses.filter(s => counts[s]).map(s =>
+                    `<div class="status-bar-row">
+                        <div class="status-bar-label">${labels[s]}</div>
+                        <div class="status-bar-track">
+                            <div class="status-bar-fill" style="width:${(counts[s]/max)*100}%; background:${colors[s]};"></div>
+                        </div>
+                        <div class="status-bar-count">${counts[s]}</div>
+                    </div>`
+                ).join('')
+            }</div>`;
+        }
+
+        async function renderCouponStats() {
+            try {
+                const { data: coupons } = await _supabase
+                    .from('coupons')
+                    .select('code, is_active, redemption_count, max_redemptions')
+                    .eq('is_active', true)
+                    .order('redemption_count', { ascending: false })
+                    .limit(5);
+
+                if (!coupons?.length) {
+                    document.getElementById('couponStats').innerHTML = `<p style="color:#9999a8; font-size:.82rem;">No hay cupones activos.</p>`;
+                    return;
+                }
+                document.getElementById('couponStats').innerHTML = coupons.map(c =>
+                    `<div class="coupon-stat-row">
+                        <span class="coupon-code">${c.code}</span>
+                        <span class="coupon-uses">${c.redemption_count}${c.max_redemptions ? '/' + c.max_redemptions : ''} usos</span>
+                    </div>`
+                ).join('');
+            } catch(e) {
+                document.getElementById('couponStats').innerHTML = `<p style="color:#9999a8; font-size:.82rem;">No disponible.</p>`;
+            }
+        }
+
+        function renderRecentCustomers(users) {
+            const recent = [...users].sort((a,b) => new Date(b.created_at) - new Date(a.created_at)).slice(0,5);
+            const el = document.getElementById('recentCustomers');
+            if (!recent.length) {
+                el.innerHTML = `<p style="color:#9999a8; font-size:.82rem;">Sin clientes aún.</p>`;
+                return;
+            }
+            el.innerHTML = recent.map(u => {
+                const initials = ((u.first_name||'?')[0] + (u.last_name||'')[0]).toUpperCase();
+                return `<div class="cust-row">
+                    <div class="cust-avatar">${initials}</div>
+                    <div class="cust-info">
+                        <div class="cust-name">${u.first_name || ''} ${u.last_name || ''}</div>
+                        <div class="cust-email">${u.email || ''}</div>
+                    </div>
+                    <div class="cust-date">${new Date(u.created_at).toLocaleDateString('es-EC')}</div>
+                </div>`;
+            }).join('');
+        }
+
+        function exportCSV() {
+            if (!allOrders.length) { alert('No hay pedidos para exportar.'); return; }
+            const rows = [['ID', 'Cliente', 'Email', 'Total', 'Estado', 'Fecha']];
+            for (const o of allOrders) {
+                rows.push([
+                    o.id,
+                    `${o.customer?.first_name || ''} ${o.customer?.last_name || ''}`.trim(),
+                    o.customer?.email || '',
+                    Number(o.total).toFixed(2),
+                    o.status || '',
+                    new Date(o.created_at).toLocaleString('es-EC'),
+                ]);
+            }
+            const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url;
+            a.download = `pedidos_${new Date().toISOString().slice(0,10)}.csv`;
+            a.click(); URL.revokeObjectURL(url);
+        }
+
         async function loadDashboard() {
             try {
                 const [pr, or, ur] = await Promise.all([
                     apiFetch('/api/admin/products'),
-                    apiFetch('/api/admin/orders?limit=10'),
+                    apiFetch('/api/admin/orders?limit=200'),
                     apiFetch('/api/admin/users')
                 ]);
                 const prods = await pr.json();
                 const odata = await or.json();
                 const users = await ur.json();
 
-                document.getElementById('statProds').textContent = prods.filter(p => p.is_active).length;
-                document.getElementById('statOrders').textContent = odata.total || 0;
-                document.getElementById('statUsers').textContent = users.length;
+                allOrders = odata.orders || [];
+                const totalOrders = odata.total || allOrders.length;
+                const revenue = allOrders.reduce((s, o) => s + Number(o.total || 0), 0);
+                const pending = allOrders.filter(o => o.status === 'confirmando_pago');
+                const avgOrder = totalOrders > 0 ? revenue / totalOrders : 0;
 
-                const recent = odata.orders || [];
-                document.getElementById('recentOrders').innerHTML = recent.length
-                    ? `<table class="admin-table"><thead><tr><th>ID</th><th>Cliente</th><th>Total</th><th>Fecha</th></tr></thead><tbody>${recent.slice(0, 5).map(o => `<tr>
-                        <td style="font-weight:700;">${o.id}</td>
-                        <td>${o.customer?.first_name || ''} ${o.customer?.last_name || ''}</td>
-                        <td style="font-weight:700;">$${Number(o.total).toFixed(2)}</td>
-                        <td>${new Date(o.created_at).toLocaleDateString()}</td>
-                    </tr>`).join('')}</tbody></table>`
-                    : '<p style="color:#9999a8; text-align:center; padding:2rem;">Sin pedidos aún.</p>';
+                // Stat cards
+                document.getElementById('statOrders').textContent = totalOrders;
+                document.getElementById('statRevenue').textContent = '$' + revenue.toFixed(0);
+                document.getElementById('statPending').textContent = pending.length;
+                if (pending.length > 0) {
+                    document.getElementById('statPending').classList.add('urgent');
+                    document.getElementById('cardPending').classList.add('highlight');
+                }
+                document.getElementById('statAvg').textContent = '$' + avgOrder.toFixed(0);
+                document.getElementById('statProds').textContent = prods.filter(p => p.is_active).length;
+                document.getElementById('statUsers').textContent = Array.isArray(users) ? users.length : 0;
+
+                // Feature 11: Alert banner
+                const now = new Date();
+                const last24h = allOrders.filter(o =>
+                    o.status === 'confirmando_pago' &&
+                    (now - new Date(o.created_at)) < 24 * 3600 * 1000
+                );
+                if (last24h.length > 0) {
+                    const banner = document.getElementById('alertBanner');
+                    banner.style.display = 'flex';
+                    document.getElementById('alertMsg').textContent =
+                        `⚠️ ${last24h.length} pedido${last24h.length > 1 ? 's' : ''} nuevo${last24h.length > 1 ? 's' : ''} sin atender`;
+                }
+
+                renderRecentOrders();
+                renderStockAlerts(prods);
+                renderTopProducts(allOrders);
+                renderStatusBars(allOrders);
+                renderRecentCustomers(Array.isArray(users) ? users : []);
+                renderCouponStats();
 
             } catch (e) { console.error(e); }
         }

@@ -226,6 +226,49 @@
                 reposición del equipo a la brevedad posible.
             </div>
 
+            <!-- Feature 9: Province delivery calculator -->
+            <h2>Calculadora de Entrega Estimada</h2>
+            <div style="background:rgba(255,140,0,.08);border:1px solid rgba(255,140,0,.25);border-radius:14px;padding:1.4rem;margin-bottom:1.5rem;">
+                <p style="margin-bottom:.8rem;font-weight:700;font-size:.9rem;"><i class="fa fa-map-marker-alt" style="color:var(--primary);margin-right:.4rem;"></i> Selecciona tu provincia:</p>
+                <select id="provCalc" style="width:100%;padding:.8rem 1rem;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:var(--text);font-size:.9rem;margin-bottom:.8rem;" onchange="calcDelivery(this.value)">
+                    <option value="">— Elige tu provincia —</option>
+                    <option value="sucumbios">Sucumbíos (Lago Agrio)</option>
+                    <option value="pichincha">Pichincha (Quito)</option>
+                    <option value="guayas">Guayas (Guayaquil)</option>
+                    <option value="azuay">Azuay (Cuenca)</option>
+                    <option value="manabi">Manabí (Manta / Portoviejo)</option>
+                    <option value="tungurahua">Tungurahua (Ambato)</option>
+                    <option value="loja">Loja</option>
+                    <option value="esmeraldas">Esmeraldas</option>
+                    <option value="napo">Napo (Tena)</option>
+                    <option value="orellana">Orellana (Coca)</option>
+                    <option value="other">Otra provincia</option>
+                </select>
+                <div id="deliveryResult" style="display:none;padding:.8rem 1rem;background:rgba(52,199,89,.08);border:1px solid rgba(52,199,89,.25);border-radius:10px;font-size:.9rem;font-weight:600;"></div>
+            </div>
+            <script>
+                const DELIVERY = {
+                    sucumbios: { days: '1-2 días hábiles', carrier: 'Servientrega / entrega local', cost: '$0 (gratis si compras +$500)' },
+                    pichincha: { days: '1-2 días hábiles', carrier: 'Servientrega', cost: '$5 (gratis si +$500)' },
+                    guayas:    { days: '1-2 días hábiles', carrier: 'Servientrega / Tramaco Express', cost: '$5 (gratis si +$500)' },
+                    azuay:     { days: '2-3 días hábiles', carrier: 'Servientrega', cost: '$5 (gratis si +$500)' },
+                    manabi:    { days: '2-3 días hábiles', carrier: 'Tramaco Express', cost: '$5 (gratis si +$500)' },
+                    tungurahua:{ days: '2-3 días hábiles', carrier: 'Servientrega', cost: '$5 (gratis si +$500)' },
+                    loja:      { days: '3-4 días hábiles', carrier: 'Servientrega', cost: '$5 (gratis si +$500)' },
+                    esmeraldas:{ days: '2-3 días hábiles', carrier: 'Tramaco Express', cost: '$5 (gratis si +$500)' },
+                    napo:      { days: '2-3 días hábiles', carrier: 'Cooperativa', cost: '$5 (gratis si +$500)' },
+                    orellana:  { days: '2-3 días hábiles', carrier: 'Cooperativa', cost: '$5 (gratis si +$500)' },
+                    other:     { days: '3-5 días hábiles', carrier: 'Servientrega / Cooperativa', cost: '$5 (gratis si +$500)' },
+                };
+                function calcDelivery(val) {
+                    const r = document.getElementById('deliveryResult');
+                    if (!val || !DELIVERY[val]) { r.style.display = 'none'; return; }
+                    const d = DELIVERY[val];
+                    r.style.display = 'block';
+                    r.innerHTML = `📦 <strong>Entrega estimada:</strong> ${d.days}<br>🚚 <strong>Carrier:</strong> ${d.carrier}<br>💵 <strong>Costo:</strong> ${d.cost}`;
+                }
+            </script>
+
             <h2>4. Rastreo de Pedido</h2>
             <p>Una vez despachado tu paquete, recibirás la Guía de Remisión (número de tracking y foto) vía WhatsApp.
                 También puedes consultar el estado de tu envío en tiempo real desde nuestra página de <a

@@ -20,17 +20,17 @@
             background: #000;
         }
 
+        /* ── Sidebar ── */
         .admin-sidebar {
             background: #050505;
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            border-right: 1px solid rgba(255,255,255,0.08);
             padding: 1.5rem 1rem;
             display: flex;
             flex-direction: column;
             gap: 0.2rem;
             overflow-y: auto;
             position: fixed;
-            left: 0;
-            top: 0;
+            left: 0; top: 0;
             height: 100vh;
             width: 280px;
             z-index: 1100;
@@ -46,9 +46,7 @@
             gap: 10px;
         }
 
-        .sidebar-brand span {
-            color: var(--primary);
-        }
+        .sidebar-brand span { color: var(--primary); }
 
         .sidebar-group {
             font-size: 10px;
@@ -77,10 +75,7 @@
             text-align: left;
         }
 
-        .sidebar-item:hover {
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--white);
-        }
+        .sidebar-item:hover { background: rgba(255,255,255,0.04); color: var(--white); }
 
         .sidebar-item.active {
             background: var(--primary) !important;
@@ -93,6 +88,7 @@
         .sidebar-item-danger { color: #ff6b6b !important; }
         .sidebar-item-danger:hover { background: rgba(255,107,107,.1) !important; color: #ff8080 !important; }
 
+        /* ── Content ── */
         .admin-content {
             padding: 2.5rem;
             overflow-x: auto;
@@ -110,6 +106,101 @@
             box-shadow: var(--shadow-glass);
         }
 
+        /* ── Feature 1: Stats Row ── */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: #111114;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            padding: 1.2rem 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .stat-card .stat-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #71717a;
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #f5f5f7;
+            line-height: 1;
+        }
+
+        .stat-card .stat-icon {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+        }
+
+        /* ── Filter Tabs ── */
+        .filter-tabs {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .filter-tab {
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.09);
+            background: rgba(255,255,255,0.04);
+            color: #a1a1aa;
+            transition: 0.2s;
+        }
+
+        .filter-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .filter-tab:hover:not(.active) {
+            background: rgba(255,255,255,0.08);
+            color: #e2e2e7;
+        }
+
+        /* ── Controls ── */
+        .controls-row {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            background: #1c1c1e;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #f5f5f7;
+            padding: 8px 14px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .search-input::placeholder { color: #555; }
+        .search-input:focus { border-color: var(--primary); }
+
+        /* ── Table ── */
         .admin-table {
             width: 100%;
             border-collapse: separate;
@@ -119,7 +210,7 @@
 
         .admin-table th {
             padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255,255,255,0.02);
             color: var(--text-dim);
             font-weight: 600;
             text-align: left;
@@ -129,13 +220,41 @@
             border-bottom: 1px solid var(--border);
         }
 
+        .admin-table th.sortable {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .admin-table th.sortable:hover { color: #e2e2e7; }
+        .admin-table th .sort-icon { margin-left: 4px; font-size: 10px; opacity: 0.5; }
+        .admin-table th.sort-asc .sort-icon::after { content: '▲'; opacity: 1; }
+        .admin-table th.sort-desc .sort-icon::after { content: '▼'; opacity: 1; }
+        .admin-table th:not(.sort-asc):not(.sort-desc) .sort-icon::after { content: '⇅'; }
+
         .admin-table td {
             padding: 14px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
             color: #e2e2e7;
             vertical-align: middle;
         }
 
+        .admin-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+        /* ── Feature 4: Avatar ── */
+        .customer-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        /* ── Status chips ── */
         .status-chip {
             display: inline-block;
             font-size: 10px;
@@ -145,18 +264,13 @@
             text-transform: uppercase;
         }
 
-        .s-recibido {
-            background: rgba(52, 199, 89, 0.1);
-            color: #34c759;
-        }
+        .s-active { background: rgba(52,199,89,0.1); color: #34c759; }
+        .s-banned { background: rgba(255,69,58,0.1); color: #ff453a; }
+        .s-admin { background: rgba(255,140,0,0.12); color: #ff9f0a; }
 
-        .s-cancelado {
-            background: rgba(255, 107, 107, 0.1);
-            color: #ff6b6b;
-        }
-
+        /* ── Buttons ── */
         .btn-action {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 6px 14px;
@@ -168,6 +282,151 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            text-decoration: none;
+        }
+
+        .btn-action:hover { background: rgba(255,255,255,0.09); }
+
+        .btn-action.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .btn-action.primary:hover { background: #e07b00; }
+
+        .btn-icon {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 5px 8px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #a1a1aa;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .btn-icon:hover { color: #fff; background: rgba(255,255,255,0.1); }
+
+        /* ── Pagination ── */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1.2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .pagination-info { font-size: 13px; color: #71717a; }
+        .pagination-buttons { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+        .page-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: #e2e2e7;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .page-btn:hover:not(:disabled) { background: rgba(255,255,255,0.1); }
+        .page-btn:disabled { opacity: 0.35; cursor: default; }
+        .page-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 700; }
+
+        /* ── Feature 10: Customer Detail Panel ── */
+        .customer-detail-panel {
+            position: fixed;
+            top: 0; right: -480px;
+            width: 460px;
+            height: 100vh;
+            background: #1c1c1e;
+            border-left: 1px solid var(--border);
+            transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+            z-index: 1200;
+            padding: 2rem;
+            overflow-y: auto;
+            box-shadow: -20px 0 60px rgba(0,0,0,0.5);
+        }
+
+        .customer-detail-panel.open { right: 0; }
+
+        /* ── Feature 13: Admin notes ── */
+        .admin-notes-area {
+            width: 100%;
+            background: #141416;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #e2e2e7;
+            padding: 10px 12px;
+            font-size: 13px;
+            resize: vertical;
+            min-height: 80px;
+            box-sizing: border-box;
+            font-family: Inter, sans-serif;
+        }
+
+        .admin-notes-area:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* ── Mini order row in panel ── */
+        .mini-order-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+
+        /* ── select dropdowns ── */
+        select {
+            background: #1c1c1e;
+            color: #f5f5f7;
+        }
+
+        select option {
+            background: #1c1c1e;
+            color: #f5f5f7;
+        }
+
+        /* ── Custom Checkbox ── */
+        input[type="checkbox"].row-check {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1.5px solid #444;
+            border-radius: 4px;
+            background: #1c1c1e;
+            cursor: pointer;
+            position: relative;
+        }
+
+        input[type="checkbox"].row-check:checked {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        input[type="checkbox"].row-check:checked::after {
+            content: '';
+            position: absolute;
+            left: 3px; top: 1px;
+            width: 5px; height: 9px;
+            border: 2px solid #fff;
+            border-top: none; border-left: none;
+            transform: rotate(45deg);
         }
     </style>
 </head>
@@ -184,25 +443,85 @@
             <div class="sidebar-group">Marketing</div>
             <a href="admin-coupons.html" class="sidebar-item"><i class="fa fa-ticket-alt"></i> Cupones</a>
             <a href="admin-carts.html" class="sidebar-item"><i class="fa fa-shopping-basket"></i> Carritos</a>
-            <div class="sidebar-group">Configuración</div>
+            <div class="sidebar-group">Configuracion</div>
             <a href="admin-settings.html" class="sidebar-item"><i class="fa fa-cog"></i> Ajustes</a>
             <div class="sidebar-footer">
-                <button class="sidebar-item sidebar-item-danger" onclick="signOutAdmin()"><i
-                        class="fa fa-sign-out-alt"></i> Cerrar Sesión</button>
+                <button class="sidebar-item sidebar-item-danger" onclick="signOutAdmin()">
+                    <i class="fa fa-sign-out-alt"></i> Cerrar Sesion
+                </button>
             </div>
         </aside>
 
         <div class="admin-content">
-            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">Gestión de Clientes</h2>
+            <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">
+                <i class="fa fa-users" style="color:var(--primary); margin-right:8px;"></i> Gestion de Clientes
+            </h2>
+
+            <!-- Feature 1: Stats Row -->
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-users"></i></div>
+                    <div class="stat-label">Total Clientes</div>
+                    <div class="stat-value" id="statTotal">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-user-check"></i></div>
+                    <div class="stat-label">Activos</div>
+                    <div class="stat-value" id="statActive">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-user-slash"></i></div>
+                    <div class="stat-label">Baneados</div>
+                    <div class="stat-value" id="statBanned">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-calendar-plus"></i></div>
+                    <div class="stat-label">Nuevos Este Mes</div>
+                    <div class="stat-value" id="statNew">—</div>
+                </div>
+            </div>
+
             <div class="admin-card">
+                <!-- Feature 9: Filter Tabs -->
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">Todos</button>
+                    <button class="filter-tab" data-filter="active">Activos</button>
+                    <button class="filter-tab" data-filter="banned">Baneados</button>
+                </div>
+
+                <!-- Feature 2: Search + Feature 7: Export CSV -->
+                <div class="controls-row">
+                    <input type="text" class="search-input" id="searchInput"
+                        placeholder="Buscar por nombre o email..." oninput="applyFilters()">
+                    <button class="btn-action" onclick="exportCSV()" title="Exportar CSV">
+                        <i class="fa fa-download"></i> CSV
+                    </button>
+                </div>
+
                 <div style="overflow-x:auto;">
                     <table class="admin-table">
                         <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Email</th>
+                                <!-- Feature 4: Avatar column -->
+                                <th style="width:40px;"></th>
+                                <!-- Feature 8: Sortable name -->
+                                <th class="sortable" data-col="name" onclick="sortBy('name')">
+                                    Nombre <span class="sort-icon"></span>
+                                </th>
+                                <!-- Feature 8: Sortable email -->
+                                <th class="sortable" data-col="email" onclick="sortBy('email')">
+                                    Email <span class="sort-icon"></span>
+                                </th>
                                 <th>Rol</th>
-                                <th>Última IP</th>
+                                <!-- Feature 5: Orders count -->
+                                <th>Ordenes</th>
+                                <!-- Feature 6: Total spent -->
+                                <th>Gastado</th>
+                                <!-- Feature 3: Registration date -->
+                                <th class="sortable" data-col="date" onclick="sortBy('date')">
+                                    Registro <span class="sort-icon"></span>
+                                </th>
+                                <th>Ultima IP</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -210,8 +529,23 @@
                         <tbody id="usersBody"></tbody>
                     </table>
                 </div>
+
+                <!-- Feature 14: Pagination -->
+                <div class="pagination">
+                    <div class="pagination-info" id="pageInfo">—</div>
+                    <div class="pagination-buttons" id="pageButtons"></div>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- Feature 10: Customer Detail Side Panel -->
+    <div class="customer-detail-panel" id="customerDetailPanel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+            <h3 style="font-weight:800; color:#f5f5f7; margin:0;">Detalle de Cliente</h3>
+            <button class="btn-action" onclick="closeCustomerDetail()"><i class="fa fa-times"></i></button>
+        </div>
+        <div id="customerDetailContent"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -219,63 +553,487 @@
     <script src="/lib/auth.js?v=1.0.6"></script>
     <script>
         let adminToken = '';
+        let allUsers = [];
+        let filteredUsers = [];
+        let currentFilter = 'all';
+        let currentSort = { col: 'name', dir: 'asc' };
+        let currentPage = 1;
+        const PAGE_SIZE = 25;
+
+        // Palette for avatars
+        const AVATAR_COLORS = [
+            '#ff8c00', '#30d158', '#64d2ff', '#bf5af2',
+            '#ff453a', '#ff9f0a', '#34c759', '#0a84ff'
+        ];
+
+        function avatarColor(name) {
+            let hash = 0;
+            for (let i = 0; i < (name || '').length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+            return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
+        }
+
+        // ── Init ──────────────────────────────────────────────
         async function init() {
             adminToken = await Auth.requireAdmin();
             if (!adminToken) return;
-            loadUsers();
+
+            // Feature 9: Tab click handlers
+            document.querySelectorAll('.filter-tab').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    currentPage = 1;
+                    applyFilters();
+                });
+            });
+
+            await loadUsers();
         }
 
+        // ── API ───────────────────────────────────────────────
         async function apiFetch(url, opts = {}) {
             return fetch(url, {
                 ...opts,
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken, ...(opts.headers || {}) }
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + adminToken,
+                    ...(opts.headers || {})
+                }
             });
         }
 
         async function signOutAdmin() { await _supabase.auth.signOut(); location.href = 'login.html'; }
 
+        // ── Load Users ────────────────────────────────────────
         async function loadUsers() {
-            const res = await apiFetch('/api/admin/users');
-            const data = await res.json();
-            const tbody = document.getElementById('usersBody');
-            tbody.innerHTML = data.map(u => `
-                <tr>
-                    <td style="font-weight:700;">${u.first_name || ''} ${u.last_name || ''}</td>
-                    <td style="color:#d0d0d8;">${u.email}</td>
-                    <td><span class="status-chip ${u.role === 'admin' ? 's-recibido' : ''}">${u.role}</span></td>
-                    <td style="font-family:monospace;font-size:12px;">${u.last_ip || '<span style="color:#555">—</span>'}</td>
-                    <td>${u.is_banned ? '<span class="status-chip s-cancelado">BANEADO</span>' : '<span class="status-chip s-recibido">ACTIVO</span>'}</td>
-                    <td style="display:flex;gap:6px;flex-wrap:wrap;">
-                        <button class="btn-action" onclick="toggleUserBan('${u.id}', ${!u.is_banned})" title="${u.is_banned ? 'Desbanear' : 'Banear'}">
-                            <i class="fa ${u.is_banned ? 'fa-unlock' : 'fa-ban'}" style="color:${u.is_banned ? '#34c759' : '#ff6b6b'}"></i>
-                        </button>
-                        <button class="btn-action" onclick="resetPassword('${u.id}','${u.email}')" title="Resetear contraseña">
-                            <i class="fa fa-key" style="color:#f59e0b"></i>
-                        </button>
-                        <a class="btn-action" href="admin-orders.html?user=${u.id}" title="Ver órdenes">
-                            <i class="fa fa-receipt" style="color:#a78bfa"></i>
-                        </a>
-                    </td>
-                </tr>
-            `).join('');
+            try {
+                const res = await apiFetch('/api/admin/users');
+                const data = await res.json();
+                allUsers = Array.isArray(data) ? data : (data.users || []);
+                updateStats(allUsers);
+                applyFilters();
+            } catch (e) {
+                document.getElementById('usersBody').innerHTML =
+                    '<tr><td colspan="10" style="text-align:center;color:#555;padding:2rem;">Error cargando clientes</td></tr>';
+            }
         }
 
+        // ── Feature 1: Stats ──────────────────────────────────
+        function updateStats(users) {
+            const now = new Date();
+            const thisMonth = users.filter(u => {
+                if (!u.created_at) return false;
+                const d = new Date(u.created_at);
+                return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+            }).length;
+
+            document.getElementById('statTotal').textContent = users.length;
+            document.getElementById('statActive').textContent = users.filter(u => !u.is_banned).length;
+            document.getElementById('statBanned').textContent = users.filter(u => u.is_banned).length;
+            document.getElementById('statNew').textContent = thisMonth;
+        }
+
+        // ── Feature 2 & 9: Apply Filters ─────────────────────
+        function applyFilters() {
+            const search = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+
+            filteredUsers = allUsers.filter(u => {
+                // Feature 9: status filter
+                if (currentFilter === 'active' && u.is_banned) return false;
+                if (currentFilter === 'banned' && !u.is_banned) return false;
+
+                // Feature 2: search filter
+                if (search) {
+                    const name = ((u.first_name || '') + ' ' + (u.last_name || '')).toLowerCase();
+                    const email = (u.email || '').toLowerCase();
+                    if (!name.includes(search) && !email.includes(search)) return false;
+                }
+
+                return true;
+            });
+
+            sortUsers();
+            currentPage = 1;
+            renderTable();
+        }
+
+        // ── Feature 8: Sort ───────────────────────────────────
+        function sortBy(col) {
+            if (currentSort.col === col) {
+                currentSort.dir = currentSort.dir === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.col = col;
+                currentSort.dir = 'asc';
+            }
+            document.querySelectorAll('.admin-table th.sortable').forEach(th => {
+                th.classList.remove('sort-asc', 'sort-desc');
+                if (th.dataset.col === currentSort.col) {
+                    th.classList.add(currentSort.dir === 'asc' ? 'sort-asc' : 'sort-desc');
+                }
+            });
+            sortUsers();
+            renderTable();
+        }
+
+        function sortUsers() {
+            filteredUsers.sort((a, b) => {
+                let va, vb;
+                if (currentSort.col === 'name') {
+                    va = ((a.first_name || '') + (a.last_name || '')).toLowerCase();
+                    vb = ((b.first_name || '') + (b.last_name || '')).toLowerCase();
+                } else if (currentSort.col === 'email') {
+                    va = (a.email || '').toLowerCase();
+                    vb = (b.email || '').toLowerCase();
+                } else {
+                    // date
+                    va = new Date(a.created_at || 0).getTime();
+                    vb = new Date(b.created_at || 0).getTime();
+                }
+                if (va < vb) return currentSort.dir === 'asc' ? -1 : 1;
+                if (va > vb) return currentSort.dir === 'asc' ? 1 : -1;
+                return 0;
+            });
+        }
+
+        // ── Render Table ──────────────────────────────────────
+        function renderTable() {
+            const total = filteredUsers.length;
+            const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+            if (currentPage > totalPages) currentPage = totalPages;
+            const start = (currentPage - 1) * PAGE_SIZE;
+            const pageUsers = filteredUsers.slice(start, start + PAGE_SIZE);
+
+            const tbody = document.getElementById('usersBody');
+            if (pageUsers.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:#555;padding:2rem;">Sin resultados</td></tr>';
+            } else {
+                tbody.innerHTML = pageUsers.map(u => buildRow(u)).join('');
+            }
+
+            // Pagination UI
+            document.getElementById('pageInfo').textContent =
+                `Mostrando ${Math.min(start + 1, total)}–${Math.min(start + PAGE_SIZE, total)} de ${total} clientes`;
+
+            const btns = document.getElementById('pageButtons');
+            btns.innerHTML = '';
+
+            const prev = document.createElement('button');
+            prev.className = 'page-btn';
+            prev.textContent = '← Anterior';
+            prev.disabled = currentPage === 1;
+            prev.onclick = () => { currentPage--; renderTable(); };
+            btns.appendChild(prev);
+
+            getPageRange(currentPage, totalPages).forEach(p => {
+                if (p === '...') {
+                    const span = document.createElement('span');
+                    span.className = 'page-btn';
+                    span.textContent = '…';
+                    span.style.cursor = 'default';
+                    btns.appendChild(span);
+                } else {
+                    const btn = document.createElement('button');
+                    btn.className = 'page-btn' + (p === currentPage ? ' active' : '');
+                    btn.textContent = p;
+                    btn.onclick = () => { currentPage = p; renderTable(); };
+                    btns.appendChild(btn);
+                }
+            });
+
+            const next = document.createElement('button');
+            next.className = 'page-btn';
+            next.textContent = 'Siguiente →';
+            next.disabled = currentPage === totalPages;
+            next.onclick = () => { currentPage++; renderTable(); };
+            btns.appendChild(next);
+        }
+
+        function getPageRange(current, total) {
+            if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+            if (current <= 4) return [1, 2, 3, 4, 5, '...', total];
+            if (current >= total - 3) return [1, '...', total - 4, total - 3, total - 2, total - 1, total];
+            return [1, '...', current - 1, current, current + 1, '...', total];
+        }
+
+        // ── Build Row ─────────────────────────────────────────
+        function buildRow(u) {
+            const name = ((u.first_name || '') + ' ' + (u.last_name || '')).trim() || 'Sin nombre';
+            const initial = name.charAt(0).toUpperCase();
+            const color = avatarColor(name);
+
+            // Feature 3: Registration date
+            const regDate = u.created_at ? new Date(u.created_at).toLocaleDateString('es-EC') : '—';
+
+            // Feature 5: Orders count
+            const ordersCount = u.orders_count != null ? u.orders_count : '—';
+
+            // Feature 6: Total spent
+            const totalSpent = u.total_spent != null ? '$' + Number(u.total_spent).toFixed(2) : '—';
+
+            // Feature 12: WhatsApp
+            const phone = u.phone || '';
+            const waPhone = phone.replace(/\D/g, '');
+
+            return `
+            <tr>
+                <!-- Feature 4: Avatar -->
+                <td>
+                    <div class="customer-avatar" style="background:${color};" title="${name}">
+                        ${initial}
+                    </div>
+                </td>
+                <td style="font-weight:700;">${name}</td>
+                <td style="color:#d0d0d8;">
+                    ${u.email}
+                    <!-- Feature 11: Copy email -->
+                    <button class="btn-icon" onclick="copyEmail('${u.email}')" title="Copiar email" style="margin-left:4px;">
+                        <i class="fa fa-copy"></i>
+                    </button>
+                </td>
+                <td>
+                    <span class="status-chip ${u.role === 'admin' ? 's-admin' : ''}">${u.role || 'user'}</span>
+                </td>
+                <!-- Feature 5 -->
+                <td style="color:#a1a1aa; text-align:center;">${ordersCount}</td>
+                <!-- Feature 6 -->
+                <td style="color:#34c759; font-weight:700;">${totalSpent}</td>
+                <!-- Feature 3 -->
+                <td style="color:#71717a; font-size:12px;">${regDate}</td>
+                <td style="font-family:monospace; font-size:12px; color:#71717a;">${u.last_ip || '—'}</td>
+                <td>
+                    ${u.is_banned
+                        ? '<span class="status-chip s-banned">BANEADO</span>'
+                        : '<span class="status-chip s-active">ACTIVO</span>'}
+                </td>
+                <td>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
+                        <!-- Feature 10: Open detail panel -->
+                        <button class="btn-action" onclick="showCustomerDetail('${u.id}')" title="Ver detalle">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        <!-- Feature 12: WhatsApp -->
+                        ${waPhone ? `<a class="btn-icon" style="color:#25d366;" href="https://wa.me/${waPhone}" target="_blank" title="WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>` : ''}
+                        <!-- Feature 15: Ver Ordenes -->
+                        <a class="btn-icon" href="admin-orders.html?user=${u.id}" title="Ver ordenes del cliente" style="color:#a78bfa;">
+                            <i class="fa fa-receipt"></i>
+                        </a>
+                        <button class="btn-icon" onclick="toggleUserBan('${u.id}', ${!u.is_banned})" title="${u.is_banned ? 'Desbanear' : 'Banear'}">
+                            <i class="fa ${u.is_banned ? 'fa-unlock' : 'fa-ban'}" style="color:${u.is_banned ? '#34c759' : '#ff6b6b'}"></i>
+                        </button>
+                        <button class="btn-icon" onclick="resetPassword('${u.id}','${u.email}')" title="Resetear contrasena">
+                            <i class="fa fa-key" style="color:#f59e0b"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>`;
+        }
+
+        // ── Feature 11: Copy email ────────────────────────────
+        function copyEmail(email) {
+            navigator.clipboard.writeText(email).then(() => {
+                const el = event.target.closest('button');
+                el.style.color = '#34c759';
+                setTimeout(() => { el.style.color = ''; }, 1200);
+            });
+        }
+
+        // ── Feature 7: Export CSV ─────────────────────────────
+        function exportCSV() {
+            const rows = [['ID', 'Nombre', 'Email', 'Rol', 'Ordenes', 'Gastado', 'Registro', 'Ultima IP', 'Estado']];
+            filteredUsers.forEach(u => {
+                rows.push([
+                    u.id,
+                    ((u.first_name || '') + ' ' + (u.last_name || '')).trim(),
+                    u.email,
+                    u.role || 'user',
+                    u.orders_count != null ? u.orders_count : '',
+                    u.total_spent != null ? u.total_spent : '',
+                    u.created_at ? new Date(u.created_at).toLocaleDateString('es-EC') : '',
+                    u.last_ip || '',
+                    u.is_banned ? 'BANEADO' : 'ACTIVO'
+                ]);
+            });
+            const csv = rows.map(r => r.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\n');
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'clientes_' + new Date().toISOString().slice(0, 10) + '.csv';
+            a.click();
+        }
+
+        // ── Feature 10: Customer Detail Panel ────────────────
+        async function showCustomerDetail(userId) {
+            const panel = document.getElementById('customerDetailPanel');
+            panel.classList.add('open');
+            panel.dataset.userId = userId;
+            document.getElementById('customerDetailContent').innerHTML =
+                '<div style="text-align:center;color:#555;padding:2rem;"><i class="fa fa-spinner fa-spin"></i> Cargando...</div>';
+
+            const user = allUsers.find(u => String(u.id) === String(userId));
+            if (!user) return;
+
+            // Load last 5 orders for this customer
+            let ordersHtml = '<div style="color:#555; font-size:12px;">Sin ordenes</div>';
+            try {
+                const res = await apiFetch(`/api/admin/orders?user=${userId}&limit=5`);
+                const data = await res.json();
+                const orders = data.orders || [];
+                if (orders.length > 0) {
+                    ordersHtml = orders.map(o => `
+                        <div class="mini-order-row">
+                            <span style="font-family:monospace; color:#a1a1aa; font-size:11px;" title="${o.id}">${String(o.id).substring(0,10)}...</span>
+                            <span class="status-chip s-${o.status}" style="font-size:9px;">${statusLabel(o.status)}</span>
+                            <span style="font-weight:700; color:#34c759;">$${Number(o.total).toFixed(2)}</span>
+                            <span style="font-size:11px; color:#555;">${new Date(o.created_at).toLocaleDateString('es-EC')}</span>
+                        </div>`).join('');
+                }
+            } catch (e) {
+                ordersHtml = '<div style="color:#ff453a; font-size:12px;">Error cargando ordenes</div>';
+            }
+
+            const name = ((user.first_name || '') + ' ' + (user.last_name || '')).trim() || 'Sin nombre';
+            const initial = name.charAt(0).toUpperCase();
+            const color = avatarColor(name);
+            const phone = user.phone || '';
+            const waPhone = phone.replace(/\D/g, '');
+            const regDate = user.created_at ? new Date(user.created_at).toLocaleDateString('es-EC') : '—';
+
+            // Feature 13: Load notes from localStorage
+            const notesKey = 'admin_notes_user_' + userId;
+            const savedNote = localStorage.getItem(notesKey) || '';
+
+            document.getElementById('customerDetailContent').innerHTML = `
+                <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
+                    <div class="customer-avatar" style="background:${color}; width:56px; height:56px; font-size:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; color:#fff; flex-shrink:0;">${initial}</div>
+                    <div>
+                        <div style="font-weight:800; color:#f5f5f7; font-size:1.1rem;">${name}</div>
+                        <div style="color:#71717a; font-size:0.82rem;">${user.email}</div>
+                        <div style="margin-top:4px;">
+                            ${user.is_banned
+                                ? '<span class="status-chip s-banned">BANEADO</span>'
+                                : '<span class="status-chip s-active">ACTIVO</span>'}
+                            <span class="status-chip ${user.role === 'admin' ? 's-admin' : ''}" style="margin-left:4px;">${user.role || 'user'}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background:#141416; border-radius:12px; padding:1rem; margin-bottom:1rem;">
+                    <div style="font-size:11px; color:#71717a; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.6rem;">Informacion</div>
+                    ${phone ? `<div style="font-size:13px; color:#e2e2e7; margin-bottom:4px;"><i class="fa fa-phone" style="color:#71717a; width:16px;"></i> ${phone}</div>` : ''}
+                    <div style="font-size:13px; color:#e2e2e7; margin-bottom:4px;">
+                        <i class="fa fa-envelope" style="color:#71717a; width:16px;"></i> ${user.email}
+                        <button class="btn-icon" onclick="copyEmail('${user.email}')" style="margin-left:4px;" title="Copiar">
+                            <i class="fa fa-copy"></i>
+                        </button>
+                    </div>
+                    <div style="font-size:13px; color:#a1a1aa; margin-bottom:4px;"><i class="fa fa-calendar" style="color:#71717a; width:16px;"></i> Registro: ${regDate}</div>
+                    <div style="font-size:13px; color:#a1a1aa; font-family:monospace;"><i class="fa fa-network-wired" style="color:#71717a; width:16px;"></i> IP: ${user.last_ip || '—'}</div>
+                    ${user.orders_count != null ? `<div style="font-size:13px; color:#a1a1aa; margin-top:4px;"><i class="fa fa-receipt" style="color:#71717a; width:16px;"></i> Ordenes: ${user.orders_count}</div>` : ''}
+                    ${user.total_spent != null ? `<div style="font-size:13px; color:#34c759; margin-top:4px; font-weight:700;"><i class="fa fa-dollar-sign" style="color:#71717a; width:16px;"></i> Gastado: $${Number(user.total_spent).toFixed(2)}</div>` : ''}
+                </div>
+
+                <!-- Quick actions -->
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.2rem;">
+                    ${waPhone ? `<a class="btn-action" style="background:#25d366; color:#fff;" href="https://wa.me/${waPhone}" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>` : ''}
+                    <!-- Feature 15: Ver Ordenes -->
+                    <a class="btn-action" href="admin-orders.html?user=${userId}" style="color:#a78bfa; border-color:#a78bfa;">
+                        <i class="fa fa-receipt"></i> Ver Ordenes
+                    </a>
+                    <button class="btn-action" onclick="toggleUserBan('${userId}', ${!user.is_banned})">
+                        <i class="fa ${user.is_banned ? 'fa-unlock' : 'fa-ban'}" style="color:${user.is_banned ? '#34c759' : '#ff6b6b'}"></i>
+                        ${user.is_banned ? 'Desbanear' : 'Banear'}
+                    </button>
+                    <button class="btn-action" onclick="resetPassword('${userId}','${user.email}')">
+                        <i class="fa fa-key" style="color:#f59e0b"></i> Reset Pass
+                    </button>
+                </div>
+
+                <!-- Last 5 orders -->
+                <div style="margin-bottom:1.2rem;">
+                    <div style="font-size:11px; color:#71717a; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.6rem;">Ultimas 5 Ordenes</div>
+                    ${ordersHtml}
+                </div>
+
+                <!-- Feature 13: Admin notes -->
+                <div>
+                    <div style="font-size:11px; color:#71717a; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.6rem;">
+                        <i class="fa fa-sticky-note" style="margin-right:4px;"></i> Notas de Admin
+                    </div>
+                    <textarea class="admin-notes-area" id="adminNotesArea_${userId}"
+                        placeholder="Notas internas sobre este cliente..."
+                        onchange="saveNote('${userId}')">${savedNote}</textarea>
+                    <button class="btn-action primary" style="margin-top:0.5rem;" onclick="saveNote('${userId}')">
+                        <i class="fa fa-save"></i> Guardar Nota
+                    </button>
+                </div>
+            `;
+        }
+
+        function closeCustomerDetail() {
+            document.getElementById('customerDetailPanel').classList.remove('open');
+        }
+
+        // ── Feature 13: Save note to localStorage ─────────────
+        function saveNote(userId) {
+            const ta = document.getElementById('adminNotesArea_' + userId);
+            if (!ta) return;
+            const notesKey = 'admin_notes_user_' + userId;
+            localStorage.setItem(notesKey, ta.value);
+            const btn = event && event.target ? event.target.closest('button') : null;
+            if (btn) {
+                const orig = btn.innerHTML;
+                btn.innerHTML = '<i class="fa fa-check"></i> Guardado';
+                btn.style.background = '#166534';
+                setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 1500);
+            }
+        }
+
+        // ── Status label helper ───────────────────────────────
+        function statusLabel(s) {
+            return {
+                confirmando_pago: 'Pendiente',
+                orden_confirmada: 'Confirmada',
+                empacando: 'Empacando',
+                enviado: 'Enviado',
+                recibido: 'Recibido',
+                cancelado: 'Cancelado'
+            }[s] || s;
+        }
+
+        // ── Reset password ────────────────────────────────────
         async function resetPassword(id, email) {
-            if (!confirm(`¿Enviar enlace de recuperación de contraseña a ${email}?`)) return;
+            if (!confirm(`Enviar enlace de recuperacion de contrasena a ${email}?`)) return;
             const res = await apiFetch(`/api/admin/users/${id}/reset-password`, { method: 'POST' });
             const data = await res.json();
             if (res.ok) {
-                alert(`✅ Enlace generado y enviado a ${email}`);
+                alert(`Enlace generado y enviado a ${email}`);
             } else {
                 alert('Error: ' + data.error);
             }
         }
 
+        // ── Toggle ban ────────────────────────────────────────
         async function toggleUserBan(id, ban) {
-            if (!confirm(`¿${ban ? 'Banear' : 'Desbanear'} a este usuario?`)) return;
-            const res = await apiFetch(`/api/admin/users/${id}`, { method: 'PATCH', body: JSON.stringify({ is_banned: ban }) });
-            if (res.ok) loadUsers();
-            else alert('Error al actualizar estado del usuario');
+            if (!confirm(`${ban ? 'Banear' : 'Desbanear'} a este usuario?`)) return;
+            const res = await apiFetch(`/api/admin/users/${id}`, {
+                method: 'PATCH',
+                body: JSON.stringify({ is_banned: ban })
+            });
+            if (res.ok) {
+                await loadUsers();
+                // Refresh detail panel if open for this user
+                const panel = document.getElementById('customerDetailPanel');
+                if (panel.classList.contains('open') && panel.dataset.userId === String(id)) {
+                    showCustomerDetail(id);
+                }
+            } else {
+                alert('Error al actualizar estado del usuario');
+            }
         }
 
         init();

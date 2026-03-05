@@ -48,6 +48,56 @@
         .legal-content li {
             margin-bottom: 0.5rem;
         }
+
+        /* TOC */
+        .toc-box {
+            background: rgba(255,140,0,0.06);
+            border: 1px solid rgba(255,140,0,0.2);
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .toc-box h3 { color: var(--primary); font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+        .toc-box ol { padding-left: 1.2rem; margin: 0; }
+        .toc-box li { margin-bottom: 0.3rem; }
+        .toc-box a { color: var(--text-dim); font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
+        .toc-box a:hover { color: var(--primary); }
+
+        /* Print / action bar */
+        .legal-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .legal-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 7px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #e2e2e7;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .legal-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        .legal-btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+        /* section anchors */
+        .legal-content h2 { scroll-margin-top: 80px; }
+
+        @media print {
+            header, .legal-actions, .toc-box { display: none !important; }
+            .legal-container { margin: 0; border: none; box-shadow: none; }
+            body { background: #fff; color: #000; }
+            .legal-content h1, .legal-content h2 { color: #000; }
+            .legal-content p, .legal-content li { color: #222; }
+        }
     </style>
 </head>
 
@@ -65,6 +115,19 @@
     <main class="legal-container">
         <div class="legal-content">
             <h1>Términos y Condiciones de Uso</h1>
+
+            <!-- Action Bar -->
+            <div class="legal-actions">
+                <button class="legal-btn primary" onclick="window.print()"><i class="fa fa-print"></i> Imprimir</button>
+                <button class="legal-btn" onclick="navigator.clipboard.writeText(location.href).then(()=>alert('Enlace copiado'))"><i class="fa fa-link"></i> Copiar Enlace</button>
+            </div>
+
+            <!-- Table of Contents -->
+            <div class="toc-box" id="toc">
+                <h3><i class="fa fa-list"></i> Tabla de Contenido</h3>
+                <ol id="tocList"></ol>
+            </div>
+
             <p>Bienvenido a Ecugaming Import. Al utilizar nuestro sitio web y los servicios de crédito directo, usted
                 acepta los siguientes términos y condiciones de forma íntegra.</p>
 
@@ -139,7 +202,23 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
     <script src="/lib/supabase-client.js?v=1.0.8"></script>
     <script src="/lib/auth.js?v=1.0.8"></script>
-    <script>Auth.updateAuthUI();</script>
+    <script>
+        Auth.updateAuthUI();
+        // Auto-generate TOC from h2 headings
+        (function() {
+            const headings = document.querySelectorAll('.legal-content h2');
+            const list = document.getElementById('tocList');
+            headings.forEach((h, i) => {
+                if (!h.id) h.id = 'sec-' + (i + 1);
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = '#' + h.id;
+                a.textContent = h.textContent;
+                li.appendChild(a);
+                list.appendChild(li);
+            });
+        })();
+    </script>
 </body>
 
 </html>

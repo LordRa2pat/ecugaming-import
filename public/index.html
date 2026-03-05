@@ -173,10 +173,119 @@
             .slide-img { width: 110px; }
             .slide-info .s-name { font-size: .88rem; }
         }
+
+        /* ── ANNOUNCEMENT BAR ── (Feature 1) */
+        #announcementBar {
+            background: linear-gradient(90deg, rgba(255,140,0,.18), rgba(255,45,85,.12));
+            border-bottom: 1px solid rgba(255,140,0,.3);
+            padding: 7px 5%; font-size: .78rem; font-weight: 700;
+            color: #ffb347; display: flex; align-items: center; justify-content: center;
+            gap: 8px; position: relative;
+        }
+        #announcementBar .ann-close {
+            position: absolute; right: 1rem; cursor: pointer;
+            font-size: 1rem; color: rgba(255,179,71,.6);
+            background: none; border: none;
+            transition: .15s;
+        }
+        #announcementBar .ann-close:hover { color: #ffb347; }
+
+        /* ── BACK TO TOP ── (Feature 2) */
+        #backToTop {
+            position: fixed; bottom: 5.5rem; right: 1.5rem;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--primary); color: #fff;
+            border: none; cursor: pointer; font-size: 1rem;
+            display: none; align-items: center; justify-content: center;
+            box-shadow: 0 4px 14px rgba(255,140,0,.4);
+            z-index: 500; transition: opacity .2s, transform .2s;
+        }
+        #backToTop.show { display: flex; }
+        #backToTop:hover { transform: translateY(-2px); }
+
+        /* ── CATALOG TOOLBAR ── (Features 3,4,9) */
+        .catalog-toolbar {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: .5rem;
+            padding: .5rem 5%;
+            border-bottom: 1px solid rgba(255,255,255,.05);
+        }
+        .cat-count { font-size: .8rem; color: var(--text-dim); font-weight: 600; }
+        .cat-count strong { color: var(--text); }
+        .filter-reset {
+            display: none; align-items: center; gap: 4px;
+            background: rgba(255,140,0,.1); border: 1px solid rgba(255,140,0,.3);
+            color: var(--primary); border-radius: 980px;
+            padding: 4px 12px; font-size: .75rem; font-weight: 800;
+            cursor: pointer; transition: .15s;
+        }
+        .filter-reset:hover { background: rgba(255,140,0,.2); }
+        .sort-select {
+            background: rgba(255,255,255,.04); border: 1px solid var(--border);
+            color: var(--text); border-radius: 8px; padding: 5px 10px;
+            font-size: .78rem; font-weight: 700; cursor: pointer;
+        }
+
+        /* ── SKELETON LOADING ── (Feature 6) */
+        @keyframes shimmer {
+            0%   { background-position: -400px 0; }
+            100% { background-position: 400px 0; }
+        }
+        .skeleton-card {
+            border-radius: 16px; overflow: hidden;
+            background: var(--card-bg); border: 1px solid var(--border);
+            padding: 1rem;
+        }
+        .skeleton-line {
+            border-radius: 4px;
+            background: linear-gradient(90deg, #1c1c28 25%, #252535 50%, #1c1c28 75%);
+            background-size: 400px 100%;
+            animation: shimmer 1.2s ease infinite;
+        }
+
+        /* ── BADGE PULSE ANIMATION ── (Feature 11) */
+        @keyframes badgePulse {
+            0%,100% { box-shadow: 0 0 0 0 rgba(255,149,0,.4); }
+            50%      { box-shadow: 0 0 0 5px rgba(255,149,0,0); }
+        }
+        .badge-remate { animation: badgePulse 2s ease-in-out infinite; }
+
+        /* ── RECENTLY VIEWED ── (Feature 10) */
+        #recentlyViewed {
+            padding: 20px 5% 0; display: none;
+        }
+        .rv-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .rv-header h3 { font-size: 1rem; font-weight: 800; color: var(--text); }
+        .rv-strip {
+            display: flex; gap: .75rem; overflow-x: auto; padding-bottom: 8px;
+            scrollbar-width: none;
+        }
+        .rv-strip::-webkit-scrollbar { display: none; }
+        .rv-card {
+            flex-shrink: 0; width: 100px; cursor: pointer;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 12px; padding: .6rem; text-align: center;
+            transition: border-color .18s;
+        }
+        .rv-card:hover { border-color: var(--primary); }
+        .rv-card img { width: 60px; height: 60px; object-fit: contain; border-radius: 6px; }
+        .rv-card .rv-name { font-size: .68rem; font-weight: 700; color: var(--text); margin-top: .3rem; line-height: 1.2; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .rv-card .rv-price { font-size: .72rem; font-weight: 900; color: var(--primary); }
+
+        /* ── STOCK URGENCY ── (Feature 5) */
+        .stock-urgent { color: #ff9500; font-size: .72rem; font-weight: 800; }
     </style>
 </head>
 
 <body>
+    <!-- Feature 1: Announcement bar -->
+    <div id="announcementBar">
+        🚚 <strong>Envío GRATIS</strong> en compras mayores a $500 · Lago Agrio, Ecuador
+        <button class="ann-close" onclick="dismissAnnouncement()" aria-label="Cerrar">×</button>
+    </div>
     <div class="top-bar" id="topBarText">
         <i class="fa fa-truck-fast"></i> Envíos 100% seguros a nivel nacional vía Servientrega y Tramaco Express.
     </div>
@@ -331,8 +440,31 @@
         </div>
     </section>
 
+    <!-- Feature 10: Recently viewed -->
+    <section id="recentlyViewed">
+        <div class="rv-header">
+            <h3><i class="fa fa-eye" style="color:var(--primary);margin-right:.3rem;"></i> Vistos recientemente</h3>
+        </div>
+        <div class="rv-strip" id="rvStrip"></div>
+    </section>
+
     <!-- ── CATALOG ─────────────────────────────────────────── -->
     <div id="catalogTitle" style="display:none;"></div>
+    <!-- Features 3,4,9: Toolbar with count, reset filter, sort -->
+    <div class="catalog-toolbar" id="catalogToolbar">
+        <div style="display:flex; align-items:center; gap:.6rem;">
+            <span class="cat-count" id="productCount"></span>
+            <button class="filter-reset" id="filterResetBtn" onclick="resetFilter()">
+                <i class="fa fa-times"></i> Limpiar filtros
+            </button>
+        </div>
+        <select class="sort-select" id="sortSelect" onchange="handleSort(this.value)">
+            <option value="default">Ordenar: Relevancia</option>
+            <option value="price-asc">Precio: Menor a Mayor</option>
+            <option value="price-desc">Precio: Mayor a Menor</option>
+            <option value="name-asc">Nombre: A-Z</option>
+        </select>
+    </div>
     <main class="catalog-section fade-in" id="catalogStart" style="padding-top: 1rem;">
         <div id="catalog" class="grid" style="padding: 0 0 0;">
             <!-- Products injected by JS -->
@@ -394,6 +526,10 @@
     <div class="floating-wa" onclick="window.open('https://wa.me/593962609951','_blank')">
         <i class="fab fa-whatsapp"></i>
     </div>
+    <!-- Feature 2: Back to top -->
+    <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">
+        <i class="fa fa-arrow-up"></i>
+    </button>
 
     <!-- Supabase + libs -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -408,6 +544,35 @@
         let promoSwiper = null;
         let currentPage = 1;
         const PAGE_SIZE = 12;
+        let currentSortKey = 'default';
+        let isFiltered = false;
+
+        // Feature 1: Dismiss announcement bar
+        function dismissAnnouncement() {
+            const el = document.getElementById('announcementBar');
+            if (el) el.style.display = 'none';
+            sessionStorage.setItem('ann_dismissed', '1');
+        }
+        if (sessionStorage.getItem('ann_dismissed')) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const el = document.getElementById('announcementBar');
+                if (el) el.style.display = 'none';
+            });
+        }
+
+        // Feature 2: Back-to-top
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('backToTop');
+            btn.classList.toggle('show', window.scrollY > 400);
+        });
+
+        // Feature 14: Keyboard shortcut — press / to focus search
+        document.addEventListener('keydown', e => {
+            if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+        });
 
         // ── Platform keyword mapping for game subcategories ──────────────
         const XBOX_GAMES = ['halo','forza','gears of war','sea of thieves','grounded','fable'];
@@ -515,20 +680,60 @@
                 default:                filtered = allProducts.filter(p => (p.name+' '+(p.category||'')).toLowerCase().includes(key.toLowerCase())); break;
             }
 
-            curProducts = filtered;
+            curProducts = applySortTo(filtered);
             currentPage = 1;
+            isFiltered = key !== 'All';
             // Title
             const titleEl = document.getElementById('catalogTitle');
             if (key === 'All') {
                 titleEl.style.display = 'none';
+                document.title = 'Ecugaming Import | Tienda Oficial - Lago Agrio';
             } else {
                 titleEl.style.display = 'flex';
                 titleEl.innerHTML = `<i class="fa fa-filter" style="color:var(--primary);font-size:.9rem;"></i> ${label} <span style="color:var(--text-dim);font-weight:400;font-size:.9rem;">(${filtered.length})</span>`;
+                // Feature 13: Update page title
+                document.title = `${label} | Ecugaming Import`;
             }
+            // Filter reset pill (Feature 3) & product count (Feature 4)
+            const resetBtn = document.getElementById('filterResetBtn');
+            if (resetBtn) resetBtn.style.display = isFiltered ? 'flex' : 'none';
+            updateProductCount(filtered.length, allProducts.length);
             // Hide slider when filtering (show for All or Promos — Promos shows promo slider)
             document.getElementById('promoSliderSection').style.display = (key === 'All' || key === 'Promos') ? 'block' : 'none';
-            renderCards(filtered, 'catalog');
+            renderCards(curProducts, 'catalog');
             document.getElementById('catalogStart').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function resetFilter() {
+            filterSub('All', 'Todos');
+            document.querySelectorAll('.cat-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+        }
+
+        function updateProductCount(shown, total) {
+            const el = document.getElementById('productCount');
+            if (el) {
+                el.innerHTML = isFiltered
+                    ? `<strong>${shown}</strong> de <strong>${total}</strong> productos`
+                    : `<strong>${total}</strong> productos`;
+            }
+        }
+
+        // Feature 9: Sort
+        function handleSort(val) {
+            currentSortKey = val;
+            curProducts = applySortTo(curProducts);
+            currentPage = 1;
+            renderCards(curProducts, 'catalog');
+        }
+
+        function applySortTo(items) {
+            const arr = [...items];
+            switch (currentSortKey) {
+                case 'price-asc':  return arr.sort((a,b) => (a.sale_price??a.price) - (b.sale_price??b.price));
+                case 'price-desc': return arr.sort((a,b) => (b.sale_price??b.price) - (a.sale_price??a.price));
+                case 'name-asc':   return arr.sort((a,b) => a.name.localeCompare(b.name));
+                default: return arr;
+            }
         }
 
         function changePage(delta) {
@@ -551,7 +756,22 @@
             return idx === -1 ? 99 : idx;
         }
 
+        // Feature 6: Skeleton loading
+        function showSkeletons() {
+            const container = document.getElementById('catalog');
+            if (!container) return;
+            container.innerHTML = Array.from({length: 12}).map(() => `
+                <div class="skeleton-card">
+                    <div class="skeleton-line" style="height:160px; border-radius:12px; margin-bottom:.8rem;"></div>
+                    <div class="skeleton-line" style="height:14px; width:60%; margin-bottom:.5rem;"></div>
+                    <div class="skeleton-line" style="height:20px; width:80%; margin-bottom:.5rem;"></div>
+                    <div class="skeleton-line" style="height:14px; width:40%; margin-bottom:.8rem;"></div>
+                    <div class="skeleton-line" style="height:36px; border-radius:8px;"></div>
+                </div>`).join('');
+        }
+
         async function fetchStock() {
+            showSkeletons();
             try {
                 const res = await fetch('/api/stock');
                 const raw = await res.json();
@@ -576,6 +796,8 @@
                 }
 
                 renderCards(allProducts, 'catalog');
+                updateProductCount(allProducts.length, allProducts.length);
+                renderRecentlyViewed();
                 fetchNews();
             } catch (err) { console.error('Error fetching stock:', err); }
         }
@@ -679,6 +901,29 @@
             return `<span class="badge-tag ${cls}">${badge}</span>`;
         }
 
+        // Feature 10: Recently viewed
+        function trackView(item) {
+            let rv = JSON.parse(localStorage.getItem('eg_recent') || '[]');
+            rv = rv.filter(x => x.id !== item.id);
+            rv.unshift({ id: item.id, name: item.name, price: item.sale_price ?? item.price, image_url: item.image_url || item.image });
+            if (rv.length > 6) rv = rv.slice(0, 6);
+            localStorage.setItem('eg_recent', JSON.stringify(rv));
+        }
+
+        function renderRecentlyViewed() {
+            const rv = JSON.parse(localStorage.getItem('eg_recent') || '[]');
+            const section = document.getElementById('recentlyViewed');
+            const strip = document.getElementById('rvStrip');
+            if (!rv.length || !section || !strip) return;
+            section.style.display = 'block';
+            strip.innerHTML = rv.map(item => `
+                <div class="rv-card" onclick="location.href='/product?id=${item.id}'">
+                    <img src="${item.image_url || ''}" alt="${item.name}" onerror="this.style.display='none'">
+                    <div class="rv-name">${item.name}</div>
+                    <div class="rv-price">$${Number(item.price).toFixed(2)}</div>
+                </div>`).join('');
+        }
+
         function createCardHTML(item) {
             const activePrice = item.sale_price ?? item.price;
             const hasPromo = item.sale_price && item.sale_price < item.price;
@@ -688,16 +933,21 @@
                     onerror="this.outerHTML='<i class=\\'fa fa-gamepad\\' style=\\'font-size:2.5rem;color:#333;\\'></i>'">`
                 : `<i class="fa fa-gamepad" style="font-size:2.5rem;color:#333;"></i>`;
             const platBadge = platformBadgeHTML(item);
+            // Feature 5: Stock urgency
+            const stockText = item.stock > 0
+                ? (item.stock <= 5 ? `<span class="stock-urgent">¡Solo quedan ${item.stock}!</span>` : '')
+                : '<span style="color:#888;font-size:.72rem;font-weight:700;">Agotado</span>';
             return `
                 <div class="card-tag">${item.category||''}</div>
                 ${badgeHTML(item.badge)}
-                <div class="card-img-placeholder" onclick="location.href='/product?id=${item.id}'" style="cursor:pointer;">${imgTag}</div>
+                <div class="card-img-placeholder" onclick="trackView(${JSON.stringify({id:item.id,name:item.name,price:activePrice,image_url:imgSrc||''}).replace(/"/g,'&quot;')});location.href='/product?id=${item.id}'" style="cursor:pointer;">${imgTag}</div>
                 ${platBadge ? `<div class="card-meta">${platBadge}</div>` : ''}
-                <h3 class="card-name" onclick="location.href='/product?id=${item.id}'" style="cursor:pointer;">${item.name}</h3>
+                <h3 class="card-name" onclick="trackView(${JSON.stringify({id:item.id,name:item.name,price:activePrice,image_url:imgSrc||''}).replace(/"/g,'&quot;')});location.href='/product?id=${item.id}'" style="cursor:pointer;">${item.name}</h3>
                 <div class="price-container">
                     <div class="card-price">$${Number(activePrice).toFixed(2)}</div>
                     ${hasPromo ? `<div class="card-old-price">$${Number(item.price).toFixed(2)}</div>` : ''}
                 </div>
+                ${stockText ? `<div style="margin:2px 0 4px;">${stockText}</div>` : ''}
                 <p class="card-desc">${item.description||'Tecnología premium garantizada. Envío seguro a todo el país.'}</p>
                 <div style="display:flex;gap:.5rem;">
                     ${item.stock > 0
@@ -716,9 +966,26 @@
             const start = (currentPage - 1) * PAGE_SIZE;
             const pageItems = items.slice(start, start + PAGE_SIZE);
 
-            container.innerHTML = pageItems.length
-                ? ''
-                : '<p style="grid-column:1/-1;text-align:center;color:var(--text-dim);padding:3rem 0;">No hay productos en esta categoría.</p>';
+            // Feature 7: Empty state
+            if (!pageItems.length) {
+                const query = document.getElementById('searchInput').value;
+                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:4rem 0;">
+                    <div style="font-size:3rem; margin-bottom:1rem;">🎮</div>
+                    <h3 style="color:var(--text); font-size:1.1rem; margin-bottom:.5rem;">
+                        ${query ? `Sin resultados para "${query}"` : 'Sin productos en esta categoría'}
+                    </h3>
+                    <p style="color:var(--text-dim); font-size:.85rem; margin-bottom:1.5rem;">
+                        Intenta con otra búsqueda o revisa el catálogo completo.
+                    </p>
+                    <button onclick="resetFilter()" style="background:var(--primary);color:#fff;border:none;border-radius:12px;padding:.7rem 1.5rem;font-weight:800;cursor:pointer;">
+                        Ver todos los productos
+                    </button>
+                </div>`;
+                document.getElementById('paginationBar').style.display = 'none';
+                return;
+            }
+
+            container.innerHTML = '';
             pageItems.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -742,21 +1009,28 @@
             const query = document.getElementById('searchInput').value.toLowerCase();
             currentPage = 1;
             if (!query) {
-                curProducts = allProducts;
-                renderCards(allProducts, 'catalog');
+                isFiltered = false;
+                curProducts = applySortTo(allProducts);
+                renderCards(curProducts, 'catalog');
+                updateProductCount(allProducts.length, allProducts.length);
                 document.getElementById('promoSliderSection').style.display = 'block';
                 document.getElementById('catalogTitle').style.display = 'none';
+                document.getElementById('filterResetBtn').style.display = 'none';
                 return;
             }
             const filtered = allProducts.filter(p =>
                 p.name.toLowerCase().includes(query) || (p.category||'').toLowerCase().includes(query)
             );
-            curProducts = filtered;
+            isFiltered = true;
+            curProducts = applySortTo(filtered);
             document.getElementById('promoSliderSection').style.display = 'none';
             document.getElementById('catalogTitle').style.display = 'flex';
             document.getElementById('catalogTitle').innerHTML =
                 `<i class="fa fa-search" style="color:var(--primary);font-size:.9rem;"></i> Resultados: "${query}" <span style="color:var(--text-dim);font-weight:400;font-size:.9rem;">(${filtered.length})</span>`;
-            renderCards(filtered, 'catalog');
+            document.getElementById('filterResetBtn').style.display = 'flex';
+            updateProductCount(filtered.length, allProducts.length);
+            renderCards(curProducts, 'catalog');
+            document.title = `Búsqueda: "${query}" | Ecugaming Import`;
         }
 
         function scrollToCatalog() {

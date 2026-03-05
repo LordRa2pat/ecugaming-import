@@ -179,8 +179,14 @@
             <div class="form-group">
                 <label>Contraseña</label>
                 <input type="password" id="regPass" class="form-control" required placeholder="••••••••" minlength="6"
-                    autocomplete="new-password">
-                <div class="password-hint">Mínimo 6 caracteres</div>
+                    autocomplete="new-password" oninput="updateRegStrength(this.value)">
+                <!-- Feature 6: Password strength meter -->
+                <div style="display:flex;gap:4px;margin-top:.4rem;">
+                    <div id="rs1" style="height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .2s;"></div>
+                    <div id="rs2" style="height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .2s;"></div>
+                    <div id="rs3" style="height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .2s;"></div>
+                </div>
+                <div id="rsLabel" style="font-size:.72rem;font-weight:700;color:var(--text-dim);margin-top:.2rem;"></div>
             </div>
             <div class="form-group">
                 <label>Confirmar Contraseña</label>
@@ -200,6 +206,21 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
     <script src="/lib/supabase-client.js?v=1.0.2"></script>
     <script>
+        function updateRegStrength(val) {
+            const hasNum = /\d/.test(val);
+            const hasSpec = /[^a-zA-Z0-9]/.test(val);
+            let s = 0;
+            if (val.length >= 6) s = 1;
+            if (val.length >= 8 && hasNum) s = 2;
+            if (val.length >= 8 && hasNum && hasSpec) s = 3;
+            const colors = ['','#ff453a','#ff9500','#34c759'];
+            const labels = ['','Débil','Media','Fuerte'];
+            for (let i=1;i<=3;i++) document.getElementById('rs'+i).style.background = i<=s ? colors[s] : 'rgba(255,255,255,.1)';
+            const lbl = document.getElementById('rsLabel');
+            lbl.textContent = val.length ? labels[s] : '';
+            lbl.style.color = colors[s] || 'var(--text-dim)';
+        }
+
         const form = document.getElementById('registerForm');
         const btn = document.getElementById('submitBtn');
         const errorEl = document.getElementById('errorMsg');

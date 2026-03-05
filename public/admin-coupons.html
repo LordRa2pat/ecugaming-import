@@ -9,8 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: #000; color: #e2e2e7; }
-
+        body { background: #000; color: #e2e2e7; font-family: 'Inter', sans-serif; }
         .admin-layout { min-height: 100vh; background: #0a0a0a; }
 
         /* ── SIDEBAR ── */
@@ -81,6 +80,96 @@
             min-height: 100vh;
         }
 
+        /* ── STATS ROW ── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: #111114;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: .3rem;
+        }
+        .stat-card .stat-icon {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px;
+            margin-bottom: .4rem;
+        }
+        .stat-card .stat-value { font-size: 1.6rem; font-weight: 900; color: #fff; line-height: 1; }
+        .stat-card .stat-label { font-size: 12px; color: #71717a; font-weight: 600; }
+
+        /* ── TOOLBAR ── */
+        .toolbar {
+            display: flex;
+            gap: .75rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .search-input {
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 10px;
+            color: #fff;
+            padding: 9px 14px;
+            font-size: 13px;
+            font-family: inherit;
+            width: 220px;
+            transition: border-color .2s;
+        }
+        .search-input:focus { outline: none; border-color: #ff8c00; }
+        .search-input::placeholder { color: #52525b; }
+        .filter-select {
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 10px;
+            color: #e2e2e7;
+            padding: 9px 14px;
+            font-size: 13px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color .2s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .filter-select:focus { outline: none; border-color: #ff8c00; }
+        .filter-select option { background: #18181b; color: #e2e2e7; }
+
+        /* Filter tabs */
+        .filter-tabs {
+            display: flex;
+            gap: .35rem;
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 4px;
+        }
+        .filter-tab {
+            padding: 6px 14px;
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: #71717a;
+            transition: .15s;
+            white-space: nowrap;
+        }
+        .filter-tab.active {
+            background: #ff8c00;
+            color: #fff;
+        }
+        .filter-tab:hover:not(.active) { color: #e2e2e7; }
+
         /* ── CARD / TABLE ── */
         .admin-card {
             background: #111114;
@@ -100,7 +189,15 @@
             text-transform: uppercase;
             letter-spacing: .05em;
             border-bottom: 1px solid rgba(255,255,255,.06);
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+            transition: color .2s;
         }
+        .admin-table th:hover { color: #e2e2e7; }
+        .admin-table th .sort-icon { margin-left: 4px; font-size: 10px; opacity: .5; }
+        .admin-table th.sorted { color: #ff8c00; }
+        .admin-table th.sorted .sort-icon { opacity: 1; }
         .admin-table td {
             padding: 14px 16px;
             border-bottom: 1px solid rgba(255,255,255,.03);
@@ -108,26 +205,48 @@
             vertical-align: middle;
         }
         .admin-table tr:last-child td { border-bottom: none; }
+        .admin-table tr.bulk-selected td { background: rgba(255,140,0,.05); }
 
         /* ── BUTTONS ── */
         .btn-action {
             background: rgba(255,255,255,.06);
             border: 1px solid rgba(255,255,255,.1);
             border-radius: 10px;
-            padding: 6px 14px;
+            padding: 6px 12px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
             color: #e2e2e7;
             transition: .2s;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
+            white-space: nowrap;
         }
         .btn-action:hover { background: rgba(255,255,255,.1); }
         .btn-action.primary { background: #ff8c00; border-color: #ff8c00; color: #fff; font-weight: 700; }
         .btn-action.primary:hover { background: #e07b00; }
         .btn-action.danger { background: rgba(255,107,107,.15); border-color: rgba(255,107,107,.3); color: #ff6b6b; }
+        .btn-action.danger:hover { background: rgba(255,107,107,.25); }
+        .btn-action.success { background: rgba(52,199,89,.15); border-color: rgba(52,199,89,.3); color: #34c759; }
+        .btn-action.success:hover { background: rgba(52,199,89,.25); }
+        .btn-action.info { background: rgba(10,132,255,.15); border-color: rgba(10,132,255,.3); color: #0a84ff; }
+        .btn-action.info:hover { background: rgba(10,132,255,.25); }
+        .actions-cell { display: flex; gap: .35rem; flex-wrap: wrap; }
+
+        /* Bulk bar */
+        .bulk-bar {
+            display: none;
+            align-items: center;
+            gap: .75rem;
+            padding: .75rem 1rem;
+            background: rgba(255,140,0,.08);
+            border: 1px solid rgba(255,140,0,.25);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        .bulk-bar.visible { display: flex; }
+        .bulk-bar span { font-size: 13px; font-weight: 700; color: #ff8c00; }
 
         /* ── MODAL ── */
         .modal-overlay {
@@ -149,7 +268,7 @@
             border-radius: 24px;
             padding: 2rem;
             width: 100%;
-            max-width: 520px;
+            max-width: 560px;
             position: relative;
             margin: auto;
         }
@@ -195,9 +314,26 @@
             appearance: none;
         }
         .form-control:focus { outline: none; border-color: #ff8c00; }
-        .form-control option { background: #18181b; color: #fff; }
+        .form-control option { background: #1c1c1e; color: #f5f5f7; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+        .code-input-wrap { position: relative; }
+        .code-input-wrap .form-control { padding-right: 80px; }
+        .code-gen-btn {
+            position: absolute;
+            right: 6px; top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,140,0,.15);
+            border: 1px solid rgba(255,140,0,.3);
+            border-radius: 8px;
+            color: #ff8c00;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            cursor: pointer;
+            transition: .2s;
+            white-space: nowrap;
+        }
+        .code-gen-btn:hover { background: rgba(255,140,0,.25); }
 
         /* Toggle switch */
         .toggle-row {
@@ -244,8 +380,23 @@
             font-weight: 700;
             letter-spacing: .03em;
         }
-        .chip-active { background: rgba(52,199,89,.15); color: #34c759; }
-        .chip-inactive { background: rgba(255,69,58,.12); color: #ff453a; }
+        .chip-active   { background: rgba(52,199,89,.15);  color: #34c759; }
+        .chip-inactive { background: rgba(255,69,58,.12);  color: #ff453a; }
+        .chip-expired  { background: rgba(120,120,120,.12); color: #888; }
+
+        /* Countdown chip */
+        .countdown-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        .countdown-chip.soon  { background: rgba(255,149,0,.12); color: #ff9500; }
+        .countdown-chip.far   { background: rgba(52,199,89,.1);  color: #34c759; }
+        .countdown-chip.past  { background: rgba(120,120,120,.1); color: #888; }
 
         /* Uses progress */
         .uses-bar {
@@ -264,12 +415,74 @@
         }
         .uses-fill { height: 100%; background: #ff8c00; border-radius: 4px; transition: width .3s; }
 
+        /* Checkbox */
+        .row-checkbox {
+            width: 16px; height: 16px;
+            accent-color: #ff8c00;
+            cursor: pointer;
+        }
+
+        /* Preview calculator */
+        .preview-calc {
+            background: rgba(255,140,0,.06);
+            border: 1px solid rgba(255,140,0,.2);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: .5rem;
+        }
+        .preview-calc .pc-label { font-size: 12px; font-weight: 700; color: #ff8c00; margin-bottom: .5rem; }
+        .preview-calc .pc-result { font-size: 1.1rem; font-weight: 900; color: #fff; }
+        .preview-calc .pc-detail { font-size: 12px; color: #71717a; margin-top: 2px; }
+
         .modal-footer { display: flex; justify-content: flex-end; gap: .75rem; margin-top: 1.5rem; }
         .section-title { font-size: 10px; font-weight: 800; color: #52525b; text-transform: uppercase; letter-spacing: .08em; margin: 1.25rem 0 .75rem; }
+
+        /* Toast */
+        #toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            z-index: 99999;
+        }
+        .toast {
+            background: #18181b;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 12px;
+            padding: .75rem 1.2rem;
+            font-size: 13px;
+            font-weight: 600;
+            color: #e2e2e7;
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            min-width: 240px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.4);
+            animation: toastIn .25s ease;
+            transition: opacity .3s;
+        }
+        .toast.success { border-color: rgba(52,199,89,.3); }
+        .toast.success .toast-icon { color: #34c759; }
+        .toast.error { border-color: rgba(255,69,58,.3); }
+        .toast.error .toast-icon { color: #ff453a; }
+        .toast.info { border-color: rgba(10,132,255,.3); }
+        .toast.info .toast-icon { color: #0a84ff; }
+        @keyframes toastIn { from { opacity:0; transform:translateX(24px); } to { opacity:1; transform:translateX(0); } }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #52525b;
+        }
+        .empty-state i { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
     </style>
 </head>
 
 <body>
+<div id="toast-container"></div>
+
 <div class="admin-layout">
     <aside class="admin-sidebar">
         <div class="sidebar-brand">🎮 Ecugaming <span>Import</span></div>
@@ -290,32 +503,91 @@
     </aside>
 
     <div class="admin-content">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <!-- Header -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
             <div>
                 <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin:0;">Gestión de Cupones</h2>
                 <p style="color:#52525b; font-size:13px; margin:.25rem 0 0;">Crea y administra códigos de descuento</p>
             </div>
-            <button class="btn-action primary" onclick="openCreate()"><i class="fa fa-plus"></i> Nuevo Cupón</button>
+            <div style="display:flex; gap:.75rem; flex-wrap:wrap;">
+                <button class="btn-action" onclick="exportCSV()"><i class="fa fa-download"></i> Exportar CSV</button>
+                <button class="btn-action primary" onclick="openCreate()"><i class="fa fa-plus"></i> Nuevo Cupón</button>
+            </div>
+        </div>
+
+        <!-- Stats Row (Feature 1) -->
+        <div class="stats-row" id="statsRow">
+            <div class="stat-card">
+                <div class="stat-icon" style="background:rgba(52,199,89,.12); color:#34c759;"><i class="fa fa-check-circle"></i></div>
+                <div class="stat-value" id="statActive">—</div>
+                <div class="stat-label">Cupones Activos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:rgba(255,140,0,.12); color:#ff8c00;"><i class="fa fa-fire"></i></div>
+                <div class="stat-value" id="statUses">—</div>
+                <div class="stat-label">Total Usos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:rgba(10,132,255,.12); color:#0a84ff;"><i class="fa fa-dollar-sign"></i></div>
+                <div class="stat-value" id="statSavings">—</div>
+                <div class="stat-label">Descuentos Otorgados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:rgba(255,69,58,.12); color:#ff453a;"><i class="fa fa-clock"></i></div>
+                <div class="stat-value" id="statExpired">—</div>
+                <div class="stat-label">Vencidos</div>
+            </div>
+        </div>
+
+        <!-- Toolbar (Features 2, 3, 11) -->
+        <div class="toolbar">
+            <div style="position:relative;">
+                <i class="fa fa-search" style="position:absolute; left:11px; top:50%; transform:translateY(-50%); color:#52525b; font-size:12px; pointer-events:none;"></i>
+                <input type="text" class="search-input" id="searchInput" placeholder="Buscar por código…" style="padding-left:32px;"
+                    oninput="applyFilters()">
+            </div>
+            <div class="filter-tabs" id="filterTabs">
+                <button class="filter-tab active" data-tab="all" onclick="setTab('all')">Todos</button>
+                <button class="filter-tab" data-tab="active" onclick="setTab('active')">Activos</button>
+                <button class="filter-tab" data-tab="inactive" onclick="setTab('inactive')">Inactivos</button>
+                <button class="filter-tab" data-tab="expired" onclick="setTab('expired')">Vencidos</button>
+            </div>
+            <select class="filter-select" id="typeFilter" onchange="applyFilters()">
+                <option value="">Todos los tipos</option>
+                <option value="percent">% Porcentaje</option>
+                <option value="fixed">$ Fijo</option>
+            </select>
+        </div>
+
+        <!-- Bulk action bar (Feature 12) -->
+        <div class="bulk-bar" id="bulkBar">
+            <span id="bulkCount">0 seleccionados</span>
+            <button class="btn-action success" onclick="bulkToggle(true)"><i class="fa fa-check"></i> Activar</button>
+            <button class="btn-action danger" onclick="bulkToggle(false)"><i class="fa fa-ban"></i> Desactivar</button>
+            <button class="btn-action" onclick="clearSelection()" style="margin-left:auto;"><i class="fa fa-times"></i> Limpiar</button>
         </div>
 
         <div class="admin-card">
             <div style="overflow-x:auto;">
-                <table class="admin-table">
+                <table class="admin-table" id="mainTable">
                     <thead>
                         <tr>
-                            <th>Código</th>
+                            <th style="width:36px; cursor:default;">
+                                <input type="checkbox" class="row-checkbox" id="checkAll" onchange="toggleAll(this.checked)" title="Seleccionar todos">
+                            </th>
+                            <th onclick="sortBy('code')" id="th-code">Código <span class="sort-icon"><i class="fa fa-sort"></i></span></th>
                             <th>Tipo</th>
-                            <th>Descuento</th>
+                            <th onclick="sortBy('value')" id="th-value">Descuento <span class="sort-icon"><i class="fa fa-sort"></i></span></th>
                             <th>E. Gratis</th>
-                            <th>Min. Compra</th>
-                            <th>Usos</th>
+                            <th>Min.</th>
+                            <th onclick="sortBy('uses')" id="th-uses">Usos <span class="sort-icon"><i class="fa fa-sort"></i></span></th>
                             <th>Vigencia</th>
                             <th>Estado</th>
-                            <th>Acción</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="couponsBody">
-                        <tr><td colspan="9" style="text-align:center; padding:2rem; color:#52525b;">
+                        <tr><td colspan="10" class="empty-state">
                             <i class="fa fa-spinner fa-spin"></i> Cargando…
                         </td></tr>
                     </tbody>
@@ -332,17 +604,25 @@
         <h3 class="modal-title" id="couponModalTitle">Nuevo Cupón</h3>
         <input type="hidden" id="couponId">
 
-        <!-- Básico -->
+        <!-- Código con auto-generador (Feature 5) -->
         <div class="form-row">
             <div class="form-group">
                 <label>Código *</label>
-                <input type="text" id="couponCode" class="form-control" placeholder="ECU10" style="text-transform:uppercase; font-family:monospace; font-weight:700; letter-spacing:.05em;">
+                <div class="code-input-wrap">
+                    <input type="text" id="couponCode" class="form-control"
+                        placeholder="ECU10"
+                        style="text-transform:uppercase; font-family:monospace; font-weight:700; letter-spacing:.05em;"
+                        oninput="this.value=this.value.toUpperCase(); updatePreview()">
+                    <button class="code-gen-btn" onclick="autoGenerateCode()" title="Auto-generar código">
+                        <i class="fa fa-dice"></i> Generar
+                    </button>
+                </div>
             </div>
             <div class="form-group">
                 <label>Estado</label>
                 <select id="couponActive" class="form-control">
-                    <option value="true">✅ Activo</option>
-                    <option value="false">⛔ Inactivo</option>
+                    <option value="true" style="background:#1c1c1e; color:#f5f5f7;">✅ Activo</option>
+                    <option value="false" style="background:#1c1c1e; color:#f5f5f7;">⛔ Inactivo</option>
                 </select>
             </div>
         </div>
@@ -350,14 +630,14 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Tipo de descuento *</label>
-                <select id="couponType" class="form-control">
-                    <option value="percent">% Porcentaje</option>
-                    <option value="fixed">$ Monto fijo</option>
+                <select id="couponType" class="form-control" onchange="updatePreview()">
+                    <option value="percent" style="background:#1c1c1e; color:#f5f5f7;">% Porcentaje</option>
+                    <option value="fixed" style="background:#1c1c1e; color:#f5f5f7;">$ Monto fijo</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>Valor *</label>
-                <input type="number" id="couponValue" class="form-control" placeholder="10" min="0" step="0.01">
+                <input type="number" id="couponValue" class="form-control" placeholder="10" min="0" step="0.01" oninput="updatePreview()">
             </div>
         </div>
 
@@ -399,9 +679,20 @@
             </label>
         </div>
 
+        <!-- Preview Calculator (Feature 14) -->
+        <div class="section-title"><i class="fa fa-calculator"></i> Calculadora de Vista Previa</div>
+        <div style="display:flex; gap:.75rem; align-items:center; margin-bottom:.5rem;">
+            <input type="number" id="previewAmount" class="form-control" placeholder="Monto de prueba ($)" style="flex:1;" oninput="updatePreview()" min="0" step="0.01">
+        </div>
+        <div class="preview-calc" id="previewCalc" style="display:none;">
+            <div class="pc-label"><i class="fa fa-tag"></i> Resultado de descuento</div>
+            <div class="pc-result" id="previewResult">—</div>
+            <div class="pc-detail" id="previewDetail">—</div>
+        </div>
+
         <div class="modal-footer">
             <button class="btn-action" onclick="closeModal()">Cancelar</button>
-            <button class="btn-action primary" onclick="saveCoupon()">
+            <button class="btn-action primary" id="saveCouponBtn" onclick="saveCoupon()">
                 <i class="fa fa-save"></i> Guardar Cupón
             </button>
         </div>
@@ -414,7 +705,13 @@
 <script>
     let adminToken = '';
     let allCoupons = [];
+    let filteredCoupons = [];
+    let currentTab = 'all';
+    let sortCol = '';
+    let sortDir = 1;
+    let selectedIds = new Set();
 
+    // ── INIT ──────────────────────────────────────────────────────
     async function init() {
         adminToken = await Auth.requireAdmin();
         if (!adminToken) return;
@@ -435,19 +732,89 @@
     async function loadCoupons() {
         const res = await apiFetch('/api/admin/coupons');
         allCoupons = await res.json();
+        updateStats();
+        applyFilters();
+    }
+
+    // ── STATS (Feature 1) ─────────────────────────────────────────
+    function updateStats() {
+        const now = new Date();
+        const active  = allCoupons.filter(c => c.is_active && (!c.ends_at || new Date(c.ends_at) > now)).length;
+        const expired = allCoupons.filter(c => c.ends_at && new Date(c.ends_at) <= now).length;
+        const totalUses = allCoupons.reduce((s, c) => s + (c.redemption_count || 0), 0);
+        // Estimated savings: sum of (uses * value) for fixed, approximate for percent
+        const savings = allCoupons.reduce((s, c) => {
+            const uses = c.redemption_count || 0;
+            return s + (c.type === 'fixed' ? uses * parseFloat(c.value) : 0);
+        }, 0);
+        document.getElementById('statActive').textContent  = active;
+        document.getElementById('statUses').textContent    = totalUses;
+        document.getElementById('statSavings').textContent = '$' + savings.toFixed(0);
+        document.getElementById('statExpired').textContent = expired;
+    }
+
+    // ── FILTER / SEARCH / SORT ────────────────────────────────────
+    function setTab(tab) {
+        currentTab = tab;
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+        applyFilters();
+    }
+
+    function applyFilters() {
+        const q    = (document.getElementById('searchInput').value || '').toLowerCase();
+        const type = document.getElementById('typeFilter').value;
+        const now  = new Date();
+
+        filteredCoupons = allCoupons.filter(c => {
+            if (q && !c.code.toLowerCase().includes(q)) return false;
+            if (type && c.type !== type) return false;
+            const isExpired = c.ends_at && new Date(c.ends_at) <= now;
+            if (currentTab === 'active')   return c.is_active && !isExpired;
+            if (currentTab === 'inactive') return !c.is_active;
+            if (currentTab === 'expired')  return isExpired;
+            return true;
+        });
+
+        if (sortCol) {
+            filteredCoupons.sort((a, b) => {
+                let va = sortCol === 'code' ? a.code : sortCol === 'value' ? a.value : (a.redemption_count || 0);
+                let vb = sortCol === 'code' ? b.code : sortCol === 'value' ? b.value : (b.redemption_count || 0);
+                if (typeof va === 'string') return va.localeCompare(vb) * sortDir;
+                return (va - vb) * sortDir;
+            });
+        }
+
         renderTable();
     }
 
+    // ── SORT (Feature 10) ─────────────────────────────────────────
+    function sortBy(col) {
+        if (sortCol === col) sortDir *= -1;
+        else { sortCol = col; sortDir = 1; }
+
+        document.querySelectorAll('.admin-table th').forEach(th => th.classList.remove('sorted'));
+        const th = document.getElementById('th-' + col);
+        if (th) {
+            th.classList.add('sorted');
+            th.querySelector('.sort-icon').innerHTML = `<i class="fa fa-sort-${sortDir === 1 ? 'up' : 'down'}"></i>`;
+        }
+        applyFilters();
+    }
+
+    // ── RENDER TABLE ──────────────────────────────────────────────
     function renderTable() {
         const tbody = document.getElementById('couponsBody');
-        if (!allCoupons.length) {
-            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:2rem;color:#52525b;">No hay cupones aún</td></tr>';
+        if (!filteredCoupons.length) {
+            tbody.innerHTML = `<tr><td colspan="10" class="empty-state">
+                <i class="fa fa-ticket-alt"></i>
+                <div>No hay cupones que coincidan</div>
+            </td></tr>`;
             return;
         }
-        tbody.innerHTML = allCoupons.map(c => {
-            const max = c.max_redemptions || 0;
+        tbody.innerHTML = filteredCoupons.map(c => {
+            const max  = c.max_redemptions || 0;
             const used = c.redemption_count || 0;
-            const pct = max > 0 ? Math.min(100, (used / max) * 100) : 0;
+            const pct  = max > 0 ? Math.min(100, (used / max) * 100) : 0;
             const usesHtml = max > 0
                 ? `<div class="uses-bar">
                     <span style="font-weight:700;">${used}/${max}</span>
@@ -455,29 +822,52 @@
                   </div>`
                 : `<span style="color:#52525b;">${used} / ∞</span>`;
 
-            const now = new Date();
+            const now  = new Date();
             const ends = c.ends_at ? new Date(c.ends_at) : null;
             const starts = c.starts_at ? new Date(c.starts_at) : null;
             let vigencia = '—';
-            if (ends) vigencia = ends < now
-                ? `<span style="color:#ff453a;">Vencido ${fmtDate(ends)}</span>`
-                : `<span style="color:#34c759;">Hasta ${fmtDate(ends)}</span>`;
-            else if (starts) vigencia = `Desde ${fmtDate(starts)}`;
+            if (ends) {
+                if (ends < now) {
+                    vigencia = `<span class="countdown-chip past"><i class="fa fa-times-circle"></i> VENCIDO</span>`;
+                } else {
+                    const days = Math.ceil((ends - now) / 86400000);
+                    const cls  = days <= 7 ? 'soon' : 'far';
+                    vigencia = `<span class="countdown-chip ${cls}"><i class="fa fa-clock"></i> Vence en ${days}d</span>`;
+                }
+            } else if (starts) {
+                vigencia = `<span style="color:#71717a; font-size:12px;">Desde ${fmtDate(starts)}</span>`;
+            }
 
-            return `<tr>
-                <td style="font-weight:800; font-family:monospace; font-size:15px; color:#ff8c00;">${c.code}</td>
-                <td><span style="background:rgba(255,140,0,.1);color:#ff8c00;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;">${c.type === 'percent' ? '%' : '$'} ${c.type === 'percent' ? 'Porcentaje' : 'Fijo'}</span></td>
+            const isExpired = ends && ends < now;
+            const statusChip = isExpired
+                ? `<span class="status-chip chip-expired">Vencido</span>`
+                : `<span class="status-chip ${c.is_active ? 'chip-active' : 'chip-inactive'}">${c.is_active ? 'Activo' : 'Inactivo'}</span>`;
+
+            const checked = selectedIds.has(c.id) ? 'checked' : '';
+
+            return `<tr id="row-${c.id}" class="${selectedIds.has(c.id) ? 'bulk-selected' : ''}">
+                <td><input type="checkbox" class="row-checkbox" ${checked} onchange="toggleRowSelect('${c.id}', this.checked)"></td>
+                <td>
+                    <span style="font-weight:800; font-family:monospace; font-size:14px; color:#ff8c00;">${c.code}</span>
+                </td>
+                <td><span style="background:rgba(255,140,0,.1);color:#ff8c00;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;">${c.type === 'percent' ? '% Porcentaje' : '$ Fijo'}</span></td>
                 <td style="font-weight:700; color:#fff;">${c.type === 'percent' ? c.value + '%' : '$' + Number(c.value).toFixed(2)}</td>
-                <td>${c.free_shipping ? '<i class="fa fa-check" style="color:#34c759;"></i> Sí' : '<i class="fa fa-times" style="color:#52525b;"></i> No'}</td>
-                <td>${c.min_subtotal > 0 ? '$' + Number(c.min_subtotal).toFixed(2) : '—'}</td>
+                <td>${c.free_shipping ? '<i class="fa fa-check" style="color:#34c759;"></i>' : '<i class="fa fa-times" style="color:#52525b;"></i>'}</td>
+                <td style="font-size:12px;">${c.min_subtotal > 0 ? '$' + Number(c.min_subtotal).toFixed(2) : '—'}</td>
                 <td>${usesHtml}</td>
                 <td style="font-size:12px;">${vigencia}</td>
-                <td><span class="status-chip ${c.is_active ? 'chip-active' : 'chip-inactive'}">${c.is_active ? 'Activo' : 'Inactivo'}</span></td>
-                <td style="display:flex;gap:.5rem;">
-                    <button class="btn-action" onclick="editCoupon('${c.id}')"><i class="fa fa-edit"></i> Editar</button>
-                    <button class="btn-action danger" onclick="toggleCoupon('${c.id}', ${!c.is_active})" title="${c.is_active ? 'Desactivar' : 'Activar'}">
-                        <i class="fa fa-power-off"></i>
-                    </button>
+                <td>${statusChip}</td>
+                <td>
+                    <div class="actions-cell">
+                        <button class="btn-action" onclick="copyCouponCode('${c.code}')" title="Copiar código"><i class="fa fa-copy"></i></button>
+                        <button class="btn-action info" onclick="shareCoupon('${c.code}')" title="Compartir enlace"><i class="fa fa-share-alt"></i></button>
+                        <button class="btn-action" onclick="editCoupon('${c.id}')" title="Editar"><i class="fa fa-edit"></i></button>
+                        <button class="btn-action success" onclick="duplicateCoupon('${c.id}')" title="Duplicar"><i class="fa fa-copy"></i></button>
+                        <button class="btn-action danger" onclick="toggleCoupon('${c.id}', ${!c.is_active})" title="${c.is_active ? 'Desactivar' : 'Activar'}">
+                            <i class="fa fa-power-off"></i>
+                        </button>
+                        <button class="btn-action danger" onclick="deleteCoupon('${c.id}', '${c.code}')" title="Eliminar"><i class="fa fa-trash"></i></button>
+                    </div>
                 </td>
             </tr>`;
         }).join('');
@@ -487,6 +877,98 @@
         return d.toLocaleDateString('es-EC', { day:'2-digit', month:'short', year:'2-digit' });
     }
 
+    // ── BULK SELECT (Feature 12) ──────────────────────────────────
+    function toggleRowSelect(id, checked) {
+        if (checked) selectedIds.add(id);
+        else selectedIds.delete(id);
+        updateBulkBar();
+        const row = document.getElementById('row-' + id);
+        if (row) row.classList.toggle('bulk-selected', checked);
+    }
+
+    function toggleAll(checked) {
+        filteredCoupons.forEach(c => {
+            if (checked) selectedIds.add(c.id);
+            else selectedIds.delete(c.id);
+        });
+        updateBulkBar();
+        renderTable();
+    }
+
+    function clearSelection() {
+        selectedIds.clear();
+        document.getElementById('checkAll').checked = false;
+        updateBulkBar();
+        renderTable();
+    }
+
+    function updateBulkBar() {
+        const bar = document.getElementById('bulkBar');
+        const count = selectedIds.size;
+        bar.classList.toggle('visible', count > 0);
+        document.getElementById('bulkCount').textContent = `${count} seleccionado${count !== 1 ? 's' : ''}`;
+    }
+
+    async function bulkToggle(newActive) {
+        const ids = [...selectedIds];
+        if (!ids.length) return;
+        await Promise.all(ids.map(id =>
+            apiFetch(`/api/admin/coupons/${id}`, { method: 'PATCH', body: JSON.stringify({ is_active: newActive }) })
+        ));
+        clearSelection();
+        await loadCoupons();
+        showToast(newActive ? 'Cupones activados' : 'Cupones desactivados', 'success');
+    }
+
+    // ── COPY CODE (Feature 4) ─────────────────────────────────────
+    function copyCouponCode(code) {
+        navigator.clipboard.writeText(code).then(() => {
+            showToast(`Código <strong>${code}</strong> copiado al portapapeles`, 'success');
+        }).catch(() => showToast('No se pudo copiar', 'error'));
+    }
+
+    // ── SHARE COUPON (Feature 13) ─────────────────────────────────
+    function shareCoupon(code) {
+        const url = `${location.origin}/?cupon=${encodeURIComponent(code)}`;
+        navigator.clipboard.writeText(url).then(() => {
+            showToast(`Enlace copiado: …/?cupon=${code}`, 'info');
+        }).catch(() => showToast('No se pudo copiar', 'error'));
+    }
+
+    // ── AUTO-GENERATE CODE (Feature 5) ────────────────────────────
+    function autoGenerateCode() {
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        let code = 'ECU';
+        for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+        document.getElementById('couponCode').value = code;
+        updatePreview();
+    }
+
+    // ── PREVIEW CALCULATOR (Feature 14) ──────────────────────────
+    function updatePreview() {
+        const amount = parseFloat(document.getElementById('previewAmount').value);
+        const type   = document.getElementById('couponType').value;
+        const value  = parseFloat(document.getElementById('couponValue').value) || 0;
+        const calc   = document.getElementById('previewCalc');
+        const result = document.getElementById('previewResult');
+        const detail = document.getElementById('previewDetail');
+
+        if (!amount || !value) { calc.style.display = 'none'; return; }
+        calc.style.display = 'block';
+
+        let discount = 0;
+        if (type === 'percent') {
+            discount = amount * value / 100;
+            detail.textContent = `${value}% de $${amount.toFixed(2)}`;
+        } else {
+            discount = Math.min(value, amount);
+            detail.textContent = `Descuento fijo de $${value.toFixed(2)}`;
+        }
+        const final = Math.max(0, amount - discount);
+        result.innerHTML = `<span style="color:#ff453a;">-$${discount.toFixed(2)}</span> → Total final: <span style="color:#34c759;">$${final.toFixed(2)}</span>`;
+    }
+
+    // ── MODAL OPEN / CLOSE ────────────────────────────────────────
     function openCreate() {
         document.getElementById('couponId').value = '';
         document.getElementById('couponCode').value = '';
@@ -499,6 +981,8 @@
         document.getElementById('couponStartsAt').value = '';
         document.getElementById('couponEndsAt').value = '';
         document.getElementById('couponModalTitle').textContent = 'Nuevo Cupón';
+        document.getElementById('previewAmount').value = '';
+        document.getElementById('previewCalc').style.display = 'none';
         document.getElementById('couponModal').classList.add('active');
     }
 
@@ -516,66 +1000,148 @@
         document.getElementById('couponStartsAt').value = c.starts_at ? c.starts_at.slice(0, 10) : '';
         document.getElementById('couponEndsAt').value = c.ends_at ? c.ends_at.slice(0, 10) : '';
         document.getElementById('couponModalTitle').textContent = `Editar Cupón — ${c.code}`;
+        document.getElementById('previewAmount').value = '';
+        document.getElementById('previewCalc').style.display = 'none';
         document.getElementById('couponModal').classList.add('active');
+        updatePreview();
     }
 
-    function toLocalInput(iso) {
-        const d = new Date(iso);
-        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-        return d.toISOString().slice(0, 16);
+    // ── DUPLICATE (Feature 8) ─────────────────────────────────────
+    function duplicateCoupon(id) {
+        const c = allCoupons.find(x => x.id === id);
+        if (!c) return;
+        document.getElementById('couponId').value = '';
+        document.getElementById('couponCode').value = '';
+        document.getElementById('couponType').value = c.type;
+        document.getElementById('couponValue').value = c.value;
+        document.getElementById('couponActive').value = 'false';
+        document.getElementById('couponFreeShipping').checked = !!c.free_shipping;
+        document.getElementById('couponMinSubtotal').value = c.min_subtotal || '';
+        document.getElementById('couponMaxRedemptions').value = c.max_redemptions || '';
+        document.getElementById('couponStartsAt').value = c.starts_at ? c.starts_at.slice(0, 10) : '';
+        document.getElementById('couponEndsAt').value = c.ends_at ? c.ends_at.slice(0, 10) : '';
+        document.getElementById('couponModalTitle').textContent = `Duplicar Cupón — nuevo código requerido`;
+        document.getElementById('previewAmount').value = '';
+        document.getElementById('previewCalc').style.display = 'none';
+        document.getElementById('couponModal').classList.add('active');
     }
 
     function closeModal() {
         document.getElementById('couponModal').classList.remove('active');
     }
 
+    // ── SAVE COUPON ───────────────────────────────────────────────
     async function saveCoupon() {
-        const id = document.getElementById('couponId').value;
-        const code = document.getElementById('couponCode').value.trim().toUpperCase();
-        const type = document.getElementById('couponType').value;
-        const value = parseFloat(document.getElementById('couponValue').value);
-        const is_active = document.getElementById('couponActive').value === 'true';
+        const id            = document.getElementById('couponId').value;
+        const code          = document.getElementById('couponCode').value.trim().toUpperCase();
+        const type          = document.getElementById('couponType').value;
+        const value         = parseFloat(document.getElementById('couponValue').value);
+        const is_active     = document.getElementById('couponActive').value === 'true';
         const free_shipping = document.getElementById('couponFreeShipping').checked;
-        const min_subtotal = parseFloat(document.getElementById('couponMinSubtotal').value) || 0;
+        const min_subtotal  = parseFloat(document.getElementById('couponMinSubtotal').value) || 0;
         const max_redemptions = parseInt(document.getElementById('couponMaxRedemptions').value) || null;
-        const startsRaw = document.getElementById('couponStartsAt').value;
-        const endsRaw = document.getElementById('couponEndsAt').value;
-        const starts_at = startsRaw ? startsRaw + 'T00:00:00' : null;
-        const ends_at = endsRaw ? endsRaw + 'T23:59:59' : null;
+        const startsRaw     = document.getElementById('couponStartsAt').value;
+        const endsRaw       = document.getElementById('couponEndsAt').value;
+        const starts_at     = startsRaw ? startsRaw + 'T00:00:00' : null;
+        const ends_at       = endsRaw   ? endsRaw   + 'T23:59:59' : null;
 
         if (!code || isNaN(value)) {
-            alert('Código y valor son obligatorios.');
+            showToast('Código y valor son obligatorios.', 'error');
             return;
         }
 
         const payload = { code, type, value, is_active, free_shipping, min_subtotal, max_redemptions, starts_at, ends_at };
 
-        const btn = document.querySelector('.modal-footer .btn-action.primary');
+        const btn = document.getElementById('saveCouponBtn');
         btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Guardando…';
         btn.disabled = true;
 
         const res = id
             ? await apiFetch(`/api/admin/coupons/${id}`, { method: 'PATCH', body: JSON.stringify(payload) })
-            : await apiFetch('/api/admin/coupons', { method: 'POST', body: JSON.stringify(payload) });
+            : await apiFetch('/api/admin/coupons',        { method: 'POST',  body: JSON.stringify(payload) });
 
         btn.innerHTML = '<i class="fa fa-save"></i> Guardar Cupón';
         btn.disabled = false;
 
         if (res.ok) {
             closeModal();
-            loadCoupons();
+            await loadCoupons();
+            showToast(id ? 'Cupón actualizado correctamente' : 'Cupón creado correctamente', 'success');
         } else {
             const err = await res.json().catch(() => ({}));
-            alert('Error: ' + (err.error || res.status));
+            showToast('Error: ' + (err.error || res.status), 'error');
         }
     }
 
+    // ── TOGGLE (Feature 12 per-row) ───────────────────────────────
     async function toggleCoupon(id, newActive) {
-        const res = await apiFetch(`/api/admin/coupons/${id}`, { method: 'PATCH', body: JSON.stringify({ is_active: newActive }) });
-        if (res.ok) loadCoupons();
+        const res = await apiFetch(`/api/admin/coupons/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify({ is_active: newActive })
+        });
+        if (res.ok) {
+            await loadCoupons();
+            showToast(newActive ? 'Cupón activado' : 'Cupón desactivado', 'success');
+        }
     }
 
-    async function signOutAdmin() { await _supabase.auth.signOut(); location.href = 'login.html'; }
+    // ── DELETE (Feature 7) ────────────────────────────────────────
+    async function deleteCoupon(id, code) {
+        if (!confirm(`¿Eliminar el cupón "${code}"? Esta acción no se puede deshacer.`)) return;
+        const res = await apiFetch(`/api/admin/coupons/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+            await loadCoupons();
+            showToast(`Cupón ${code} eliminado`, 'success');
+        } else {
+            showToast('Error al eliminar el cupón', 'error');
+        }
+    }
+
+    // ── EXPORT CSV (Feature 9) ────────────────────────────────────
+    function exportCSV() {
+        const headers = ['Código','Tipo','Valor','Envío Gratis','Min. Compra','Límite Usos','Usos Realizados','Válido Desde','Válido Hasta','Activo'];
+        const rows = allCoupons.map(c => [
+            c.code,
+            c.type === 'percent' ? 'Porcentaje' : 'Fijo',
+            c.value,
+            c.free_shipping ? 'Sí' : 'No',
+            c.min_subtotal || 0,
+            c.max_redemptions || 'Ilimitado',
+            c.redemption_count || 0,
+            c.starts_at ? c.starts_at.slice(0,10) : '',
+            c.ends_at   ? c.ends_at.slice(0,10)   : '',
+            c.is_active ? 'Sí' : 'No'
+        ]);
+        const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+        const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement('a');
+        a.href = url;
+        a.download = `cupones_${new Date().toISOString().slice(0,10)}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('CSV exportado correctamente', 'success');
+    }
+
+    // ── TOAST (Feature 15) ────────────────────────────────────────
+    function showToast(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        const iconMap = { success: 'fa-check-circle', error: 'fa-times-circle', info: 'fa-info-circle' };
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `<i class="fa ${iconMap[type] || 'fa-check-circle'} toast-icon"></i><span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 320);
+        }, 3000);
+    }
+
+    // ── SIGN OUT ──────────────────────────────────────────────────
+    async function signOutAdmin() {
+        await _supabase.auth.signOut();
+        location.href = 'login.html';
+    }
 
     init();
 </script>

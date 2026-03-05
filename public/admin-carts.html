@@ -8,42 +8,200 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: var(--secondary); color: var(--bg-light); }
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            background: #000;
+            color: #e2e2e7;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+        }
+
         .admin-layout { min-height: 100vh; background: #000; }
+
+        /* ── Sidebar ── */
         .admin-sidebar {
-            background: #050505; border-right: 1px solid rgba(255,255,255,0.08);
-            padding: 1.5rem 1rem; display: flex; flex-direction: column; gap: 0.2rem;
-            overflow-y: auto; position: fixed; left: 0; top: 0;
+            background: #050505;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            padding: 1.5rem 1rem;
+            display: flex; flex-direction: column; gap: 0.2rem;
+            overflow-y: auto;
+            position: fixed; left: 0; top: 0;
             height: 100vh; width: 280px; z-index: 1100;
         }
-        .sidebar-brand { padding: 0 1rem 2rem; font-size: 1.2rem; font-weight: 900; color: var(--white); display: flex; align-items: center; gap: 10px; }
+        .sidebar-brand { padding: 0 1rem 2rem; font-size: 1.2rem; font-weight: 900; color: #fff; display: flex; align-items: center; gap: 10px; }
         .sidebar-brand span { color: var(--primary); }
         .sidebar-group { font-size: 10px; font-weight: 800; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin: 1.5rem 1rem 0.5rem; }
-        .sidebar-item { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 10px; cursor: pointer; font-size: 13.5px; font-weight: 500; color: #a1a1aa; text-decoration: none; transition: 0.2s; border: none; background: none; width: 100%; text-align: left; }
-        .sidebar-item:hover { background: rgba(255,255,255,0.04); color: var(--white); }
+        .sidebar-item { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 10px; cursor: pointer; font-size: 13.5px; font-weight: 500; color: #a1a1aa; text-decoration: none; transition: 0.2s; border: none; background: none; width: 100%; text-align: left; font-family: 'Inter', sans-serif; }
+        .sidebar-item:hover { background: rgba(255,255,255,0.04); color: #fff; }
         .sidebar-item.active { background: var(--primary) !important; color: #fff !important; box-shadow: 0 4px 12px var(--primary-glow); font-weight: 700; }
         .sidebar-footer { margin-top: auto; padding: 1rem 0 0; border-top: 1px solid rgba(255,255,255,.06); }
         .sidebar-item-danger { color: #ff6b6b !important; }
-        .sidebar-item-danger:hover { background: rgba(255,107,107,.1) !important; }
-        .admin-content { padding: 2.5rem; overflow-x: auto; background: var(--bg-light); margin-left: 280px; min-height: 100vh; }
-        .admin-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .sidebar-item-danger:hover { background: rgba(255,107,107,.1) !important; color: #ff8080 !important; }
+
+        /* ── Content ── */
+        .admin-content { padding: 2.5rem; background: #050505; margin-left: 280px; min-height: 100vh; }
+
+        /* ── Page Header ── */
+        .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap; }
+
+        /* ── Stats Grid ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card { background: #111114; border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 1.1rem 1.3rem; }
+        .stat-label { font-size: 11px; font-weight: 700; color: #71717a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+        .stat-value { font-size: 1.6rem; font-weight: 900; color: #fff; line-height: 1.1; }
+        .stat-value.purple { color: #a78bfa; }
+        .stat-value.orange { color: #ff8c00; }
+        .stat-value.green  { color: #34c759; }
+        .stat-value.amber  { color: #f59e0b; }
+
+        /* ── Top Products Widget ── */
+        .widget-card { background: #111114; border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 1.2rem 1.4rem; margin-bottom: 1.5rem; }
+        .widget-title { font-size: 12px; font-weight: 800; color: #71717a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+        .top-product-row { display: flex; align-items: center; gap: 0.75rem; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        .top-product-row:last-child { border-bottom: none; }
+        .top-rank { width: 24px; height: 24px; border-radius: 8px; background: rgba(167,139,250,0.12); color: #a78bfa; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .top-rank.gold   { background: rgba(245,158,11,0.12); color: #f59e0b; }
+        .top-rank.silver { background: rgba(156,163,175,0.12); color: #9ca3af; }
+        .top-rank.bronze { background: rgba(180,120,60,0.12); color: #b4783c; }
+        .top-prod-name { font-size: 13px; font-weight: 600; color: #e2e2e7; flex: 1; }
+        .top-prod-count { font-size: 12px; color: #71717a; font-weight: 700; }
+
+        /* ── Toolbar ── */
+        .toolbar { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .search-wrap { position: relative; flex: 1; min-width: 200px; }
+        .search-wrap input {
+            width: 100%; background: #1c1c1e;
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+            color: #f5f5f7 !important; padding: 10px 36px 10px 38px;
+            font-size: 13px; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s;
+        }
+        .search-wrap input:focus { border-color: rgba(255,140,0,0.5); }
+        .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #71717a; pointer-events: none; font-size: 13px; }
+
+        .toolbar-select {
+            background: #1c1c1e;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: #f5f5f7 !important;
+            padding: 9px 14px;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            cursor: pointer;
+        }
+        .toolbar-select option { background: #1c1c1e; color: #f5f5f7; }
+
+        /* ── Date Filter Tabs ── */
+        .filter-tabs { display: flex; gap: 4px; background: #111114; border-radius: 12px; padding: 4px; border: 1px solid rgba(255,255,255,0.07); }
+        .filter-tab { padding: 6px 14px; border-radius: 8px; border: none; background: none; color: #71717a; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; white-space: nowrap; font-family: 'Inter', sans-serif; }
+        .filter-tab.active { background: var(--primary); color: #fff; }
+
+        /* ── Sort Button ── */
+        .sort-btn {
+            background: #1c1c1e; border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; color: #e2e2e7;
+            padding: 9px 14px; font-size: 13px; font-family: 'Inter', sans-serif;
+            cursor: pointer; display: flex; align-items: center; gap: 6px;
+            white-space: nowrap;
+        }
+        .sort-btn:hover { border-color: rgba(255,140,0,0.4); }
+        .sort-btn.active { border-color: rgba(255,140,0,0.5); color: #ff8c00; }
+
+        /* ── Admin Card / Table ── */
+        .admin-card { background: #111114; border: 1px solid rgba(255,255,255,0.07); border-radius: 20px; padding: 1.5rem; margin-bottom: 1.5rem; }
         .admin-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
-        .admin-table th { padding: 12px 16px; background: rgba(255,255,255,0.02); color: var(--text-dim); font-weight: 600; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
-        .admin-table td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); color: #e2e2e7; vertical-align: middle; }
+        .admin-table th { padding: 12px 16px; background: rgba(255,255,255,0.02); color: #71717a; font-weight: 600; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid rgba(255,255,255,0.06); white-space: nowrap; }
+        .admin-table td { padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); color: #e2e2e7; vertical-align: middle; }
+        .admin-table tr:last-child td { border-bottom: none; }
+        .admin-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+        /* ── Customer Avatar ── */
+        .customer-avatar {
+            width: 34px; height: 34px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 800;
+            flex-shrink: 0;
+            color: #fff;
+        }
+        .avatar-group { display: flex; align-items: center; gap: 10px; }
+
+        /* ── Product thumbnail in table ── */
+        .prod-mini-thumb { width: 28px; height: 28px; border-radius: 6px; object-fit: cover; background: #2a2a30; border: 1px solid rgba(255,255,255,0.08); display: inline-block; vertical-align: middle; margin-right: 4px; }
+
+        /* ── Items list ── */
+        .items-list { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+        .item-chip { background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: #a78bfa; white-space: nowrap; }
+
+        /* ── Status chip ── */
         .status-chip { display: inline-block; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 8px; text-transform: uppercase; }
         .s-pendiente { background: rgba(245,158,11,0.15); color: #f59e0b; }
-        .s-recibido { background: rgba(52,199,89,0.1); color: #34c759; }
-        .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
-        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-        .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.2rem 1.5rem; }
-        .stat-label { font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
-        .stat-value { font-size: 1.8rem; font-weight: 900; color: #fff; }
-        .items-list { display: flex; flex-wrap: wrap; gap: 4px; }
-        .item-chip { background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: #a78bfa; }
+
+        /* ── Buttons ── */
+        .btn-action {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px; padding: 6px 14px;
+            cursor: pointer; font-size: 13px; font-weight: 500;
+            color: #e2e2e7; transition: 0.2s;
+            display: inline-flex; align-items: center; gap: 6px;
+            font-family: 'Inter', sans-serif; text-decoration: none;
+        }
+        .btn-action:hover { background: rgba(255,255,255,0.09); }
+        .btn-action.primary { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 600; }
+        .btn-action.primary:hover { opacity: 0.88; }
+        .btn-action.green { background: rgba(52,199,89,0.1); border-color: rgba(52,199,89,0.3); color: #34c759; }
+        .btn-action.blue { background: rgba(96,165,250,0.1); border-color: rgba(96,165,250,0.3); color: #60a5fa; }
+        .btn-action.sm { padding: 5px 10px; font-size: 12px; border-radius: 8px; }
+
+        /* ── Cart Age ── */
+        .cart-age { font-size: 11px; color: #71717a; margin-top: 2px; }
+
+        /* ── Pagination ── */
+        .pagination { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+        .page-info { font-size: 12px; color: #71717a; }
+        .page-btns { display: flex; gap: 4px; }
+        .page-btn {
+            background: #1c1c1e; border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px; color: #e2e2e7; padding: 6px 12px;
+            cursor: pointer; font-size: 12px; font-weight: 600;
+            font-family: 'Inter', sans-serif; transition: 0.2s;
+        }
+        .page-btn:hover { border-color: rgba(255,140,0,0.4); }
+        .page-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* ── Auto-refresh countdown ── */
+        .refresh-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px; padding: 7px 14px; font-size: 13px; color: #71717a;
+        }
+        .refresh-dot { width: 7px; height: 7px; border-radius: 50%; background: #34c759; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+        #refreshCountdown { font-weight: 700; color: #ff8c00; min-width: 20px; display: inline-block; }
+
+        /* ── Empty State ── */
+        .empty-state { text-align: center; padding: 5rem 2rem; color: #71717a; }
+        .empty-state-icon { font-size: 4rem; margin-bottom: 1.5rem; display: block; opacity: 0.3; }
+        .empty-state h3 { font-size: 1.1rem; font-weight: 700; color: #a1a1aa; margin-bottom: 0.5rem; }
+        .empty-state p { font-size: 13px; max-width: 300px; margin: 0 auto; }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
     </style>
 </head>
 <body>
 <div class="admin-layout">
+
+    <!-- Sidebar -->
     <aside class="admin-sidebar">
         <div class="sidebar-brand">🎮 Ecugaming <span>Import</span></div>
         <div class="sidebar-group">Principal</div>
@@ -57,52 +215,119 @@
         <div class="sidebar-group">Configuración</div>
         <a href="admin-settings.html" class="sidebar-item"><i class="fa fa-cog"></i> Ajustes</a>
         <div class="sidebar-footer">
-            <button class="sidebar-item sidebar-item-danger" onclick="signOutAdmin()"><i class="fa fa-sign-out-alt"></i> Cerrar Sesión</button>
+            <button class="sidebar-item sidebar-item-danger" onclick="signOutAdmin()">
+                <i class="fa fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
         </div>
     </aside>
 
+    <!-- Main Content -->
     <div class="admin-content">
+
+        <!-- Page Header -->
         <div class="page-header">
-            <h2 style="font-size:1.3rem;font-weight:800;color:#f5f5f7;margin:0;">Carritos Activos</h2>
-            <button onclick="loadCarts()" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;padding:8px 16px;color:#e2e2e7;cursor:pointer;font-size:13px;">
-                <i class="fa fa-sync"></i> Actualizar
-            </button>
+            <div>
+                <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin:0 0 4px;">Carritos Abandonados</h2>
+                <span style="font-size:12px; color:#71717a;">Órdenes pendientes de pago</span>
+            </div>
+            <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap;">
+                <!-- Auto-refresh countdown (feature 15) -->
+                <div class="refresh-badge">
+                    <span class="refresh-dot"></span>
+                    Auto-actualiza en <span id="refreshCountdown">60</span>s
+                </div>
+                <button class="btn-action" onclick="exportCartsCSV()"><i class="fa fa-download"></i> Exportar CSV</button>
+                <button class="btn-action primary" onclick="loadCarts()"><i class="fa fa-sync"></i> Actualizar</button>
+            </div>
         </div>
 
-        <!-- Stats -->
-        <div class="stats-row">
+        <!-- Stats (features 3 improved) -->
+        <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-label">Órdenes Pendientes</div>
+                <div class="stat-label">Carritos Activos</div>
                 <div class="stat-value" id="statPending">—</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Total en Carritos</div>
-                <div class="stat-value" id="statTotal">—</div>
+                <div class="stat-value purple" id="statTotal">—</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Clientes Activos</div>
-                <div class="stat-value" id="statClients">—</div>
+                <div class="stat-label">Clientes Únicos</div>
+                <div class="stat-value green" id="statClients">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Valor Promedio</div>
+                <div class="stat-value orange" id="statAvgValue">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Antigüedad Prom.</div>
+                <div class="stat-value amber" id="statAvgAge">—</div>
             </div>
         </div>
 
+        <!-- Most Abandoned Products Widget (feature 13) -->
+        <div class="widget-card" id="topProductsWidget" style="display:none;">
+            <div class="widget-title"><i class="fa fa-fire" style="color:#ff8c00;"></i> Productos más abandonados</div>
+            <div id="topProductsList"></div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <!-- Search (feature 2) -->
+            <div class="search-wrap">
+                <i class="fa fa-search search-icon"></i>
+                <input type="text" id="cartSearch" placeholder="Buscar por cliente o email..." oninput="applyCartsFilter()">
+            </div>
+            <!-- Payment method filter (feature 14) -->
+            <select class="toolbar-select" id="paymentFilter" onchange="applyCartsFilter()">
+                <option value="">Todos los pagos</option>
+                <option value="transferencia">Transferencia</option>
+                <option value="efectivo">Efectivo</option>
+                <option value="tarjeta">Tarjeta</option>
+                <option value="paypal">PayPal</option>
+            </select>
+            <!-- Sort by total (feature 4) -->
+            <button class="sort-btn active" id="sortTotalBtn" onclick="toggleSortTotal()">
+                <i class="fa fa-sort-amount-down"></i>
+                <span id="sortTotalLabel">Mayor Total</span>
+            </button>
+        </div>
+
+        <!-- Date Filter Tabs (feature 1) -->
+        <div style="margin-bottom:1rem;">
+            <div class="filter-tabs">
+                <button class="filter-tab" data-period="today"  onclick="setDateTab(this,'today')">Hoy</button>
+                <button class="filter-tab" data-period="week"   onclick="setDateTab(this,'week')">Esta Semana</button>
+                <button class="filter-tab" data-period="month"  onclick="setDateTab(this,'month')">Este Mes</button>
+                <button class="filter-tab active" data-period="all" onclick="setDateTab(this,'all')">Todos</button>
+            </div>
+        </div>
+
+        <!-- Table Card -->
         <div class="admin-card">
             <div style="overflow-x:auto;">
                 <table class="admin-table">
                     <thead>
                         <tr>
                             <th>Cliente</th>
-                            <th>Email</th>
                             <th>Productos</th>
                             <th>Total</th>
                             <th>Método Pago</th>
                             <th>Fecha</th>
                             <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="cartsBody">
                         <tr><td colspan="7" style="text-align:center;color:#555;padding:3rem;">Cargando...</td></tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Pagination (feature 12) -->
+            <div class="pagination" id="paginationWrap" style="display:none;">
+                <div class="page-info" id="pageInfo">—</div>
+                <div class="page-btns" id="pageBtns"></div>
             </div>
         </div>
     </div>
@@ -112,11 +337,27 @@
 <script src="/lib/supabase-client.js?v=1.0.6"></script>
 <script src="/lib/auth.js?v=1.0.6"></script>
 <script>
-    let adminToken = '';
+    /* ─── State ─── */
+    let adminToken   = '';
+    let allOrders    = [];
+    let filteredOrders = [];
+    let currentPage  = 1;
+    const PAGE_SIZE  = 15;
+    let datePeriod   = 'all';
+    let sortTotalDesc = true;
+    let autoRefreshTimer = null;
+    let countdownTimer   = null;
+    let countdownSecs    = 60;
+
+    const SUPABASE_URL = window.SUPABASE_URL || 'https://dpomkchvjpdkndkksphy.supabase.co';
+    const AVATAR_COLORS = ['#a78bfa','#60a5fa','#34c759','#f59e0b','#ff6b6b','#ff8c00','#22d3ee','#f472b6'];
+
+    /* ─── Init ─── */
     async function init() {
         adminToken = await Auth.requireAdmin();
         if (!adminToken) return;
-        loadCarts();
+        await loadCarts();
+        startAutoRefresh();
     }
 
     async function apiFetch(url, opts = {}) {
@@ -128,45 +369,363 @@
 
     async function signOutAdmin() { await _supabase.auth.signOut(); location.href = 'login.html'; }
 
+    /* ─── Load Carts ─── */
     async function loadCarts() {
-        const res = await apiFetch('/api/admin/orders?status=pendiente&limit=100');
-        const data = await res.json();
-        const orders = Array.isArray(data) ? data : (data.orders || []);
+        try {
+            const res = await apiFetch('/api/admin/orders?status=pendiente&limit=500');
+            const data = await res.json();
+            allOrders = Array.isArray(data) ? data : (data.orders || []);
+        } catch(e) {
+            allOrders = [];
+        }
+        currentPage = 1;
+        updateStats();
+        buildTopProductsWidget();
+        applyCartsFilter();
+        resetCountdown();
+    }
+
+    /* ─── Stats (feature 3 improved) ─── */
+    function updateStats() {
+        const total = allOrders.reduce((s, o) => s + parseFloat(o.total || 0), 0);
+        const uniqueClients = new Set(allOrders.map(o => o.customer_id || o.customer?.email)).size;
+        const avg   = allOrders.length ? total / allOrders.length : 0;
+
+        // Average age in days
+        const now = Date.now();
+        const totalAgeDays = allOrders.reduce((s, o) => {
+            if (!o.created_at) return s;
+            return s + (now - new Date(o.created_at).getTime()) / 86400000;
+        }, 0);
+        const avgAgeDays = allOrders.length ? (totalAgeDays / allOrders.length) : 0;
+
+        document.getElementById('statPending').textContent  = allOrders.length;
+        document.getElementById('statTotal').textContent    = '$' + total.toFixed(2);
+        document.getElementById('statClients').textContent  = uniqueClients;
+        document.getElementById('statAvgValue').textContent = '$' + avg.toFixed(2);
+        document.getElementById('statAvgAge').textContent   = avgAgeDays < 1
+            ? '< 1 día'
+            : Math.round(avgAgeDays) + ' día' + (Math.round(avgAgeDays) !== 1 ? 's' : '');
+    }
+
+    /* ─── Most Abandoned Products Widget (feature 13) ─── */
+    function buildTopProductsWidget() {
+        const counts = {};
+        allOrders.forEach(o => {
+            const items = o.items || o.order_items || [];
+            items.forEach(i => {
+                const name = i.name || i.product?.name || 'Producto';
+                counts[name] = (counts[name] || 0) + (i.quantity || i.qty || 1);
+            });
+        });
+
+        const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 3);
+        if (!sorted.length) { document.getElementById('topProductsWidget').style.display = 'none'; return; }
+
+        const rankClasses = ['gold','silver','bronze'];
+        const rankLabels  = ['1°','2°','3°'];
+        document.getElementById('topProductsList').innerHTML = sorted.map(([name, qty], i) => `
+            <div class="top-product-row">
+                <div class="top-rank ${rankClasses[i]}">${rankLabels[i]}</div>
+                <div class="top-prod-name">${escHtml(name)}</div>
+                <div class="top-prod-count">${qty} unidad${qty !== 1 ? 'es' : ''} en carritos</div>
+            </div>
+        `).join('');
+        document.getElementById('topProductsWidget').style.display = 'block';
+    }
+
+    /* ─── Date Tabs (feature 1) ─── */
+    function setDateTab(el, period) {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+        datePeriod = period;
+        currentPage = 1;
+        applyCartsFilter();
+    }
+
+    /* ─── Sort (feature 4) ─── */
+    function toggleSortTotal() {
+        sortTotalDesc = !sortTotalDesc;
+        const btn = document.getElementById('sortTotalBtn');
+        const lbl = document.getElementById('sortTotalLabel');
+        btn.querySelector('i').className = sortTotalDesc ? 'fa fa-sort-amount-down' : 'fa fa-sort-amount-up';
+        lbl.textContent = sortTotalDesc ? 'Mayor Total' : 'Menor Total';
+        currentPage = 1;
+        applyCartsFilter();
+    }
+
+    /* ─── Filter ─── */
+    function applyCartsFilter() {
+        const q       = (document.getElementById('cartSearch').value || '').toLowerCase().trim();
+        const payment = document.getElementById('paymentFilter').value.toLowerCase();
+        const now     = new Date();
+
+        filteredOrders = allOrders.filter(o => {
+            const customer = o.customer || {};
+            const name  = [customer.first_name, customer.last_name].filter(Boolean).join(' ').toLowerCase();
+            const email = (customer.email || '').toLowerCase();
+
+            // Search (feature 2)
+            const matchQ = !q || name.includes(q) || email.includes(q);
+
+            // Payment method (feature 14)
+            const matchPay = !payment || (o.payment_method || '').toLowerCase().includes(payment);
+
+            // Date filter (feature 1)
+            let matchDate = true;
+            if (o.created_at && datePeriod !== 'all') {
+                const created = new Date(o.created_at);
+                if (datePeriod === 'today') {
+                    matchDate = created.toDateString() === now.toDateString();
+                } else if (datePeriod === 'week') {
+                    const weekAgo = new Date(now); weekAgo.setDate(now.getDate() - 7);
+                    matchDate = created >= weekAgo;
+                } else if (datePeriod === 'month') {
+                    matchDate = created.getMonth() === now.getMonth() && created.getFullYear() === now.getFullYear();
+                }
+            }
+
+            return matchQ && matchPay && matchDate;
+        });
+
+        // Sort by total (feature 4)
+        filteredOrders.sort((a, b) => {
+            const va = parseFloat(a.total || 0);
+            const vb = parseFloat(b.total || 0);
+            return sortTotalDesc ? vb - va : va - vb;
+        });
+
+        renderPage();
+    }
+
+    /* ─── Render Page (with pagination) ─── */
+    function renderPage() {
+        const totalItems = filteredOrders.length;
+        const totalPages = Math.ceil(totalItems / PAGE_SIZE) || 1;
+        if (currentPage > totalPages) currentPage = 1;
+
+        const start  = (currentPage - 1) * PAGE_SIZE;
+        const end    = Math.min(start + PAGE_SIZE, totalItems);
+        const pageOrders = filteredOrders.slice(start, end);
+
+        renderCartsTable(pageOrders);
+        renderPagination(totalItems, totalPages, start, end);
+    }
+
+    /* ─── Render Table ─── */
+    function renderCartsTable(orders) {
         const tbody = document.getElementById('cartsBody');
 
         if (!orders.length) {
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#555;padding:3rem;"><i class="fa fa-shopping-basket" style="font-size:2rem;display:block;margin-bottom:1rem;"></i>No hay carritos pendientes</td></tr>';
-            document.getElementById('statPending').textContent = '0';
-            document.getElementById('statTotal').textContent = '$0';
-            document.getElementById('statClients').textContent = '0';
+            tbody.innerHTML = `<tr><td colspan="7">
+                <div class="empty-state">
+                    <i class="fa fa-shopping-basket empty-state-icon"></i>
+                    <h3>No hay carritos</h3>
+                    <p>No se encontraron carritos que coincidan con los filtros aplicados.</p>
+                </div>
+            </td></tr>`;
             return;
         }
 
-        const totalVal = orders.reduce((s, o) => s + parseFloat(o.total || 0), 0);
-        const uniqueClients = new Set(orders.map(o => o.customer_id || o.customer?.email)).size;
-        document.getElementById('statPending').textContent = orders.length;
-        document.getElementById('statTotal').textContent = '$' + totalVal.toFixed(2);
-        document.getElementById('statClients').textContent = uniqueClients;
-
+        const now = Date.now();
         tbody.innerHTML = orders.map(o => {
             const customer = o.customer || {};
-            const name = [customer.first_name, customer.last_name].filter(Boolean).join(' ') || '—';
+            const name  = [customer.first_name, customer.last_name].filter(Boolean).join(' ') || 'Anónimo';
+            const email = customer.email || '—';
             const items = o.items || o.order_items || [];
+
+            // Avatar (feature 5)
+            const initials   = name !== 'Anónimo' ? (name.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase()) : '?';
+            const avatarColor = AVATAR_COLORS[Math.abs(hashStr(name)) % AVATAR_COLORS.length];
+
+            // First product image (feature 10)
+            const firstItem = items[0];
+            const firstImg  = firstItem?.product?.images?.[0]?.storage_path || firstItem?.image_url || '';
+            const firstImgUrl = firstImg
+                ? (firstImg.startsWith('http') ? firstImg : `${SUPABASE_URL}/storage/v1/object/public/product-images/${firstImg}`)
+                : '';
+
+            // Items HTML
             const itemsHtml = items.length
-                ? items.map(i => `<span class="item-chip">${i.name || i.product?.name || 'Producto'} ×${i.quantity || i.qty || 1}</span>`).join('')
+                ? items.map(i => {
+                    const iName = i.name || i.product?.name || 'Producto';
+                    const iImg  = i.product?.images?.[0]?.storage_path || i.image_url || '';
+                    const iImgUrl = iImg ? (iImg.startsWith('http') ? iImg : `${SUPABASE_URL}/storage/v1/object/public/product-images/${iImg}`) : '';
+                    return `${iImgUrl ? `<img class="prod-mini-thumb" src="${iImgUrl}" onerror="this.style.display='none'">` : ''}<span class="item-chip">${escHtml(iName)} ×${i.quantity || i.qty || 1}</span>`;
+                  }).join('')
                 : '<span style="color:#555">Sin detalle</span>';
-            const date = o.created_at ? new Date(o.created_at).toLocaleDateString('es-EC', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' }) : '—';
-            return `
-                <tr>
-                    <td style="font-weight:700;">${name}</td>
-                    <td style="color:#8888a0;font-size:12px;">${customer.email || '—'}</td>
-                    <td><div class="items-list">${itemsHtml}</div></td>
-                    <td style="font-weight:800;color:#a78bfa;">$${parseFloat(o.total || 0).toFixed(2)}</td>
-                    <td style="font-size:12px;">${o.payment_method || '—'}</td>
-                    <td style="font-size:12px;color:#8888a0;">${date}</td>
-                    <td><span class="status-chip s-pendiente">${o.status || 'pendiente'}</span></td>
-                </tr>`;
+
+            // Cart age (feature 6)
+            const created     = o.created_at ? new Date(o.created_at) : null;
+            const ageMs       = created ? now - created.getTime() : 0;
+            const ageDays     = Math.floor(ageMs / 86400000);
+            const ageHours    = Math.floor(ageMs / 3600000);
+            const ageText     = !created ? '—' : ageDays >= 1 ? `hace ${ageDays} día${ageDays !== 1 ? 's' : ''}` : `hace ${ageHours}h`;
+            const dateDisplay = created ? created.toLocaleDateString('es-EC', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' }) : '—';
+
+            // WA message (feature 7)
+            const waMsg  = `Hola ${name}, tu carrito de $${parseFloat(o.total || 0).toFixed(2)} te está esperando en EcuGaming!`;
+            const waLink = `https://wa.me/?text=${encodeURIComponent(waMsg)}`;
+            // If phone available use it
+            const phone  = customer.phone || customer.whatsapp || '';
+            const waLinkPhone = phone ? `https://wa.me/${phone.replace(/\D/g,'')}?text=${encodeURIComponent(waMsg)}` : waLink;
+
+            return `<tr>
+                <td>
+                    <div class="avatar-group">
+                        <div class="customer-avatar" style="background:${avatarColor}20; color:${avatarColor};">${initials}</div>
+                        <div>
+                            <div style="font-weight:700; font-size:13px;">${escHtml(name)}</div>
+                            <div style="color:#71717a; font-size:11px;">${escHtml(email)}</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="items-list">${itemsHtml}</div>
+                </td>
+                <td style="font-weight:800; color:#a78bfa; white-space:nowrap;">
+                    $${parseFloat(o.total || 0).toFixed(2)}
+                </td>
+                <td style="font-size:12px; color:#71717a;">${escHtml(o.payment_method || '—')}</td>
+                <td>
+                    <div style="font-size:12px;">${dateDisplay}</div>
+                    <div class="cart-age">${ageText}</div>
+                </td>
+                <td><span class="status-chip s-pendiente">${o.status || 'pendiente'}</span></td>
+                <td>
+                    <div style="display:flex; gap:4px; flex-wrap:nowrap;">
+                        <a class="btn-action green sm" href="${waLinkPhone}" target="_blank" rel="noopener" title="Enviar recordatorio por WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <button class="btn-action blue sm" onclick="sendEmailReminder('${o.id}')" title="Enviar recordatorio por email">
+                            <i class="fa fa-envelope"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>`;
         }).join('');
+    }
+
+    /* ─── Pagination (feature 12) ─── */
+    function renderPagination(total, totalPages, start, end) {
+        const wrap   = document.getElementById('paginationWrap');
+        const info   = document.getElementById('pageInfo');
+        const btns   = document.getElementById('pageBtns');
+
+        if (total === 0) { wrap.style.display = 'none'; return; }
+        wrap.style.display = 'flex';
+        info.textContent = `Mostrando ${start + 1}–${end} de ${total} carritos`;
+
+        let html = `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="goPage(${currentPage - 1})"><i class="fa fa-chevron-left"></i></button>`;
+        for (let p = 1; p <= totalPages; p++) {
+            if (totalPages > 7 && Math.abs(p - currentPage) > 2 && p !== 1 && p !== totalPages) {
+                if (p === currentPage - 3 || p === currentPage + 3) html += `<span style="padding:6px 4px;color:#555;">…</span>`;
+                continue;
+            }
+            html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goPage(${p})">${p}</button>`;
+        }
+        html += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="goPage(${currentPage + 1})"><i class="fa fa-chevron-right"></i></button>`;
+        btns.innerHTML = html;
+    }
+
+    function goPage(p) {
+        currentPage = p;
+        renderPage();
+        document.querySelector('.admin-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ─── Send Email Reminder (feature 8) ─── */
+    async function sendEmailReminder(orderId) {
+        try {
+            const res = await apiFetch(`/api/admin/orders/${orderId}/send-email`, { method: 'POST' });
+            if (res.ok) {
+                showToast('Recordatorio enviado por email.', 'success');
+            } else {
+                const e = await res.json().catch(() => ({}));
+                showToast('Error: ' + (e.error || 'No se pudo enviar.'), 'error');
+            }
+        } catch {
+            showToast('Error de conexión al enviar email.', 'error');
+        }
+    }
+
+    /* ─── Export CSV (feature 9) ─── */
+    function exportCartsCSV() {
+        const rows = [['Cliente','Email','Total','Método Pago','Fecha','Antigüedad (días)','Estado','Productos']];
+        allOrders.forEach(o => {
+            const customer = o.customer || {};
+            const name  = [customer.first_name, customer.last_name].filter(Boolean).join(' ') || 'Anónimo';
+            const items = (o.items || o.order_items || []).map(i => (i.name || i.product?.name || 'Producto') + '×' + (i.quantity || 1)).join(' | ');
+            const created   = o.created_at ? new Date(o.created_at) : null;
+            const ageDays   = created ? Math.floor((Date.now() - created.getTime()) / 86400000) : '';
+            const dateStr   = created ? created.toISOString().slice(0,10) : '';
+            rows.push([
+                `"${name.replace(/"/g,'""')}"`,
+                `"${(customer.email || '').replace(/"/g,'""')}"`,
+                parseFloat(o.total || 0).toFixed(2),
+                o.payment_method || '',
+                dateStr,
+                ageDays,
+                o.status || 'pendiente',
+                `"${items.replace(/"/g,'""')}"`
+            ]);
+        });
+        const csv  = rows.map(r => r.join(',')).join('\n');
+        const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href  = URL.createObjectURL(blob);
+        link.download = 'carritos-ecugaming.csv';
+        link.click();
+    }
+
+    /* ─── Auto-refresh every 60s (feature 15) ─── */
+    function startAutoRefresh() {
+        resetCountdown();
+    }
+
+    function resetCountdown() {
+        clearInterval(countdownTimer);
+        clearTimeout(autoRefreshTimer);
+        countdownSecs = 60;
+        document.getElementById('refreshCountdown').textContent = countdownSecs;
+
+        countdownTimer = setInterval(() => {
+            countdownSecs--;
+            document.getElementById('refreshCountdown').textContent = countdownSecs;
+            if (countdownSecs <= 0) {
+                clearInterval(countdownTimer);
+                loadCarts(); // this calls resetCountdown() again
+            }
+        }, 1000);
+    }
+
+    /* ─── Utility ─── */
+    function escHtml(s) {
+        if (!s) return '';
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function hashStr(s) {
+        let h = 0;
+        for (let i = 0; i < s.length; i++) { h = Math.imul(31, h) + s.charCodeAt(i) | 0; }
+        return h;
+    }
+
+    /* ─── Toast notification ─── */
+    function showToast(msg, type) {
+        let t = document.getElementById('toastNotif');
+        if (!t) {
+            t = document.createElement('div');
+            t.id = 'toastNotif';
+            t.style.cssText = 'position:fixed;bottom:2rem;right:2rem;z-index:99999;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;font-family:Inter,sans-serif;transition:opacity 0.3s;';
+            document.body.appendChild(t);
+        }
+        t.style.background = type === 'success' ? 'rgba(52,199,89,0.15)' : 'rgba(255,107,107,0.15)';
+        t.style.border     = `1px solid ${type === 'success' ? 'rgba(52,199,89,0.4)' : 'rgba(255,107,107,0.4)'}`;
+        t.style.color      = type === 'success' ? '#34c759' : '#ff6b6b';
+        t.style.opacity    = '1';
+        t.textContent      = msg;
+        setTimeout(() => { t.style.opacity = '0'; }, 3500);
     }
 
     init();

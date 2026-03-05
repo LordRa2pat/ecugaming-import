@@ -63,7 +63,7 @@
         }
         .form-control::placeholder { color: rgba(255,255,255,0.25); }
         .form-control:focus { border-color: var(--primary); outline: none; background: rgba(255,255,255,0.10); }
-        .form-control option { background: #1a1a2e; color: var(--text); }
+        .form-control option { background: #1c1c1e !important; color: var(--text); }
         .optional-label { font-size: .75rem; color: var(--text-dim); margin-left: .4rem; }
 
         /* Carrier selection */
@@ -175,6 +175,47 @@
         /* SSL badge */
         .ssl-note { font-size: .78rem; color: var(--text-dim); display: flex; align-items: center; gap: .4rem; margin-top: .8rem; }
 
+        /* Cart countdown timer */
+        .cart-countdown {
+            display: flex; align-items: center; gap: .5rem;
+            background: rgba(255,149,0,.1); border: 1px solid rgba(255,149,0,.3);
+            border-radius: 10px; padding: .5rem .85rem;
+            font-size: .8rem; font-weight: 700; color: #ff9500;
+            margin-bottom: 1rem;
+        }
+        .cart-countdown.urgent { background: rgba(255,69,58,.1); border-color: rgba(255,69,58,.3); color: #ff453a; }
+
+        /* Coupon savings feedback */
+        .coupon-savings-line {
+            display: flex; align-items: center; gap: .4rem;
+            color: #34c759; font-size: .88rem; font-weight: 700;
+            padding: .4rem 0;
+        }
+
+        /* Sticky steps bar */
+        .steps-bar-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            background: var(--bg-light, #0a0a0a);
+            padding-top: .5rem;
+            margin-top: -.5rem;
+            backdrop-filter: blur(12px);
+        }
+
+        /* Copy order ID button */
+        .copy-order-btn {
+            background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+            border-radius: 8px; padding: 4px 12px; font-size: .8rem; font-weight: 700;
+            color: var(--text-dim); cursor: pointer; transition: .2s;
+            display: inline-flex; align-items: center; gap: .35rem; margin-left: .5rem;
+        }
+        .copy-order-btn:hover { background: rgba(255,255,255,.14); color: var(--text); }
+
+        /* Fixed dark select options */
+        select.form-control option { background: #1c1c1e !important; color: #f5f5f7 !important; }
+        select.form-control { background-color: rgba(255,255,255,0.06); color: var(--text); }
+
         /* Success modal */
         .success-modal {
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7);
@@ -207,8 +248,8 @@
     <div class="checkout-layout">
         <!-- LEFT: Checkout Steps -->
         <div>
-            <!-- Steps bar -->
-            <div class="steps-bar" id="stepsBar">
+            <!-- Steps bar (sticky - Feature 3) -->
+            <div class="steps-bar steps-bar-sticky" id="stepsBar">
                 <div class="step-item active" id="sbar1"><div class="step-num">1</div> Envío</div>
                 <div class="step-sep">›</div>
                 <div class="step-item" id="sbar2"><div class="step-num">2</div> Transportista</div>
@@ -321,10 +362,17 @@
                 <div class="checkout-card">
                     <h3><i class="fa fa-tag" style="color:var(--primary);"></i> Cupón de Descuento</h3>
 
-                    <div id="couponAppliedBox" class="coupon-applied" style="display:none; margin-bottom:1rem;">
-                        <i class="fa fa-check-circle"></i>
-                        <span id="couponAppliedText">Cupón ECU10 aplicado — 10% descuento + envío gratis</span>
-                        <button onclick="removeCoupon()" style="margin-left:auto; background:none; border:none; color:#27ae60; cursor:pointer; font-size:.8rem;">✕ Quitar</button>
+                    <div id="couponAppliedBox" class="coupon-applied" style="display:none; margin-bottom:1rem; flex-direction:column; align-items:flex-start; gap:.4rem;">
+                        <div style="display:flex; align-items:center; gap:.5rem; width:100%;">
+                            <i class="fa fa-check-circle"></i>
+                            <span id="couponAppliedText">Cupón ECU10 aplicado — 10% descuento + envío gratis</span>
+                            <button onclick="removeCoupon()" style="margin-left:auto; background:none; border:none; color:#27ae60; cursor:pointer; font-size:.8rem;">✕ Quitar</button>
+                        </div>
+                        <!-- Coupon savings feedback (Feature 5) -->
+                        <div class="coupon-savings-line" id="couponSavingsLine" style="display:none;">
+                            <i class="fa fa-tag"></i>
+                            <span id="couponSavingsText">Cupón aplicado: -$0.00</span>
+                        </div>
                     </div>
 
                     <div id="couponInputSection">
@@ -421,6 +469,11 @@
         <div class="order-summary">
             <div class="summary-card">
                 <h3><i class="fa fa-receipt" style="color:var(--text-dim);"></i> Resumen del Pedido</h3>
+                <!-- Cart countdown timer (Feature 1) -->
+                <div class="cart-countdown" id="cartCountdown">
+                    <i class="fa fa-clock"></i>
+                    <span>Tu carrito expira en <strong id="countdownDisplay">30:00</strong></span>
+                </div>
                 <div id="summaryItems"></div>
                 <hr class="summary-divider">
                 <div id="couponChipSummary"></div>
@@ -455,10 +508,17 @@
             <div class="icon"><i class="fa fa-check-circle"></i></div>
             <h2>¡Orden Creada!</h2>
             <p>Tu pedido ha sido registrado. Te notificaremos por WhatsApp cuando tu pago sea verificado.</p>
-            <div class="order-id-box" id="successOrderId">EG-XXXX</div>
+            <!-- Copy order ID (Feature 2) -->
+            <div style="display:flex; align-items:center; justify-content:center; margin-bottom:1.5rem;">
+                <div class="order-id-box" id="successOrderId" style="margin-bottom:0;">EG-XXXX</div>
+                <button class="copy-order-btn" id="btnCopyOrderId" onclick="copyOrderId()">
+                    <i class="fa fa-copy"></i> Copiar ID
+                </button>
+            </div>
             <div class="success-btns">
+                <!-- WhatsApp comprobante button (Feature 4) -->
                 <button class="btn-wa" id="btnWhatsapp">
-                    <i class="fab fa-whatsapp"></i> Enviar comprobante
+                    <i class="fab fa-whatsapp"></i> Enviar comprobante por WhatsApp
                 </button>
                 <button class="btn-track" id="btnTracking">
                     Ver mi pedido
@@ -893,6 +953,63 @@
                 btn.innerHTML = '<i class="fa fa-lock"></i> Confirmar Orden';
             }
         }
+
+        // ── CART COUNTDOWN TIMER (Feature 1) ─────────────────────
+        function startCartCountdown() {
+            let seconds = 30 * 60; // 30 minutes
+            const display = document.getElementById('countdownDisplay');
+            const container = document.getElementById('cartCountdown');
+            if (!display || !container) return;
+
+            function tick() {
+                if (seconds <= 0) {
+                    display.textContent = '00:00';
+                    container.classList.add('urgent');
+                    return;
+                }
+                const m = Math.floor(seconds / 60);
+                const s = seconds % 60;
+                display.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                if (seconds <= 300) container.classList.add('urgent'); // last 5 min
+                seconds--;
+                setTimeout(tick, 1000);
+            }
+            tick();
+        }
+
+        // ── COPY ORDER ID (Feature 2) ────────────────────────────
+        function copyOrderId() {
+            const orderId = document.getElementById('successOrderId').textContent.trim();
+            navigator.clipboard.writeText(orderId).then(() => {
+                const btn = document.getElementById('btnCopyOrderId');
+                if (btn) { btn.innerHTML = '<i class="fa fa-check"></i> Copiado'; setTimeout(() => { btn.innerHTML = '<i class="fa fa-copy"></i> Copiar ID'; }, 2000); }
+            });
+        }
+
+        // ── COUPON SAVINGS FEEDBACK (Feature 5) ──────────────────
+        // Hook into renderSummary to update savings line
+        const _origRenderSummary = renderSummary;
+        renderSummary = function() {
+            _origRenderSummary.call(this);
+            if (couponData) {
+                const subtotal = Cart.subtotal();
+                let discount = couponData.type === 'percent'
+                    ? parseFloat((subtotal * couponData.value / 100).toFixed(2))
+                    : Math.min(couponData.value, subtotal);
+                const savingsLine = document.getElementById('couponSavingsLine');
+                const savingsText = document.getElementById('couponSavingsText');
+                if (savingsLine && savingsText && discount > 0) {
+                    savingsText.textContent = `Cupón aplicado: -$${discount.toFixed(2)}`;
+                    savingsLine.style.display = 'flex';
+                }
+            } else {
+                const savingsLine = document.getElementById('couponSavingsLine');
+                if (savingsLine) savingsLine.style.display = 'none';
+            }
+        };
+
+        // Start countdown on load
+        startCartCountdown();
 
         init();
     </script>
