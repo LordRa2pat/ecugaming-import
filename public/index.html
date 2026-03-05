@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecugaming Import | Tienda Oficial - Lago Agrio</title>
-    <link rel="stylesheet" href="style.css?v=1.0.8">
+    <link rel="stylesheet" href="style.css?v=1.1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
@@ -398,9 +398,9 @@
     <!-- Supabase + libs -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="/lib/supabase-client.js?v=1.0.9"></script>
-    <script src="/lib/cart.js?v=1.0.9"></script>
-    <script src="/lib/auth.js?v=1.0.9"></script>
+    <script src="/lib/supabase-client.js?v=1.1.0"></script>
+    <script src="/lib/cart.js?v=1.1.0"></script>
+    <script src="/lib/auth.js?v=1.1.0"></script>
 
     <script>
         let allProducts = [];
@@ -410,13 +410,27 @@
         const PAGE_SIZE = 12;
 
         // ── Platform keyword mapping for game subcategories ──────────────
-        const XBOX_GAMES = ['call of duty','halo','forza','gears','sea of thieves','grounded'];
+        const XBOX_GAMES = ['halo','forza','gears of war','sea of thieves','grounded','fable'];
         const NINTENDO_GAMES = ['mario','zelda','pokemon','pokémon','splatoon','animal crossing','metroid','kirby','donkey kong'];
         const PC_GAMES = ['palworld','baldur\'s gate','overwatch','diablo','world of warcraft'];
         const PS3_GAMES = ['tekken 7 - legendary','bioshock: the collection'];
-        const PS5_EXCLUSIVES = ['spider-man 2','spider man 2','returnal','ratchet & clank: rift apart','ratchet & clank rift apart',
-            'demon\'s souls','rise of the ronin','final fantasy xvi','final fantasy vii rebirth',
-            'dragon\'s dogma 2','stellar blade','astro\'s playroom'];
+        const PS5_EXCLUSIVES = [
+            'spider-man 2','spider man 2','marvel\'s spider-man 2',
+            'returnal','ratchet & clank','demon\'s souls','rise of the ronin',
+            'final fantasy xvi','final fantasy vii rebirth','final fantasy xvi',
+            'dragon\'s dogma 2','stellar blade','astro\'s playroom',
+            'god of war ragnar','god of war: ragnar',
+            'gran turismo 7','gt7',
+            'horizon forbidden west','horizon: forbidden west',
+            'the last of us part i','last of us part i',
+            'death stranding: director','death stranding director',
+            'ufc 5','ea sports ufc 5',
+            'elden ring',
+            'ghost of tsushima',
+            'alan wake 2',
+            'final fantasy vii rebirth',
+            'call of duty: modern warfare iii','call of duty modern warfare iii',
+        ];
         const RETRO_KEYWORDS = ['game boy','3ds','ps vita','sega','retro console','3do','neo geo'];
 
         function getPlatform(p) {
