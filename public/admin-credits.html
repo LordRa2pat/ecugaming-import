@@ -572,7 +572,22 @@
 
     async function sendCreditEmail() {
         if (!_currentCredit) return;
-        alert('Para enviar un email, cambia el estado de la solicitud y se notificará automáticamente al solicitante.');
+        const btn = document.querySelector('[onclick="sendCreditEmail()"]');
+        const orig = btn?.innerHTML;
+        if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'; }
+        try {
+            const res = await apiFetch(`/api/admin/credits/${_currentCredit.id}/send-email`, { method: 'POST' });
+            const data = await res.json();
+            if (data.ok) {
+                showToast(`✅ Email enviado a ${data.sentTo} (vía ${data.via || 'smtp'})`);
+                if (btn) { btn.innerHTML = '<i class="fa fa-check"></i>'; btn.style.background = '#166534'; }
+            } else {
+                throw new Error(data.error || 'Error desconocido');
+            }
+        } catch (e) {
+            alert('Error enviando email: ' + e.message);
+            if (btn) { btn.disabled = false; btn.innerHTML = orig; }
+        }
     }
 
     // ── Toast ─────────────────────────────────────────────────

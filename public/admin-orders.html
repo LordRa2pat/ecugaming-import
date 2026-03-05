@@ -824,8 +824,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-    <script src="/lib/supabase-client.js?v=1.0.6"></script>
-    <script src="/lib/auth.js?v=1.0.6"></script>
+    <script src="/lib/supabase-client.js?v=1.1.0"></script>
+    <script src="/lib/auth.js?v=1.1.0"></script>
     <script>
         let adminToken = '';
         let allOrders = [];
@@ -835,19 +835,45 @@
         let currentPage = 1;
         const PAGE_SIZE = 20;
 
+        // ── Visible status banner ─────────────────────────────
+        function showBanner(msg, type) {
+            let banner = document.getElementById('_loadBanner');
+            if (!banner) {
+                banner = document.createElement('div');
+                banner.id = '_loadBanner';
+                document.querySelector('.admin-content').prepend(banner);
+            }
+            const colors = { info: '#2563eb', error: '#dc2626', ok: '#16a34a', warn: '#d97706' };
+            banner.style.cssText = `position:sticky;top:0;z-index:999;background:${colors[type]||'#333'};color:#fff;padding:12px 18px;border-radius:12px;margin-bottom:1rem;font-size:13px;font-weight:700;display:flex;align-items:center;gap:10px;`;
+            banner.innerHTML = msg + (type === 'error' ? ` <button onclick="location.reload()" style="margin-left:auto;background:rgba(255,255,255,.2);border:none;color:#fff;padding:6px 14px;border-radius:8px;cursor:pointer;font-weight:700;">↺ Reintentar</button> <button onclick="location.href='/login'" style="background:rgba(255,255,255,.2);border:none;color:#fff;padding:6px 14px;border-radius:8px;cursor:pointer;font-weight:700;">→ Login</button>` : '');
+        }
+
+        function hideBanner() {
+            const b = document.getElementById('_loadBanner'); if (b) b.remove();
+        }
+
         // ── Init ──────────────────────────────────────────────
         async function init() {
+            showBanner('<i class="fa fa-circle-notch fa-spin"></i> Verificando sesión...', 'info');
             try {
-                // Show loading skeletons
                 ['statTotal','statRevenue','statPending','statAvg'].forEach(id => {
                     const el = document.getElementById(id);
                     if (el) { el.textContent = '…'; el.style.opacity = '0.4'; }
                 });
 
-                adminToken = await Auth.requireAdmin();
-                if (!adminToken) return;
+                // Step 1: wait for Supabase to initialize
+                const client = await window._supabaseReady;
+                if (!client) throw new Error('No se pudo conectar con Supabase. Verifica /api/config.');
 
-                // Feature 2: Tab click handlers
+                showBanner('<i class="fa fa-circle-notch fa-spin"></i> Verificando permisos de admin...', 'info');
+
+                // Step 2: get admin token
+                adminToken = await Auth.requireAdmin();
+                if (!adminToken) return; // redirected to login
+
+                showBanner('<i class="fa fa-circle-notch fa-spin"></i> Cargando órdenes...', 'info');
+
+                // Step 3: tab click handlers
                 document.querySelectorAll('.filter-tab').forEach(btn => {
                     btn.addEventListener('click', () => {
                         document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
@@ -859,25 +885,11 @@
                 });
 
                 await loadOrders();
-
-                // Auto-refresh every 60 seconds
                 setInterval(loadOrders, 60000);
 
             } catch (err) {
                 console.error('[admin-orders] init error:', err);
-                document.getElementById('ordersBody').innerHTML = `
-                    <tr><td colspan="11" style="text-align:center;padding:3rem;">
-                        <div style="color:#ff6b6b; margin-bottom:1rem;">
-                            <i class="fa fa-exclamation-circle" style="font-size:2rem;"></i>
-                            <div style="margin-top:0.5rem; font-size:14px;">Error al cargar. Sesión posiblemente expirada.</div>
-                        </div>
-                        <button class="btn-action primary" onclick="location.reload()">
-                            <i class="fa fa-sync"></i> Reintentar
-                        </button>
-                        <button class="btn-action" onclick="location.href='/login'" style="margin-left:8px;">
-                            <i class="fa fa-sign-in-alt"></i> Iniciar Sesión
-                        </button>
-                    </td></tr>`;
+                showBanner(`<i class="fa fa-exclamation-triangle"></i> Error: ${err.message}`, 'error');
                 ['statTotal','statRevenue','statPending','statAvg'].forEach(id => {
                     const el = document.getElementById(id);
                     if (el) { el.textContent = '—'; el.style.opacity = '1'; }
@@ -909,34 +921,29 @@
                 if (!res.ok) {
                     const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
                     if (res.status === 401 || res.status === 403) {
-                        document.getElementById('ordersBody').innerHTML = `
-                            <tr><td colspan="11" style="text-align:center;padding:2rem;color:#ff6b6b;">
-                                Sesión expirada o sin permisos.
-                                <button class="btn-action" onclick="location.href='/login'" style="margin-left:8px;">Iniciar Sesión</button>
-                            </td></tr>`;
+                        showBanner('<i class="fa fa-lock"></i> Sesión expirada o sin permisos de admin.', 'error');
+                        document.getElementById('ordersBody').innerHTML = '';
                         return;
                     }
-                    throw new Error(err.error || `Error ${res.status}`);
+                    throw new Error(err.error || `Error HTTP ${res.status}`);
                 }
 
                 const data = await res.json();
                 allOrders = data.orders || [];
                 _lastRefresh = new Date();
+                hideBanner();
                 updateStats(allOrders);
                 updateChart(allOrders);
                 applyFilters();
 
-                // Update refresh timestamp
                 const ts = document.getElementById('refreshTs');
                 if (ts) ts.textContent = 'Actualizado ' + _lastRefresh.toLocaleTimeString('es-EC');
 
             } catch (e) {
                 console.error('[loadOrders]', e);
-                document.getElementById('ordersBody').innerHTML = `
-                    <tr><td colspan="11" style="text-align:center;padding:2rem;">
-                        <div style="color:#ff6b6b; margin-bottom:0.8rem;">${e.message || 'Error cargando órdenes'}</div>
-                        <button class="btn-action" onclick="loadOrders()"><i class="fa fa-sync"></i> Reintentar</button>
-                    </td></tr>`;
+                showBanner(`<i class="fa fa-database"></i> Error DB: ${e.message}`, 'error');
+                document.getElementById('ordersBody').innerHTML =
+                    '<tr><td colspan="11" style="text-align:center;color:#555;padding:1rem;">—</td></tr>';
             }
         }
 

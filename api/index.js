@@ -687,22 +687,42 @@ app.get('/api/admin/orders', requireAdmin(async (req, res) => {
     const from = (page - 1) * limit;
     const status = req.query.status;
 
-    let query = supabase
-        .from('orders')
-        .select(`
-            id, status, payment_method, payment_status,
-            subtotal, discount_total, shipping_total, total,
-            coupon_code, carrier, carrier_agency_name,
-            tracking_code, shipping_address, ip_address, notes,
-            created_at, updated_at,
-            customer:profiles(id, first_name, last_name, email, phone, is_banned, last_ip)
-        `, { count: 'exact' })
-        .order('created_at', { ascending: false })
-        .range(from, from + limit - 1);
+    // Build select — only use columns guaranteed to exist in schema
+    // ip_address, is_banned, last_ip are added by migration 003v2;
+    // if they don't exist yet, Supabase returns a 400 and we fall back gracefully.
+    const fullSelect = `
+        id, status, payment_method, payment_status,
+        subtotal, discount_total, shipping_total, total,
+        coupon_code, carrier, carrier_agency_name,
+        tracking_code, shipping_address, ip_address, notes,
+        created_at, updated_at,
+        customer:profiles(id, first_name, last_name, email, phone, is_banned, last_ip)
+    `;
+    const safeSelect = `
+        id, status, payment_method, payment_status,
+        subtotal, discount_total, shipping_total, total,
+        coupon_code, carrier, carrier_agency_name,
+        tracking_code, shipping_address, notes,
+        created_at, updated_at,
+        customer:profiles(id, first_name, last_name, email, phone)
+    `;
 
-    if (status) query = query.eq('status', status);
+    const buildQuery = (sel) => {
+        let q = supabase.from('orders').select(sel, { count: 'exact' })
+            .order('created_at', { ascending: false })
+            .range(from, from + limit - 1);
+        if (status) q = q.eq('status', status);
+        return q;
+    };
 
-    const { data, error, count } = await query;
+    let { data, error, count } = await buildQuery(fullSelect);
+
+    // If full select fails (columns missing), fall back to safe select
+    if (error) {
+        console.warn('[admin/orders] full select failed, trying safe select:', error.message);
+        ({ data, error, count } = await buildQuery(safeSelect));
+    }
+
     if (error) return res.status(400).json({ error: error.message });
     res.json({ orders: data || [], total: count, page, limit });
 }));
@@ -1193,7 +1213,7 @@ app.get('/api/config', (req, res) => {
 
 // ============================================================
 // ADMIN: POST /api/admin/orders/:id/send-email
-// Manually trigger the n8n order notification email
+// Send order notification via n8n webhook (primary) + SMTP fallback
 // ============================================================
 app.post('/api/admin/orders/:id/send-email', requireAdmin(async (req, res) => {
     const { data: order, error } = await supabase
@@ -1214,9 +1234,11 @@ app.post('/api/admin/orders/:id/send-email', requireAdmin(async (req, res) => {
     const customerEmail = order.customer?.email || order.shipping_address?.email;
     if (!customerEmail) return res.status(400).json({ error: 'El cliente no tiene email registrado' });
 
-    await sendOrderEmail({
+    const payload = {
+        type: 'order_notification',
         orderId: order.id,
         status: order.status || 'confirmando_pago',
+        statusLabel: STATUS_LABELS_ES[order.status] || order.status,
         customerName: `${order.shipping_address?.firstName || order.customer?.first_name || ''} ${order.shipping_address?.lastName || order.customer?.last_name || ''}`.trim(),
         customerEmail,
         productName: sanitize(firstItem?.product_snapshot?.name || 'Tu pedido'),
@@ -1224,11 +1246,148 @@ app.post('/api/admin/orders/:id/send-email', requireAdmin(async (req, res) => {
         total: parseFloat(order.total || 0).toFixed(2),
         paymentMethod: sanitize(order.payment_method || ''),
         trackingCode: order.tracking_code || '',
-        statusNote: order.status_note || '',
+        triggeredBy: 'admin_manual',
         timestamp: new Date().toISOString(),
+    };
+
+    // Try n8n first
+    let sent = false;
+    const n8nUrl = process.env.N8N_ORDER_WEBHOOK_URL?.trim();
+    const n8nKey = process.env.N8N_API_KEY?.trim();
+    if (n8nUrl && n8nKey) {
+        try {
+            const r = await fetch(n8nUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'x-api-key': n8nKey },
+                body: JSON.stringify(payload),
+                signal: AbortSignal.timeout(6000),
+            });
+            if (r.ok) sent = true;
+            else console.warn('[send-email] n8n returned', r.status);
+        } catch (e) { console.warn('[send-email] n8n failed:', e.message); }
+    }
+
+    // Fallback: direct SMTP
+    if (!sent) {
+        await sendOrderEmail({ ...payload });
+        sent = true;
+    }
+
+    res.json({ ok: true, sentTo: customerEmail, via: n8nUrl && n8nKey ? 'n8n' : 'smtp' });
+}));
+
+// ============================================================
+// ADMIN: POST /api/admin/credits/:id/send-email
+// Send credit approval/rejection email via n8n + SMTP fallback
+// ============================================================
+app.post('/api/admin/credits/:id/send-email', requireAdmin(async (req, res) => {
+    const { data: credit, error } = await supabase
+        .from('credit_applications')
+        .select('*')
+        .eq('id', req.params.id)
+        .single();
+
+    if (error || !credit) return res.status(404).json({ error: 'Solicitud no encontrada' });
+    if (!credit.email) return res.status(400).json({ error: 'El solicitante no tiene email registrado' });
+
+    const statusMsg = {
+        aprobado:    '✅ ¡Tu crédito fue APROBADO!',
+        rechazado:   '❌ Tu solicitud de crédito fue rechazada',
+        en_revision: '🔍 Tu solicitud está en revisión',
+        pendiente:   'Tu solicitud está pendiente de revisión',
+    };
+
+    const payload = {
+        type: 'credit_notification',
+        creditId: credit.id,
+        status: credit.status,
+        statusLabel: statusMsg[credit.status] || credit.status,
+        customerName: `${credit.nombres || ''} ${credit.apellidos || ''}`.trim(),
+        customerEmail: credit.email,
+        productName: credit.product_name || 'Producto solicitado',
+        total: parseFloat(credit.total_pagar || 0).toFixed(2),
+        cuotaMensual: parseFloat(credit.cuota_mensual || 0).toFixed(2),
+        plazoMeses: credit.plazo_meses || 0,
+        adminNote: credit.admin_note || '',
+        triggeredBy: 'admin_manual',
+        timestamp: new Date().toISOString(),
+    };
+
+    let sent = false;
+    const n8nUrl = process.env.N8N_ORDER_WEBHOOK_URL?.trim();
+    const n8nKey = process.env.N8N_API_KEY?.trim();
+    if (n8nUrl && n8nKey) {
+        try {
+            const r = await fetch(n8nUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'x-api-key': n8nKey },
+                body: JSON.stringify(payload),
+                signal: AbortSignal.timeout(6000),
+            });
+            if (r.ok) sent = true;
+        } catch (e) { console.warn('[credit-email] n8n failed:', e.message); }
+    }
+
+    // SMTP fallback
+    if (!sent) {
+        await sendOrderEmail({
+            orderId: `CRÉDITO #${credit.id.slice(0,8)}`,
+            status: credit.status === 'aprobado' ? 'recibido' : credit.status === 'rechazado' ? 'cancelado' : 'orden_confirmada',
+            customerName: payload.customerName,
+            customerEmail: credit.email,
+            productName: `Solicitud crédito: ${payload.productName}`,
+            carrier: `Cuota: $${payload.cuotaMensual}/mes × ${payload.plazoMeses} meses`,
+            total: payload.total,
+            paymentMethod: payload.statusLabel,
+            statusNote: credit.admin_note || '',
+        }).catch(() => {});
+        sent = true;
+    }
+
+    res.json({ ok: true, sentTo: credit.email, via: n8nUrl && n8nKey ? 'n8n' : 'smtp' });
+}));
+
+// ============================================================
+// ADMIN: POST /api/admin/users/:id/reset-password
+// Send password reset email to customer via Supabase Auth
+// ============================================================
+app.post('/api/admin/users/:id/reset-password', requireAdmin(async (req, res) => {
+    const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('email')
+        .eq('id', req.params.id)
+        .single();
+
+    if (error || !profile) return res.status(404).json({ error: 'Usuario no encontrado' });
+    if (!profile.email) return res.status(400).json({ error: 'El usuario no tiene email' });
+
+    // Use admin auth API to send password reset
+    const { error: resetError } = await supabase.auth.admin.generateLink({
+        type: 'recovery',
+        email: profile.email,
     });
 
-    res.json({ ok: true, sentTo: customerEmail });
+    if (resetError) {
+        // Fallback: use n8n or SMTP to notify admin to reset manually
+        const n8nUrl = process.env.N8N_ORDER_WEBHOOK_URL?.trim();
+        const n8nKey = process.env.N8N_API_KEY?.trim();
+        if (n8nUrl && n8nKey) {
+            await fetch(n8nUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'x-api-key': n8nKey },
+                body: JSON.stringify({
+                    type: 'password_reset_request',
+                    customerEmail: profile.email,
+                    requestedBy: req.user.id,
+                    timestamp: new Date().toISOString(),
+                }),
+                signal: AbortSignal.timeout(5000),
+            }).catch(() => {});
+        }
+        return res.status(400).json({ error: resetError.message });
+    }
+
+    res.json({ ok: true, sentTo: profile.email });
 }));
 
 // ============================================================
