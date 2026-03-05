@@ -628,12 +628,63 @@
             background: #1c1c1e;
             color: #f5f5f7;
         }
+
+        /* ── Mobile ── */
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 12px; left: 12px;
+            z-index: 1200;
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.12);
+            color: #fff;
+            border-radius: 10px;
+            width: 40px; height: 40px;
+            align-items: center; justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .sidebar-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1050;
+        }
+        @media (max-width: 900px) {
+            .hamburger { display: flex; }
+            .admin-sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.25s ease;
+            }
+            .admin-sidebar.open { transform: translateX(0); }
+            .sidebar-overlay.open { display: block; }
+            .admin-content {
+                margin-left: 0;
+                padding: 1rem;
+                padding-top: 60px;
+            }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .orders-table { font-size: 12px; }
+            .orders-table th:nth-child(5),
+            .orders-table td:nth-child(5),
+            .orders-table th:nth-child(9),
+            .orders-table td:nth-child(9) { display: none; }
+        }
+        @media (max-width: 500px) {
+            .stats-bar { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .filter-tabs { flex-wrap: wrap; gap: 0.3rem; }
+            .filter-tab { font-size: 11px; padding: 5px 10px; }
+        }
     </style>
 </head>
 
 <body>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()" aria-label="Menú">
+        <i class="fa fa-bars"></i>
+    </button>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <div class="admin-layout">
-        <aside class="admin-sidebar">
+        <aside class="admin-sidebar" id="adminSidebar">
             <div class="sidebar-brand">🎮 Ecugaming <span>Import</span></div>
             <div class="sidebar-group">Principal</div>
             <a href="admin.html" class="sidebar-item"><i class="fa fa-th-large"></i> Dashboard</a>
@@ -834,6 +885,12 @@
         let currentSort = { col: 'date', dir: 'desc' };
         let currentPage = 1;
         const PAGE_SIZE = 20;
+
+        // ── Mobile sidebar toggle ─────────────────────────────
+        function toggleSidebar() {
+            document.getElementById('adminSidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('open');
+        }
 
         // ── Visible status banner ─────────────────────────────
         function showBanner(msg, type) {
@@ -1523,7 +1580,7 @@
         <div class="thanks">¡Gracias por tu compra!</div>
     </div>
 </div>
-<script>window.onload = () => window.print();<\/script>
+\u003Cscript>window.onload = () => window.print();\u003C/script>
 </body>
 </html>`;
 
