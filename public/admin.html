@@ -324,6 +324,7 @@
             <a href="admin-products.html" class="sidebar-item"><i class="fa fa-box"></i> Inventario</a>
             <a href="admin-orders.html" class="sidebar-item"><i class="fa fa-shopping-cart"></i> Ventas</a>
             <a href="admin-customers.html" class="sidebar-item"><i class="fa fa-users"></i> Clientes</a>
+            <a href="admin-credits.html" class="sidebar-item"><i class="fa fa-credit-card"></i> Créditos</a>
             <div class="sidebar-group">Marketing</div>
             <a href="admin-coupons.html" class="sidebar-item"><i class="fa fa-ticket-alt"></i> Cupones</a>
             <a href="admin-carts.html" class="sidebar-item"><i class="fa fa-shopping-basket"></i> Carritos</a>
@@ -391,6 +392,12 @@
                         <div class="value" id="statUsers">--</div>
                         <div class="sub">cuentas activas</div>
                     </div>
+                    <div class="stat-card" style="cursor:pointer;" onclick="location.href='admin-credits.html'">
+                        <i class="fa fa-credit-card stat-icon" style="color:#a855f7;"></i>
+                        <div class="label">Créditos Pendientes</div>
+                        <div class="value" id="statCredits" style="color:#a855f7;">--</div>
+                        <div class="sub">solicitudes sin revisar</div>
+                    </div>
                 </div>
 
                 <!-- Feature 6: Quick actions -->
@@ -411,6 +418,9 @@
                         </a>
                         <a href="admin-settings.html" class="qa-btn">
                             <i class="fa fa-cog"></i> Ajustes
+                        </a>
+                        <a href="admin-credits.html" class="qa-btn" style="border-color:rgba(168,85,247,0.3); color:#a855f7;">
+                            <i class="fa fa-credit-card"></i> Créditos
                         </a>
                         <a href="index.html" target="_blank" class="qa-btn">
                             <i class="fa fa-store"></i> Ver Tienda
@@ -491,9 +501,19 @@
         let orderFilter = 'hoy';
 
         async function init() {
-            adminToken = await Auth.requireAdmin();
-            if (!adminToken) return;
-            loadDashboard();
+            try {
+                adminToken = await Auth.requireAdmin();
+                if (!adminToken) return;
+                loadDashboard();
+            } catch (err) {
+                console.error('[admin] init error:', err);
+                document.querySelector('.admin-content').innerHTML = `
+                    <div style="text-align:center; padding:4rem; color:#f5f5f7;">
+                        <i class="fa fa-exclamation-triangle" style="font-size:3rem; color:#ff6b6b; margin-bottom:1rem; display:block;"></i>
+                        <div style="margin-bottom:1rem;">Error al iniciar sesión o sesión expirada.</div>
+                        <button class="qa-btn" onclick="location.href='/login'"><i class="fa fa-sign-in-alt"></i> Iniciar Sesión</button>
+                    </div>`;
+            }
         }
 
         async function apiFetch(url, opts = {}) {
@@ -696,14 +716,16 @@
 
         async function loadDashboard() {
             try {
-                const [pr, or, ur] = await Promise.all([
+                const [pr, or, ur, cr] = await Promise.all([
                     apiFetch('/api/admin/products'),
                     apiFetch('/api/admin/orders?limit=200'),
-                    apiFetch('/api/admin/users')
+                    apiFetch('/api/admin/users'),
+                    apiFetch('/api/admin/credits?limit=500')
                 ]);
                 const prods = await pr.json();
                 const odata = await or.json();
                 const users = await ur.json();
+                const cdata = await cr.json().catch(() => ({ applications: [] }));
 
                 allOrders = odata.orders || [];
                 const totalOrders = odata.total || allOrders.length;
@@ -722,6 +744,18 @@
                 document.getElementById('statAvg').textContent = '$' + avgOrder.toFixed(0);
                 document.getElementById('statProds').textContent = prods.filter(p => p.is_active).length;
                 document.getElementById('statUsers').textContent = Array.isArray(users) ? users.length : 0;
+                const pendingCredits = (cdata.applications || []).filter(c => c.status === 'pendiente').length;
+                document.getElementById('statCredits').textContent = pendingCredits;
+                if (pendingCredits > 0) {
+                    document.getElementById('statCredits').style.color = '#ff9f0a';
+                    // Add credit alert banner below order banner
+                    const creditBanner = document.createElement('div');
+                    creditBanner.id = 'creditAlertBanner';
+                    creditBanner.style.cssText = 'display:flex; align-items:center; gap:1rem; background:rgba(168,85,247,0.1); border:1px solid rgba(168,85,247,0.3); border-radius:12px; padding:12px 18px; margin-bottom:1rem; font-size:13px; font-weight:600; color:#a855f7;';
+                    creditBanner.innerHTML = `<i class="fa fa-credit-card"></i> <span>${pendingCredits} solicitud${pendingCredits > 1 ? 'es' : ''} de crédito pendiente${pendingCredits > 1 ? 's' : ''} sin revisar</span> <a href="admin-credits.html" style="color:#a855f7; margin-left:auto; font-weight:800;">Revisar →</a>`;
+                    const alertBanner = document.getElementById('alertBanner');
+                    alertBanner.parentNode.insertBefore(creditBanner, alertBanner.nextSibling);
+                }
 
                 // Feature 11: Alert banner
                 const now = new Date();

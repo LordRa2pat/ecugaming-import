@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créditos | Ecugaming Import</title>
+    <link rel="stylesheet" href="style.css?v=1.0.6">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: var(--secondary); color: var(--bg-light); font-feature-settings: "cv11", "ss01"; }
+
+        .admin-layout { min-height: 100vh; background: #000; }
+
+        .admin-sidebar {
+            background: #050505;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            padding: 1.5rem 1rem;
+            display: flex; flex-direction: column; gap: 0.2rem;
+            overflow-y: auto;
+            position: fixed; left: 0; top: 0;
+            height: 100vh; width: 280px; z-index: 1100;
+        }
+        .sidebar-brand { padding: 0 1rem 2rem; font-size: 1.2rem; font-weight: 900; color: var(--white); display: flex; align-items: center; gap: 10px; }
+        .sidebar-brand span { color: var(--primary); }
+        .sidebar-group { font-size: 10px; font-weight: 800; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin: 1.5rem 1rem 0.5rem; }
+        .sidebar-item { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 10px; cursor: pointer; font-size: 13.5px; font-weight: 500; color: #a1a1aa; text-decoration: none; transition: 0.2s; border: none; background: none; width: 100%; text-align: left; }
+        .sidebar-item:hover { background: rgba(255,255,255,0.04); color: var(--white); }
+        .sidebar-item.active { background: var(--primary) !important; color: #fff !important; box-shadow: 0 4px 12px var(--primary-glow); font-weight: 700; }
+        .sidebar-footer { margin-top: auto; padding: 1rem 0 0; border-top: 1px solid rgba(255,255,255,.06); }
+        .sidebar-item-danger { color: #ff6b6b !important; }
+        .sidebar-item-danger:hover { background: rgba(255,107,107,.1) !important; color: #ff8080 !important; }
+
+        .admin-content { padding: 2.5rem; overflow-x: auto; background: #0a0a0b; margin-left: 280px; min-height: 100vh; }
+
+        .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .stat-card { background: #111; border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 1.2rem 1.4rem; }
+        .stat-icon { font-size: 1.1rem; color: var(--primary); margin-bottom: 0.4rem; }
+        .stat-label { font-size: 11px; color: #71717a; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+        .stat-value { font-size: 1.6rem; font-weight: 900; color: #f5f5f7; margin-top: 4px; }
+
+        .admin-card { background: #111; border: 1px solid rgba(255,255,255,0.07); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; }
+
+        .filter-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .filter-tab { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #71717a; cursor: pointer; transition: 0.2s; }
+        .filter-tab:hover { color: #f5f5f7; background: rgba(255,255,255,0.08); }
+        .filter-tab.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+        .controls-row { display: flex; gap: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .search-input { flex: 1; min-width: 180px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #f5f5f7; padding: 8px 14px; font-size: 13px; outline: none; }
+        .search-input::placeholder { color: #555; }
+
+        .btn-action { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 7px 12px; font-size: 12px; color: #e2e2e7; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; transition: 0.2s; }
+        .btn-action:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        .btn-action.primary { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 700; }
+        .btn-action.primary:hover { filter: brightness(1.1); }
+        .btn-action.success { background: #166534; border-color: #166534; color: #fff; }
+        .btn-action.danger { background: #7f1d1d; border-color: #7f1d1d; color: #fff; }
+        .btn-action.info { background: #1e3a5f; border-color: #1e3a5f; color: #93c5fd; }
+
+        .admin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .admin-table th { padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 800; color: #555; text-transform: uppercase; letter-spacing: .07em; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .admin-table td { padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #d4d4d8; vertical-align: middle; }
+        .admin-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        /* Status chips */
+        .chip { display: inline-block; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 8px; text-transform: uppercase; }
+        .chip-pendiente { background: rgba(255,159,10,0.1); color: #ff9f0a; }
+        .chip-en_revision { background: rgba(100,210,255,0.1); color: #64d2ff; }
+        .chip-aprobado { background: rgba(52,199,89,0.1); color: #34c759; }
+        .chip-rechazado { background: rgba(255,69,58,0.1); color: #ff453a; }
+
+        /* Detail panel */
+        .detail-panel {
+            position: fixed; top: 0; right: -520px; width: 500px; height: 100vh;
+            background: #1c1c1e; border-left: 1px solid rgba(255,255,255,0.08);
+            transition: 0.3s cubic-bezier(0.4,0,0.2,1); z-index: 1200;
+            padding: 2rem; overflow-y: auto; box-shadow: -20px 0 60px rgba(0,0,0,0.5);
+        }
+        .detail-panel.open { right: 0; }
+
+        .detail-section { margin-bottom: 1.5rem; }
+        .detail-section h4 { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: #555; margin-bottom: 10px; }
+        .detail-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; }
+        .detail-row .dr-label { color: #71717a; }
+        .detail-row .dr-value { color: #f5f5f7; font-weight: 600; text-align: right; max-width: 60%; word-break: break-word; }
+
+        .credit-badge { display: inline-block; background: linear-gradient(135deg,#6c63ff,#a855f7); color: #fff; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px; }
+
+        .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:9999; display:none; justify-content:center; align-items:center; padding:2rem; }
+        .modal-overlay.active { display:flex; }
+        .modal-box { background:#1c1c1e; border:1px solid rgba(255,255,255,0.1); border-radius:24px; padding:2rem; width:100%; max-width:460px; position:relative; }
+        .modal-close { position:absolute; top:1.5rem; right:1.5rem; background:none; border:none; color:#71717a; font-size:1.5rem; cursor:pointer; }
+        .modal-close:hover { color:#fff; }
+        .form-group { margin-bottom:1rem; }
+        .form-group label { display:block; font-size:12px; color:#71717a; margin-bottom:6px; font-weight:600; text-transform:uppercase; }
+        .form-control { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:#f5f5f7; padding:12px 16px; font-size:14px; box-sizing:border-box; }
+        select.form-control { background:#1c1c1e; color:#f5f5f7; -webkit-appearance:none; }
+        select.form-control option { background:#1c1c1e; color:#f5f5f7; }
+        textarea.form-control { resize:vertical; min-height:80px; }
+
+        @media (max-width:768px) { .admin-content { margin-left:0; padding:1rem; } .admin-sidebar { transform:translateX(-100%); } .stats-bar { grid-template-columns:1fr 1fr; } }
+    </style>
+</head>
+
+<body>
+<div class="admin-layout">
+    <aside class="admin-sidebar">
+        <div class="sidebar-brand">🎮 Ecugaming <span>Import</span></div>
+        <div class="sidebar-group">Principal</div>
+        <a href="admin.html" class="sidebar-item"><i class="fa fa-th-large"></i> Dashboard</a>
+        <a href="admin-products.html" class="sidebar-item"><i class="fa fa-box"></i> Inventario</a>
+        <a href="admin-orders.html" class="sidebar-item"><i class="fa fa-shopping-cart"></i> Ventas</a>
+        <a href="admin-customers.html" class="sidebar-item"><i class="fa fa-users"></i> Clientes</a>
+        <a href="admin-credits.html" class="sidebar-item active"><i class="fa fa-credit-card"></i> Créditos</a>
+        <div class="sidebar-group">Marketing</div>
+        <a href="admin-coupons.html" class="sidebar-item"><i class="fa fa-ticket-alt"></i> Cupones</a>
+        <a href="admin-carts.html" class="sidebar-item"><i class="fa fa-shopping-basket"></i> Carritos</a>
+        <div class="sidebar-group">Configuración</div>
+        <a href="admin-settings.html" class="sidebar-item"><i class="fa fa-cog"></i> Ajustes</a>
+        <div class="sidebar-footer">
+            <button class="sidebar-item sidebar-item-danger" onclick="Auth.signOut()">
+                <i class="fa fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+        </div>
+    </aside>
+
+    <div class="admin-content">
+        <h2 style="font-size:1.3rem; font-weight:800; color:#f5f5f7; margin-bottom:1.5rem;">
+            <i class="fa fa-credit-card" style="color:var(--primary); margin-right:8px;"></i> Solicitudes de Crédito
+        </h2>
+
+        <!-- Stats -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fa fa-file-alt"></i></div>
+                <div class="stat-label">Total Solicitudes</div>
+                <div class="stat-value" id="stTotal">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="color:#ff9f0a;"><i class="fa fa-clock"></i></div>
+                <div class="stat-label">Pendientes</div>
+                <div class="stat-value" id="stPending" style="color:#ff9f0a;">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="color:#34c759;"><i class="fa fa-check-circle"></i></div>
+                <div class="stat-label">Aprobadas</div>
+                <div class="stat-value" id="stApproved" style="color:#34c759;">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="color:#a855f7;"><i class="fa fa-dollar-sign"></i></div>
+                <div class="stat-label">Monto Total Aprobado</div>
+                <div class="stat-value" id="stAmount">—</div>
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <!-- Filter tabs -->
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-status="">Todas</button>
+                <button class="filter-tab" data-status="pendiente">Pendientes</button>
+                <button class="filter-tab" data-status="en_revision">En Revisión</button>
+                <button class="filter-tab" data-status="aprobado">Aprobadas</button>
+                <button class="filter-tab" data-status="rechazado">Rechazadas</button>
+            </div>
+
+            <!-- Search + refresh -->
+            <div class="controls-row">
+                <input type="text" class="search-input" id="searchInput" placeholder="Buscar por nombre, cédula o producto..." oninput="applyFilter()">
+                <button class="btn-action" onclick="loadCredits()" title="Actualizar">
+                    <i class="fa fa-sync"></i>
+                </button>
+                <span id="refreshTs" style="font-size:11px; color:#555; align-self:center;"></span>
+            </div>
+
+            <div style="overflow-x:auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Solicitante</th>
+                            <th>Cédula</th>
+                            <th>Producto</th>
+                            <th>Monto</th>
+                            <th>Cuota/Mes</th>
+                            <th>Plazo</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="creditsBody">
+                        <tr><td colspan="9" style="text-align:center; color:#555; padding:2rem;">
+                            <i class="fa fa-spinner fa-spin"></i> Cargando...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top:1rem; font-size:12px; color:#555;" id="countInfo"></div>
+        </div>
+    </div>
+
+    <!-- Detail Panel -->
+    <div class="detail-panel" id="detailPanel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+            <h3 style="font-weight:800; color:#f5f5f7; margin:0;">Detalle de Solicitud</h3>
+            <div style="display:flex; gap:0.5rem;">
+                <button class="btn-action" onclick="sendCreditEmail()" title="Enviar email al solicitante">
+                    <i class="fa fa-envelope"></i>
+                </button>
+                <button class="btn-action" onclick="openWA()" title="WhatsApp">
+                    <i class="fab fa-whatsapp" style="color:#25d366;"></i>
+                </button>
+                <button class="btn-action" onclick="closePanel()">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div id="detailContent"></div>
+    </div>
+
+    <!-- Status Modal -->
+    <div class="modal-overlay" id="statusModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3 style="color:#f5f5f7; margin-bottom:1.5rem;"><i class="fa fa-edit" style="color:var(--primary); margin-right:8px;"></i> Actualizar Estado</h3>
+            <input type="hidden" id="modalCreditId">
+            <div class="form-group">
+                <label>Nuevo Estado</label>
+                <select id="modalStatus" class="form-control">
+                    <option value="pendiente">Pendiente</option>
+                    <option value="en_revision">En Revisión</option>
+                    <option value="aprobado">Aprobado ✅</option>
+                    <option value="rechazado">Rechazado ❌</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Nota interna / mensaje al solicitante</label>
+                <textarea id="modalNote" class="form-control" rows="4" placeholder="Ej: Aprobado con cuota de entrada de $150, coordinar entrega..."></textarea>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:1rem; margin-top:1.5rem;">
+                <button class="btn-action" onclick="closeModal()">Cancelar</button>
+                <button class="btn-action primary" onclick="saveStatus()">
+                    <i class="fa fa-save"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="/lib/supabase-client.js?v=1.0.6"></script>
+<script src="/lib/auth.js?v=1.0.6"></script>
+<script>
+    let adminToken = '';
+    let allCredits = [];
+    let filtered = [];
+    let currentFilter = '';
+    let _currentCredit = null;
+
+    // ── Init ──────────────────────────────────────────────────
+    async function init() {
+        try {
+            ['stTotal','stPending','stApproved','stAmount'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.textContent = '…'; el.style.opacity = '0.4'; }
+            });
+
+            adminToken = await Auth.requireAdmin();
+            if (!adminToken) return;
+
+            document.querySelectorAll('.filter-tab').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.status;
+                    applyFilter();
+                });
+            });
+
+            await loadCredits();
+        } catch (err) {
+            console.error('[admin-credits] init error:', err);
+            document.getElementById('creditsBody').innerHTML = `
+                <tr><td colspan="9" style="text-align:center;padding:3rem;">
+                    <div style="color:#ff6b6b; margin-bottom:1rem;">Error al cargar. Sesión posiblemente expirada.</div>
+                    <button class="btn-action" onclick="location.href='/login'"><i class="fa fa-sign-in-alt"></i> Iniciar Sesión</button>
+                </td></tr>`;
+        }
+    }
+
+    // ── API ───────────────────────────────────────────────────
+    async function apiFetch(url, opts = {}) {
+        return fetch(url, {
+            ...opts,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + adminToken,
+                ...(opts.headers || {})
+            }
+        });
+    }
+
+    // ── Load ─────────────────────────────────────────────────
+    async function loadCredits() {
+        try {
+            document.getElementById('creditsBody').innerHTML =
+                '<tr><td colspan="9" style="text-align:center;color:#555;padding:2rem;"><i class="fa fa-spinner fa-spin"></i> Cargando...</td></tr>';
+
+            const res = await apiFetch('/api/admin/credits?limit=500');
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+                throw new Error(err.error || `Error ${res.status}`);
+            }
+
+            const data = await res.json();
+            allCredits = data.applications || [];
+            updateStats(allCredits);
+            applyFilter();
+
+            const ts = document.getElementById('refreshTs');
+            if (ts) ts.textContent = 'Actualizado ' + new Date().toLocaleTimeString('es-EC');
+
+        } catch (e) {
+            console.error('[loadCredits]', e);
+            document.getElementById('creditsBody').innerHTML = `
+                <tr><td colspan="9" style="text-align:center;padding:2rem;">
+                    <div style="color:#ff6b6b; margin-bottom:0.5rem;">${e.message || 'Error de carga'}</div>
+                    <button class="btn-action" onclick="loadCredits()"><i class="fa fa-sync"></i> Reintentar</button>
+                </td></tr>`;
+        }
+    }
+
+    // ── Stats ─────────────────────────────────────────────────
+    function updateStats(credits) {
+        const approved = credits.filter(c => c.status === 'aprobado');
+        const totalAmount = approved.reduce((s, c) => s + parseFloat(c.total_pagar || 0), 0);
+
+        document.getElementById('stTotal').textContent = credits.length;
+        document.getElementById('stTotal').style.opacity = '1';
+        document.getElementById('stPending').textContent = credits.filter(c => c.status === 'pendiente').length;
+        document.getElementById('stPending').style.opacity = '1';
+        document.getElementById('stApproved').textContent = approved.length;
+        document.getElementById('stApproved').style.opacity = '1';
+        document.getElementById('stAmount').textContent = '$' + totalAmount.toFixed(0);
+        document.getElementById('stAmount').style.opacity = '1';
+    }
+
+    // ── Filter ────────────────────────────────────────────────
+    function applyFilter() {
+        const search = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+
+        filtered = allCredits.filter(c => {
+            if (currentFilter && c.status !== currentFilter) return false;
+            if (search) {
+                const searchable = [c.nombres, c.apellidos, c.cedula, c.product_name, c.email].join(' ').toLowerCase();
+                if (!searchable.includes(search)) return false;
+            }
+            return true;
+        });
+
+        renderTable();
+        document.getElementById('countInfo').textContent = `Mostrando ${filtered.length} de ${allCredits.length} solicitudes`;
+    }
+
+    // ── Render ────────────────────────────────────────────────
+    function renderTable() {
+        const tbody = document.getElementById('creditsBody');
+        if (filtered.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#555;padding:2rem;">Sin solicitudes para mostrar</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = filtered.map(c => {
+            const fecha = new Date(c.created_at).toLocaleDateString('es-EC', { day:'2-digit', month:'short', year:'numeric' });
+            const chip = `<span class="chip chip-${c.status}">${statusLabel(c.status)}</span>`;
+            const nombre = [c.nombres, c.apellidos].filter(Boolean).join(' ') || '—';
+            const monto = c.total_pagar ? '$' + parseFloat(c.total_pagar).toFixed(0) : '—';
+            const cuota = c.cuota_mensual ? '$' + parseFloat(c.cuota_mensual).toFixed(0) + '/m' : '—';
+            const plazo = c.plazo_meses ? c.plazo_meses + ' meses' : '—';
+
+            return `<tr>
+                <td>
+                    <div style="font-weight:700; color:#f5f5f7;">${nombre}</div>
+                    <div style="font-size:11px; color:#71717a;">${c.email || '—'}</div>
+                </td>
+                <td style="font-family:monospace; font-size:12px;">${c.cedula || '—'}</td>
+                <td>
+                    <div style="font-weight:600;">${c.product_name || '—'}</div>
+                    ${c.product_price ? `<div style="font-size:11px; color:#71717a;">Precio: $${parseFloat(c.product_price).toFixed(0)}</div>` : ''}
+                </td>
+                <td style="font-weight:700; color:#a855f7;">${monto}</td>
+                <td>${cuota}</td>
+                <td>${plazo}</td>
+                <td>${chip}</td>
+                <td style="font-size:12px; color:#71717a;">${fecha}</td>
+                <td>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                        <button class="btn-action" onclick="showDetail('${c.id}')">Ver</button>
+                        <button class="btn-action primary" onclick="openStatusModal('${c.id}','${c.status}')">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        ${c.phone ? `<a class="btn-action" style="background:#25d366;color:#fff;" href="https://wa.me/${c.phone.replace(/\D/g,'')}?text=${encodeURIComponent(`Hola ${c.nombres}, sobre tu solicitud de crédito para ${c.product_name || 'el producto solicitado'} — Ecugaming Import`)}" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>` : ''}
+                    </div>
+                </td>
+            </tr>`;
+        }).join('');
+    }
+
+    // ── Status label ──────────────────────────────────────────
+    function statusLabel(s) {
+        return { pendiente: 'Pendiente', en_revision: 'En Revisión', aprobado: 'Aprobado', rechazado: 'Rechazado' }[s] || s;
+    }
+
+    // ── Detail Panel ──────────────────────────────────────────
+    async function showDetail(id) {
+        const panel = document.getElementById('detailPanel');
+        const content = document.getElementById('detailContent');
+        content.innerHTML = '<div style="text-align:center;padding:3rem;color:#555;"><i class="fa fa-spinner fa-spin fa-2x"></i></div>';
+        panel.classList.add('open');
+
+        try {
+            const res = await apiFetch(`/api/admin/credits/${id}`);
+            if (!res.ok) throw new Error('Error al cargar');
+            const c = await res.json();
+            _currentCredit = c;
+            renderDetail(c);
+        } catch (e) {
+            content.innerHTML = `<div style="color:#ff6b6b;">Error: ${e.message}</div>`;
+        }
+    }
+
+    function renderDetail(c) {
+        const content = document.getElementById('detailContent');
+        const nombre = [c.nombres, c.apellidos].filter(Boolean).join(' ') || '—';
+        const fecha = new Date(c.created_at).toLocaleString('es-EC');
+        const chip = `<span class="chip chip-${c.status}">${statusLabel(c.status)}</span>`;
+
+        content.innerHTML = `
+            <div style="text-align:center; margin-bottom:1.5rem;">
+                <div style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#6c63ff,#a855f7); display:flex; align-items:center; justify-content:center; font-size:1.4rem; font-weight:900; color:#fff; margin:0 auto 0.6rem;">
+                    ${(c.nombres || '?')[0].toUpperCase()}
+                </div>
+                <div style="font-size:1rem; font-weight:800; color:#f5f5f7;">${nombre}</div>
+                <div style="font-size:12px; color:#71717a; margin-top:2px;">${c.email || '—'}</div>
+                <div style="margin-top:8px;">${chip}</div>
+            </div>
+
+            <div class="detail-section">
+                <h4>Datos Personales</h4>
+                ${row('Cédula', c.cedula)}
+                ${row('Teléfono', c.phone)}
+                ${row('Email', c.email)}
+                ${row('Fecha nacimiento', c.fecha_nacimiento)}
+                ${row('Provincia', c.provincia)}
+                ${row('Ciudad', c.ciudad)}
+                ${row('Dirección', c.direccion)}
+            </div>
+
+            <div class="detail-section">
+                <h4>Datos Económicos</h4>
+                ${row('Ingresos mensuales', c.ingresos_mensuales ? '$' + parseFloat(c.ingresos_mensuales).toFixed(0) : null)}
+                ${row('Situación laboral', c.situacion_laboral)}
+                ${row('Empleador', c.empleador)}
+                ${row('Gastos mensuales', c.gastos_mensuales ? '$' + parseFloat(c.gastos_mensuales).toFixed(0) : null)}
+            </div>
+
+            <div class="detail-section">
+                <h4>Producto Solicitado</h4>
+                ${row('Producto', c.product_name)}
+                ${row('Precio del producto', c.product_price ? '$' + parseFloat(c.product_price).toFixed(2) : null)}
+                ${row('Cuota de entrada', c.cuota_entrada ? '$' + parseFloat(c.cuota_entrada).toFixed(2) : null)}
+                ${row('Monto a financiar', c.monto_financiar ? '$' + parseFloat(c.monto_financiar).toFixed(2) : null)}
+                ${row('Plazo', c.plazo_meses ? c.plazo_meses + ' meses' : null)}
+                ${row('Cuota mensual', c.cuota_mensual ? '$' + parseFloat(c.cuota_mensual).toFixed(2) : null)}
+                ${row('Total a pagar', c.total_pagar ? '<strong style="color:#a855f7;">$' + parseFloat(c.total_pagar).toFixed(2) + '</strong>' : null)}
+            </div>
+
+            ${c.admin_note ? `
+            <div class="detail-section">
+                <h4>Nota del Admin</h4>
+                <div style="background:rgba(255,159,10,0.07); border:1px solid rgba(255,159,10,0.2); border-radius:10px; padding:12px; font-size:13px; color:#ffb340;">
+                    ${c.admin_note}
+                </div>
+            </div>` : ''}
+
+            <div style="font-size:11px; color:#555; text-align:center; margin-top:1rem;">Solicitud: ${fecha}</div>
+
+            <div style="display:flex; gap:0.5rem; margin-top:1.5rem; flex-wrap:wrap;">
+                <button class="btn-action primary" style="flex:1;" onclick="openStatusModal('${c.id}','${c.status}')">
+                    <i class="fa fa-edit"></i> Cambiar Estado
+                </button>
+                ${c.phone ? `<a class="btn-action" style="background:#25d366;color:#fff;flex:1;justify-content:center;" href="https://wa.me/${c.phone.replace(/\D/g,'')}?text=${encodeURIComponent(`Hola ${c.nombres}, te contactamos de Ecugaming Import sobre tu solicitud de crédito para ${c.product_name || 'el producto solicitado'}.`)}" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>` : ''}
+            </div>`;
+    }
+
+    function row(label, value) {
+        if (!value) return '';
+        return `<div class="detail-row"><span class="dr-label">${label}</span><span class="dr-value">${value}</span></div>`;
+    }
+
+    function closePanel() {
+        document.getElementById('detailPanel').classList.remove('open');
+        _currentCredit = null;
+    }
+
+    // ── Status Modal ──────────────────────────────────────────
+    function openStatusModal(id, currentStatus) {
+        document.getElementById('modalCreditId').value = id;
+        document.getElementById('modalStatus').value = currentStatus || 'pendiente';
+        document.getElementById('modalNote').value = '';
+        document.getElementById('statusModal').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('statusModal').classList.remove('active');
+    }
+
+    async function saveStatus() {
+        const id = document.getElementById('modalCreditId').value;
+        const status = document.getElementById('modalStatus').value;
+        const note = document.getElementById('modalNote').value.trim();
+
+        const btn = document.querySelector('#statusModal .btn-action.primary');
+        const orig = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+
+        try {
+            const res = await apiFetch(`/api/admin/credits/${id}/status`, {
+                method: 'PATCH',
+                body: JSON.stringify({ status, admin_note: note })
+            });
+
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.error || 'Error');
+            }
+
+            closeModal();
+            // Update in allCredits
+            const idx = allCredits.findIndex(c => c.id === id);
+            if (idx !== -1) { allCredits[idx].status = status; allCredits[idx].admin_note = note; }
+            updateStats(allCredits);
+            applyFilter();
+            // Refresh detail panel if open
+            if (_currentCredit && _currentCredit.id === id) {
+                _currentCredit.status = status;
+                _currentCredit.admin_note = note;
+                renderDetail(_currentCredit);
+            }
+            showToast('Estado actualizado correctamente');
+        } catch (e) {
+            alert('Error: ' + e.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = orig;
+        }
+    }
+
+    // ── WhatsApp from detail panel ────────────────────────────
+    function openWA() {
+        if (!_currentCredit) return;
+        const phone = (_currentCredit.phone || '').replace(/\D/g,'');
+        if (!phone) { alert('El solicitante no tiene teléfono registrado'); return; }
+        const text = `Hola ${_currentCredit.nombres || ''}, te contactamos de Ecugaming Import sobre tu solicitud de crédito para ${_currentCredit.product_name || 'el producto solicitado'}. ¿Podemos conversar?`;
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    async function sendCreditEmail() {
+        if (!_currentCredit) return;
+        alert('Para enviar un email, cambia el estado de la solicitud y se notificará automáticamente al solicitante.');
+    }
+
+    // ── Toast ─────────────────────────────────────────────────
+    function showToast(msg) {
+        const t = document.createElement('div');
+        t.textContent = msg;
+        t.style.cssText = 'position:fixed;bottom:2rem;right:2rem;background:#22c55e;color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,.4);';
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 3000);
+    }
+
+    // Close panel on outside click
+    document.addEventListener('click', e => {
+        const panel = document.getElementById('detailPanel');
+        if (panel.classList.contains('open') && !panel.contains(e.target) && !e.target.closest('[onclick*="showDetail"]') && !e.target.closest('[onclick*="openStatusModal"]')) {
+            closePanel();
+        }
+    });
+
+    init();
+</script>
+</body>
+</html>

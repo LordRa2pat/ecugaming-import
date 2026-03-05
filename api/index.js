@@ -1061,23 +1061,124 @@ app.get('/api/news', async (req, res) => {
 });
 
 // ============================================================
-// PUBLIC: POST /api/credit-check — proxies n8n credit form webhook
+// PUBLIC: POST /api/credit-check — saves credit application to Supabase
 // ============================================================
 app.post('/api/credit-check', async (req, res) => {
-    const url = process.env.N8N_CREDIT_WEBHOOK_URL;
-    if (!url) return res.json({ ok: true }); // fail silently — form still shows success
+    const b = req.body;
+    const sol = b.solicitante || {};
+    const eco = b.economia || {};
+    const prod = b.producto || {};
     try {
-        await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(req.body),
-            signal: AbortSignal.timeout(5000),
-        });
+        if (useSupabase) {
+            await supabase.from('credit_applications').insert({
+                status: 'pendiente',
+                nombres:            sanitize(sol.nombres || ''),
+                apellidos:          sanitize(sol.apellidos || ''),
+                cedula:             sanitize(sol.cedula || ''),
+                fecha_nacimiento:   sol.fecha_nacimiento || null,
+                whatsapp:           sanitize(sol.whatsapp || ''),
+                email:              sanitize(sol.email || ''),
+                direccion:          sanitize(sol.direccion || ''),
+                ciudad:             sanitize(sol.ciudad || ''),
+                estado_civil:       sanitize(sol.estado_civil || ''),
+                ocupacion:          sanitize(eco.ocupacion || ''),
+                lugar_trabajo:      sanitize(eco.lugar_trabajo || ''),
+                ingresos_mensuales: parseFloat(eco.ingresos_mensuales) || 0,
+                gastos_mensuales:   parseFloat(eco.gastos_mensuales) || 0,
+                tiempo_en_trabajo:  sanitize(eco.tiempo_en_trabajo || ''),
+                referencia_personal: sanitize(eco.referencia_personal || ''),
+                product_name:       sanitize(prod.nombre || ''),
+                product_price:      parseFloat(prod.precio) || 0,
+                entrada_inicial:    parseFloat(prod.entrada_inicial) || 0,
+                monto_financiar:    parseFloat(prod.monto_financiar) || 0,
+                plan_meses:         parseInt(prod.plan_meses) || 0,
+                cuota_mensual:      parseFloat(prod.cuota_mensual) || 0,
+                total_pagar:        parseFloat(prod.total_pagar) || 0,
+            });
+        }
+        // Also fire n8n if configured
+        const url = process.env.N8N_CREDIT_WEBHOOK_URL;
+        if (url) {
+            fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(b), signal: AbortSignal.timeout(5000) })
+                .catch(e => console.error('[credit n8n]', e.message));
+        }
+        // Notify admin by email
+        if (process.env.SMTP_USER) {
+            sendOrderEmail({
+                orderId: `CREDITO-${Date.now()}`,
+                status: 'confirmando_pago',
+                customerName: `${sol.nombres} ${sol.apellidos}`,
+                customerEmail: process.env.SMTP_FROM || process.env.SMTP_USER,
+                productName: `Solicitud Crédito: ${prod.nombre}`,
+                carrier: `$${prod.cuota_mensual?.toFixed(2)}/mes x${prod.plan_meses} meses`,
+                total: prod.total_pagar?.toFixed(2) || '0',
+                paymentMethod: `Entrada: $${prod.entrada_inicial}`,
+            }).catch(() => {});
+        }
     } catch (e) {
         console.error('[credit-check]', e.message);
     }
     res.json({ ok: true });
 });
+
+// ============================================================
+// ADMIN: GET /api/admin/credits — list all credit applications
+// ============================================================
+app.get('/api/admin/credits', requireAdmin(async (req, res) => {
+    const { status, limit = 200, page = 1 } = req.query;
+    let query = supabase
+        .from('credit_applications')
+        .select('*', { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .range((page - 1) * limit, page * limit - 1);
+    if (status) query = query.eq('status', status);
+    const { data, error, count } = await query;
+    if (error) return res.status(400).json({ error: error.message });
+    res.json({ applications: data || [], total: count });
+}));
+
+// ADMIN: GET /api/admin/credits/:id
+app.get('/api/admin/credits/:id', requireAdmin(async (req, res) => {
+    const { data, error } = await supabase
+        .from('credit_applications')
+        .select('*')
+        .eq('id', req.params.id)
+        .single();
+    if (error || !data) return res.status(404).json({ error: 'No encontrado' });
+    res.json(data);
+}));
+
+// ADMIN: PATCH /api/admin/credits/:id/status
+app.patch('/api/admin/credits/:id/status', requireAdmin(async (req, res) => {
+    const { status, admin_note } = req.body;
+    const valid = ['pendiente', 'en_revision', 'aprobado', 'rechazado'];
+    if (!valid.includes(status)) return res.status(400).json({ error: 'Estado inválido' });
+    const updates = { status, updated_at: new Date().toISOString() };
+    if (admin_note !== undefined) updates.admin_note = sanitize(admin_note);
+    const { data, error } = await supabase
+        .from('credit_applications')
+        .update(updates)
+        .eq('id', req.params.id)
+        .select()
+        .single();
+    if (error) return res.status(400).json({ error: error.message });
+    // Notify applicant by email
+    if (data.email && process.env.SMTP_USER) {
+        const statusMsg = { aprobado: '✅ ¡Tu crédito fue APROBADO!', rechazado: '❌ Tu solicitud fue rechazada', en_revision: '🔍 Tu solicitud está en revisión', pendiente: 'Tu solicitud está pendiente' };
+        sendOrderEmail({
+            orderId: `CRÉDITO`,
+            status: 'orden_confirmada',
+            customerName: `${data.nombres} ${data.apellidos}`,
+            customerEmail: data.email,
+            productName: `Crédito: ${data.product_name}`,
+            carrier: `Cuota: $${parseFloat(data.cuota_mensual || 0).toFixed(2)}/mes`,
+            total: parseFloat(data.total_pagar || 0).toFixed(2),
+            paymentMethod: statusMsg[status] || status,
+            statusNote: admin_note || '',
+        }).catch(() => {});
+    }
+    res.json(data);
+}));
 
 // ============================================================
 // PUBLIC: GET /api/config — serves public Supabase config

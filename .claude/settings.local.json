@@ -2,7 +2,36 @@
   "permissions": {
     "allow": [
       "Bash(node -e \":*)",
-      "Bash(node scripts/image-enrichment.js)"
+      "Bash(node scripts/image-enrichment.js)",
+      "Bash(node -e \"console.log\\(require\\(''crypto''\\).randomBytes\\(32\\).toString\\(''hex''\\)\\)\")",
+      "Bash(npx vercel --prod)",
+      "Bash(npx vercel env add N8N_ORDER_WEBHOOK_URL production)",
+      "Bash(npx vercel env add N8N_API_KEY production)",
+      "Bash(curl -s -w \"\\\\n\\\\nHTTP Status: %{http_code}\" -X POST \"https://n8n-n8n.tlsfxv.easypanel.host/webhook/order-notification\" -H \"Content-Type: application/json\" -H \"x-api-key: 4ea73ff3370525701b10f43b051fb2f545f1847f16744f05afbae8af68dff726\" -d '{:*)",
+      "Bash(npm install nodemailer)",
+      "Bash(npx vercel env add SMTP_HOST production)",
+      "Bash(npx vercel env add SMTP_PORT production)",
+      "Bash(npx vercel env add SMTP_USER production)",
+      "Bash(npx vercel env add SMTP_PASS production)",
+      "Bash(npx vercel env add SMTP_FROM production)",
+      "Bash(SMTP_HOST=\"mail.spaceship.com\" SMTP_PORT=\"465\" SMTP_USER=\"soporte@ecugamingimport.top\" SMTP_PASS=\"Patricio0987\" SMTP_FROM=\"soporte@ecugamingimport.top\" node -e \":*)",
+      "Bash(timeout 8 node -e \":*)",
+      "Bash(timeout 10 node -e \":*)",
+      "Bash(npx vercel env rm SMTP_HOST production --yes)",
+      "Bash(npx vercel env ls)",
+      "Bash(SMTP_HOST=\"mail.spacemail.com\" SMTP_PORT=\"465\" SMTP_USER=\"soporte@ecugamingimport.top\" SMTP_PASS=\"Patricio0987\" node -e \":*)",
+      "Bash(curl -s \"https://ecugamingimport.online/api/test-email?to=pelixd@gmail.com&key=4ea73ff3370525701b10f43b051fb2f545f1847f16744f05afbae8af68dff726\")",
+      "Bash(npx vercel env rm N8N_API_KEY production --yes)",
+      "Bash(printf \"4ea73ff3370525701b10f43b051fb2f545f1847f16744f05afbae8af68dff726\")",
+      "Bash(curl -s \"https://ecugamingimport.online/api/test-email?to=pelixd%40gmail.com&key=4ea73ff3370525701b10f43b051fb2f545f1847f16744f05afbae8af68dff726\")",
+      "Bash(node -e \"const dns = require\\(''dns''\\); dns.resolve4\\(''mail.spacemail.com'', \\(e, a\\) => { if\\(e\\) console.log\\(''err:'', e.message\\); else console.log\\(''IP:'', a\\); }\\);\")",
+      "Bash(nslookup mail.spacemail.com 8.8.8.8)",
+      "Bash(printf \"198.177.121.32\")",
+      "Bash(npx vercel env add SMTP_IP production)",
+      "Bash(curl -sI \"https://m.media-amazon.com/images/I/81hPbvBTNFL._AC_SL1500_.jpg\")",
+      "Bash(curl -s \"https://www.googleapis.com/customsearch/v1?key=AIzaSyA_PuMotDviY7C7EXaMNnKTZGaUti_mlHk&cx=8483c315919cd4ed4&searchType=image&q=Elden+Ring+PS5+cover&num=3\")",
+      "Bash(python3 -m json.tool)",
+      "Bash(node scripts/test-email.js)"
     ]
   }
 }

@@ -640,6 +640,7 @@
             <a href="admin-products.html" class="sidebar-item"><i class="fa fa-box"></i> Inventario</a>
             <a href="admin-orders.html" class="sidebar-item active"><i class="fa fa-shopping-cart"></i> Ventas</a>
             <a href="admin-customers.html" class="sidebar-item"><i class="fa fa-users"></i> Clientes</a>
+            <a href="admin-credits.html" class="sidebar-item"><i class="fa fa-credit-card"></i> Créditos</a>
             <div class="sidebar-group">Marketing</div>
             <a href="admin-coupons.html" class="sidebar-item"><i class="fa fa-ticket-alt"></i> Cupones</a>
             <a href="admin-carts.html" class="sidebar-item"><i class="fa fa-shopping-basket"></i> Carritos</a>
@@ -698,6 +699,12 @@
                     <button class="filter-tab" data-status="empacando">Empacando</button>
                     <button class="filter-tab" data-status="enviado">Enviados</button>
                     <button class="filter-tab" data-status="cancelado">Cancelados</button>
+                </div>
+
+                <!-- Refresh indicator -->
+                <div style="display:flex; justify-content:flex-end; margin-bottom:0.5rem;">
+                    <span id="refreshTs" style="font-size:11px; color:#555;"></span>
+                    <button class="btn-icon" onclick="loadOrders()" title="Actualizar" style="margin-left:6px;"><i class="fa fa-sync"></i></button>
                 </div>
 
                 <!-- Feature 3 & 4: Search + Date Range + Feature 5: Export CSV -->
@@ -830,21 +837,52 @@
 
         // ── Init ──────────────────────────────────────────────
         async function init() {
-            adminToken = await Auth.requireAdmin();
-            if (!adminToken) return;
-
-            // Feature 2: Tab click handlers
-            document.querySelectorAll('.filter-tab').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    currentStatusFilter = btn.dataset.status;
-                    currentPage = 1;
-                    applyFilters();
+            try {
+                // Show loading skeletons
+                ['statTotal','statRevenue','statPending','statAvg'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) { el.textContent = '…'; el.style.opacity = '0.4'; }
                 });
-            });
 
-            await loadOrders();
+                adminToken = await Auth.requireAdmin();
+                if (!adminToken) return;
+
+                // Feature 2: Tab click handlers
+                document.querySelectorAll('.filter-tab').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        currentStatusFilter = btn.dataset.status;
+                        currentPage = 1;
+                        applyFilters();
+                    });
+                });
+
+                await loadOrders();
+
+                // Auto-refresh every 60 seconds
+                setInterval(loadOrders, 60000);
+
+            } catch (err) {
+                console.error('[admin-orders] init error:', err);
+                document.getElementById('ordersBody').innerHTML = `
+                    <tr><td colspan="11" style="text-align:center;padding:3rem;">
+                        <div style="color:#ff6b6b; margin-bottom:1rem;">
+                            <i class="fa fa-exclamation-circle" style="font-size:2rem;"></i>
+                            <div style="margin-top:0.5rem; font-size:14px;">Error al cargar. Sesión posiblemente expirada.</div>
+                        </div>
+                        <button class="btn-action primary" onclick="location.reload()">
+                            <i class="fa fa-sync"></i> Reintentar
+                        </button>
+                        <button class="btn-action" onclick="location.href='/login'" style="margin-left:8px;">
+                            <i class="fa fa-sign-in-alt"></i> Iniciar Sesión
+                        </button>
+                    </td></tr>`;
+                ['statTotal','statRevenue','statPending','statAvg'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) { el.textContent = '—'; el.style.opacity = '1'; }
+                });
+            }
         }
 
         // ── API ───────────────────────────────────────────────
@@ -860,17 +898,45 @@
         }
 
         // ── Load all orders ───────────────────────────────────
+        let _lastRefresh = null;
         async function loadOrders() {
             try {
+                document.getElementById('ordersBody').innerHTML =
+                    '<tr><td colspan="11" style="text-align:center;color:#555;padding:2rem;"><i class="fa fa-spinner fa-spin"></i> Cargando...</td></tr>';
+
                 const res = await apiFetch('/api/admin/orders?limit=500');
+
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+                    if (res.status === 401 || res.status === 403) {
+                        document.getElementById('ordersBody').innerHTML = `
+                            <tr><td colspan="11" style="text-align:center;padding:2rem;color:#ff6b6b;">
+                                Sesión expirada o sin permisos.
+                                <button class="btn-action" onclick="location.href='/login'" style="margin-left:8px;">Iniciar Sesión</button>
+                            </td></tr>`;
+                        return;
+                    }
+                    throw new Error(err.error || `Error ${res.status}`);
+                }
+
                 const data = await res.json();
                 allOrders = data.orders || [];
+                _lastRefresh = new Date();
                 updateStats(allOrders);
                 updateChart(allOrders);
                 applyFilters();
+
+                // Update refresh timestamp
+                const ts = document.getElementById('refreshTs');
+                if (ts) ts.textContent = 'Actualizado ' + _lastRefresh.toLocaleTimeString('es-EC');
+
             } catch (e) {
-                document.getElementById('ordersBody').innerHTML =
-                    '<tr><td colspan="11" style="text-align:center;color:#555;padding:2rem;">Error cargando ordenes</td></tr>';
+                console.error('[loadOrders]', e);
+                document.getElementById('ordersBody').innerHTML = `
+                    <tr><td colspan="11" style="text-align:center;padding:2rem;">
+                        <div style="color:#ff6b6b; margin-bottom:0.8rem;">${e.message || 'Error cargando órdenes'}</div>
+                        <button class="btn-action" onclick="loadOrders()"><i class="fa fa-sync"></i> Reintentar</button>
+                    </td></tr>`;
             }
         }
 
@@ -1084,9 +1150,9 @@
                         <button class="btn-action" style="background:#6c63ff" title="Enviar email" onclick="sendOrderEmail('${o.id}')">
                             <i class="fa fa-envelope"></i>
                         </button>
-                        <!-- Feature 6: WhatsApp button -->
-                        ${waPhone ? `<a class="btn-action" style="background:#25d366; color:#fff;" href="https://wa.me/${waPhone}" target="_blank" title="WhatsApp ${phone}">
-                            <i class="fa-brands fa-whatsapp"></i>
+                        <!-- Feature 6: WhatsApp button with pre-filled message -->
+                        ${waPhone ? `<a class="btn-action" style="background:#25d366; color:#fff;" href="https://wa.me/${waPhone}?text=${encodeURIComponent(`Hola ${o.customer?.first_name || ''}, tu pedido #${o.id} está en estado: ${statusLabel(o.status)}. Cualquier consulta estamos a tu servicio — Ecugaming Import`)}" target="_blank" title="WhatsApp a cliente">
+                            <i class="fab fa-whatsapp"></i>
                         </a>` : ''}
                         ${ip !== '—' ? `<button class="btn-icon" style="color:#ff453a;" title="Banear IP ${ip}" onclick="banIp('${ip}')"><i class="fa fa-ban"></i></button>` : ''}
                         ${customerId && !isBanned ? `<button class="btn-icon" style="color:#ff6b6b;" title="Banear usuario" onclick="banUser('${customerId}')"><i class="fa fa-user-slash"></i></button>` : ''}

@@ -20,6 +20,8 @@
         { "source": "/pagos", "destination": "/pagos.html" },
         { "source": "/devoluciones", "destination": "/devoluciones.html" },
         { "source": "/credito", "destination": "/credito.html" },
-        { "source": "/solicitud-credito", "destination": "/solicitud-credito.html" }
+        { "source": "/solicitud-credito", "destination": "/solicitud-credito.html" },
+        { "source": "/admin-credits", "destination": "/admin-credits.html" },
+        { "source": "/admin-carts", "destination": "/admin-carts.html" }
     ]
 }
