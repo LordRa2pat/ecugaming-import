@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <style>
+        html,
+        body {
+            background: #0a0a0b !important
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos | Admin StreamCell</title>
+    <meta name="supabase-url" content="https://bwxxgeaaiwqituaitzsw.supabase.co">
+    <meta name="supabase-anon"
+        content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ3eHhnZWFhaXdxaXR1YWl0enN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjM4NjEsImV4cCI6MjA4NjgzOTg2MX0.lkdHvA791TBLvSRQeg8rARfHbiAuENNV5B6MOarWtxU">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh
+        }
+
+        .admin-sidebar {
+            width: 240px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            padding: 1.25rem 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 900
+        }
+
+        .sidebar-brand {
+            padding: 0 1.25rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .sidebar-brand span {
+            color: var(--primary)
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem 0
+        }
+
+        .nav-section {
+            padding: 0 1rem;
+            margin-bottom: .5rem;
+            font-size: .68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--text-muted)
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            padding: .55rem 1.25rem;
+            font-size: .82rem;
+            font-weight: 500;
+            color: var(--text-dim);
+            transition: .15s;
+            text-decoration: none;
+            border-left: 3px solid transparent
+        }
+
+        .nav-link:hover {
+            background: var(--bg-hover);
+            color: var(--text)
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            background: rgba(255, 140, 0, .06);
+            border-left-color: var(--primary);
+            font-weight: 700
+        }
+
+        .nav-link i {
+            width: 16px;
+            text-align: center
+        }
+
+        .admin-main {
+            margin-left: 240px;
+            flex: 1;
+            padding: 1.5rem
+        }
+
+        .pipeline {
+            display: flex;
+            gap: .3rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: .5rem
+        }
+
+        .pipeline-btn {
+            padding: .4rem .75rem;
+            border-radius: var(--r-full);
+            font-size: .72rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-dim);
+            white-space: nowrap;
+            transition: .15s;
+            display: flex;
+            align-items: center;
+            gap: .3rem
+        }
+
+        .pipeline-btn:hover {
+            border-color: var(--primary)
+        }
+
+        .pipeline-btn.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary)
+        }
+
+        .pipeline-count {
+            background: rgba(0, 0, 0, .2);
+            border-radius: var(--r-full);
+            padding: 0 5px;
+            font-size: .6rem
+        }
+
+        .order-row {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            margin-bottom: .5rem;
+            overflow: hidden;
+            transition: .15s
+        }
+
+        .order-row:hover {
+            border-color: rgba(255, 140, 0, .2)
+        }
+
+        .order-row-top {
+            display: flex;
+            align-items: center;
+            padding: .75rem 1rem;
+            gap: .75rem;
+            cursor: pointer;
+            flex-wrap: wrap
+        }
+
+        .order-row-expanded {
+            display: none;
+            padding: 0 1rem 1rem;
+            border-top: 1px solid var(--border)
+        }
+
+        .order-row.open .order-row-expanded {
+            display: block
+        }
+
+        .proof-viewer {
+            max-width: 300px;
+            border-radius: var(--r);
+            cursor: pointer;
+            margin-top: .5rem
+        }
+
+        .order-actions {
+            display: flex;
+            gap: .3rem;
+            flex-wrap: wrap;
+            margin-top: .75rem
+        }
+
+        .revenue-bar {
+            display: flex;
+            gap: .75rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap
+        }
+
+        .revenue-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: .65rem .85rem;
+            text-align: center;
+            min-width: 100px
+        }
+
+        .revenue-item .val {
+            font-size: 1.1rem;
+            font-weight: 900
+        }
+
+        .revenue-item .lbl {
+            font-size: .68rem;
+            color: var(--text-muted)
+        }
+
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: .75rem;
+            left: .75rem;
+            z-index: 999;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: .5rem .65rem;
+            cursor: pointer
+        }
+
+        @media(max-width:900px) {
+            .admin-sidebar {
+                transform: translateX(-100%)
+            }
+
+            .admin-main {
+                margin-left: 0
+            }
+
+            .mobile-toggle {
+                display: block
+            }
+
+            .pipeline {
+                flex-wrap: wrap
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="mobile-toggle" onclick="document.querySelector('.admin-sidebar').classList.toggle('open')"><i
+            class="fa-solid fa-bars"></i></button>
+    <nav class="admin-sidebar">
+        <div class="sidebar-brand">🖥 Stream<span>Cell</span></div>
+        <div class="sidebar-nav">
+            <div class="nav-section">Principal</div><a href="/admin/index.html" class="nav-link"><i
+                    class="fa-solid fa-chart-pie"></i> Dashboard</a><a href="/admin/pedidos.html"
+                class="nav-link active"><i class="fa-solid fa-receipt"></i> Pedidos</a>
+            <div class="nav-section" style="margin-top:.75rem;">Inventario</div><a href="/admin/productos.html"
+                class="nav-link"><i class="fa-solid fa-box"></i> Productos</a><a href="/admin/inventario.html"
+                class="nav-link"><i class="fa-solid fa-database"></i> Inventario</a>
+            <div class="nav-section" style="margin-top:.75rem;">Clientes</div><a href="/admin/clientes.html"
+                class="nav-link"><i class="fa-solid fa-users"></i> Clientes</a><a href="/admin/wallet.html"
+                class="nav-link"><i class="fa-solid fa-wallet"></i> Wallet</a>
+            <div class="nav-section" style="margin-top:.75rem;">Operaciones</div><a href="/admin/renovaciones.html"
+                class="nav-link"><i class="fa-solid fa-rotate"></i> Renovaciones</a><a href="/admin/configuracion.html"
+                class="nav-link"><i class="fa-solid fa-gear"></i> Configuración</a>
+        </div>
+    </nav>
+
+    <main class="admin-main">
+        <div
+            style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem;">
+            <div>
+                <h1 style="font-size:1.3rem;font-weight:800;">Pedidos</h1>
+                <p style="font-size:.82rem;color:var(--text-dim);">Pipeline de 9 estados</p>
+            </div>
+            <div style="display:flex;gap:.3rem;">
+                <!-- Feature 12: CSV export -->
+                <button class="btn btn-secondary btn-sm" onclick="exportOrders()"><i class="fa-solid fa-download"></i>
+                    CSV</button>
+                <button class="btn btn-ghost btn-sm" onclick="loadOrders()"><i class="fa-solid fa-rotate"></i></button>
+            </div>
+        </div>
+
+        <!-- Feature 15: Revenue summary -->
+        <div class="revenue-bar" id="revenueBar">
+            <div class="revenue-item">
+                <div class="val" style="color:var(--primary);" id="revToday">$0</div>
+                <div class="lbl">Hoy</div>
+            </div>
+            <div class="revenue-item">
+                <div class="val" style="color:var(--green);" id="revWeek">$0</div>
+                <div class="lbl">Semana</div>
+            </div>
+            <div class="revenue-item">
+                <div class="val" style="color:var(--accent);" id="revMonth">$0</div>
+                <div class="lbl">Mes</div>
+            </div>
+            <div class="revenue-item">
+                <div class="val" id="ordTotal">0</div>
+                <div class="lbl">Total pedidos</div>
+            </div>
+        </div>
+
+        <!-- Feature 1: Pipeline filter -->
+        <div class="pipeline" id="pipeline"></div>
+
+        <!-- Search & filters -->
+        <div style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;">
+            <input type="text" class="form-control" placeholder="Buscar # pedido, cliente..."
+                style="width:220px;padding:.35rem .65rem;font-size:.78rem;" id="searchOrder" oninput="filterOrders()">
+            <select class="form-control" style="width:auto;padding:.35rem .5rem;font-size:.78rem;" id="filterMethod"
+                onchange="filterOrders()">
+                <option value="">Método: Todos</option>
+                <option>transfer</option>
+                <option>binance</option>
+                <option>deuna</option>
+                <option>wallet</option>
+            </select>
+
+            <div id="bulkOrderActions" style="display:none;align-items:center;gap:.5rem;margin-left:auto;">
+                <span style="font-size:.75rem;color:var(--text-dim);"><span id="selOrderCount">0</span>
+                    seleccionados</span>
+                <button class="btn btn-secondary btn-sm"
+                    onclick="bulkChangeStatus('VALIDATING_PAYMENT')">Verificar</button>
+                <button class="btn btn-secondary btn-sm" onclick="bulkChangeStatus('PAYMENT_APPROVED')">Aprobar</button>
+                <button class="btn btn-ghost btn-sm" style="color:var(--red);" onclick="bulkDeleteOrders()"><i
+                        class="fa-solid fa-trash"></i></button>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="openWhatsAppSettings()" style="margin-left:auto;"><i
+                    class="fa-solid fa-message"></i> Plantillas WA</button>
+        </div>
+
+        <!-- WhatsApp Template Editor (Tool 3/10) -->
+        <div class="modal-overlay" id="waModal">
+            <div class="modal" style="max-width:500px;">
+                <div class="modal-header">
+                    <span class="modal-title">Plantillas WhatsApp</span>
+                    <button class="modal-close" onclick="closeWAModal()"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Plantilla Verificación</label>
+                        <textarea id="waTplVerify" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Plantilla Entrega</label>
+                        <textarea id="waTplDelivery" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Plantilla Garantía (Auto)</label>
+                        <textarea id="waTplWarranty" class="form-control" rows="3"></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveWATemplates()">Guardar Plantillas</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders list -->
+        <div id="ordersList"></div>
+    </main>
+
+    <div class="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../lib/supabase-client.js"></script>
+    <script src="../lib/admin-auth.js"></script>
+    <script>
+        window.API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:3000/api' : '/api';
+        let allOrders = [], currentFilter = 'all';
+        const STATUS_FLOW = [
+            { key: 'PENDING_PAYMENT', icon: '⏳', label: 'Pendiente Pago' },
+            { key: 'PAYMENT_UPLOADED', icon: '📤', label: 'Pago Subido' },
+            { key: 'VALIDATING_PAYMENT', icon: '🔍', label: 'Verificando' },
+            { key: 'PAYMENT_APPROVED', icon: '✅', label: 'Aprobado' },
+            { key: 'ASSIGNING_ACCOUNT', icon: '⚙️', label: 'Asignando' },
+            { key: 'COMPLETED', icon: '🏆', label: 'Completado' },
+            { key: 'REJECTED', icon: '❌', label: 'Rechazado' },
+            { key: 'WARRANTY_CLAIM', icon: '🛡️', label: 'Garantía' },
+            { key: 'REPLACED', icon: '🔄', label: 'Reemplazado' },
+        ];
+
+        function buildPipeline() {
+            const pipe = document.getElementById('pipeline');
+            pipe.innerHTML = `<button class="pipeline-btn active" onclick="setPipeFilter('all',this)">Todos <span class="pipeline-count" id="cnt-all">0</span></button>` +
+                STATUS_FLOW.map(s => {
+                    const count = allOrders.filter(o => o.status === s.key).length;
+                    return `<button class="pipeline-btn" onclick="setPipeFilter('${s.key}',this)">${s.icon} ${s.label} <span class="pipeline-count" id="cnt-${s.key}">${count}</span></button>`;
+                }).join('');
+            document.getElementById('cnt-all').textContent = allOrders.length;
+        }
+
+        function setPipeFilter(status, el) {
+            currentFilter = status;
+            document.querySelectorAll('.pipeline-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            filterOrders();
+        }
+
+        function filterOrders() {
+            let filtered = [...allOrders];
+            if (currentFilter !== 'all') filtered = filtered.filter(o => o.status === currentFilter);
+            const search = document.getElementById('searchOrder').value.toLowerCase().trim();
+            if (search) filtered = filtered.filter(o => (o.order_number || '').toLowerCase().includes(search) || (o.customer_name || '').toLowerCase().includes(search));
+            const method = document.getElementById('filterMethod').value;
+            if (method) filtered = filtered.filter(o => o.payment_method === method);
+            renderOrders(filtered);
+        }
+
+        function renderOrders(orders) {
+            const container = document.getElementById('ordersList');
+            if (!orders.length) { container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted);">Sin pedidos con este filtro</div>'; return; }
+            container.innerHTML = orders.map(o => {
+                const st = STATUS_FLOW.find(s => s.key === o.status) || { icon: '❓', label: o.status };
+                const timeInState = timeSince(o.updated_at || o.created_at);
+                return `
+            <div class="order-row" id="row-${o.id}">
+                <div class="order-row-top" onclick="toggleRow('${o.id}')">
+                    <span style="font-family:monospace;font-weight:800;font-size:.85rem;min-width:140px;">${o.order_number || o.id?.slice(0, 8)}</span>
+                    <span style="font-size:.78rem;color:var(--text-dim);min-width:100px;">${o.customer_name || 'Cliente'}</span>
+                    <span style="font-weight:800;color:var(--primary);min-width:60px;">$${Number(o.total_amount).toFixed(2)}</span>
+                    <span class="badge badge-${o.status === 'COMPLETED' ? 'success' : o.status === 'REJECTED' ? 'error' : 'warning'}" style="font-size:.65rem;">${st.icon} ${st.label}</span>
+                    <!-- Feature 10: Time in state -->
+                    <span style="font-size:.65rem;color:var(--text-muted);margin-left:auto;">${timeInState}</span>
+                    <i class="fa-solid fa-chevron-down" style="font-size:.65rem;color:var(--text-muted);transition:transform .2s;"></i>
+                </div>
+                <div class="order-row-expanded">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;font-size:.82rem;margin-bottom:.75rem;">
+                        <div><strong>Método:</strong> ${o.payment_method || '-'}</div>
+                        <div><strong>Pago:</strong> ${o.payment_status || '-'}</div>
+                        <div><strong>Fecha:</strong> ${new Date(o.created_at).toLocaleString('es-EC')}</div>
+                        <div><strong>Items:</strong> ${(o.items || []).map(i => i.product_name).join(', ') || '-'}</div>
+                        ${o.payment_proof_url ? `<div style="grid-column:1/-1;"><strong>Comprobante:</strong><br><img src="${o.payment_proof_url}" class="proof-viewer" alt="Comprobante" onclick="window.open('${o.payment_proof_url}','_blank')"></div>` : ''}
+                        ${o.notes ? `<div style="grid-column:1/-1;"><strong>Notas:</strong> ${o.notes}</div>` : ''}
+                    </div>
+
+                    <!-- Feature 8: Internal notes input -->
+                    <div class="form-group" style="margin-bottom:.5rem;">
+                        <input type="text" class="form-control" placeholder="Nota interna..." style="font-size:.78rem;padding:.35rem .65rem;" id="note-${o.id}">
+                    </div>
+
+                    <div class="order-actions">
+                        <!-- Feature 2-3: Approve/Reject -->
+                        ${['PAYMENT_UPLOADED', 'VALIDATING_PAYMENT'].includes(o.status) ? `
+                            <button class="btn btn-sm" style="background:var(--green);color:#fff;" onclick="changeStatus('${o.id}','PAYMENT_APPROVED')"><i class="fa-solid fa-check"></i> Aprobar</button>
+                            <button class="btn btn-sm" style="background:var(--red);color:#fff;" onclick="rejectOrder('${o.id}')"><i class="fa-solid fa-xmark"></i> Rechazar</button>
+                        ` : ''}
+                        ${o.status === 'PAYMENT_APPROVED' ? `
+                            <button class="btn btn-sm btn-primary" onclick="changeStatus('${o.id}','ASSIGNING_ACCOUNT')"><i class="fa-solid fa-user-gear"></i> Asignar cuenta</button>
+                        ` : ''}
+                        ${o.status === 'ASSIGNING_ACCOUNT' ? `
+                            <button class="btn btn-sm btn-primary" onclick="changeStatus('${o.id}','COMPLETED')"><i class="fa-solid fa-trophy"></i> Completar</button>
+                        ` : ''}
+                        <button class="btn btn-sm btn-secondary" onclick="changeStatus('${o.id}',prompt('Nuevo estado:'))"><i class="fa-solid fa-arrows-rotate"></i> Cambiar</button>
+                        <!-- Tool 4: Automated Warranty Handler -->
+                        ${o.status === 'COMPLETED' ? `
+                            <button class="btn btn-sm" style="background:var(--orange);color:#fff;" onclick="triggerWarranty('${o.id}')"><i class="fa-solid fa-shield-halved"></i> Garantía</button>
+                        ` : ''}
+                        <!-- WhatsApp with templates -->
+                        <div style="display:flex;gap:0.2rem;">
+                            <button class="btn btn-sm btn-ghost" style="color:#25D366;" onclick="sendWA('${o.id}','v')" title="WA Verificación"><i class="fa-brands fa-whatsapp"></i> V</button>
+                            <button class="btn btn-sm btn-ghost" style="color:#25D366;" onclick="sendWA('${o.id}','e')" title="WA Entrega"><i class="fa-brands fa-whatsapp"></i> E</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+            }).join('');
+            updateOrderSelection();
+        }
+
+        function updateOrderSelection() {
+            const selected = document.querySelectorAll('.order-check:checked');
+            document.getElementById('bulkOrderActions').style.display = selected.length ? 'flex' : 'none';
+            document.getElementById('selOrderCount').textContent = selected.length;
+        }
+
+        async function bulkChangeStatus(status) {
+            const ids = Array.from(document.querySelectorAll('.order-check:checked')).map(c => c.value);
+            if (!ids.length) return;
+            showToast(`Actualizando ${ids.length} pedidos...`, 'info');
+            await Promise.all(ids.map(id =>
+                fetch(`${API_BASE}/admin/orders/${id}`, {
+                    method: 'PATCH',
+                    headers: { ...AdminAuth.headers(), 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status })
+                })
+            ));
+            showToast('Actualizado correctamente', 'success');
+            loadOrders();
+        }
+
+        async function bulkDeleteOrders() {
+            const ids = Array.from(document.querySelectorAll('.order-check:checked')).map(c => c.value);
+            if (!ids.length || !confirm(`¿Eliminar ${ids.length} pedidos permanentemente?`)) return;
+            showToast('Eliminando...', 'info');
+            await Promise.all(ids.map(id => fetch(`${API_BASE}/admin/orders/${id}`, { method: 'DELETE', headers: AdminAuth.headers() })));
+            showToast('Pedidos eliminados', 'success');
+            loadOrders();
+        }
+
+
+        function openWhatsAppSettings() {
+            document.getElementById('waTplVerify').value = localStorage.getItem('wa_tpl_v') || '¡Hola! Recibimos tu pago del pedido #{ID}. Estamos procesando tu entrega.';
+            document.getElementById('waTplDelivery').value = localStorage.getItem('wa_tpl_e') || '¡Hola! Tu pedido #{ID} ha sido entregado. Revisa tu correo o dashboard.';
+            document.getElementById('waTplWarranty').value = localStorage.getItem('wa_tpl_w') || 'Lamentamos el inconveniente con tu pedido #{ID}. Un técnico revisará tu caso en breve.';
+            document.getElementById('waModal').classList.add('open');
+        }
+
+        function closeWAModal() { document.getElementById('waModal').classList.remove('open'); }
+
+        function saveWATemplates() {
+            localStorage.setItem('wa_tpl_v', document.getElementById('waTplVerify').value);
+            localStorage.setItem('wa_tpl_e', document.getElementById('waTplDelivery').value);
+            localStorage.setItem('wa_tpl_w', document.getElementById('waTplWarranty').value);
+            showToast('Plantillas guardadas', 'success');
+            closeWAModal();
+        }
+
+        function sendWA(orderId, type) {
+            const o = allOrders.find(x => x.id === orderId);
+            if (!o) return;
+            const phone = (o.customer_phone || '').replace('+', '').replace(/\s/g, '');
+            let tpl = localStorage.getItem('wa_tpl_' + type) || '';
+            if (!tpl) {
+                if (type === 'v') tpl = 'Hola! Recibimos tu pago del pedido #{ID}.';
+                if (type === 'e') tpl = 'Hola! Tu pedido #{ID} está listo.';
+                if (type === 'w') tpl = 'Revisando garantía del pedido #{ID}.';
+            }
+            const text = encodeURIComponent(tpl.replace('#{ID}', o.order_number || o.id.slice(0, 8)));
+            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+        }
+
+        async function triggerWarranty(id) {
+            if (!confirm('¿Iniciar proceso de garantía para este pedido?')) return;
+            showToast('Cambiando a estado Garantía...', 'info');
+            await changeStatus(id, 'WARRANTY_CLAIM');
+            sendWA(id, 'w');
+        }
+
+        function toggleRow(id) {
+            document.getElementById('row-' + id).classList.toggle('open');
+        }
+
+        function timeSince(date) {
+            const s = Math.floor((new Date() - new Date(date)) / 1000);
+            if (s < 60) return 'ahora';
+            if (s < 3600) return `${Math.floor(s / 60)}m`;
+            if (s < 86400) return `${Math.floor(s / 3600)}h`;
+            return `${Math.floor(s / 86400)}d`;
+        }
+
+        async function changeStatus(orderId, newStatus) {
+            if (!newStatus) return;
+            try {
+                await fetch(`${API_BASE}/admin/orders/${orderId}`, {
+                    method: 'PATCH', headers: { ...AdminAuth.headers(), 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+                showToast(`Estado → ${newStatus}`, 'success');
+                loadOrders();
+            } catch (e) { showToast('Error', 'error'); }
+        }
+
+        async function rejectOrder(id) {
+            const reason = prompt('Motivo del rechazo (opcional):');
+            await changeStatus(id, 'REJECTED');
+            if (reason) {
+                // Save note
+                try {
+                    await fetch(`${API_BASE}/admin/orders/${id}`, {
+                        method: 'PATCH', headers: { ...AdminAuth.headers(), 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ notes: `RECHAZADO: ${reason}` })
+                    });
+                } catch (e) { }
+            }
+        }
+
+        function exportOrders() {
+            const headers = ['Pedido', 'Cliente', 'Total', 'Estado', 'Método', 'Fecha'];
+            const rows = allOrders.map(o => [o.order_number || o.id, o.customer_name || '-', '$' + Number(o.total_amount).toFixed(2), o.status, o.payment_method || '-', new Date(o.created_at).toLocaleDateString('es-EC')]);
+            const csv = [headers.join(','), ...rows.map(r => r.map(v => `"${v}"`).join(','))].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'pedidos-streamcell.csv'; a.click();
+        }
+
+        async function loadOrders() {
+            try {
+                const res = await fetch(API_BASE + '/admin/orders-list', { headers: AdminAuth.headers() });
+                const data = await res.json();
+                allOrders = Array.isArray(data) ? data : [];
+                allOrders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+                // Revenue
+                const today = new Date().toISOString().split('T')[0];
+                const completed = allOrders.filter(o => o.status === 'COMPLETED');
+                document.getElementById('revToday').textContent = '$' + completed.filter(o => o.created_at?.startsWith(today)).reduce((s, o) => s + Number(o.total_amount || 0), 0).toFixed(0);
+                const weekAgo = new Date(Date.now() - 7 * 86400000);
+                document.getElementById('revWeek').textContent = '$' + completed.filter(o => new Date(o.created_at) >= weekAgo).reduce((s, o) => s + Number(o.total_amount || 0), 0).toFixed(0);
+                document.getElementById('revMonth').textContent = '$' + completed.filter(o => new Date(o.created_at).getMonth() === new Date().getMonth()).reduce((s, o) => s + Number(o.total_amount || 0), 0).toFixed(0);
+                document.getElementById('ordTotal').textContent = allOrders.length;
+
+                buildPipeline();
+                filterOrders();
+            } catch (e) { console.error(e); }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            AdminAuth.require();
+            loadOrders();
+            // Auto-check filter from URL
+            const urlFilter = new URLSearchParams(window.location.search).get('filter');
+            if (urlFilter) currentFilter = urlFilter;
+        });
+    </script>
+</body>
+
+</html>

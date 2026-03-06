@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <style>
+        html,
+        body {
+            background: #0a0a0b !important
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | StreamCell</title>
+    <meta name="supabase-url" content="https://bwxxgeaaiwqituaitzsw.supabase.co">
+    <meta name="supabase-anon"
+        content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ3eHhnZWFhaXdxaXR1YWl0enN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjM4NjEsImV4cCI6MjA4NjgzOTg2MX0.lkdHvA791TBLvSRQeg8rARfHbiAuENNV5B6MOarWtxU">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .admin-sidebar {
+            width: 240px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            padding: 1.25rem 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 900;
+            transition: transform .3s;
+        }
+
+        .sidebar-brand {
+            padding: 0 1.25rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-brand span {
+            color: var(--primary);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem 0;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            padding: 0 1rem;
+            margin-bottom: .5rem;
+            font-size: .68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--text-muted);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            padding: .55rem 1.25rem;
+            font-size: .82rem;
+            font-weight: 500;
+            color: var(--text-dim);
+            transition: .15s;
+            cursor: pointer;
+            text-decoration: none;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: var(--bg-hover);
+            color: var(--text);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            background: rgba(255, 140, 0, .06);
+            border-left-color: var(--primary);
+            font-weight: 700;
+        }
+
+        .nav-link i {
+            width: 16px;
+            text-align: center;
+            font-size: .85rem;
+        }
+
+        .nav-link .nav-badge {
+            margin-left: auto;
+            background: var(--red);
+            color: #fff;
+            border-radius: var(--r-full);
+            padding: 1px 6px;
+            font-size: .65rem;
+            font-weight: 800;
+        }
+
+        .sidebar-footer {
+            padding: .75rem 1.25rem;
+            border-top: 1px solid var(--border);
+            font-size: .72rem;
+            color: var(--text-muted);
+        }
+
+        .admin-main {
+            margin-left: 240px;
+            flex: 1;
+            padding: 1.5rem;
+            min-height: 100vh;
+        }
+
+        .admin-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: .5rem;
+        }
+
+        .admin-topbar h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .stat-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--r-xl);
+            padding: 1.25rem;
+            transition: .2s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(255, 140, 0, .3);
+            transform: translateY(-2px);
+        }
+
+        .stat-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: .75rem;
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--r);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .9rem;
+        }
+
+        .stat-change {
+            font-size: .7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: .2rem;
+        }
+
+        .stat-change.up {
+            color: var(--green);
+        }
+
+        .stat-change.down {
+            color: var(--red);
+        }
+
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: .15rem;
+        }
+
+        .stat-label {
+            font-size: .75rem;
+            color: var(--text-muted);
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .pending-queue-item {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .65rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .03);
+        }
+
+        .pending-queue-item:last-child {
+            border: none;
+        }
+
+        .pq-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .75rem;
+            flex-shrink: 0;
+        }
+
+        .pq-info {
+            flex: 1;
+        }
+
+        .pq-name {
+            font-size: .82rem;
+            font-weight: 600;
+        }
+
+        .pq-meta {
+            font-size: .7rem;
+            color: var(--text-muted);
+        }
+
+        .stock-alert-item {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .4rem 0;
+            font-size: .82rem;
+        }
+
+        .stock-bar {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--bg-input);
+            overflow: hidden;
+        }
+
+        .stock-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width .3s;
+        }
+
+        .live-feed {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .feed-item {
+            display: flex;
+            align-items: start;
+            gap: .5rem;
+            padding: .4rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .03);
+            font-size: .78rem;
+        }
+
+        .feed-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-top: .35rem;
+            flex-shrink: 0;
+        }
+
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: .75rem;
+            left: .75rem;
+            z-index: 999;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: .5rem .65rem;
+            cursor: pointer;
+        }
+
+        @media(max-width:900px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .admin-main {
+                margin-left: 0;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .dash-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="mobile-toggle" onclick="document.querySelector('.admin-sidebar').classList.toggle('open')">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-brand">🖥 Stream<span>Cell</span> <span
+                style="font-size:.6rem;color:var(--text-muted);font-weight:400;">Admin</span></div>
+        <div class="sidebar-nav">
+            <div class="nav-section">Principal</div>
+            <a href="/admin/index.html" class="nav-link active"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+            <a href="/admin/pedidos.html" class="nav-link"><i class="fa-solid fa-receipt"></i> Pedidos <span
+                    class="nav-badge" id="pendingBadge">0</span></a>
+
+            <div class="nav-section" style="margin-top:.75rem;">Inventario</div>
+            <a href="/admin/productos.html" class="nav-link"><i class="fa-solid fa-box"></i> Productos</a>
+            <a href="/admin/inventario.html" class="nav-link"><i class="fa-solid fa-database"></i> Inventario</a>
+
+            <div class="nav-section" style="margin-top:.75rem;">Clientes</div>
+            <a href="/admin/clientes.html" class="nav-link"><i class="fa-solid fa-users"></i> Clientes</a>
+            <a href="/admin/wallet.html" class="nav-link"><i class="fa-solid fa-wallet"></i> Wallet</a>
+
+            <div class="nav-section" style="margin-top:.75rem;">Operaciones</div>
+            <a href="/admin/renovaciones.html" class="nav-link"><i class="fa-solid fa-rotate"></i> Renovaciones</a>
+            <a href="/admin/configuracion.html" class="nav-link"><i class="fa-solid fa-gear"></i> Configuración</a>
+        </div>
+        <div class="sidebar-footer">
+            <div style="display:flex;align-items:center;gap:.5rem;">
+                <div style="width:8px;height:8px;border-radius:50;background:var(--green);"></div>
+                <span id="adminName">Admin</span>
+            </div>
+            <a href="/index.html" style="color:var(--text-muted);font-size:.7rem;display:block;margin-top:.3rem;">←
+                Volver a tienda</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="admin-main">
+        <div class="admin-topbar">
+            <div>
+                <h1>Dashboard</h1>
+                <p style="font-size:.82rem;color:var(--text-dim);">Resumen de StreamCell · <span id="todayDate"></span>
+                </p>
+            </div>
+            <!-- Feature 15: Quick actions -->
+            <div style="display:flex;gap:.3rem;">
+                <button class="btn btn-primary btn-sm" onclick="window.location.href='/admin/pedidos.html'"><i
+                        class="fa-solid fa-receipt"></i> Pedidos</button>
+                <button class="btn btn-secondary btn-sm" onclick="refreshDashboard()"><i
+                        class="fa-solid fa-rotate"></i></button>
+            </div>
+        </div>
+
+        <!-- Stats Grid (Feature 1-5) -->
+        <div class="stat-cards" id="statCards">
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div class="stat-icon" style="background:rgba(255,140,0,.12);color:var(--primary);"><i
+                            class="fa-solid fa-chart-line"></i></div>
+                    <div class="stat-change up" id="revenueChange"><i class="fa-solid fa-arrow-up"></i> 12%</div>
+                </div>
+                <div class="stat-value" id="totalRevenue">$--</div>
+                <div class="stat-label">Ingresos Hoy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div class="stat-icon" style="background:rgba(34,197,94,0.1);color:var(--green);"><i
+                            class="fa-solid fa-wallet"></i></div>
+                </div>
+                <div class="stat-value" id="monthlyRevenue">$--</div>
+                <div class="stat-label">Ingresos Mes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div class="stat-icon" style="background:rgba(59,130,246,0.1);color:var(--blue);"><i
+                            class="fa-solid fa-users"></i></div>
+                </div>
+                <div class="stat-value" id="totalCustomers">--</div>
+                <div class="stat-label">Clientes Activos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div class="stat-icon" style="background:rgba(239,68,68,0.1);color:var(--red);"><i
+                            class="fa-solid fa-triangle-exclamation"></i></div>
+                </div>
+                <div class="stat-value" id="stockAlertsCount">--</div>
+                <div class="stat-label">Alertas de Stock</div>
+            </div>
+        </div>
+
+        <!-- Advanced Analytics Section (Feature 6 & 7) -->
+        <div style="display:grid;grid-template-columns: 2fr 1fr;gap:1.5rem;margin-bottom:1.5rem;">
+            <div class="card">
+                <div class="card-header">
+                    <div style="display:flex;align-items:center;gap:0.75rem;">
+                        <i class="fa-solid fa-chart-area" style="color:var(--primary);"></i>
+                        <h2 style="font-size:1rem;font-weight:700;">Rendimiento de Ventas (Últimos 7 días)</h2>
+                    </div>
+                </div>
+                <div class="card-body-pad"
+                    style="height:250px;display:flex;align-items:flex-end;justify-content:center;gap:12px;padding-bottom:2rem;"
+                    id="salesChart">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div style="display:flex;align-items:center;gap:0.75rem;">
+                        <i class="fa-solid fa-bolt" style="color:var(--primary);"></i>
+                        <h2 style="font-size:1rem;font-weight:700;">Actividad en Vivo</h2>
+                    </div>
+                </div>
+                <div class="card-body-pad live-feed" id="liveFeed" style="max-height:250px;">
+                    <div style="text-align:center;padding:1rem;"><span class="spinner"></span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 15: Quick actions -->
+        <div class="quick-actions">
+            <button class="btn btn-primary btn-sm" onclick="window.location.href='/admin/productos.html?new=1'"><i
+                    class="fa-solid fa-plus"></i> Nuevo Producto</button>
+            <button class="btn btn-secondary btn-sm" onclick="window.location.href='/admin/inventario.html?upload=1'"><i
+                    class="fa-solid fa-upload"></i> Subir Inventario</button>
+            <button class="btn btn-secondary btn-sm" onclick="window.location.href='/admin/clientes.html'"><i
+                    class="fa-solid fa-user-plus"></i> Nuevo Cliente</button>
+            <button class="btn btn-ghost btn-sm" onclick="exportDashboard()"><i class="fa-solid fa-download"></i>
+                Exportar Resumen</button>
+        </div>
+
+        <div class="dash-grid">
+            <!-- Feature 1: Payment verification queue -->
+            <div class="card">
+                <div class="card-header">
+                    <span style="font-weight:700;"><i class="fa-solid fa-hourglass-half"
+                            style="color:var(--yellow);"></i> Pagos por Verificar</span>
+                    <a href="/admin/pedidos.html?filter=PAYMENT_UPLOADED" class="btn btn-ghost btn-sm"
+                        style="margin-left:auto;">Ver todos</a>
+                </div>
+                <div class="card-body-pad" id="pendingQueue" style="max-height:350px;overflow-y:auto;">
+                    <div style="text-align:center;padding:1rem;"><span class="spinner"></span></div>
+                </div>
+            </div>
+
+            <!-- Reseller Analytics (Feature 14) -->
+            <div class="card">
+                <div class="card-header">
+                    <span style="font-weight:700;"><i class="fa-solid fa-crown" style="color:var(--yellow);"></i>
+                        Análisis de Revendedores</span>
+                    <a href="/admin/clientes.html" class="btn btn-ghost btn-sm" style="margin-left:auto;">Clientes</a>
+                </div>
+                <div class="card-body-pad" id="topCustomersTable" style="max-height:350px;overflow-y:auto;">
+                    <div style="text-align:center;padding:1rem;"><span class="spinner"></span></div>
+                </div>
+            </div>
+
+            <!-- Feature 7: Stock health -->
+            <div class="card">
+                <div class="card-header">
+                    <span style="font-weight:700;"><i class="fa-solid fa-heart-pulse" style="color:var(--red);"></i>
+                        Salud de Stock (Bajo)</span>
+                    <a href="/admin/inventario.html" class="btn btn-ghost btn-sm" style="margin-left:auto;">Ver todo</a>
+                </div>
+                <div class="card-body-pad" id="stockHealth" style="max-height:350px;overflow-y:auto;">
+                    <div style="text-align:center;padding:1rem;"><span class="spinner"></span></div>
+                </div>
+            </div>
+
+            <!-- System Health (Feature 8) -->
+            <div class="card">
+                <div class="card-header">
+                    <span style="font-weight:700;"><i class="fa-solid fa-server" style="color:var(--blue);"></i> Estado
+                        de API & Sistemas</span>
+                </div>
+                <div class="card-body-pad" id="systemHealth" style="font-size:0.8rem;">
+                    <div style="display:flex;flex-direction:column;gap:0.75rem;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span>Supabase DB</span>
+                            <span class="badge" style="background:rgba(34,197,94,0.1);color:var(--green);">Online</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span>n8n Automations</span>
+                            <span class="badge" style="background:rgba(34,197,94,0.1);color:var(--green);">Online</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span>Store API</span>
+                            <span class="badge" style="background:rgba(34,197,94,0.1);color:var(--green);">Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 13: Sales chart placeholder -->
+        <div class="card" style="margin-top:1rem;">
+            <div class="card-header"><span style="font-weight:700;"><i class="fa-solid fa-chart-line"
+                        style="color:var(--primary);"></i> Ventas — Últimos 7 días</span></div>
+            <div class="card-body-pad" style="text-align:center;padding:2rem;">
+                <div id="salesChart"
+                    style="height:200px;display:flex;align-items:flex-end;justify-content:center;gap:8px;"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../lib/supabase-client.js"></script>
+    <script src="../lib/admin-auth.js"></script>
+
+    <script>
+        window.API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:3000/api' : '/api';
+
+        document.getElementById('todayDate').textContent = new Date().toLocaleDateString('es-EC', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+        async function refreshDashboard() {
+            showToast('Actualizando datos...', 'info');
+            await loadDashboard();
+            showToast('Panel actualizado', 'success');
+        }
+
+        async function loadDashboard() {
+            try {
+                // Fetch all necessary data
+                const [oRes, pRes, cRes] = await Promise.all([
+                    fetch(API_BASE + '/admin/orders-list', { headers: AdminAuth.headers() }),
+                    fetch(API_BASE + '/admin/products', { headers: AdminAuth.headers() }),
+                    fetch(API_BASE + '/admin/customers', { headers: AdminAuth.headers() })
+                ]);
+
+                const oData = await oRes.json();
+                const orders = oData.orders || [];
+                const products = (await pRes.json()) || [];
+                const customers = (await cRes.json()) || [];
+
+                renderTopStats(orders, products, customers);
+                renderSalesChart(orders);
+                renderLiveFeed(orders);
+                renderPendingQueue(orders);
+                renderStockHealth(products);
+                renderResellerAnalytics(customers, orders);
+
+            } catch (e) {
+                console.error('Dashboard Error:', e);
+                showToast('Error al cargar datos del dashboard', 'error');
+            }
+        }
+
+        function renderTopStats(orders, products, customers) {
+            const now = new Date();
+            const today = now.toISOString().split('T')[0];
+            const thisMonth = now.toISOString().substring(0, 7);
+
+            const revenueToday = orders
+                .filter(o => o.created_at?.startsWith(today) && o.status === 'COMPLETED')
+                .reduce((s, o) => s + Number(o.total_amount || 0), 0);
+
+            const revenueMonth = orders
+                .filter(o => o.created_at?.startsWith(thisMonth) && o.status === 'COMPLETED')
+                .reduce((s, o) => s + Number(o.total_amount || 0), 0);
+
+            const lowStock = products.filter(p => p.is_active && (p.stock_count || 0) <= 5).length;
+
+            document.getElementById('totalRevenue').textContent = `$${revenueToday.toFixed(2)}`;
+            document.getElementById('monthlyRevenue').textContent = `$${revenueMonth.toFixed(2)}`;
+            document.getElementById('totalCustomers').textContent = customers.length;
+            document.getElementById('stockAlertsCount').textContent = lowStock;
+
+            // Pending badge in sidebar
+            const pendingCount = orders.filter(o => ['PAYMENT_UPLOADED', 'VALIDATING_PAYMENT'].includes(o.status)).length;
+            document.getElementById('pendingBadge').textContent = pendingCount;
+        }
+
+        function renderSalesChart(orders) {
+            const chart = document.getElementById('salesChart');
+            const data = [];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date(); d.setDate(d.getDate() - i);
+                const dayStr = d.toISOString().split('T')[0];
+                const total = orders
+                    .filter(o => o.status === 'COMPLETED' && o.created_at?.startsWith(dayStr))
+                    .reduce((s, o) => s + Number(o.total_amount || 0), 0);
+                data.push({ label: d.toLocaleDateString('es-EC', { weekday: 'short' }), value: total });
+            }
+
+            const max = Math.max(...data.map(d => d.value), 1);
+            chart.innerHTML = data.map(d => {
+                const h = Math.max((d.value / max) * 180, 5);
+                return `
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;flex:1;">
+                        <span style="font-size:0.65rem;font-weight:700;color:var(--primary);">$${d.value.toFixed(0)}</span>
+                        <div style="width:100%;max-width:30px;height:${h}px;background:linear-gradient(to top, var(--primary), var(--accent));border-radius:4px 4px 0 0;position:relative;" title="$${d.value.toFixed(2)}">
+                            <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:white;opacity:0.1;border-radius:4px 4px 0 0;"></div>
+                        </div>
+                        <span style="font-size:0.6rem;color:var(--text-dim);text-transform:uppercase;">${d.label}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderLiveFeed(orders) {
+            const feed = document.getElementById('liveFeed');
+            const recent = Array.isArray(orders) ? orders.slice(0, 10) : [];
+            const statusColors = { COMPLETED: 'var(--green)', REJECTED: 'var(--red)', PENDING_PAYMENT: 'var(--yellow)', PAYMENT_UPLOADED: 'var(--primary)' };
+
+            feed.innerHTML = recent.map(o => `
+                <div class="feed-item">
+                    <div class="feed-dot" style="background:${statusColors[o.status] || 'var(--text-muted)'};box-shadow:0 0 8px ${statusColors[o.status] || 'transparent'};"></div>
+                    <div style="flex:1;">
+                        <div style="display:flex;justify-content:space-between;">
+                            <strong style="font-size:0.8rem;">${o.order_number || o.id?.slice(0, 8)}</strong>
+                            <span style="font-weight:800;color:var(--primary);">$${Number(o.total_amount || 0).toFixed(2)}</span>
+                        </div>
+                        <div style="font-size:0.65rem;color:var(--text-dim);margin-top:2px;">
+                            ${o.status?.replace('_', ' ')} • ${timeAgo(o.created_at)}
+                        </div>
+                    </div>
+                </div>
+            `).join('') || '<div style="text-align:center;padding:2rem;color:var(--text-dim);">Sin actividad reciente</div>';
+        }
+
+        function renderPendingQueue(orders) {
+            const pq = document.getElementById('pendingQueue');
+            const pending = orders.filter(o => ['PAYMENT_UPLOADED', 'VALIDATING_PAYMENT'].includes(o.status)).slice(0, 6);
+
+            if (pending.length === 0) {
+                pq.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--green);"><i class="fa-solid fa-check-circle" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i> Todo al día</div>';
+                return;
+            }
+
+            pq.innerHTML = pending.map(o => `
+                <div class="pending-queue-item">
+                    <div class="pq-icon" style="background:rgba(255,204,0,0.1);color:var(--yellow);"><i class="fa-solid fa-clock"></i></div>
+                    <div class="pq-info">
+                        <div class="pq-name">Pedido ${o.order_number || o.id?.slice(0, 8)}</div>
+                        <div class="pq-meta">$${Number(o.total_amount || 0).toFixed(2)} • ${o.customer_name || 'Cliente'}</div>
+                    </div>
+                    <div style="display:flex;gap:0.4rem;">
+                        <button class="btn btn-primary btn-sm" style="padding:4px 8px;" onclick="quickApprove('${o.id}')"><i class="fa-solid fa-check"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderStockHealth(products) {
+            const sh = document.getElementById('stockHealth');
+            const low = products
+                .filter(p => p.is_active)
+                .sort((a, b) => (a.stock_count || 0) - (b.stock_count || 0))
+                .slice(0, 6);
+
+            sh.innerHTML = low.map(p => {
+                const count = p.stock_count || 0;
+                const pct = Math.min((count / 10) * 100, 100);
+                const color = count <= 2 ? 'var(--red)' : count <= 5 ? 'var(--orange)' : 'var(--green)';
+                return `
+                    <div class="stock-alert-item" style="margin-bottom:0.75rem;">
+                        <div style="flex:1;">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:0.75rem;">
+                                <span style="font-weight:600;">${p.name}</span>
+                                <span style="font-weight:800;color:${color}">${count} u.</span>
+                            </div>
+                            <div class="stock-bar"><div class="stock-bar-fill" style="width:${pct}%;background:${color};"></div></div>
+                        </div>
+                    </div>
+                `;
+            }).join('') || '<div style="text-align:center;padding:2rem;color:var(--green);">Stock optimizado ✅</div>';
+        }
+
+        function renderResellerAnalytics(customers, orders) {
+            const rTable = document.getElementById('topCustomersTable');
+            const resellerData = customers
+                .filter(c => c.role === 'revendedor')
+                .map(c => {
+                    const cOrders = orders.filter(o => o.customer_id === c.id && o.status === 'COMPLETED');
+                    const totalSpent = cOrders.reduce((s, o) => s + (o.total_amount || 0), 0);
+                    return { ...c, totalSpent, orderCount: cOrders.length };
+                })
+                .sort((a, b) => b.totalSpent - a.totalSpent)
+                .slice(0, 5);
+
+            rTable.innerHTML = `
+                <table class="data-table" style="font-size:0.75rem;">
+                    <thead><tr><th>Revendedor</th><th>Gasto</th><th>Pedidos</th></tr></thead>
+                    <tbody>
+                        ${resellerData.map(r => `
+                            <tr>
+                                <td>
+                                    <div style="font-weight:700;">${r.name || r.email?.split('@')[0]}</div>
+                                    <div style="font-size:0.6rem;color:var(--text-dim);">Tier: ${r.tier || 'Bronce'}</div>
+                                </td>
+                                <td style="color:var(--primary);font-weight:800;">$${r.totalSpent.toFixed(2)}</td>
+                                <td>${r.orderCount}</td>
+                            </tr>
+                        `).join('') || '<tr><td colspan="3" style="text-align:center;padding:1rem;">Sin datos de revendedores</td></tr>'}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        async function quickApprove(id) {
+            if (!confirm('¿Aprobar este pago rápidamente?')) return;
+            showToast('Procesando...', 'info');
+            try {
+                const res = await fetch(API_BASE + '/admin/orders/' + id, {
+                    method: 'PATCH',
+                    headers: { ...AdminAuth.headers(), 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'COMPLETED', payment_status: 'confirmed' })
+                });
+                if (res.ok) {
+                    showToast('Pago aprobado', 'success');
+                    loadDashboard();
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        function timeAgo(date) {
+            if (!date) return '...';
+            const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+            if (seconds < 60) return 'Ahora';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)}m`;
+            if (seconds < 86400) return `${Math.floor(seconds / 3600)}h`;
+            return `${Math.floor(seconds / 86400)}d`;
+        }
+
+        function exportDashboard() {
+            showToast('Generando reporte...', 'info');
+            setTimeout(() => showToast('Reporte descargado (Simulado)', 'success'), 1500);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            AdminAuth.require();
+            loadDashboard();
+            // Auto-refresh every 60s
+            setInterval(loadDashboard, 60000);
+        });
+    </script>
+</body>
+
+</html>

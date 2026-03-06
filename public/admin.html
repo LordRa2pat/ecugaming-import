@@ -10,16 +10,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            background: var(--secondary);
-            color: var(--bg-light);
+            background: #f5f5f7;
+            color: #111111;
             font-feature-settings: "cv11", "ss01";
         }
 
-        .admin-layout { min-height: 100vh; background: #000; }
+        .admin-layout { min-height: 100vh; background: #f5f5f7; }
 
         .admin-sidebar {
-            background: #050505;
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            background: #ffffff;
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
             padding: 1.5rem 1rem;
             display: flex;
             flex-direction: column;
@@ -34,7 +34,7 @@
         .sidebar-brand {
             padding: 0 1rem 2rem;
             font-size: 1.2rem; font-weight: 900;
-            color: var(--white);
+            color: #111111;
             display: flex; align-items: center; gap: 10px;
         }
         .sidebar-brand span { color: var(--primary); }
@@ -50,11 +50,11 @@
             display: flex; align-items: center; gap: 12px;
             padding: 10px 16px; border-radius: 10px;
             cursor: pointer; font-size: 13.5px; font-weight: 500;
-            color: #a1a1aa; text-decoration: none;
+            color: #555555; text-decoration: none;
             transition: 0.2s; border: none; background: none;
             width: 100%; text-align: left;
         }
-        .sidebar-item:hover { background: rgba(255,255,255,0.04); color: var(--white); }
+        .sidebar-item:hover { background: rgba(0,0,0,0.04); color: #111111; }
         .sidebar-item.active {
             background: var(--primary) !important;
             color: #fff !important;
@@ -65,7 +65,7 @@
         .sidebar-footer {
             margin-top: auto;
             padding: 1rem 0 0;
-            border-top: 1px solid rgba(255,255,255,.06);
+            border-top: 1px solid rgba(0,0,0,0.1);
         }
 
         .sidebar-item-danger { color: #ff6b6b !important; }
@@ -97,7 +97,7 @@
             display: flex; align-items: center; justify-content: space-between;
             margin-bottom: 1.5rem;
         }
-        .page-header h2 { font-size: 1.3rem; font-weight: 800; color: #f5f5f7; margin: 0; }
+        .page-header h2 { font-size: 1.3rem; font-weight: 800; color: #111111; margin: 0; }
 
         /* ── STAT GRID ── */
         .stat-grid {
@@ -127,7 +127,7 @@
             color: var(--text-dim); text-transform: uppercase; letter-spacing: .05em;
         }
         .stat-card .value {
-            font-size: 1.8rem; font-weight: 900; color: var(--white);
+            font-size: 1.8rem; font-weight: 900; color: #111111;
         }
         .stat-card .value.urgent { color: #ff9500; }
         .stat-card .sub { font-size: .75rem; color: var(--text-dim); }
@@ -146,7 +146,7 @@
             box-shadow: var(--shadow-glass);
         }
         .admin-card h3 {
-            color: white; margin-bottom: 1.2rem;
+            color: #111111; margin-bottom: 1.2rem;
             font-size: .95rem; font-weight: 800;
             display: flex; align-items: center; gap: 8px;
         }
@@ -160,7 +160,7 @@
         }
         .admin-table th {
             padding: 10px 14px;
-            background: rgba(255,255,255,0.02);
+            background: #f0f0f0;
             color: var(--text-dim); font-weight: 600;
             text-align: left; font-size: 11px;
             text-transform: uppercase; letter-spacing: 0.05em;
@@ -168,8 +168,8 @@
         }
         .admin-table td {
             padding: 12px 14px;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            color: #e2e2e7; vertical-align: middle;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            color: #222222; vertical-align: middle;
         }
         .admin-table tr.clickable { cursor: pointer; transition: background .15s; }
         .admin-table tr.clickable:hover td { background: rgba(255,140,0,.06); }
@@ -185,7 +185,7 @@
         .chip-blue   { background: rgba(10,132,255,.15); color: #0a84ff; border: 1px solid rgba(10,132,255,.3); }
         .chip-green  { background: rgba(52,199,89,.15);  color: #34c759; border: 1px solid rgba(52,199,89,.3); }
         .chip-red    { background: rgba(255,69,58,.15);  color: #ff453a; border: 1px solid rgba(255,69,58,.3); }
-        .chip-gray   { background: rgba(255,255,255,.08); color: #aaa; border: 1px solid rgba(255,255,255,.12); }
+        .chip-gray   { background: rgba(0,0,0,.06); color: #666; border: 1px solid rgba(0,0,0,.1); }
 
         /* ── QUICK ACTIONS ── */
         .quick-actions {
@@ -196,7 +196,7 @@
         .qa-btn {
             display: flex; flex-direction: column; align-items: center;
             gap: 8px; padding: 16px 12px; border-radius: 14px;
-            background: rgba(255,255,255,.04);
+            background: rgba(0,0,0,0.03);
             border: 1px solid var(--border);
             color: var(--text); text-decoration: none;
             font-size: .8rem; font-weight: 700;
@@ -218,12 +218,12 @@
             border-radius: 20px; padding: 1px 7px;
             font-size: .72rem; font-weight: 900;
         }
-        .stock-pill .name { color: #e2e2e7; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .stock-pill .name { color: #222222; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
         /* ── TOP PRODUCTS ── */
         .top-prod-row {
             display: flex; align-items: center; gap: 10px;
-            padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+            padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
         }
         .top-prod-row:last-child { border-bottom: none; }
         .top-prod-rank {
@@ -233,26 +233,26 @@
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
         }
-        .top-prod-name { flex: 1; font-size: .83rem; color: #e2e2e7; font-weight: 600; }
+        .top-prod-name { flex: 1; font-size: .83rem; color: #222222; font-weight: 600; }
         .top-prod-qty { font-size: .8rem; font-weight: 800; color: var(--primary); }
 
         /* ── STATUS BARS ── */
         .status-bars { display: flex; flex-direction: column; gap: .6rem; }
         .status-bar-row { display: flex; align-items: center; gap: 10px; }
-        .status-bar-label { font-size: .76rem; font-weight: 700; color: #aaa; width: 150px; flex-shrink: 0; }
+        .status-bar-label { font-size: .76rem; font-weight: 700; color: #555555; width: 150px; flex-shrink: 0; }
         .status-bar-track {
             flex: 1; height: 6px; border-radius: 3px;
-            background: rgba(255,255,255,.08);
+            background: rgba(0,0,0,0.08);
             overflow: hidden;
         }
         .status-bar-fill {
             height: 100%; border-radius: 3px; transition: width .6s ease;
         }
-        .status-bar-count { font-size: .76rem; font-weight: 800; color: #e2e2e7; width: 28px; text-align: right; }
+        .status-bar-count { font-size: .76rem; font-weight: 800; color: #222222; width: 28px; text-align: right; }
 
         /* ── TOGGLE TABS ── */
         .tab-toggle {
-            display: inline-flex; background: rgba(255,255,255,.05);
+            display: inline-flex; background: rgba(0,0,0,0.05);
             border-radius: 8px; padding: 3px; gap: 2px;
         }
         .tab-toggle button {
@@ -267,7 +267,7 @@
         /* ── CUSTOMERS LIST ── */
         .cust-row {
             display: flex; align-items: center; gap: 10px;
-            padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+            padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
         }
         .cust-row:last-child { border-bottom: none; }
         .cust-avatar {
@@ -277,7 +277,7 @@
             font-size: .8rem; font-weight: 900; flex-shrink: 0;
         }
         .cust-info { flex: 1; }
-        .cust-name { font-size: .83rem; font-weight: 700; color: #e2e2e7; }
+        .cust-name { font-size: .83rem; font-weight: 700; color: #222222; }
         .cust-email { font-size: .72rem; color: var(--text-dim); }
         .cust-date { font-size: .72rem; color: var(--text-dim); }
 
@@ -289,7 +289,7 @@
         .btn-export {
             display: inline-flex; align-items: center; gap: 6px;
             padding: 7px 16px; border-radius: 8px;
-            background: rgba(255,255,255,.06); border: 1px solid var(--border);
+            background: rgba(0,0,0,0.04); border: 1px solid var(--border);
             color: var(--text-dim); font-size: .78rem; font-weight: 700;
             cursor: pointer; transition: .15s; text-decoration: none;
         }
@@ -306,7 +306,7 @@
         /* ── COUPON STATS ── */
         .coupon-stat-row {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+            padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
             font-size: .82rem;
         }
         .coupon-stat-row:last-child { border-bottom: none; }
@@ -508,7 +508,7 @@
             } catch (err) {
                 console.error('[admin] init error:', err);
                 document.querySelector('.admin-content').innerHTML = `
-                    <div style="text-align:center; padding:4rem; color:#f5f5f7;">
+                    <div style="text-align:center; padding:4rem; color:#555555;">
                         <i class="fa fa-exclamation-triangle" style="font-size:3rem; color:#ff6b6b; margin-bottom:1rem; display:block;"></i>
                         <div style="margin-bottom:1rem;">Error al iniciar sesión o sesión expirada.</div>
                         <button class="qa-btn" onclick="location.href='/login'"><i class="fa fa-sign-in-alt"></i> Iniciar Sesión</button>

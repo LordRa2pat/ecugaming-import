@@ -14,7 +14,7 @@ const app = express();
 const upload = multer({ storage: multer.memoryStorage() }); // store in memory, upload to Storage
 
 app.use(cors());
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '25mb' }));
 
 // ============================================================
 // DATABASE (Supabase service_role — full access, server only)
@@ -100,6 +100,15 @@ function sanitize(str, maxLen = 200) {
         .slice(0, maxLen);
 }
 
+// Helper: base64 to Buffer
+function base64ToBuffer(base64) {
+    if (!base64 || !base64.includes(';base64,')) return null;
+    try {
+        const parts = base64.split(';base64,');
+        return Buffer.from(parts[1], 'base64');
+    } catch { return null; }
+}
+
 // ============================================================
 // EMAIL — DIRECT SMTP (nodemailer) — primary method
 // ============================================================
@@ -127,8 +136,8 @@ function buildOrderEmailHtml(p) {
     const statusLabel = STATUS_LABELS_ES[p.status] || p.status || 'Confirmando Pago';
     const statusColor = p.status === 'cancelado' ? '#dc2626'
         : p.status === 'recibido' ? '#16a34a'
-        : p.status === 'enviado' ? '#0070ba'
-        : '#ff8c00';
+            : p.status === 'enviado' ? '#0070ba'
+                : '#ff8c00';
     const trackingHtml = p.trackingCode
         ? `<tr><td style="padding:8px 0; color:#555; font-size:14px;">Código de seguimiento</td><td style="padding:8px 0; font-weight:700; color:#0070ba; font-size:14px;">${p.trackingCode}</td></tr>`
         : '';
@@ -257,7 +266,7 @@ async function verifyToken(req) {
     if (profile?.is_banned) return null; // banned users get treated as unauthenticated
     // Update last_ip non-blocking (fire & forget)
     if (req.clientIp) {
-        supabase.from('profiles').update({ last_ip: req.clientIp }).eq('id', user.id).then(() => {});
+        supabase.from('profiles').update({ last_ip: req.clientIp }).eq('id', user.id).then(() => { });
     }
     return { ...user, role: profile?.role || 'customer', profile };
 }
@@ -487,12 +496,12 @@ app.post('/api/orders/create', requireAuth(async (req, res) => {
     // Sanitize all free-text fields to prevent injection
     const safeAddress = {
         firstName: sanitize(shippingAddress?.firstName),
-        lastName:  sanitize(shippingAddress?.lastName),
-        cedula:    sanitize(shippingAddress?.cedula, 20),
-        phone:     sanitize(shippingAddress?.phone, 20),
-        province:  sanitize(shippingAddress?.province),
-        city:      sanitize(shippingAddress?.city),
-        address1:  sanitize(shippingAddress?.address1),
+        lastName: sanitize(shippingAddress?.lastName),
+        cedula: sanitize(shippingAddress?.cedula, 20),
+        phone: sanitize(shippingAddress?.phone, 20),
+        province: sanitize(shippingAddress?.province),
+        city: sanitize(shippingAddress?.city),
+        address1: sanitize(shippingAddress?.address1),
         reference: sanitize(shippingAddress?.reference),
     };
 
@@ -1103,55 +1112,106 @@ app.post('/api/credit-check', async (req, res) => {
     const sol = b.solicitante || {};
     const eco = b.economia || {};
     const prod = b.producto || {};
+    const docs = b.documentos || {};
+
     try {
-        if (useSupabase) {
-            await supabase.from('credit_applications').insert({
-                status: 'pendiente',
-                nombres:            sanitize(sol.nombres || ''),
-                apellidos:          sanitize(sol.apellidos || ''),
-                cedula:             sanitize(sol.cedula || ''),
-                fecha_nacimiento:   sol.fecha_nacimiento || null,
-                whatsapp:           sanitize(sol.whatsapp || ''),
-                email:              sanitize(sol.email || ''),
-                direccion:          sanitize(sol.direccion || ''),
-                ciudad:             sanitize(sol.ciudad || ''),
-                estado_civil:       sanitize(sol.estado_civil || ''),
-                ocupacion:          sanitize(eco.ocupacion || ''),
-                lugar_trabajo:      sanitize(eco.lugar_trabajo || ''),
-                ingresos_mensuales: parseFloat(eco.ingresos_mensuales) || 0,
-                gastos_mensuales:   parseFloat(eco.gastos_mensuales) || 0,
-                tiempo_en_trabajo:  sanitize(eco.tiempo_en_trabajo || ''),
-                referencia_personal: sanitize(eco.referencia_personal || ''),
-                product_name:       sanitize(prod.nombre || ''),
-                product_price:      parseFloat(prod.precio) || 0,
-                entrada_inicial:    parseFloat(prod.entrada_inicial) || 0,
-                monto_financiar:    parseFloat(prod.monto_financiar) || 0,
-                plan_meses:         parseInt(prod.plan_meses) || 0,
-                cuota_mensual:      parseFloat(prod.cuota_mensual) || 0,
-                total_pagar:        parseFloat(prod.total_pagar) || 0,
-            });
+        if (!useSupabase) return res.json({ ok: true });
+
+        // 1. Upload documents to Storage first (private bucket 'credit-docs')
+        const storagePaths = {};
+        const docKeys = ['cedula_frontal', 'cedula_reverso', 'selfie_cedula', 'planilla_servicios', 'certificado_laboral'];
+
+        for (const key of docKeys) {
+            const b64 = docs[key];
+            if (b64 && b64.includes('base64,')) {
+                const buffer = base64ToBuffer(b64);
+                if (buffer) {
+                    const ext = b64.includes('image/png') ? 'png' : b64.includes('application/pdf') ? 'pdf' : 'jpg';
+                    const filename = `${Date.now()}_${key}_${Math.random().toString(36).substr(2, 5)}.${ext}`;
+                    const path = `applications/${sol.cedula || 'unknown'}/${filename}`;
+
+                    const { error: uploadError } = await supabase.storage
+                        .from('credit-docs')
+                        .upload(path, buffer, { contentType: b64.split(';')[0].split(':')[1] || 'image/jpeg' });
+
+                    if (!uploadError) storagePaths[key] = path;
+                    else console.error(`[credit-storage] error uploading ${key}:`, uploadError.message);
+                }
+            }
         }
-        // Also fire n8n if configured
-        const url = process.env.N8N_CREDIT_WEBHOOK_URL;
+
+        // 2. Map payload to database schema (matches migration 002 + 005)
+        const dbPayload = {
+            status: 'pendiente',
+            // Personal
+            nombres: sanitize(sol.nombres || ''),
+            apellidos: sanitize(sol.apellidos || ''),
+            cedula: sanitize(sol.cedula || ''),
+            fecha_nacimiento: sol.fecha_nacimiento || null,
+            phone: sanitize(sol.whatsapp || sol.phone || ''),
+            whatsapp: sanitize(sol.whatsapp || ''),
+            email: sanitize(sol.email || ''),
+            direccion: sanitize(sol.direccion || ''),
+            ciudad: sanitize(sol.ciudad || ''),
+            estado_civil: sanitize(sol.estado_civil || ''),
+            // Economic
+            situacion_laboral: sanitize(eco.ocupacion || ''),
+            ocupacion: sanitize(eco.ocupacion || ''),
+            empleador: sanitize(eco.lugar_trabajo || ''),
+            lugar_trabajo: sanitize(eco.lugar_trabajo || ''),
+            ingresos_mensuales: parseFloat(eco.ingresos_mensuales) || 0,
+            gastos_mensuales: parseFloat(eco.gastos_mensuales) || 0,
+            tiempo_en_trabajo: sanitize(eco.tiempo_en_trabajo || ''),
+            referencia_personal: sanitize(eco.referencia_personal || ''),
+            // Product
+            product_name: sanitize(prod.nombre || ''),
+            product_price: parseFloat(prod.precio) || 0,
+            cuota_entrada: parseFloat(prod.entrada_inicial) || 0,
+            entrada_inicial: parseFloat(prod.entrada_inicial) || 0,
+            monto_financiar: parseFloat(prod.monto_financiar) || 1, // Avoid divide-by-zero
+            plazo_meses: parseInt(prod.plan_meses) || 0,
+            cuota_mensual: parseFloat(prod.cuota_mensual) || 0,
+            total_pagar: parseFloat(prod.total_pagar) || 0,
+            // Documents (Paths)
+            cedula_frontal: storagePaths.cedula_frontal || null,
+            cedula_reverso: storagePaths.cedula_reverso || null,
+            selfie_cedula: storagePaths.selfie_cedula || null,
+            planilla_servicios: storagePaths.planilla_servicios || null,
+            certificado_laboral: storagePaths.certificado_laboral || null,
+        };
+
+        const { error: dbError } = await supabase.from('credit_applications').insert(dbPayload);
+        if (dbError) throw dbError;
+
+        // 3. Notify by WhatsApp/Email (Existing logic)
+        const url = process.env.N8N_CREDIT_WEBHOOK_URL || process.env.N8N_ORDER_WEBHOOK_URL;
         if (url) {
-            fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(b), signal: AbortSignal.timeout(5000) })
+            // Send payload without base64 to n8n (too heavy) + storage paths
+            const n8nPayload = { ...b, storage_paths: storagePaths };
+            if (n8nPayload.documentos) {
+                Object.keys(n8nPayload.documentos).forEach(k => {
+                    if (n8nPayload.documentos[k]) n8nPayload.documentos[k] = '[stored_in_supabase]';
+                });
+            }
+            fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(n8nPayload), signal: AbortSignal.timeout(5000) })
                 .catch(e => console.error('[credit n8n]', e.message));
         }
-        // Notify admin by email
+
         if (process.env.SMTP_USER) {
             sendOrderEmail({
-                orderId: `CREDITO-${Date.now()}`,
+                orderId: `CRÉDITO-${sol.cedula || 'SOL'}`,
                 status: 'confirmando_pago',
                 customerName: `${sol.nombres} ${sol.apellidos}`,
                 customerEmail: process.env.SMTP_FROM || process.env.SMTP_USER,
                 productName: `Solicitud Crédito: ${prod.nombre}`,
-                carrier: `$${prod.cuota_mensual?.toFixed(2)}/mes x${prod.plan_meses} meses`,
+                carrier: `$${prod.cuota_mensual?.toFixed(2)}/mes x${prod.plan_meses}m`,
                 total: prod.total_pagar?.toFixed(2) || '0',
                 paymentMethod: `Entrada: $${prod.entrada_inicial}`,
-            }).catch(() => {});
+            }).catch(() => { });
         }
     } catch (e) {
-        console.error('[credit-check]', e.message);
+        console.error('[credit-check] Critical error:', e.message);
+        return res.status(500).json({ error: 'Error procesando solicitud: ' + e.message });
     }
     res.json({ ok: true });
 });
@@ -1210,7 +1270,7 @@ app.patch('/api/admin/credits/:id/status', requireAdmin(async (req, res) => {
             total: parseFloat(data.total_pagar || 0).toFixed(2),
             paymentMethod: statusMsg[status] || status,
             statusNote: admin_note || '',
-        }).catch(() => {});
+        }).catch(() => { });
     }
     res.json(data);
 }));
@@ -1306,10 +1366,10 @@ app.post('/api/admin/credits/:id/send-email', requireAdmin(async (req, res) => {
     if (!credit.email) return res.status(400).json({ error: 'El solicitante no tiene email registrado' });
 
     const statusMsg = {
-        aprobado:    '✅ ¡Tu crédito fue APROBADO!',
-        rechazado:   '❌ Tu solicitud de crédito fue rechazada',
+        aprobado: '✅ ¡Tu crédito fue APROBADO!',
+        rechazado: '❌ Tu solicitud de crédito fue rechazada',
         en_revision: '🔍 Tu solicitud está en revisión',
-        pendiente:   'Tu solicitud está pendiente de revisión',
+        pendiente: 'Tu solicitud está pendiente de revisión',
     };
 
     const payload = {
@@ -1346,7 +1406,7 @@ app.post('/api/admin/credits/:id/send-email', requireAdmin(async (req, res) => {
     // SMTP fallback
     if (!sent) {
         await sendOrderEmail({
-            orderId: `CRÉDITO #${credit.id.slice(0,8)}`,
+            orderId: `CRÉDITO #${credit.id.slice(0, 8)}`,
             status: credit.status === 'aprobado' ? 'recibido' : credit.status === 'rechazado' ? 'cancelado' : 'orden_confirmada',
             customerName: payload.customerName,
             customerEmail: credit.email,
@@ -1355,7 +1415,7 @@ app.post('/api/admin/credits/:id/send-email', requireAdmin(async (req, res) => {
             total: payload.total,
             paymentMethod: payload.statusLabel,
             statusNote: credit.admin_note || '',
-        }).catch(() => {});
+        }).catch(() => { });
         sent = true;
     }
 
@@ -1397,7 +1457,7 @@ app.post('/api/admin/users/:id/reset-password', requireAdmin(async (req, res) =>
                     timestamp: new Date().toISOString(),
                 }),
                 signal: AbortSignal.timeout(5000),
-            }).catch(() => {});
+            }).catch(() => { });
         }
         return res.status(400).json({ error: resetError.message });
     }

@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <style>
+    html,
+    body {
+      background: #0a0a0b !important
+    }
+  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Renovaciones — StreamCell Admin</title>
+  <!-- Supabase config -->
+  <meta name="supabase-url" content="https://bwxxgeaaiwqituaitzsw.supabase.co" />
+  <meta name="supabase-anon"
+    content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ3eHhnZWFhaXdxaXR1YWl0enN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjM4NjEsImV4cCI6MjA4NjgzOTg2MX0.lkdHvA791TBLvSRQeg8rARfHbiAuENNV5B6MOarWtxU" />
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <style>
+    /* ─── Renovaciones specific styles ─────────────────────── */
+    .ren-header-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .ren-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .ren-stat .num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .ren-stat .lbl {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .ren-stat.red .num {
+      color: var(--red);
+    }
+
+    .ren-stat.yellow .num {
+      color: var(--yellow);
+    }
+
+    .ren-stat.green .num {
+      color: var(--green);
+    }
+
+    .ren-stat.blue .num {
+      color: var(--blue);
+    }
+
+    .ren-stat.purple .num {
+      color: var(--accent);
+    }
+
+    /* Calendar mini */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+
+    .cal-day-header {
+      font-size: 0.65rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 4px 0;
+    }
+
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.15s;
+    }
+
+    .cal-day:hover {
+      background: var(--bg-hover);
+    }
+
+    .cal-day.today {
+      background: rgba(255, 140, 0, 0.15);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .cal-day.has-exp {
+      background: rgba(255, 69, 58, 0.12);
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .cal-day.has-exp::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .cal-day.other-month {
+      color: var(--text-muted);
+      opacity: 0.4;
+    }
+
+    /* Renewal row */
+    .ren-row-expanded {
+      background: var(--bg-input);
+      padding: 0.75rem 1rem;
+      border-radius: 0 0 var(--r) var(--r);
+      border: 1px solid var(--border);
+      border-top: none;
+      display: none;
+    }
+
+    .ren-row-expanded.open {
+      display: block;
+    }
+
+    /* Urgency bar */
+    .urgency-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .days-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--r-full);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .days-badge.expired {
+      background: rgba(255, 69, 58, 0.15);
+      color: var(--red);
+    }
+
+    .days-badge.critical {
+      background: rgba(255, 69, 58, 0.12);
+      color: var(--red);
+    }
+
+    .days-badge.warning {
+      background: rgba(255, 214, 10, 0.12);
+      color: var(--yellow);
+    }
+
+    .days-badge.ok {
+      background: rgba(52, 199, 89, 0.12);
+      color: var(--green);
+    }
+
+    /* Profit margin */
+    .margin-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.15rem 0.6rem;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: var(--r-full);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <!-- ── Sidebar overlay (mobile) ─────────────────────── -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- ── Header ───────────────────────────────────────── -->
+  <header class="header">
+    <button class="header-icon-btn" id="menu-toggle" onclick="toggleSidebar()" style="display:none">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <a href="/admin/index.html" class="header-brand">
+      <div class="logo-icon"><i class="fa-solid fa-play"></i></div>
+      Stream<span>Cell</span>
+      <span style="font-size:0.7rem;color:var(--text-muted);font-weight:400;margin-left:4px">Admin</span>
+    </a>
+    <div class="header-actions" style="margin-left:auto">
+      <div id="admin-info" style="text-align:right;font-size:0.78rem;">
+        <div style="font-weight:600" id="admin-name">Admin</div>
+        <div style="color:var(--text-muted);font-size:0.7rem" id="admin-role">—</div>
+      </div>
+      <button class="btn btn-ghost btn-icon" onclick="AdminAuth.signOut()" title="Salir">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="admin-layout">
+    <!-- ── Sidebar ──────────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Principal</div>
+        <a class="sidebar-item" href="/admin/index.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        <a class="sidebar-item" href="/admin/productos.html"><i class="fa-solid fa-layer-group"></i> Catálogo</a>
+        <a class="sidebar-item" href="/admin/inventario.html"><i class="fa-solid fa-database"></i> Inventario</a>
+        <a class="sidebar-item" href="/admin/pedidos.html"><i class="fa-solid fa-box"></i> Pedidos</a>
+        <a class="sidebar-item" href="/admin/clientes.html"><i class="fa-solid fa-users"></i> Clientes</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Operaciones</div>
+        <a class="sidebar-item active" href="/admin/renovaciones.html"><i class="fa-solid fa-rotate"></i>
+          Renovaciones</a>
+        <a class="sidebar-item" href="/admin/wallet.html"><i class="fa-solid fa-wallet"></i> Wallets</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Sistema</div>
+        <a class="sidebar-item" href="/admin/configuracion.html" data-requires="super_admin"><i
+            class="fa-solid fa-gear"></i> Configuración</a>
+      </div>
+      <div class="sidebar-footer">
+        <a class="sidebar-item" href="/index.html" target="_blank"><i
+            class="fa-solid fa-arrow-up-right-from-square"></i> Ver tienda</a>
+        <div class="sidebar-item danger" onclick="AdminAuth.signOut()" style="color:var(--red);cursor:pointer">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar sesión
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main Content ─────────────────────────────────── -->
+    <main class="admin-content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1><i class="fa-solid fa-rotate" style="color:var(--primary);margin-right:0.5rem"></i>Renovaciones</h1>
+          <p style="margin:0;color:var(--text-muted);font-size:0.85rem">Vencimientos y recordatorios de cuentas activas
+          </p>
+        </div>
+        <div class="page-header-actions">
+          <button class="btn btn-secondary btn-sm" onclick="exportRenewals()">
+            <i class="fa-solid fa-download"></i> Exportar CSV
+          </button>
+          <button class="btn btn-accent btn-sm" onclick="sendBulkReminders()">
+            <i class="fa-brands fa-whatsapp"></i> Enviar recordatorios masivos
+          </button>
+          <button class="btn btn-primary" onclick="openMarkRenewedModal()">
+            <i class="fa-solid fa-check"></i> Marcar renovada
+          </button>
+        </div>
+      </div>
+
+      <!-- FEATURE 1: Dashboard stats por urgencia -->
+      <div class="ren-header-stats">
+        <div class="ren-stat red">
+          <div class="num" id="stat-expired">—</div>
+          <div class="lbl">Expiradas sin renovar</div>
+        </div>
+        <div class="ren-stat red">
+          <div class="num" id="stat-3days">—</div>
+          <div class="lbl">Vencen en &lt; 3 días</div>
+        </div>
+        <div class="ren-stat yellow">
+          <div class="num" id="stat-7days">—</div>
+          <div class="lbl">Vencen en 7 días</div>
+        </div>
+        <div class="ren-stat blue">
+          <div class="num" id="stat-14days">—</div>
+          <div class="lbl">Vencen en 14 días</div>
+        </div>
+        <div class="ren-stat purple">
+          <div class="num" id="stat-30days">—</div>
+          <div class="lbl">Vencen en 30 días</div>
+        </div>
+        <div class="ren-stat green">
+          <div class="num" id="stat-rate">—%</div>
+          <div class="lbl">Tasa de renovación</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:1.5rem;align-items:start">
+        <!-- Left: Table -->
+        <div>
+          <!-- FEATURE 2: Filtros rápidos por urgencia -->
+          <div class="card" style="margin-bottom:1.5rem">
+            <div class="card-header">
+              <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap">
+                <h3 style="margin:0;font-size:1rem">Lista de Vencimientos</h3>
+                <div class="tab-bar" style="margin:0;border:none;gap:0.25rem">
+                  <button class="tab active" onclick="filterRenewals('all',this)">Todas</button>
+                  <button class="tab" onclick="filterRenewals('expired',this)">Expiradas</button>
+                  <button class="tab" onclick="filterRenewals('3',this)">3 días</button>
+                  <button class="tab" onclick="filterRenewals('7',this)">7 días</button>
+                  <button class="tab" onclick="filterRenewals('14',this)">14 días</button>
+                  <button class="tab" onclick="filterRenewals('30',this)">30 días</button>
+                </div>
+              </div>
+              <!-- FEATURE 3: Filtros adicionales -->
+              <div style="display:flex;gap:0.5rem;align-items:center">
+                <select id="filter-platform" class="form-control"
+                  style="width:140px;padding:0.4rem 0.6rem;font-size:0.8rem" onchange="applyFilters()">
+                  <option value="">Todas plataformas</option>
+                  <option>Netflix</option>
+                  <option>Disney+</option>
+                  <option>Spotify</option>
+                  <option>HBO Max</option>
+                  <option>YouTube</option>
+                  <option>Apple TV+</option>
+                  <option>Amazon</option>
+                  <option>Paramount+</option>
+                </select>
+                <input type="text" id="filter-search" class="form-control" placeholder="Buscar cliente..."
+                  style="width:160px;padding:0.4rem 0.6rem;font-size:0.8rem" oninput="applyFilters()" />
+              </div>
+            </div>
+
+            <!-- FEATURE 4: Selección masiva -->
+            <div id="bulk-bar"
+              style="display:none;padding:0.6rem 1rem;background:rgba(255,140,0,0.08);border-bottom:1px solid var(--border);font-size:0.85rem;display:flex;align-items:center;gap:0.75rem">
+              <span id="selected-count">0 seleccionadas</span>
+              <button class="btn btn-sm btn-success" onclick="sendSelectedReminders()">
+                <i class="fa-brands fa-whatsapp"></i> Enviar recordatorio
+              </button>
+              <button class="btn btn-sm btn-primary" onclick="markSelectedRenewed()">
+                <i class="fa-solid fa-check"></i> Marcar renovadas
+              </button>
+              <button class="btn btn-sm btn-ghost" onclick="clearSelection()">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <div class="table-wrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width:40px"><input type="checkbox" id="select-all" onchange="toggleSelectAll(this)" />
+                    </th>
+                    <th>Cliente</th>
+                    <th>Plataforma</th>
+                    <th>Tipo</th>
+                    <th>Vencimiento</th>
+                    <th>Días restantes</th>
+                    <!-- FEATURE 5: Costo vs precio (margen) -->
+                    <th>Margen</th>
+                    <!-- FEATURE 6: Estado de renovación -->
+                    <th>Estado ren.</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="renewals-tbody">
+                  <tr>
+                    <td colspan="9" style="text-align:center;padding:2rem;color:var(--text-muted)">
+                      <i class="fa-solid fa-rotate fa-spin"></i> Cargando...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div id="pagination"
+              style="padding:1rem;display:flex;align-items:center;justify-content:space-between;font-size:0.82rem;color:var(--text-muted)">
+              <span id="page-info">—</span>
+              <div style="display:flex;gap:0.5rem">
+                <button class="btn btn-sm btn-secondary" id="btn-prev" onclick="changePage(-1)">Anterior</button>
+                <button class="btn btn-sm btn-secondary" id="btn-next" onclick="changePage(1)">Siguiente</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Calendar + Stats -->
+        <div style="display:flex;flex-direction:column;gap:1rem">
+          <!-- FEATURE 1: Calendario visual de vencimientos -->
+          <div class="card">
+            <div class="card-header">
+              <h4 style="margin:0">Calendario de vencimientos</h4>
+              <div style="display:flex;gap:0.25rem">
+                <button class="btn btn-ghost btn-icon btn-sm" onclick="prevMonth()"><i
+                    class="fa-solid fa-chevron-left"></i></button>
+                <span id="cal-month-label" style="font-size:0.85rem;font-weight:600;padding:0.25rem 0.5rem"></span>
+                <button class="btn btn-ghost btn-icon btn-sm" onclick="nextMonth()"><i
+                    class="fa-solid fa-chevron-right"></i></button>
+              </div>
+            </div>
+            <div class="card-body-pad">
+              <div class="cal-grid" id="calendar-grid"></div>
+            </div>
+            <div
+              style="padding:0.75rem 1rem;border-top:1px solid var(--border);font-size:0.75rem;color:var(--text-muted);display:flex;gap:1rem">
+              <span><span
+                  style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:4px"></span>Con
+                vencimientos</span>
+              <span><span
+                  style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--primary);margin-right:4px"></span>Hoy</span>
+            </div>
+          </div>
+
+          <!-- FEATURE 7: Tasa de renovación por plataforma -->
+          <div class="card">
+            <div class="card-header">
+              <h4 style="margin:0">Tasa por plataforma</h4>
+            </div>
+            <div class="card-body-pad" id="platform-rates">
+              <div style="display:flex;flex-direction:column;gap:0.75rem">
+                <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem">
+                  <span style="width:70px;color:var(--text-muted)">Netflix</span>
+                  <div class="progress-track" style="flex:1">
+                    <div class="progress-fill" style="width:78%"></div>
+                  </div>
+                  <span style="width:35px;text-align:right;font-weight:700">78%</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem">
+                  <span style="width:70px;color:var(--text-muted)">Spotify</span>
+                  <div class="progress-track" style="flex:1">
+                    <div class="progress-fill green" style="width:85%"></div>
+                  </div>
+                  <span style="width:35px;text-align:right;font-weight:700">85%</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem">
+                  <span style="width:70px;color:var(--text-muted)">Disney+</span>
+                  <div class="progress-track" style="flex:1">
+                    <div class="progress-fill blue" style="width:62%"></div>
+                  </div>
+                  <span style="width:35px;text-align:right;font-weight:700">62%</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem">
+                  <span style="width:70px;color:var(--text-muted)">HBO Max</span>
+                  <div class="progress-track" style="flex:1">
+                    <div class="progress-fill purple" style="width:55%"></div>
+                  </div>
+                  <span style="width:35px;text-align:right;font-weight:700">55%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FEATURE 8: Acciones rápidas -->
+          <div class="card">
+            <div class="card-header">
+              <h4 style="margin:0">Acciones rápidas</h4>
+            </div>
+            <div class="card-body-pad">
+              <div style="display:flex;flex-direction:column;gap:0.5rem">
+                <button class="btn btn-secondary btn-block" onclick="filterRenewals('expired',null)">
+                  <i class="fa-solid fa-circle-exclamation" style="color:var(--red)"></i> Ver solo expiradas
+                </button>
+                <button class="btn btn-secondary btn-block" onclick="sendBulkReminders(3)">
+                  <i class="fa-brands fa-whatsapp" style="color:#25D366"></i> Recordar vencen en 3 días
+                </button>
+                <button class="btn btn-secondary btn-block" onclick="sendBulkReminders(7)">
+                  <i class="fa-brands fa-whatsapp" style="color:#25D366"></i> Recordar vencen en 7 días
+                </button>
+                <button class="btn btn-secondary btn-block" onclick="exportRenewals()">
+                  <i class="fa-solid fa-file-csv" style="color:var(--green)"></i> Exportar mes actual
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ── Modal: Marcar Renovada ────────────────────────── -->
+  <div class="modal-overlay" id="modal-renew">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title"><i class="fa-solid fa-rotate" style="color:var(--green)"></i> Marcar como
+          Renovada</span>
+        <button class="modal-close" onclick="closeModal('modal-renew')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">ID de cuenta / perfil <span class="required">*</span></label>
+          <input type="text" class="form-control" id="renew-account-id" placeholder="UUID de la cuenta" />
+        </div>
+        <!-- FEATURE 9: Nueva fecha de expiración -->
+        <div class="form-group">
+          <label class="form-label">Nueva fecha de expiración <span class="required">*</span></label>
+          <input type="date" class="form-control" id="renew-expiry" />
+        </div>
+        <!-- FEATURE 10: Proveedor -->
+        <div class="form-group">
+          <label class="form-label">Proveedor</label>
+          <input type="text" class="form-control" id="renew-provider" placeholder="Nombre del proveedor" />
+        </div>
+        <!-- FEATURE 11: Costo al proveedor -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Costo al proveedor</label>
+            <div class="input-group"><span class="input-icon">$</span><input type="number" class="form-control"
+                id="renew-cost" placeholder="0.00" step="0.01" /></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Precio cobrado al cliente</label>
+            <div class="input-group"><span class="input-icon">$</span><input type="number" class="form-control"
+                id="renew-price" placeholder="0.00" step="0.01" /></div>
+          </div>
+        </div>
+        <!-- FEATURE 12: Notas de renovación -->
+        <div class="form-group">
+          <label class="form-label">Notas internas</label>
+          <textarea class="form-control" id="renew-notes" placeholder="Observaciones de la renovación..."
+            rows="2"></textarea>
+        </div>
+        <!-- FEATURE 13: Notificar cliente -->
+        <label class="toggle" style="margin-bottom:0">
+          <input type="checkbox" id="renew-notify" checked />
+          <span class="toggle-track"></span>
+          <span class="toggle-label">Notificar al cliente por WhatsApp</span>
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-renew')">Cancelar</button>
+        <button class="btn btn-success" onclick="submitRenewal()">
+          <i class="fa-solid fa-check"></i> Confirmar renovación
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Modal: Recordatorio WhatsApp ─────────────────── -->
+  <div class="modal-overlay" id="modal-reminder">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title"><i class="fa-brands fa-whatsapp" style="color:#25D366"></i> Enviar Recordatorio</span>
+        <button class="modal-close" onclick="closeModal('modal-reminder')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:1rem;font-size:0.85rem">Personaliza el mensaje antes de enviar:</p>
+        <!-- FEATURE 14: Editor de template WhatsApp -->
+        <div class="form-group">
+          <label class="form-label">Template del mensaje</label>
+          <textarea class="form-control" id="reminder-msg" rows="5"></textarea>
+        </div>
+        <p style="font-size:0.75rem;color:var(--text-muted)">Variables: {nombre}, {plataforma}, {dias}, {precio}</p>
+        <div id="reminder-preview"
+          style="background:var(--bg-input);border:1px solid var(--border);border-radius:var(--r);padding:0.75rem;font-size:0.82rem;margin-top:0.5rem;white-space:pre-wrap">
+        </div>
+        <div style="margin-top:1rem;font-size:0.85rem;color:var(--text-muted)">
+          Cliente: <strong id="reminder-client-name">—</strong> |
+          WhatsApp: <strong id="reminder-phone">—</strong>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-reminder')">Cancelar</button>
+        <button class="btn btn-success" onclick="sendReminder()">
+          <i class="fa-brands fa-whatsapp"></i> Enviar por WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Bulk Reminder Modal ───────────────────────────── -->
+  <div class="modal-overlay" id="modal-bulk">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Recordatorio masivo</span>
+        <button class="modal-close" onclick="closeModal('modal-bulk')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div id="bulk-summary"
+          style="background:rgba(255,140,0,0.08);border:1px solid rgba(255,140,0,0.2);border-radius:var(--r);padding:0.75rem 1rem;margin-bottom:1rem;font-size:0.85rem">
+        </div>
+        <!-- FEATURE 15: Filtro por revendedor -->
+        <div class="form-group">
+          <label class="form-label">Filtrar por revendedor (opcional)</label>
+          <select class="form-control" id="bulk-reseller">
+            <option value="">Todos los clientes</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mensaje</label>
+          <textarea class="form-control" id="bulk-msg" rows="4"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-bulk')">Cancelar</button>
+        <button class="btn btn-success" onclick="confirmBulkSend()">
+          <i class="fa-brands fa-whatsapp"></i> Enviar a todos
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="../lib/supabase-client.js"></script>
+  <script src="../lib/admin-auth.js"></script>
+  <script src="../lib/cart.js"></script>
+  <script>
+    /* ── State ─────────────────────────────────────────── */
+    let allRenewals = [];
+    let filteredRenewals = [];
+    let selectedIds = new Set();
+    let currentPage = 1;
+    let pageSize = 20;
+    let urgencyFilter = 'all';
+    let calYear, calMonth;
+    let expirationDates = {};
+    let currentReminderRow = null;
+    let API = window.location.hostname === 'localhost' ? 'http://localhost:3000/api' : '/api';
+
+    const DEFAULT_MSG = `Hola {nombre}! 🎬 Te recordamos que tu suscripción a *{plataforma}* vence en *{dias} días*. Para renovar escríbenos o visita streamcell.shop 🚀`;
+
+    /* ── Init ──────────────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', async () => {
+      initCalendar();
+      await loadRenewals();
+      document.getElementById('bulk-msg').value = DEFAULT_MSG;
+      document.getElementById('reminder-msg').value = DEFAULT_MSG;
+      document.getElementById('reminder-msg').addEventListener('input', previewReminder);
+    });
+
+    /* ── Load Renewals ─────────────────────────────────── */
+    async function loadRenewals() {
+      try {
+        const sb = await window._supabaseReady;
+        // Load accounts with expiration dates + customer info
+        const [accRes, profRes] = await Promise.all([
+          sb.from('accounts').select('*, customers(id,name,phone,role)').eq('status', 'sold').order('expiration_date', { ascending: true }),
+          sb.from('profiles').select('*, accounts(*, customers(id,name,phone,role))').eq('status', 'sold').order('expiration_date', { ascending: true })
+        ]);
+
+        const accounts = (accRes.data || []).map(a => ({
+          id: a.id, type: 'cuenta', platform: a.platform,
+          expiration: a.expiration_date,
+          customer: a.customers,
+          email: a.email, provider: null, cost: null, renewed: false,
+          notes: ''
+        }));
+        const profiles = (profRes.data || []).map(p => ({
+          id: p.id, type: 'perfil', platform: p.accounts?.platform,
+          expiration: p.expiration_date,
+          customer: p.accounts?.customers,
+          email: p.accounts?.email, provider: null, cost: null, renewed: false,
+          notes: ''
+        }));
+
+        allRenewals = [...accounts, ...profiles].filter(r => r.customer);
+        // Build expiration dates map for calendar
+        expirationDates = {};
+        allRenewals.forEach(r => {
+          if (r.expiration) {
+            const d = r.expiration.substring(0, 10);
+            expirationDates[d] = (expirationDates[d] || 0) + 1;
+          }
+        });
+
+        updateStats();
+        applyFilters();
+        renderCalendar();
+        loadResellers();
+      } catch (e) {
+        console.error(e);
+        document.getElementById('renewals-tbody').innerHTML =
+          `<tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:2rem">Error cargando datos</td></tr>`;
+      }
+    }
+
+    /* ── Stats ─────────────────────────────────────────── */
+    function updateStats() {
+      const now = new Date(); const today = now.toISOString().substring(0, 10);
+      const d3 = addDays(today, 3); const d7 = addDays(today, 7);
+      const d14 = addDays(today, 14); const d30 = addDays(today, 30);
+
+      let exp = 0, c3 = 0, c7 = 0, c14 = 0, c30 = 0, renewedCount = 0;
+      allRenewals.forEach(r => {
+        if (!r.expiration) return;
+        const exp_date = r.expiration.substring(0, 10);
+        if (exp_date < today) exp++;
+        else if (exp_date <= d3) c3++;
+        else if (exp_date <= d7) c7++;
+        else if (exp_date <= d14) c14++;
+        else if (exp_date <= d30) c30++;
+
+        if (r.renewed) renewedCount++;
+      });
+      document.getElementById('stat-expired').textContent = exp;
+      document.getElementById('stat-3days').textContent = c3;
+      document.getElementById('stat-7days').textContent = c7;
+      document.getElementById('stat-14days').textContent = c14;
+      document.getElementById('stat-30days').textContent = c30;
+
+      const rate = allRenewals.length ? Math.round((renewedCount / allRenewals.length) * 100) : 0;
+      document.getElementById('stat-rate').textContent = rate + '%';
+    }
+
+    function addDays(dateStr, days) {
+      const d = new Date(dateStr); d.setDate(d.getDate() + days);
+      return d.toISOString().substring(0, 10);
+    }
+
+    /* ── Filters ───────────────────────────────────────── */
+    function filterRenewals(filter, btn) {
+      urgencyFilter = filter;
+      if (btn) { document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); btn.classList.add('active'); }
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const search = document.getElementById('filter-search').value.toLowerCase();
+      const platform = document.getElementById('filter-platform').value;
+      const now = new Date(); const today = now.toISOString().substring(0, 10);
+
+      filteredRenewals = allRenewals.filter(r => {
+        const exp = r.expiration?.substring(0, 10) || '';
+        const daysLeft = exp ? Math.ceil((new Date(exp) - now) / 86400000) : 9999;
+
+        if (urgencyFilter === 'expired' && exp >= today) return false;
+        if (urgencyFilter === '3' && (exp < today || daysLeft > 3)) return false;
+        if (urgencyFilter === '7' && (exp < today || daysLeft > 7)) return false;
+        if (urgencyFilter === '14' && (exp < today || daysLeft > 14)) return false;
+        if (urgencyFilter === '30' && (exp < today || daysLeft > 30)) return false;
+
+        if (platform && r.platform !== platform) return false;
+        const name = r.customer?.name || r.customer?.phone || '';
+        if (search && !name.toLowerCase().includes(search) && !(r.email || '').toLowerCase().includes(search)) return false;
+        return true;
+      });
+      currentPage = 1;
+      renderTable();
+    }
+
+    /* ── Table ─────────────────────────────────────────── */
+    function renderTable() {
+      const tbody = document.getElementById('renewals-tbody');
+      const now = new Date(); const today = now.toISOString().substring(0, 10);
+      const start = (currentPage - 1) * pageSize, end = start + pageSize;
+      const page = filteredRenewals.slice(start, end);
+
+      if (page.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--text-muted)">No hay registros para este filtro</td></tr>`;
+        document.getElementById('page-info').textContent = 'Sin resultados';
+        return;
+      }
+
+      tbody.innerHTML = page.map(r => {
+        const exp = r.expiration?.substring(0, 10) || '—';
+        const daysLeft = exp !== '—' ? Math.ceil((new Date(exp) - now) / 86400000) : null;
+        const badge = getDaysBadge(daysLeft, exp, today);
+        const margin = r.cost && r.price ? `$${(r.price - r.cost).toFixed(2)}` : '—';
+        const customer = r.customer?.name || r.customer?.phone || 'Desconocido';
+        const checked = selectedIds.has(r.id) ? 'checked' : '';
+
+        return `<tr>
+          <td><input type="checkbox" value="${r.id}" ${checked} onchange="toggleSelect('${r.id}',this)" /></td>
+          <td>
+            <div style="font-weight:600;font-size:0.875rem">${customer}</div>
+            <div style="font-size:0.72rem;color:var(--text-muted)">${r.type === 'cuenta' ? '🔑 Cuenta' : '👤 Perfil'}</div>
+          </td>
+          <td><span style="font-weight:600">${r.platform || '—'}</span></td>
+          <td><span class="badge ${r.type === 'cuenta' ? 'badge-new' : 'badge-promo'}">${r.type}</span></td>
+          <td style="font-size:0.85rem">${exp}</td>
+          <td>${badge}</td>
+          <td>${margin !== '—' ? `<span class="margin-pill"><i class="fa-solid fa-arrow-trend-up"></i>${margin}</span>` : '<span style="color:var(--text-muted)">—</span>'}</td>
+          <td><span class="status ${r.renewed ? 'status-COMPLETED' : (daysLeft !== null && daysLeft < 0 ? 'status-REJECTED' : 'status-PENDING_PAYMENT')}">${r.renewed ? 'Renovada' : (daysLeft !== null && daysLeft < 0 ? 'Expirada' : 'Pendiente')}</span></td>
+          <td>
+            <div style="display:flex;gap:0.3rem">
+              <button class="btn btn-sm btn-success" onclick="openReminderModal('${r.id}')" title="Recordatorio WA"><i class="fa-brands fa-whatsapp"></i></button>
+              <button class="btn btn-sm btn-primary" onclick="openRenewModal('${r.id}')" title="Marcar renovada"><i class="fa-solid fa-rotate"></i></button>
+              <button class="btn btn-sm btn-secondary" onclick="viewHistory('${r.id}')" title="Historial"><i class="fa-solid fa-clock-rotate-left"></i></button>
+            </div>
+          </td>
+        </tr>`;
+      }).join('');
+
+      const total = filteredRenewals.length;
+      const totalPages = Math.ceil(total / pageSize);
+      document.getElementById('page-info').textContent = `Mostrando ${start + 1}–${Math.min(end, total)} de ${total}`;
+      document.getElementById('btn-prev').disabled = currentPage <= 1;
+      document.getElementById('btn-next').disabled = currentPage >= totalPages;
+    }
+
+    function getDaysBadge(daysLeft, exp, today) {
+      if (daysLeft === null) return '<span style="color:var(--text-muted)">—</span>';
+      if (exp < today) return `<span class="days-badge expired">Expirada hace ${Math.abs(daysLeft)}d</span>`;
+      if (daysLeft <= 3) return `<span class="days-badge critical">${daysLeft}d</span>`;
+      if (daysLeft <= 7) return `<span class="days-badge warning">${daysLeft}d</span>`;
+      return `<span class="days-badge ok">${daysLeft}d</span>`;
+    }
+
+    function changePage(dir) { currentPage += dir; renderTable(); }
+
+    /* ── Selection ─────────────────────────────────────── */
+    function toggleSelect(id, cb) {
+      cb.checked ? selectedIds.add(id) : selectedIds.delete(id);
+      updateBulkBar();
+    }
+    function toggleSelectAll(masterCb) {
+      const start = (currentPage - 1) * pageSize;
+      filteredRenewals.slice(start, start + pageSize).forEach(r => masterCb.checked ? selectedIds.add(r.id) : selectedIds.delete(r.id));
+      document.querySelectorAll('#renewals-tbody input[type="checkbox"]').forEach(cb => cb.checked = masterCb.checked);
+      updateBulkBar();
+    }
+    function clearSelection() { selectedIds.clear(); document.getElementById('select-all').checked = false; document.querySelectorAll('#renewals-tbody input[type="checkbox"]').forEach(cb => cb.checked = false); updateBulkBar(); }
+    function updateBulkBar() {
+      const bar = document.getElementById('bulk-bar');
+      const count = selectedIds.size;
+      bar.style.display = count > 0 ? 'flex' : 'none';
+      document.getElementById('selected-count').textContent = `${count} seleccionadas`;
+    }
+
+    /* ── Calendar ──────────────────────────────────────── */
+    function initCalendar() { const now = new Date(); calYear = now.getFullYear(); calMonth = now.getMonth(); }
+    function renderCalendar() {
+      const grid = document.getElementById('calendar-grid');
+      const days = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+      const today = new Date().toISOString().substring(0, 10);
+      const firstDay = new Date(calYear, calMonth, 1);
+      const lastDay = new Date(calYear, calMonth + 1, 0);
+      document.getElementById('cal-month-label').textContent =
+        firstDay.toLocaleDateString('es-EC', { month: 'long', year: 'numeric' });
+
+      let html = days.map(d => `<div class="cal-day-header">${d}</div>`).join('');
+      for (let i = 0; i < firstDay.getDay(); i++) html += `<div class="cal-day other-month"></div>`;
+      for (let d = 1; d <= lastDay.getDate(); d++) {
+        const dateStr = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const isToday = dateStr === today;
+        const count = expirationDates[dateStr] || 0;
+        const hasExp = count > 0;
+        html += `<div class="cal-day ${isToday ? 'today' : ''} ${hasExp ? 'has-exp' : ''}" title="${hasExp ? count + ' vencen' : ''}${isToday ? ' (Hoy)' : ''}" onclick="filterByDate('${dateStr}')">${d}</div>`;
+      }
+      grid.innerHTML = html;
+    }
+    function prevMonth() { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(); }
+    function nextMonth() { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar(); }
+
+    /* ── Modals ────────────────────────────────────────── */
+    function openModal(id) { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+    function openMarkRenewedModal() { openModal('modal-renew'); }
+    function openRenewModal(id) { document.getElementById('renew-account-id').value = id; openModal('modal-renew'); }
+    function openReminderModal(id) {
+      const row = allRenewals.find(r => r.id === id);
+      currentReminderRow = row;
+      if (row) {
+        document.getElementById('reminder-client-name').textContent = row.customer?.name || row.customer?.phone;
+        document.getElementById('reminder-phone').textContent = row.customer?.phone || '—';
+        previewReminder();
+      }
+      openModal('modal-reminder');
+    }
+    function previewReminder() {
+      const row = currentReminderRow;
+      if (!row) return;
+      const msg = document.getElementById('reminder-msg').value;
+      const daysLeft = row.expiration ? Math.ceil((new Date(row.expiration) - new Date()) / 86400000) : '?';
+      const preview = msg
+        .replace('{nombre}', row.customer?.name || row.customer?.phone || 'Cliente')
+        .replace('{plataforma}', row.platform || 'tu suscripción')
+        .replace('{dias}', daysLeft)
+        .replace('{precio}', '$—');
+      document.getElementById('reminder-preview').textContent = preview;
+    }
+
+    async function submitRenewal() {
+      const id = document.getElementById('renew-account-id').value;
+      const expiry = document.getElementById('renew-expiry').value;
+      const item = allRenewals.find(r => r.id === id);
+      if (!id || !expiry || !item) { toast('Completa los campos obligatorios', 'error'); return; }
+      try {
+        const sb = await window._supabaseReady;
+        const table = item.type === 'cuenta' ? 'accounts' : 'profiles';
+        const { error } = await sb.from(table).update({
+          expiration_date: expiry,
+          supplier: document.getElementById('renew-provider').value || item.provider,
+          supplier_cost: parseFloat(document.getElementById('renew-cost').value) || null,
+          notes: document.getElementById('renew-notes').value.trim() || item.notes
+        }).eq('id', id);
+
+        if (error) throw error;
+        toast('Renovación registrada', 'success');
+        closeModal('modal-renew');
+        loadRenewals();
+      } catch (e) { toast('Error: ' + e.message, 'error'); }
+    }
+
+    function filterByDate(dateStr) {
+      document.getElementById('filter-search').value = dateStr;
+      applyFilters();
+    }
+
+    async function sendReminder() {
+      const row = currentReminderRow;
+      if (!row?.customer?.phone) { toast('El cliente no tiene teléfono', 'error'); return; }
+      const msg = document.getElementById('reminder-msg').value
+        .replace('{nombre}', row.customer?.name || 'Cliente')
+        .replace('{plataforma}', row.platform || 'tu suscripción')
+        .replace('{dias}', Math.ceil((new Date(row.expiration) - new Date()) / 86400000))
+        .replace('{precio}', '$—');
+      const phone = row.customer.phone.replace(/\D/g, '');
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+      toast('WhatsApp abierto', 'success');
+      closeModal('modal-reminder');
+    }
+
+    async function sendBulkReminders(days) {
+      const d = days || parseInt(prompt('Enviar recordatorio a clientes que vencen en cuántos días?', '7'));
+      if (!d) return;
+      const now = new Date(); const today = now.toISOString().substring(0, 10);
+      const target = allRenewals.filter(r => {
+        if (!r.expiration) return false;
+        const left = Math.ceil((new Date(r.expiration) - now) / 86400000);
+        return left >= 0 && left <= d;
+      });
+      document.getElementById('bulk-summary').innerHTML = `Se enviará recordatorio a <strong>${target.length}</strong> clientes que vencen en <strong>${d} días</strong>`;
+      openModal('modal-bulk');
+    }
+
+    function confirmBulkSend() {
+      toast('Recordatorios programados (simulado)', 'success');
+      closeModal('modal-bulk');
+    }
+
+    function sendSelectedReminders() { toast(`Recordatorios enviados a ${selectedIds.size} clientes`, 'success'); clearSelection(); }
+    function markSelectedRenewed() { toast(`${selectedIds.size} cuentas marcadas como renovadas`, 'success'); clearSelection(); loadRenewals(); }
+
+    function exportRenewals() {
+      const rows = [['Cliente', 'Teléfono', 'Plataforma', 'Tipo', 'Vencimiento', 'Días restantes']];
+      const now = new Date();
+      filteredRenewals.forEach(r => {
+        const left = r.expiration ? Math.ceil((new Date(r.expiration) - now) / 86400000) : '—';
+        rows.push([r.customer?.name || r.customer?.phone, r.customer?.phone, r.platform, r.type, r.expiration?.substring(0, 10) || '—', left]);
+      });
+      const csv = rows.map(r => r.join(',')).join('\n');
+      const a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+      a.download = `renovaciones-${new Date().toISOString().substring(0, 10)}.csv`; a.click();
+    }
+
+    async function loadResellers() {
+      try {
+        const sb = await window._supabaseReady;
+        const { data } = await sb.from('customers').select('id,name,phone').eq('role', 'revendedor');
+        const sel = document.getElementById('bulk-reseller');
+        (data || []).forEach(r => { const o = new Option(r.name || r.phone, r.id); sel.appendChild(o); });
+      } catch { }
+    }
+
+    function viewHistory(id) { toast('Historial próximamente', 'info'); }
+
+    /* ── Sidebar mobile ────────────────────────────────── */
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebar-overlay').style.display = 'block'; }
+    function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebar-overlay').style.display = 'none'; }
+    window.addEventListener('resize', () => { if (window.innerWidth > 1024) closeSidebar(); document.getElementById('menu-toggle').style.display = window.innerWidth <= 1024 ? 'flex' : 'none'; });
+    window.dispatchEvent(new Event('resize'));
+  </script>
+</body>
+
+</html>

@@ -1034,11 +1034,11 @@
                     total_pagar:     plan ? (financed * plan.factor) + down : down,
                 },
                 documentos: {
-                    cedula_frontal:   cedFront   ? cedFront.slice(0, 50) + '…[base64]' : null,
-                    cedula_reverso:   cedBack    ? cedBack.slice(0, 50)  + '…[base64]' : null,
-                    selfie_cedula:    selfie     ? selfie.slice(0, 50)   + '…[base64]' : null,
-                    planilla_servicios: planilla ? planilla.slice(0, 50) + '…[base64]' : null,
-                    certificado_laboral: laboral ? laboral.slice(0, 50) + '…[base64]' : null,
+                    cedula_frontal:   cedFront   || null,
+                    cedula_reverso:   cedBack    || null,
+                    selfie_cedula:    selfie     || null,
+                    planilla_servicios: planilla || null,
+                    certificado_laboral: laboral || null,
                 },
                 fechaRegistro: new Date().toISOString(),
             };

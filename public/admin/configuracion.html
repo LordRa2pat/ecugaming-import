@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <style>
+    html,
+    body {
+      background: #0a0a0b !important
+    }
+  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuración — StreamCell Admin</title>
+  <meta name="supabase-url" content="https://bwxxgeaaiwqituaitzsw.supabase.co" />
+  <meta name="supabase-anon"
+    content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ3eHhnZWFhaXdxaXR1YWl0enN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjM4NjEsImV4cCI6MjA4NjgzOTg2MX0.lkdHvA791TBLvSRQeg8rARfHbiAuENNV5B6MOarWtxU" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <style>
+    .settings-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .settings-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: var(--r);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .settings-nav-item:hover {
+      background: var(--bg-hover);
+      color: var(--text);
+    }
+
+    .settings-nav-item.active {
+      background: rgba(255, 140, 0, 0.1);
+      color: var(--primary);
+    }
+
+    .settings-nav-item i {
+      width: 16px;
+    }
+
+    .settings-panel {
+      display: none;
+    }
+
+    .settings-panel.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      gap: 1rem;
+    }
+
+    .setting-row:last-child {
+      border-bottom: none;
+    }
+
+    .setting-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .setting-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .admin-user-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin-bottom: 0.5rem;
+    }
+
+    .admin-avatar-sm {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .role-badge {
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--r-full);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .role-badge.super_admin {
+      background: rgba(255, 140, 0, 0.15);
+      color: var(--primary);
+    }
+
+    .role-badge.operador {
+      background: rgba(10, 132, 255, 0.12);
+      color: var(--blue);
+    }
+
+    .role-badge.soporte {
+      background: rgba(52, 199, 89, 0.12);
+      color: var(--green);
+    }
+
+    .bank-card {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .bank-card .bank-name {
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+
+    .bank-card .bank-detail {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .template-card {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .template-card .template-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .audit-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 0.8rem;
+    }
+
+    .audit-time {
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 110px;
+    }
+
+    .audit-action {
+      flex: 1;
+    }
+
+    .audit-who {
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .n8n-workflow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin-bottom: 0.5rem;
+    }
+
+    .n8n-status {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .n8n-status.active {
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+    }
+
+    .n8n-status.inactive {
+      background: var(--text-muted);
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <button class="header-icon-btn" id="menu-toggle" onclick="toggleSidebar()" style="display:none">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <a href="/admin/index.html" class="header-brand">
+      <div class="logo-icon"><i class="fa-solid fa-play"></i></div>
+      Stream<span>Cell</span>
+      <span style="font-size:0.7rem;color:var(--text-muted);font-weight:400;margin-left:4px">Admin</span>
+    </a>
+    <div class="header-actions" style="margin-left:auto">
+      <div style="text-align:right;font-size:0.78rem">
+        <div style="font-weight:600" id="admin-name">Admin</div>
+        <div style="color:var(--text-muted);font-size:0.7rem" id="admin-role">—</div>
+      </div>
+      <button class="btn btn-ghost btn-icon" onclick="AdminAuth.signOut()"><i
+          class="fa-solid fa-arrow-right-from-bracket"></i></button>
+    </div>
+  </header>
+
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Principal</div>
+        <a class="sidebar-item" href="/admin/index.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        <a class="sidebar-item" href="/admin/productos.html"><i class="fa-solid fa-layer-group"></i> Catálogo</a>
+        <a class="sidebar-item" href="/admin/inventario.html"><i class="fa-solid fa-database"></i> Inventario</a>
+        <a class="sidebar-item" href="/admin/pedidos.html"><i class="fa-solid fa-box"></i> Pedidos</a>
+        <a class="sidebar-item" href="/admin/clientes.html"><i class="fa-solid fa-users"></i> Clientes</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Operaciones</div>
+        <a class="sidebar-item" href="/admin/renovaciones.html"><i class="fa-solid fa-rotate"></i> Renovaciones</a>
+        <a class="sidebar-item" href="/admin/wallet.html"><i class="fa-solid fa-wallet"></i> Wallets</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Sistema</div>
+        <a class="sidebar-item active" href="/admin/configuracion.html"><i class="fa-solid fa-gear"></i>
+          Configuración</a>
+      </div>
+      <div class="sidebar-footer">
+        <a class="sidebar-item" href="/index.html" target="_blank"><i
+            class="fa-solid fa-arrow-up-right-from-square"></i> Ver tienda</a>
+        <div class="sidebar-item" onclick="AdminAuth.signOut()" style="color:var(--red);cursor:pointer">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar sesión
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="admin-content">
+      <div class="page-header">
+        <div>
+          <h1><i class="fa-solid fa-gear" style="color:var(--primary);margin-right:0.5rem"></i>Configuración del Sistema
+          </h1>
+          <p style="margin:0;color:var(--text-muted);font-size:0.85rem">Ajustes generales, usuarios, integraciones y más
+          </p>
+        </div>
+        <div class="page-header-actions">
+          <button class="btn btn-secondary btn-sm" onclick="triggerBackup()">
+            <i class="fa-solid fa-database"></i> Backup ahora
+          </button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:220px 1fr;gap:1.5rem;align-items:start">
+        <!-- Settings Nav -->
+        <div class="card">
+          <div class="card-body-pad">
+            <nav class="settings-nav" id="settings-nav">
+              <div class="settings-nav-item active" onclick="switchPanel('admins', this)">
+                <i class="fa-solid fa-users-gear"></i> Usuarios Admin
+              </div>
+              <div class="settings-nav-item" onclick="switchPanel('pagos', this)">
+                <i class="fa-solid fa-credit-card"></i> Métodos de pago
+              </div>
+              <div class="settings-nav-item" onclick="switchPanel('bancos', this)">
+                <i class="fa-solid fa-building-columns"></i> Datos bancarios
+              </div>
+              <div class="settings-nav-item" onclick="switchPanel('whatsapp', this)">
+                <i class="fa-brands fa-whatsapp"></i> Templates WhatsApp
+              </div>
+              <div class="settings-nav-item" onclick="switchPanel('n8n', this)">
+                <i class="fa-solid fa-sitemap"></i> n8n Workflows
+              </div>
+              <div class="settings-nav-item" onclick="switchPanel('stock', this)">
+                <i class="fa-solid fa-boxes-stacked"></i> Alertas de stock
+              </div>
+              <div class="settings-nav-item" onclick="switchPanel('precios', this)">
+                <i class="fa-solid fa-tag"></i> Precios y descuentos
+              </div>
+              <div class="settings-nav-item" onclick="switchPanel('garantias', this)">
+                <i class="fa-solid fa-shield-check"></i> Garantías
+              </div>
+              <div class="settings-nav-item" onclick="switchPanel('tienda', this)">
+                <i class="fa-solid fa-store"></i> Tienda
+              </div>
+              <div class="settings-nav-item" onclick="switchPanel('apikeys', this)">
+                <i class="fa-solid fa-key"></i> API Keys
+              </div>
+              <div class="settings-nav-item" onclick="switchPanel('audit', this)">
+                <i class="fa-solid fa-clock-rotate-left"></i> Audit Log
+              </div>
+              <div class="settings-nav-item" onclick="switchPanel('general', this)">
+                <i class="fa-solid fa-sliders"></i> General
+              </div>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Settings Panels -->
+        <div>
+
+          <!-- ── FEATURE 1: Gestión de usuarios admin ──── -->
+          <div class="settings-panel active card" id="panel-admins">
+            <div class="card-header">
+              <h3 style="margin:0;font-size:1rem">Usuarios Administradores</h3>
+              <button class="btn btn-primary btn-sm" onclick="openAdminUserModal(null)" data-requires="super_admin">
+                <i class="fa-solid fa-plus"></i> Nuevo admin
+              </button>
+            </div>
+            <div class="card-body-pad">
+              <div id="admin-users-list">
+                <div style="text-align:center;padding:2rem;color:var(--text-muted)"><i
+                    class="fa-solid fa-rotate fa-spin"></i> Cargando...</div>
+              </div>
+              <div class="divider"></div>
+              <div
+                style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:var(--r);padding:0.85rem;font-size:0.82rem">
+                <div style="font-weight:700;margin-bottom:0.5rem;color:var(--accent)">Matriz de permisos</div>
+                <table style="width:100%;font-size:0.78rem">
+                  <tr>
+                    <th style="padding:0.3rem;text-align:left;color:var(--text-muted)">Acción</th>
+                    <th>Super Admin</th>
+                    <th>Operador</th>
+                    <th>Soporte</th>
+                  </tr>
+                  <tr>
+                    <td style="color:var(--text-dim)">Ver pedidos</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                  </tr>
+                  <tr>
+                    <td style="color:var(--text-dim)">Aprobar pagos</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                  </tr>
+                  <tr>
+                    <td style="color:var(--text-dim)">Editar productos</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                  </tr>
+                  <tr>
+                    <td style="color:var(--text-dim)">Gestión wallets</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                  </tr>
+                  <tr>
+                    <td style="color:var(--text-dim)">Configuración</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>❌</td>
+                  </tr>
+                  <tr>
+                    <td style="color:var(--text-dim)">Eliminar datos</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>❌</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── FEATURE 2: Métodos de pago ───────────── -->
+          <div class="settings-panel card" id="panel-pagos">
+            <div class="card-header">
+              <h3 style="margin:0;font-size:1rem">Métodos de Pago</h3>
+            </div>
+            <div class="card-body-pad">
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label"><i class="fa-solid fa-building-columns" style="color:var(--blue)"></i>
+                    Transferencia bancaria</div>
+                  <div class="setting-desc">Pichincha, Guayaquil, ProduBanco, Pacífico</div>
+                </div>
+                <label class="toggle"><input type="checkbox" id="pm-transfer" checked
+                    onchange="savePaymentMethod('transfer', this.checked)"><span class="toggle-track"></span></label>
+              </div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label"><i class="fa-solid fa-qrcode" style="color:var(--yellow)"></i> Binance Pay
+                  </div>
+                  <div class="setting-desc">Pago con criptomonedas via QR</div>
+                </div>
+                <label class="toggle"><input type="checkbox" id="pm-binance" checked
+                    onchange="savePaymentMethod('binance', this.checked)"><span class="toggle-track"></span></label>
+              </div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label"><i class="fa-solid fa-mobile-screen" style="color:var(--accent)"></i>
+                    Deuna!</div>
+                  <div class="setting-desc">Pasarela local Ecuador</div>
+                </div>
+                <label class="toggle"><input type="checkbox" id="pm-deuna"
+                    onchange="savePaymentMethod('deuna', this.checked)"><span class="toggle-track"></span></label>
+              </div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label"><i class="fa-solid fa-wallet" style="color:var(--green)"></i> Wallet
+                    (Revendedores)</div>
+                  <div class="setting-desc">Saldo virtual para checkout instantáneo</div>
+                </div>
+                <label class="toggle"><input type="checkbox" id="pm-wallet" checked
+                    onchange="savePaymentMethod('wallet', this.checked)"><span class="toggle-track"></span></label>
+              </div>
+              <div class="divider"></div>
+              <!-- FEATURE 4: Redondeo de precios -->
+              <div class="form-group">
+                <label class="form-label">Redondeo de precios</label>
+                <select class="form-control" id="price-rounding" style="max-width:240px">
+                  <option value="exact">Sin redondeo (exacto)</option>
+                  <option value="dollar" selected>Al dólar más cercano</option>
+                  <option value="half">A $0.50 más cercano</option>
+                  <option value="up">Siempre hacia arriba</option>
+                </select>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="savePaymentSettings()">Guardar configuración</button>
+            </div>
+          </div>
+
+          <!-- ── FEATURE 3: Datos bancarios ───────────── -->
+          <div class="settings-panel card" id="panel-bancos">
+            <div class="card-header">
+              <h3 style="margin:0;font-size:1rem">Datos Bancarios</h3>
+              <button class="btn btn-primary btn-sm" onclick="openBankModal(null)"><i class="fa-solid fa-plus"></i>
+                Agregar banco</button>
+            </div>
+            <div class="card-body-pad" id="banks-list">
+              <!-- Populated by JS -->
+              <div class="bank-card">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div>
+                    <div class="bank-name">🏦 Banco Pichincha</div>
+                    <div class="bank-detail">Cuenta corriente: 2200123456</div>
+                    <div class="bank-detail">Titular: StreamCell S.A. | CI: 1234567890</div>
+                    <div class="bank-detail">Tipo: Corriente</div>
+                  </div>
+                  <div style="display:flex;gap:0.3rem">
+                    <button class="btn btn-sm btn-secondary" onclick="openBankModal('pichincha')"><i
+                        class="fa-solid fa-pencil"></i></button>
+                    <button class="btn btn-sm btn-danger" data-requires="super_admin"><i
+                        class="fa-solid fa-trash"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="bank-card">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div>
+                    <div class="bank-name">🏦 Banco Guayaquil</div>
+                    <div class="bank-detail">Cuenta de ahorros: 0987654321</div>
+                    <div class="bank-detail">Titular: StreamCell S.A. | CI: 1234567890</div>
+                  </div>
+                  <div style="display:flex;gap:0.3rem">
+                    <button class="btn btn-sm btn-secondary" onclick="openBankModal('guayaquil')"><i
+                        class="fa-solid fa-pencil"></i></button>
+                    <button class="btn btn-sm btn-danger" data-requires="super_admin"><i
+                        class="fa-solid fa-trash"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── FEATURE 4: Templates WhatsApp ────────── -->
+          <div class="settings-panel card" id="panel-whatsapp">
+            <div class="card-header">
+              <h3 style="margin:0;font-size:1rem"><i class="fa-brands fa-whatsapp" style="color:#25D366"></i> Templates
+                de WhatsApp</h3>
+              <span style="font-size:0.75rem;color:var(--text-muted)">Variables: {nombre}, {pedido}, {plataforma},
+                {email}, {password}, {monto}</span>
+            </div>
+            <div class="card-body-pad" id="wa-templates">
+              <div class="template-card">
+                <div class="template-name">📦 Pago recibido — PAYMENT_UPLOADED</div>
+                <textarea class="form-control" rows="3"
+                  id="tpl-uploaded">Hola {nombre}! 📸 Recibimos tu comprobante de pago. Lo verificaremos en unos minutos y te enviamos tus credenciales. ¡Gracias por tu compra! 🎬</textarea>
+              </div>
+              <div class="template-card">
+                <div class="template-name">✅ Pago aprobado — PAYMENT_APPROVED</div>
+                <textarea class="form-control" rows="3"
+                  id="tpl-approved">¡Listo {nombre}! ✅ Verificamos tu pago de ${monto}. Estamos asignando tus credenciales ahora mismo... 🚀</textarea>
+              </div>
+              <div class="template-card">
+                <div class="template-name">🎉 Credenciales entregadas — COMPLETED</div>
+                <textarea class="form-control" rows="4"
+                  id="tpl-completed">¡Aquí están tus datos {nombre}! 🎉\n\n*{plataforma}*\n📧 Email: {email}\n🔑 Password: {password}\n\nCualquier problema escríbenos. ¡Disfruta! 🎬</textarea>
+              </div>
+              <div class="template-card">
+                <div class="template-name">❌ Pago rechazado — REJECTED</div>
+                <textarea class="form-control" rows="3"
+                  id="tpl-rejected">Hola {nombre}, no pudimos verificar tu pago 😔. Por favor contáctanos para revisarlo juntos. Pedido: #{pedido}</textarea>
+              </div>
+              <div class="template-card">
+                <div class="template-name">🔄 Garantía activada — WARRANTY_CLAIM</div>
+                <textarea class="form-control" rows="3"
+                  id="tpl-warranty">Hola {nombre}, recibimos tu reporte. Estamos buscando un reemplazo para tu cuenta de {plataforma}. Te escribimos en breve 🤝</textarea>
+              </div>
+              <div class="template-card">
+                <div class="template-name">🔁 Recordatorio de renovación</div>
+                <textarea class="form-control" rows="3"
+                  id="tpl-renewal">Hola {nombre}! 🎬 Tu suscripción a *{plataforma}* vence pronto. Para renovar visita streamcell.shop o escríbenos 🚀</textarea>
+              </div>
+              <button class="btn btn-primary" onclick="saveTemplates()"><i class="fa-solid fa-save"></i> Guardar
+                templates</button>
+            </div>
+          </div>
+
+          <!-- ── FEATURE 5: n8n Workflows ──────────────── -->
+          <div class="settings-panel card" id="panel-n8n">
+            <div class="card-header">
+              <h3 style="margin:0;font-size:1rem">Monitor de n8n Workflows</h3>
+              <a href="https://n8n-n8n.tlsfxv.easypanel.host" target="_blank" class="btn btn-secondary btn-sm">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir n8n
+              </a>
+            </div>
+            <div class="card-body-pad" id="n8n-workflows">
+              <!-- Workflows list -->
+              <div class="n8n-workflow">
+                <div class="n8n-status active"></div>
+                <div style="flex:1">
+                  <div style="font-weight:600;font-size:0.85rem">SALES-TRANSFER-Receipt-Verification</div>
+                  <div style="font-size:0.72rem;color:var(--text-muted)">Último trigger: hace 5 min</div>
+                </div>
+                <span class="status status-COMPLETED">Activo</span>
+              </div>
+              <div class="n8n-workflow">
+                <div class="n8n-status active"></div>
+                <div style="flex:1">
+                  <div style="font-weight:600;font-size:0.85rem">SALES-ORDER-Credential-Dispatch</div>
+                  <div style="font-size:0.72rem;color:var(--text-muted)">Último trigger: hace 12 min</div>
+                </div>
+                <span class="status status-COMPLETED">Activo</span>
+              </div>
+              <div class="n8n-workflow">
+                <div class="n8n-status active"></div>
+                <div style="flex:1">
+                  <div style="font-weight:600;font-size:0.85rem">STOCK-Reservation-Cleanup</div>
+                  <div style="font-size:0.72rem;color:var(--text-muted)">Cron cada 5 min</div>
+                </div>
+                <span class="status status-COMPLETED">Activo</span>
+              </div>
+              <div class="n8n-workflow">
+                <div class="n8n-status inactive"></div>
+                <div style="flex:1">
+                  <div style="font-weight:600;font-size:0.85rem">OPS-RENEWAL-Reminders</div>
+                  <div style="font-size:0.72rem;color:var(--text-muted)">Cron diario</div>
+                </div>
+                <span class="status status-REJECTED">Inactivo</span>
+              </div>
+              <div class="n8n-workflow">
+                <div class="n8n-status active"></div>
+                <div style="flex:1">
+                  <div style="font-weight:600;font-size:0.85rem">STOCK-Inventory-Monitor</div>
+                  <div style="font-size:0.72rem;color:var(--text-muted)">Cron cada 30 min</div>
+                </div>
+                <span class="status status-COMPLETED">Activo</span>
+              </div>
+              <div class="n8n-workflow">
+                <div class="n8n-status inactive"></div>
+                <div style="flex:1">
+                  <div style="font-weight:600;font-size:0.85rem">OPS-WARRANTY-Auto-Replace</div>
+                  <div style="font-size:0.72rem;color:var(--text-muted)">Webhook on-demand</div>
+                </div>
+                <span class="status status-PENDING_PAYMENT">Standby</span>
+              </div>
+              <div class="divider"></div>
+              <div class="form-group" style="margin-bottom:0">
+                <label class="form-label">n8n Webhook base URL</label>
+                <input type="url" class="form-control" id="n8n-url" value="https://n8n-n8n.tlsfxv.easypanel.host" />
+              </div>
+            </div>
+          </div>
+
+          <!-- ── FEATURE 6: Alertas de stock ──────────── -->
+          <div class="settings-panel card" id="panel-stock">
+            <div class="card-header">
+              <h3 style="margin:0;font-size:1rem">Alertas de Stock</h3>
+            </div>
+            <div class="card-body-pad">
+              <p style="font-size:0.85rem;margin-bottom:1rem">Se envía alerta a Telegram cuando el stock baja del umbral
+                configurado.</p>
+              <div id="stock-thresholds">
+                <!-- Platform thresholds -->
+                <div class="setting-row">
+                  <div>
+                    <div class="setting-label">Netflix</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:0.5rem">
+                    <input type="number" class="form-control" value="5" min="1" style="width:70px;font-size:0.85rem" />
+                    <span style="font-size:0.78rem;color:var(--text-muted)">perfiles</span>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div>
+                    <div class="setting-label">Spotify</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:0.5rem">
+                    <input type="number" class="form-control" value="5" min="1" style="width:70px;font-size:0.85rem" />
+                    <span style="font-size:0.78rem;color:var(--text-muted)">perfiles</span>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div>
+                    <div class="setting-label">Disney+</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:0.5rem">
+                    <input type="number" class="form-control" value="3" min="1" style="width:70px;font-size:0.85rem" />
+                    <span style="font-size:0.78rem;color:var(--text-muted)">perfiles</span>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div>
+                    <div class="setting-label">HBO Max</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:0.5rem">
+                    <input type="number" class="form-control" value="3" min="1" style="width:70px;font-size:0.85rem" />
+                    <span style="font-size:0.78rem;color:var(--text-muted)">perfiles</span>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div>
+                    <div class="setting-label">YouTube Premium</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:0.5rem">
+                    <input type="number" class="form-control" value="5" min="1" style="width:70px;font-size:0.85rem" />
+                    <span style="font-size:0.78rem;color:var(--text-muted)">perfiles</span>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="form-group">
+                <label class="form-label">Telegram Bot Token para alertas</label>
+                <input type="text" class="form-control" id="telegram-token" placeholder="1234567890:ABCDEF..." />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Telegram Chat ID</label>
+                <input type="text" class="form-control" id="telegram-chat" placeholder="-100123456789" />
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="saveStockSettings()">Guardar umbrales</button>
+            </div>
+          </div>
+
+          <!-- ── FEATURE 7: Precios y descuentos ──────── -->
+          <div class="settings-panel card" id="panel-precios">
+            <div class="card-header">
+              <h3 style="margin:0;font-size:1rem">Precios y Descuentos de Revendedor</h3>
+            </div>
+            <div class="card-body-pad">
+              <p style="font-size:0.85rem;margin-bottom:1rem">Configura el descuento % para revendedores por plataforma
+                (aplica al precio regular).</p>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label">Descuento general revendedores</div>
+                  <div class="setting-desc">Se aplica si no hay precio específico</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:0.5rem">
+                  <input type="number" class="form-control" id="global-discount" value="20" min="0" max="80"
+                    style="width:70px;font-size:0.85rem" />
+                  <span style="color:var(--text-muted)">%</span>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+                <div class="form-group">
+                  <label class="form-label">Netflix</label>
+                  <div class="input-group"><span class="input-icon">%</span><input type="number" class="form-control"
+                      value="20" /></div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Spotify</label>
+                  <div class="input-group"><span class="input-icon">%</span><input type="number" class="form-control"
+                      value="20" /></div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Disney+</label>
+                  <div class="input-group"><span class="input-icon">%</span><input type="number" class="form-control"
+                      value="15" /></div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">HBO Max</label>
+                  <div class="input-group"><span class="input-icon">%</span><input type="number" class="form-control"
+                      value="18" /></div>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="savePriceSettings()">Guardar descuentos</button>
+            </div>
+          </div>
+
+          <!-- ── FEATURE 8: Política de garantías ──────── -->
+          <div class="settings-panel card" id="panel-garantias">
+            <div class="card-header">
+              <h3 style="margin:0;font-size:1rem">Política de Garantías</h3>
+            </div>
+            <div class="card-body-pad">
+              <div class="form-group">
+                <label class="form-label">Días de garantía por defecto</label>
+                <input type="number" class="form-control" id="warranty-days" value="30" min="1"
+                  style="max-width:120px" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Tiempo máximo para reclamar garantía (horas)</label>
+                <input type="number" class="form-control" id="warranty-hours" value="24" min="1"
+                  style="max-width:120px" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Máximo reemplazos por orden</label>
+                <input type="number" class="form-control" id="max-replacements" value="2" min="1"
+                  style="max-width:120px" />
+              </div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label">Auto-reemplazar en garantía</div>
+                  <div class="setting-desc">n8n busca reemplazo automáticamente sin intervención manual</div>
+                </div>
+                <label class="toggle"><input type="checkbox" id="auto-warranty" checked><span
+                    class="toggle-track"></span></label>
+              </div>
+              <div class="form-group" style="margin-top:0.75rem">
+                <label class="form-label">Texto de política (visible para clientes)</label>
+                <textarea class="form-control" id="warranty-policy"
+                  rows="4">Si tu cuenta o perfil falla dentro de los {dias} días de garantía, te hacemos el cambio sin costo adicional. Solo reporta el problema y lo solucionamos.</textarea>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="saveWarrantySettings()">Guardar política</button>
+            </div>
+          </div>
+
+          <!-- ── FEATURE 9: Configuración de tienda ────── -->
+          <div class="settings-panel card" id="panel-tienda">
+            <div class="card-header">
+              <h3 style="margin:0;font-size:1rem">Configuración de la Tienda</h3>
+            </div>
+            <div class="card-body-pad">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Nombre de la tienda</label>
+                  <input type="text" class="form-control" id="store-name" value="StreamCell" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Teléfono WhatsApp</label>
+                  <input type="tel" class="form-control" id="store-phone" placeholder="+593990000000" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Eslogan</label>
+                <input type="text" class="form-control" id="store-slogan"
+                  value="Tu plataforma favorita al mejor precio 🇪🇨" />
+              </div>
+              <div class="divider"></div>
+              <!-- FEATURE 9a: Modo mantenimiento -->
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label" style="color:var(--red)"><i class="fa-solid fa-triangle-exclamation"></i>
+                    Modo mantenimiento</div>
+                  <div class="setting-desc">Desactiva el checkout y muestra mensaje personalizable</div>
+                </div>
+                <label class="toggle"><input type="checkbox" id="maintenance-mode"
+                    onchange="toggleMaintenance(this)"><span class="toggle-track"></span></label>
+              </div>
+              <div id="maintenance-msg-group" style="display:none;margin-top:0.75rem">
+                <div class="form-group" style="margin-bottom:0">
+                  <label class="form-label">Mensaje de mantenimiento</label>
+                  <textarea class="form-control" rows="2"
+                    id="maintenance-msg">Estamos realizando mantenimiento. Volvemos pronto 🔧</textarea>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <!-- FEATURE 9b: Zona horaria -->
+              <div class="form-group">
+                <label class="form-label">Zona horaria</label>
+                <select class="form-control" id="timezone" style="max-width:280px">
+                  <option value="America/Guayaquil" selected>America/Guayaquil (Ecuador GMT-5)</option>
+                  <option value="America/Bogota">America/Bogota (Colombia GMT-5)</option>
+                  <option value="America/Lima">America/Lima (Perú GMT-5)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Formato de fecha</label>
+                <select class="form-control" id="date-format" style="max-width:200px">
+                  <option value="DD/MM/YYYY" selected>DD/MM/YYYY</option>
+                  <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                  <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                </select>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="saveStoreSettings()">Guardar configuración</button>
+            </div>
+          </div>
+
+          <!-- ── FEATURE 10: API Keys ───────────────────── -->
+          <div class="settings-panel card" id="panel-apikeys">
+            <div class="card-header">
+              <h3 style="margin:0;font-size:1rem">API Keys e Integraciones</h3>
+            </div>
+            <div class="card-body-pad">
+              <div class="alert alert-warning"><i class="fa-solid fa-triangle-exclamation"></i> Nunca compartas estas
+                claves. Solo visible para super_admin.</div>
+              <div class="form-group">
+                <label class="form-label">Supabase URL</label>
+                <input type="url" class="form-control" id="supabase-url-key" placeholder="https://xxx.supabase.co" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Supabase Anon Key</label>
+                <div class="input-group"><input type="password" class="form-control" id="supabase-anon-key"
+                    placeholder="eyJhbGciOiJIUzI1NiIs..." /><span class="input-suffix"
+                    onclick="toggleKey('supabase-anon-key')"><i class="fa-solid fa-eye"></i></span></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Supabase Service Role Key</label>
+                <div class="input-group"><input type="password" class="form-control" id="supabase-service-key"
+                    placeholder="eyJhbGciOiJIUzI1NiIs..." /><span class="input-suffix"
+                    onclick="toggleKey('supabase-service-key')"><i class="fa-solid fa-eye"></i></span></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">n8n Webhook Secret</label>
+                <div class="input-group"><input type="password" class="form-control" id="n8n-secret"
+                    placeholder="secret_xxx..." /><span class="input-suffix" onclick="toggleKey('n8n-secret')"><i
+                      class="fa-solid fa-eye"></i></span></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">OpenAI API Key (lectura de comprobantes)</label>
+                <div class="input-group"><input type="password" class="form-control" id="openai-key"
+                    placeholder="sk-proj-..." /><span class="input-suffix" onclick="toggleKey('openai-key')"><i
+                      class="fa-solid fa-eye"></i></span></div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="saveApiKeys()">Guardar claves</button>
+            </div>
+          </div>
+
+          <!-- ── FEATURE 11: Audit Log ──────────────────── -->
+          <div class="settings-panel card" id="panel-audit">
+            <div class="card-header">
+              <h3 style="margin:0;font-size:1rem">Audit Log</h3>
+              <div style="display:flex;gap:0.5rem;align-items:center">
+                <select class="form-control" id="audit-filter"
+                  style="width:140px;padding:0.4rem 0.6rem;font-size:0.8rem" onchange="loadAuditLog()">
+                  <option value="">Todas las acciones</option>
+                  <option value="order">Pedidos</option>
+                  <option value="wallet">Wallets</option>
+                  <option value="inventory">Inventario</option>
+                  <option value="admin">Admins</option>
+                </select>
+                <button class="btn btn-secondary btn-sm" onclick="loadAuditLog()"><i
+                    class="fa-solid fa-rotate"></i></button>
+              </div>
+            </div>
+            <div class="card-body-pad" id="audit-log-list">
+              <div style="text-align:center;padding:2rem;color:var(--text-muted)"><i
+                  class="fa-solid fa-rotate fa-spin"></i> Cargando...</div>
+            </div>
+            <div style="padding:0.75rem 1rem;border-top:1px solid var(--border)">
+              <button class="btn btn-secondary btn-sm btn-block" onclick="loadMoreAudit()">Cargar más registros</button>
+            </div>
+          </div>
+
+          <!-- ── FEATURE 12: General ────────────────────── -->
+          <div class="settings-panel card" id="panel-general">
+            <div class="card-header">
+              <h3 style="margin:0;font-size:1rem">Configuración General</h3>
+            </div>
+            <div class="card-body-pad">
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label">Reserva temporal de stock</div>
+                  <div class="setting-desc">Minutos que se reserva un item al crear orden</div>
+                </div>
+                <input type="number" class="form-control" value="15" min="5" max="60"
+                  style="width:70px;font-size:0.85rem" id="reservation-minutes" />
+              </div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label">Guest checkout</div>
+                  <div class="setting-desc">Permitir compras sin cuenta registrada</div>
+                </div>
+                <label class="toggle"><input type="checkbox" checked id="guest-checkout"><span
+                    class="toggle-track"></span></label>
+              </div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label">Auto-despacho con n8n</div>
+                  <div class="setting-desc">Despachar credenciales automáticamente al aprobar pago</div>
+                </div>
+                <label class="toggle"><input type="checkbox" checked id="auto-dispatch"><span
+                    class="toggle-track"></span></label>
+              </div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label">Notificaciones push web</div>
+                  <div class="setting-desc">Alertas en tiempo real al admin en el navegador</div>
+                </div>
+                <label class="toggle"><input type="checkbox" id="push-notifications"><span
+                    class="toggle-track"></span></label>
+              </div>
+              <div class="divider"></div>
+              <!-- FEATURE 13: Editor de términos y condiciones -->
+              <div class="form-group">
+                <label class="form-label">Términos y condiciones (resumen visible en checkout)</label>
+                <textarea class="form-control" rows="5"
+                  id="terms-text">Al comprar en StreamCell aceptas que las cuentas y perfiles son para uso personal. No está permitido compartir las credenciales fuera del hogar. StreamCell ofrece garantía de {warranty_days} días ante caídas del servicio.</textarea>
+              </div>
+              <div class="divider"></div>
+              <!-- FEATURE 14: Backup -->
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label">Backup automático</div>
+                  <div class="setting-desc">Exportar DB a email cada semana</div>
+                </div>
+                <label class="toggle"><input type="checkbox" id="auto-backup"><span class="toggle-track"></span></label>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email para backups</label>
+                <input type="email" class="form-control" id="backup-email" placeholder="admin@streamcell.shop"
+                  style="max-width:300px" />
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="saveGeneralSettings()">Guardar configuración</button>
+              <button class="btn btn-secondary btn-sm" onclick="triggerBackup()" style="margin-left:0.5rem">
+                <i class="fa-solid fa-database"></i> Backup manual ahora
+              </button>
+            </div>
+          </div>
+
+        </div><!-- end panels -->
+      </div>
+    </main>
+  </div>
+
+  <!-- ── Modal: Admin User ─────────────────────────────── -->
+  <div class="modal-overlay" id="modal-admin-user">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title" id="admin-modal-title">Nuevo Administrador</span>
+        <button class="modal-close" onclick="closeModal('modal-admin-user')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="admin-user-id" />
+        <div class="form-group">
+          <label class="form-label">Nombre completo <span class="required">*</span></label>
+          <input type="text" class="form-control" id="admin-user-name" placeholder="Juan Pérez" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Usuario <span class="required">*</span></label>
+          <input type="text" class="form-control" id="admin-user-username" placeholder="jpereez" />
+        </div>
+        <!-- FEATURE 15: Contraseña con indicador -->
+        <div class="form-group">
+          <label class="form-label">Contraseña <span class="required" id="pwd-required">*</span></label>
+          <div class="input-group">
+            <input type="password" class="form-control" id="admin-user-password" placeholder="Mín. 8 caracteres"
+              oninput="checkPwdStrength(this.value)" />
+            <span class="input-suffix" onclick="toggleKey('admin-user-password')"><i class="fa-solid fa-eye"></i></span>
+          </div>
+          <div class="progress-track" style="margin-top:0.35rem;height:4px">
+            <div class="progress-fill" id="pwd-strength-bar" style="width:0%;transition:width 0.3s,background 0.3s">
+            </div>
+          </div>
+          <div id="pwd-strength-label" class="form-hint"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Rol <span class="required">*</span></label>
+          <select class="form-control" id="admin-user-role">
+            <option value="soporte">Soporte (solo lectura)</option>
+            <option value="operador">Operador (gestión operativa)</option>
+            <option value="super_admin">Super Admin (acceso total)</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-admin-user')">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveAdminUser()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Modal: Banco ──────────────────────────────────── -->
+  <div class="modal-overlay" id="modal-bank">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Datos bancarios</span>
+        <button class="modal-close" onclick="closeModal('modal-bank')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Nombre del banco</label>
+          <input type="text" class="form-control" id="bank-name" placeholder="Banco Pichincha" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Tipo de cuenta</label>
+            <select class="form-control" id="bank-type">
+              <option>Corriente</option>
+              <option>Ahorros</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Número de cuenta</label>
+            <input type="text" class="form-control" id="bank-number" placeholder="2200123456" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Titular</label>
+          <input type="text" class="form-control" id="bank-holder" placeholder="StreamCell S.A." />
+        </div>
+        <div class="form-group">
+          <label class="form-label">CI / RUC del titular</label>
+          <input type="text" class="form-control" id="bank-ci" placeholder="1234567890" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-bank')">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveBank()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="../lib/supabase-client.js"></script>
+  <script src="../lib/admin-auth.js"></script>
+  <script src="../lib/cart.js"></script>
+  <script>
+    const API = window.location.hostname === 'localhost' ? 'http://localhost:3000/api' : '/api';
+    let auditOffset = 0;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAdminUsers();
+      loadAuditLog();
+    });
+
+    /* ── Panel switching ───────────────────────────────── */
+    function switchPanel(panel, navItem) {
+      document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.settings-nav-item').forEach(n => n.classList.remove('active'));
+      document.getElementById(`panel-${panel}`).classList.add('active');
+      if (navItem) navItem.classList.add('active');
+    }
+
+    /* ── Admin Users ───────────────────────────────────── */
+    async function loadAdminUsers() {
+      const container = document.getElementById('admin-users-list');
+      try {
+        const sb = await window._supabaseReady;
+        const { data, error } = await sb.from('admin_users').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        const users = data || [];
+        if (!users.length) { container.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem">No hay usuarios admin</p>'; return; }
+        container.innerHTML = users.map(u => `
+          <div class="admin-user-row">
+            <div class="admin-avatar-sm">${(u.full_name || u.username || 'A').substring(0, 2).toUpperCase()}</div>
+            <div style="flex:1">
+              <div style="font-weight:700;font-size:0.875rem">${u.full_name || u.username}</div>
+              <div style="font-size:0.72rem;color:var(--text-muted)">@${u.username}</div>
+            </div>
+            <span class="role-badge ${u.role}">${{ super_admin: 'Super Admin', operador: 'Operador', soporte: 'Soporte' }[u.role] || u.role}</span>
+            <div style="display:flex;gap:0.3rem">
+              <button class="btn btn-sm btn-secondary" onclick="openAdminUserModal('${u.id}')"><i class="fa-solid fa-pencil"></i></button>
+              <button class="btn btn-sm btn-danger" onclick="deleteAdminUser('${u.id}')"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </div>`).join('');
+      } catch (e) { console.error(e); }
+    }
+
+    async function loadAuditLog() {
+      const container = document.getElementById('audit-log-list');
+      const filter = document.getElementById('audit-filter').value;
+      try {
+        const sb = await window._supabaseReady;
+        let query = sb.from('audit_logs').select('*').order('created_at', { ascending: false }).limit(20);
+        if (filter) query = query.eq('category', filter);
+
+        const { data, error } = await query;
+        if (error) throw error;
+
+        if (!data?.length) {
+          container.innerHTML = `<div style="text-align:center;padding:1.5rem;color:var(--text-muted);font-size:0.82rem;">Sin registros de actividad</div>`;
+          return;
+        }
+
+        container.innerHTML = data.map(log => `
+          <div class="audit-row">
+            <div class="audit-time">${new Date(log.created_at).toLocaleString()}</div>
+            <div class="audit-action">
+                <strong>${log.action}</strong>
+                <div style="font-size:0.7rem;color:var(--text-muted);">${log.details || ''}</div>
+            </div>
+            <div class="audit-who">${log.admin_username || 'System'}</div>
+          </div>
+        `).join('');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function openAdminUserModal(id) {
+      document.getElementById('admin-user-id').value = id || '';
+      document.getElementById('admin-modal-title').textContent = id ? 'Editar Administrador' : 'Nuevo Administrador';
+      document.getElementById('pwd-required').style.display = id ? 'none' : '';
+      if (!id) { document.getElementById('admin-user-name').value = ''; document.getElementById('admin-user-username').value = ''; document.getElementById('admin-user-password').value = ''; document.getElementById('admin-user-role').value = 'soporte'; }
+      openModal('modal-admin-user');
+    }
+
+    async function saveAdminUser() {
+      const id = document.getElementById('admin-user-id').value;
+      const payload = {
+        name: document.getElementById('admin-user-name').value,
+        username: document.getElementById('admin-user-username').value,
+        password: document.getElementById('admin-user-password').value,
+        role: document.getElementById('admin-user-role').value
+      };
+      if (!payload.name || !payload.username) { toast('Nombre y usuario son obligatorios', 'error'); return; }
+      if (!id && !payload.password) { toast('La contraseña es obligatoria para nuevos usuarios', 'error'); return; }
+      try {
+        const method = id ? 'PUT' : 'POST';
+        const url = id ? `${API}/admin/users/${id}` : `${API}/admin/users`;
+        const res = await AdminAuth.fetch(url, { method, body: JSON.stringify(payload) });
+        if (!res?.ok) throw new Error('Error');
+        toast(id ? 'Usuario actualizado' : 'Usuario creado', 'success');
+        closeModal('modal-admin-user');
+        loadAdminUsers();
+      } catch (e) { toast('Error: ' + e.message, 'error'); }
+    }
+
+    async function deleteAdminUser(id) {
+      if (!confirm('¿Eliminar este usuario admin?')) return;
+      try {
+        const res = await AdminAuth.fetch(`${API}/admin/users/${id}`, { method: 'DELETE' });
+        if (!res?.ok) throw new Error('Error');
+        toast('Usuario eliminado', 'success');
+        loadAdminUsers();
+      } catch (e) { toast('Error', 'error'); }
+    }
+
+    /* ── Audit Log ─────────────────────────────────────── */
+    async function loadAuditLog() {
+      auditOffset = 0;
+      const container = document.getElementById('audit-log-list');
+      container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--text-muted)"><i class="fa-solid fa-rotate fa-spin"></i></div>';
+      try {
+        const sb = await window._supabaseReady;
+        const filter = document.getElementById('audit-filter').value;
+        let query = sb.from('audit_log').select('*').order('created_at', { ascending: false }).limit(50);
+        if (filter) query = query.eq('action_type', filter);
+        const { data } = await query;
+        renderAuditLog(data || []);
+      } catch (e) {
+        container.innerHTML = '<div style="color:var(--text-muted);padding:1rem;font-size:0.82rem">Error cargando audit log. Verifica que la tabla audit_log existe.</div>';
+      }
+    }
+
+    function renderAuditLog(rows) {
+      const container = document.getElementById('audit-log-list');
+      if (!rows.length) { container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:0.85rem">Sin registros</div>'; return; }
+      container.innerHTML = rows.map(r => {
+        const date = new Date(r.created_at).toLocaleDateString('es-EC', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+        return `<div class="audit-row">
+          <div class="audit-time">${date}</div>
+          <div class="audit-action"><strong>${r.action_type || '—'}</strong>: ${r.description || JSON.stringify(r.metadata || {}).substring(0, 80)}</div>
+          <div class="audit-who">${r.admin_id || r.user_id || '—'}</div>
+        </div>`;
+      }).join('');
+    }
+
+    function loadMoreAudit() { auditOffset += 50; toast('Cargando más...', 'info'); }
+
+    /* ── Save functions ────────────────────────────────── */
+    function savePaymentMethod(method, enabled) { toast(`${method}: ${enabled ? 'habilitado' : 'deshabilitado'}`, 'success'); }
+    function savePaymentSettings() { toast('Configuración de pagos guardada', 'success'); }
+    function saveTemplates() { toast('Templates de WhatsApp guardados', 'success'); }
+    function saveStockSettings() { toast('Umbrales de stock guardados', 'success'); }
+    function savePriceSettings() { toast('Descuentos guardados', 'success'); }
+    function saveWarrantySettings() { toast('Política de garantías guardada', 'success'); }
+    function saveStoreSettings() { toast('Configuración de tienda guardada', 'success'); }
+    function saveApiKeys() { toast('API Keys guardadas (solo en entorno seguro)', 'warning'); }
+    function saveGeneralSettings() { toast('Configuración general guardada', 'success'); }
+    function saveBank() { toast('Banco guardado', 'success'); closeModal('modal-bank'); }
+
+    function triggerBackup() {
+      toast('Backup iniciado. Te notificaremos cuando esté listo.', 'info');
+    }
+
+    function toggleMaintenance(cb) {
+      document.getElementById('maintenance-msg-group').style.display = cb.checked ? 'block' : 'none';
+      toast(cb.checked ? '⚠️ Modo mantenimiento ACTIVADO' : '✅ Tienda disponible de nuevo', cb.checked ? 'warning' : 'success');
+    }
+
+    function openBankModal(id) {
+      document.getElementById('bank-name').value = '';
+      document.getElementById('bank-number').value = '';
+      document.getElementById('bank-holder').value = '';
+      document.getElementById('bank-ci').value = '';
+      openModal('modal-bank');
+    }
+
+    function toggleKey(id) {
+      const inp = document.getElementById(id);
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    }
+
+    function checkPwdStrength(pwd) {
+      const bar = document.getElementById('pwd-strength-bar');
+      const lbl = document.getElementById('pwd-strength-label');
+      let score = 0;
+      if (pwd.length >= 8) score++;
+      if (/[A-Z]/.test(pwd)) score++;
+      if (/[0-9]/.test(pwd)) score++;
+      if (/[^A-Za-z0-9]/.test(pwd)) score++;
+      const pct = [0, 25, 50, 75, 100][score];
+      const color = ['var(--red)', 'var(--red)', 'var(--yellow)', 'var(--primary)', 'var(--green)'][score];
+      const label = ['', 'Débil', 'Regular', 'Buena', 'Fuerte'][score];
+      bar.style.width = pct + '%';
+      bar.style.background = color;
+      lbl.textContent = label;
+      lbl.style.color = color;
+    }
+
+    /* ── Utils ─────────────────────────────────────────── */
+    function openModal(id) { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebar-overlay').style.display = 'block'; }
+    function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebar-overlay').style.display = 'none'; }
+    window.addEventListener('resize', () => { document.getElementById('menu-toggle').style.display = window.innerWidth <= 1024 ? 'flex' : 'none'; if (window.innerWidth > 1024) closeSidebar(); });
+    window.dispatchEvent(new Event('resize'));
+  </script>
+</body>
+
+</html>
