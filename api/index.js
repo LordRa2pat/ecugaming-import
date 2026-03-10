@@ -19,8 +19,12 @@ app.use(express.json({ limit: '25mb' }));
 // ============================================================
 // DATABASE (Supabase service_role — full access, server only)
 // ============================================================
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
+const SUPABASE_URL = process.env.SUPABASE_URL?.trim();
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY?.trim();
+
+process.on('uncaughtException', (err) => {
+    console.error('UNCAUGHT EXCEPTION:', err);
+});
 
 let supabase = null;
 let useSupabase = false;
@@ -1280,8 +1284,8 @@ app.patch('/api/admin/credits/:id/status', requireAdmin(async (req, res) => {
 // ============================================================
 app.get('/api/config', (req, res) => {
     res.json({
-        supabaseUrl: process.env.SUPABASE_URL || '',
-        supabaseAnonKey: process.env.SUPABASE_ANON_KEY || ''
+        supabaseUrl: process.env.SUPABASE_URL?.trim() || '',
+        supabaseAnonKey: process.env.SUPABASE_ANON_KEY?.trim() || ''
     });
 });
 
