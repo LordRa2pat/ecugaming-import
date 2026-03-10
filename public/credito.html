@@ -1,45 +1,104 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crédito Directo | Ecugaming Import</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- jsPDF + AutoTable for PDF export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.3/jspdf.plugin.autotable.min.js"></script>
     <style>
-        :root { --radius: 16px; --col-left: 420px; }
-        body { background: var(--bg-light); color: var(--text); min-height: 100vh; }
+        :root {
+            --radius: 16px;
+            --col-left: 420px;
+        }
+
+        body {
+            background: var(--bg-light);
+            color: var(--text);
+            min-height: 100vh;
+        }
 
         /* ── HEADER ─────────────────────────────────── */
         .cr-header {
-            position: sticky; top: 0; z-index: 300;
-            background: rgba(10,10,11,0.92); border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 5%; height: 56px; backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 300;
+            background: rgba(10, 10, 11, 0.92);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            height: 56px;
+            backdrop-filter: blur(10px);
         }
-        .cr-header .logo { font-size: 1.2rem; font-weight: 900; color: var(--text); cursor: pointer; }
-        .cr-header .logo span { color: var(--primary); }
-        .cr-header nav { display: flex; gap: 8px; align-items: center; }
+
+        .cr-header .logo {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .cr-header .logo span {
+            color: var(--primary);
+        }
+
+        .cr-header nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
         .cr-header nav a {
-            font-size: .82rem; font-weight: 700; color: var(--text-dim);
-            text-decoration: none; padding: 6px 14px; border-radius: 980px;
-            border: 1px solid transparent; transition: .2s;
+            font-size: .82rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 980px;
+            border: 1px solid transparent;
+            transition: .2s;
         }
-        .cr-header nav a:hover { color: var(--text); border-color: var(--border); }
-        .cr-header nav a.active-link { color: var(--primary); border-color: rgba(255,140,0,.4); background: rgba(255,140,0,.07); }
+
+        .cr-header nav a:hover {
+            color: var(--text);
+            border-color: var(--border);
+        }
+
+        .cr-header nav a.active-link {
+            color: var(--primary);
+            border-color: rgba(255, 140, 0, .4);
+            background: rgba(255, 140, 0, .07);
+        }
 
         /* ── PAGE TITLE BAND ─────────────────────────── */
         .cr-title-band {
-            background: linear-gradient(135deg, rgba(108,99,255,.15) 0%, rgba(168,85,247,.1) 100%);
+            background: linear-gradient(135deg, rgba(108, 99, 255, .15) 0%, rgba(168, 85, 247, .1) 100%);
             border-bottom: 1px solid var(--border);
             padding: 28px 5% 24px;
         }
-        .cr-title-band h1 { font-size: 1.8rem; font-weight: 900; margin: 0; }
-        .cr-title-band h1 span { color: #a855f7; }
-        .cr-title-band p { color: var(--text-dim); font-size: .9rem; margin: 6px 0 0; }
+
+        .cr-title-band h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin: 0;
+        }
+
+        .cr-title-band h1 span {
+            color: #a855f7;
+        }
+
+        .cr-title-band p {
+            color: var(--text-dim);
+            font-size: .9rem;
+            margin: 6px 0 0;
+        }
 
         /* ── TWO-PANEL LAYOUT ───────────────────────── */
         .cr-layout {
@@ -48,9 +107,16 @@
             gap: 0;
             min-height: calc(100vh - 130px);
         }
+
         @media(max-width:900px) {
-            .cr-layout { grid-template-columns: 1fr; }
-            .cr-right { border-left: none; border-top: 1px solid var(--border); }
+            .cr-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .cr-right {
+                border-left: none;
+                border-top: 1px solid var(--border);
+            }
         }
 
         /* ── LEFT PANEL ─────────────────────────────── */
@@ -59,87 +125,246 @@
             padding: 28px 24px;
             overflow-y: auto;
         }
+
         .panel-section {
             margin-bottom: 28px;
         }
+
         .panel-section-title {
-            font-size: .7rem; font-weight: 800; text-transform: uppercase;
-            letter-spacing: .1em; color: var(--text-dim);
-            margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
+            font-size: .7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--text-dim);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .panel-section-title i { color: #a855f7; }
+
+        .panel-section-title i {
+            color: #a855f7;
+        }
 
         .cr-input {
-            width: 100%; padding: 10px 14px;
-            background: rgba(255,255,255,.05); border: 1px solid var(--border);
-            border-radius: 10px; color: var(--text); font-size: .9rem;
-            transition: .2s; box-sizing: border-box;
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: .9rem;
+            transition: .2s;
+            box-sizing: border-box;
         }
-        .cr-input:focus { outline: none; border-color: #a855f7; box-shadow: 0 0 0 3px rgba(168,85,247,.15); }
+
+        .cr-input:focus {
+            outline: none;
+            border-color: #a855f7;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, .15);
+        }
+
         /* Feature 1: Dark select dropdowns */
-        select.cr-input { background-color: #1c1c1e; color: #f5f5f7; -webkit-appearance: none; appearance: none; }
-        select.cr-input option { background: #1c1c1e !important; color: #f5f5f7 !important; }
-        select.cr-input optgroup { background: #1c1c1e; color: #a855f7; }
-        .cr-input-group { margin-bottom: 12px; }
-        .cr-input-group label { display: block; font-size: .78rem; font-weight: 700; color: var(--text-dim); margin-bottom: 5px; }
-        .cr-input-group .cr-input-wrap { position: relative; }
-        .cr-input-group .cr-input-wrap .cr-prefix {
-            position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-            font-weight: 800; color: var(--text-dim); font-size: .9rem;
+        select.cr-input {
+            background-color: #1c1c1e;
+            color: #f5f5f7;
+            -webkit-appearance: none;
+            appearance: none;
         }
-        .cr-input-group .cr-input-wrap .cr-input { padding-left: 28px; }
+
+        select.cr-input option {
+            background: #1c1c1e !important;
+            color: #f5f5f7 !important;
+        }
+
+        select.cr-input optgroup {
+            background: #1c1c1e;
+            color: #a855f7;
+        }
+
+        .cr-input-group {
+            margin-bottom: 12px;
+        }
+
+        .cr-input-group label {
+            display: block;
+            font-size: .78rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            margin-bottom: 5px;
+        }
+
+        .cr-input-group .cr-input-wrap {
+            position: relative;
+        }
+
+        .cr-input-group .cr-input-wrap .cr-prefix {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 800;
+            color: var(--text-dim);
+            font-size: .9rem;
+        }
+
+        .cr-input-group .cr-input-wrap .cr-input {
+            padding-left: 28px;
+        }
 
         /* Grace period slider */
-        .grace-slider-wrap { margin-bottom: 12px; }
-        .grace-slider-wrap label { font-size: .78rem; font-weight: 700; color: var(--text-dim); margin-bottom: 8px; display: block; }
-        .grace-ticks { display: flex; justify-content: space-between; font-size: .7rem; color: var(--text-dim); margin-top: 4px; }
-        input[type=range].cr-range {
-            -webkit-appearance: none; width: 100%; height: 5px;
-            background: var(--border); border-radius: 10px; outline: none;
+        .grace-slider-wrap {
+            margin-bottom: 12px;
         }
+
+        .grace-slider-wrap label {
+            font-size: .78rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .grace-ticks {
+            display: flex;
+            justify-content: space-between;
+            font-size: .7rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        input[type=range].cr-range {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 5px;
+            background: var(--border);
+            border-radius: 10px;
+            outline: none;
+        }
+
         input[type=range].cr-range::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
-            background: #a855f7; cursor: pointer; box-shadow: 0 0 8px rgba(168,85,247,.5);
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #a855f7;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(168, 85, 247, .5);
         }
 
         /* Doc status */
-        .doc-status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .doc-status-btn {
-            padding: 8px 10px; border-radius: 10px; border: 1.5px solid var(--border);
-            background: transparent; color: var(--text-dim); font-size: .75rem; font-weight: 700;
-            cursor: pointer; transition: .15s; text-align: center;
+        .doc-status-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
         }
-        .doc-status-btn.active.pending { border-color: #f59e0b; background: rgba(245,158,11,.12); color: #f59e0b; }
-        .doc-status-btn.active.review  { border-color: #3b82f6; background: rgba(59,130,246,.12); color: #3b82f6; }
-        .doc-status-btn.active.approved { border-color: #22c55e; background: rgba(34,197,94,.12); color: #22c55e; }
-        .doc-status-btn.active.rejected { border-color: #ef4444; background: rgba(239,68,68,.12); color: #ef4444; }
+
+        .doc-status-btn {
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            background: transparent;
+            color: var(--text-dim);
+            font-size: .75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .15s;
+            text-align: center;
+        }
+
+        .doc-status-btn.active.pending {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, .12);
+            color: #f59e0b;
+        }
+
+        .doc-status-btn.active.review {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, .12);
+            color: #3b82f6;
+        }
+
+        .doc-status-btn.active.approved {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, .12);
+            color: #22c55e;
+        }
+
+        .doc-status-btn.active.rejected {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, .12);
+            color: #ef4444;
+        }
 
         /* Action buttons */
-        .cr-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+        .cr-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
         .btn-pdf {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 12px; border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 12px;
             background: linear-gradient(135deg, #6c63ff, #a855f7);
-            color: #fff; font-weight: 800; font-size: .88rem;
-            border: none; cursor: pointer; transition: .2s;
+            color: #fff;
+            font-weight: 800;
+            font-size: .88rem;
+            border: none;
+            cursor: pointer;
+            transition: .2s;
         }
-        .btn-pdf:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(168,85,247,.35); }
+
+        .btn-pdf:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(168, 85, 247, .35);
+        }
+
         .btn-wa {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 12px; border-radius: 12px;
-            background: rgba(37,211,102,.12); border: 1.5px solid rgba(37,211,102,.4);
-            color: #25D366; font-weight: 800; font-size: .88rem;
-            cursor: pointer; transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(37, 211, 102, .12);
+            border: 1.5px solid rgba(37, 211, 102, .4);
+            color: #25D366;
+            font-weight: 800;
+            font-size: .88rem;
+            cursor: pointer;
+            transition: .2s;
         }
-        .btn-wa:hover { background: rgba(37,211,102,.2); }
+
+        .btn-wa:hover {
+            background: rgba(37, 211, 102, .2);
+        }
+
         .btn-reset {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 10px; border-radius: 12px;
-            background: transparent; border: 1.5px solid var(--border);
-            color: var(--text-dim); font-weight: 700; font-size: .82rem;
-            cursor: pointer; transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            border-radius: 12px;
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text-dim);
+            font-weight: 700;
+            font-size: .82rem;
+            cursor: pointer;
+            transition: .2s;
         }
-        .btn-reset:hover { border-color: #ef4444; color: #ef4444; }
+
+        .btn-reset:hover {
+            border-color: #ef4444;
+            color: #ef4444;
+        }
 
         /* ── RIGHT PANEL ─────────────────────────────── */
         .cr-right {
@@ -149,140 +374,383 @@
 
         /* Certificate card */
         .cert-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 20px; overflow: hidden;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
         }
+
         .cert-header {
             background: linear-gradient(135deg, #1a1a2e 0%, #0f0f17 100%);
             border-bottom: 1px solid var(--border);
             padding: 20px 24px;
-            display: flex; align-items: center; justify-content: space-between;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .cert-header-left h2 { font-size: 1rem; font-weight: 900; margin: 0; }
-        .cert-header-left p { font-size: .75rem; color: var(--text-dim); margin: 2px 0 0; }
-        .cert-status-badge {
-            padding: 6px 16px; border-radius: 980px;
-            font-size: .78rem; font-weight: 800;
-        }
-        .cert-body { padding: 20px 24px; }
 
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-        .info-box {
-            background: rgba(255,255,255,.03); border: 1px solid var(--border);
-            border-radius: 12px; padding: 12px 16px;
+        .cert-header-left h2 {
+            font-size: 1rem;
+            font-weight: 900;
+            margin: 0;
         }
-        .info-box .ib-label { font-size: .68rem; font-weight: 800; color: var(--text-dim); text-transform: uppercase; letter-spacing: .07em; }
-        .info-box .ib-value { font-size: .92rem; font-weight: 700; color: var(--text); margin-top: 2px; }
-        .info-box .ib-value.highlight { color: #a855f7; font-size: 1.1rem; }
+
+        .cert-header-left p {
+            font-size: .75rem;
+            color: var(--text-dim);
+            margin: 2px 0 0;
+        }
+
+        .cert-status-badge {
+            padding: 6px 16px;
+            border-radius: 980px;
+            font-size: .78rem;
+            font-weight: 800;
+        }
+
+        .cert-body {
+            padding: 20px 24px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+        }
+
+        .info-box .ib-label {
+            font-size: .68rem;
+            font-weight: 800;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+        }
+
+        .info-box .ib-value {
+            font-size: .92rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 2px;
+        }
+
+        .info-box .ib-value.highlight {
+            color: #a855f7;
+            font-size: 1.1rem;
+        }
 
         /* Product highlight */
         .product-highlight {
-            background: linear-gradient(135deg, rgba(108,99,255,.08), rgba(168,85,247,.06));
-            border: 1px solid rgba(168,85,247,.3);
-            border-radius: 14px; padding: 16px 20px; margin-bottom: 20px;
-            display: flex; align-items: center; gap: 16px;
+            background: linear-gradient(135deg, rgba(108, 99, 255, .08), rgba(168, 85, 247, .06));
+            border: 1px solid rgba(168, 85, 247, .3);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
+
         .product-highlight img {
-            width: 64px; height: 64px; object-fit: contain;
-            background: rgba(255,255,255,.05); border-radius: 10px; padding: 6px;
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, .05);
+            border-radius: 10px;
+            padding: 6px;
         }
-        .product-highlight .ph-name { font-size: .95rem; font-weight: 800; color: var(--text); }
-        .product-highlight .ph-cat { font-size: .72rem; color: var(--text-dim); font-weight: 700; text-transform: uppercase; }
-        .product-highlight .ph-price { font-size: 1.2rem; font-weight: 900; color: #a855f7; }
+
+        .product-highlight .ph-name {
+            font-size: .95rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .product-highlight .ph-cat {
+            font-size: .72rem;
+            color: var(--text-dim);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .product-highlight .ph-price {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #a855f7;
+        }
 
         /* Economic analysis */
         .econ-row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .05);
             font-size: .88rem;
         }
-        .econ-row:last-child { border-bottom: none; }
-        .econ-row .er-label { color: var(--text-dim); }
-        .econ-row .er-value { font-weight: 700; color: var(--text); }
-        .econ-row .er-value.good { color: #22c55e; }
-        .econ-row .er-value.warn { color: #f59e0b; }
-        .econ-row .er-value.bad  { color: #ef4444; }
 
-        /* Plans table */
-        .plans-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
-        .plans-table th {
-            background: rgba(168,85,247,.12); color: #a855f7;
-            font-size: .72rem; font-weight: 800; text-transform: uppercase;
-            padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border);
+        .econ-row:last-child {
+            border-bottom: none;
         }
-        .plans-table td {
-            padding: 10px 12px; font-size: .85rem; border-bottom: 1px solid rgba(255,255,255,.04);
+
+        .econ-row .er-label {
+            color: var(--text-dim);
+        }
+
+        .econ-row .er-value {
+            font-weight: 700;
             color: var(--text);
         }
-        .plans-table tr.selected-plan td { background: rgba(168,85,247,.08); }
-        .plans-table tr.selected-plan td:first-child { border-left: 3px solid #a855f7; }
-        .plans-table td .plan-cuota { font-weight: 900; color: #a855f7; font-size: .95rem; }
-        .plans-table td .plan-total { font-size: .75rem; color: var(--text-dim); }
+
+        .econ-row .er-value.good {
+            color: #22c55e;
+        }
+
+        .econ-row .er-value.warn {
+            color: #f59e0b;
+        }
+
+        .econ-row .er-value.bad {
+            color: #ef4444;
+        }
+
+        /* Plans table */
+        .plans-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .plans-table th {
+            background: rgba(168, 85, 247, .12);
+            color: #a855f7;
+            font-size: .72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 9px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .plans-table td {
+            padding: 10px 12px;
+            font-size: .85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .04);
+            color: var(--text);
+        }
+
+        .plans-table tr.selected-plan td {
+            background: rgba(168, 85, 247, .08);
+        }
+
+        .plans-table tr.selected-plan td:first-child {
+            border-left: 3px solid #a855f7;
+        }
+
+        .plans-table td .plan-cuota {
+            font-weight: 900;
+            color: #a855f7;
+            font-size: .95rem;
+        }
+
+        .plans-table td .plan-total {
+            font-size: .75rem;
+            color: var(--text-dim);
+        }
 
         /* Amortization table */
-        .amort-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+        .amort-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .78rem;
+        }
+
         .amort-table th {
-            background: rgba(255,255,255,.04); color: var(--text-dim);
-            font-size: .68rem; font-weight: 800; text-transform: uppercase;
-            padding: 7px 10px; text-align: right; border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, .04);
+            color: var(--text-dim);
+            font-size: .68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 7px 10px;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
         }
-        .amort-table th:first-child { text-align: left; }
+
+        .amort-table th:first-child {
+            text-align: left;
+        }
+
         .amort-table td {
-            padding: 7px 10px; border-bottom: 1px solid rgba(255,255,255,.04); text-align: right;
+            padding: 7px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, .04);
+            text-align: right;
         }
-        .amort-table td:first-child { text-align: left; color: var(--text-dim); }
-        .amort-table tr:last-child td { font-weight: 800; color: var(--primary); border-top: 1px solid var(--border); }
+
+        .amort-table td:first-child {
+            text-align: left;
+            color: var(--text-dim);
+        }
+
+        .amort-table tr:last-child td {
+            font-weight: 800;
+            color: var(--primary);
+            border-top: 1px solid var(--border);
+        }
 
         /* Requirements */
         .req-list li {
-            display: flex; align-items: center; gap: 8px;
-            font-size: .82rem; color: var(--text-dim); margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .82rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
         }
-        .req-list li i { color: #22c55e; width: 16px; }
+
+        .req-list li i {
+            color: #22c55e;
+            width: 16px;
+        }
 
         /* Section sub-heading */
         .section-sub {
-            font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em;
-            color: var(--text-dim); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+            font-size: .72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .section-sub::before { content: ''; flex: 1; height: 1px; background: var(--border); }
-        .section-sub::after  { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        .section-sub::before {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .section-sub::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
 
         /* Tooltips / helpers */
-        .cr-helper { font-size: .72rem; color: var(--text-dim); margin-top: 4px; }
+        .cr-helper {
+            font-size: .72rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
 
         /* Loader overlay */
-        .cr-loader { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:999; align-items:center; justify-content:center; flex-direction:column; gap:12px; }
-        .cr-loader.visible { display:flex; }
-        .cr-loader p { color:#fff; font-weight:700; }
+        .cr-loader {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .6);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .cr-loader.visible {
+            display: flex;
+        }
+
+        .cr-loader p {
+            color: #fff;
+            font-weight: 700;
+        }
 
         /* Feature 4: Empty / loading states */
         .cr-empty-state {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 3rem 1.5rem; text-align: center; color: var(--text-dim);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            color: var(--text-dim);
         }
-        .cr-empty-state i { font-size: 2.5rem; margin-bottom: .75rem; opacity: .5; }
-        .cr-empty-state p { font-size: .88rem; margin: 0; }
-        .cr-catalog-loading { text-align:center; padding: 1rem; color: var(--text-dim); font-size:.85rem; }
+
+        .cr-empty-state i {
+            font-size: 2.5rem;
+            margin-bottom: .75rem;
+            opacity: .5;
+        }
+
+        .cr-empty-state p {
+            font-size: .88rem;
+            margin: 0;
+        }
+
+        .cr-catalog-loading {
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-dim);
+            font-size: .85rem;
+        }
 
         /* Feature 2: Print button styling */
         .btn-print {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 12px; border-radius: 12px;
-            background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.12);
-            color: var(--text-dim); font-weight: 800; font-size: .88rem;
-            cursor: pointer; transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .06);
+            border: 1.5px solid rgba(255, 255, 255, .12);
+            color: var(--text-dim);
+            font-weight: 800;
+            font-size: .88rem;
+            cursor: pointer;
+            transition: .2s;
         }
-        .btn-print:hover { background: rgba(255,255,255,.12); color: var(--text); }
+
+        .btn-print:hover {
+            background: rgba(255, 255, 255, .12);
+            color: var(--text);
+        }
 
         @media print {
-            .cr-header, .cr-title-band, .cr-left, .cr-loader { display: none !important; }
-            .cr-layout { display: block; }
-            .cr-right { padding: 0; }
-            .cert-card { border: 1px solid #ccc; border-radius: 0; }
+
+            .cr-header,
+            .cr-title-band,
+            .cr-left,
+            .cr-loader {
+                display: none !important;
+            }
+
+            .cr-layout {
+                display: block;
+            }
+
+            .cr-right {
+                padding: 0;
+            }
+
+            .cert-card {
+                border: 1px solid #ccc;
+                border-radius: 0;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <!-- HEADER -->
@@ -291,13 +759,16 @@
         <nav>
             <a href="/">Tienda</a>
             <a href="/credito" class="active-link"><i class="fa fa-credit-card"></i> Crédito Directo</a>
-            <a href="https://wa.me/593962609951" target="_blank" style="background:rgba(37,211,102,.12);color:#25D366;border-color:rgba(37,211,102,.35);"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="https://wa.me/593962609951" target="_blank"
+                style="background:rgba(37,211,102,.12);color:#25D366;border-color:rgba(37,211,102,.35);"><i
+                    class="fab fa-whatsapp"></i> WhatsApp</a>
         </nav>
     </header>
 
     <!-- TITLE BAND -->
     <div class="cr-title-band">
-        <h1><i class="fa fa-credit-card" style="color:#a855f7;margin-right:10px;"></i>Sistema de <span>Crédito Directo</span></h1>
+        <h1><i class="fa fa-credit-card" style="color:#a855f7;margin-right:10px;"></i>Sistema de <span>Crédito
+                Directo</span></h1>
         <p>Pre-aprobación automática en minutos · Respuesta garantizada · Sin buró obligatorio</p>
     </div>
 
@@ -313,11 +784,13 @@
 
                 <div class="cr-input-group">
                     <label>Nombres Completos *</label>
-                    <input type="text" class="cr-input" id="inName" placeholder="Ej: María Pérez" oninput="updateView()">
+                    <input type="text" class="cr-input" id="inName" placeholder="Ej: María Pérez"
+                        oninput="updateView()">
                 </div>
                 <div class="cr-input-group">
                     <label>Cédula de Identidad *</label>
-                    <input type="text" class="cr-input" id="inCI" placeholder="0987654321" maxlength="10" oninput="updateView()">
+                    <input type="text" class="cr-input" id="inCI" placeholder="0987654321" maxlength="10"
+                        oninput="updateView()">
                 </div>
                 <div class="cr-input-group">
                     <label>WhatsApp *</label>
@@ -325,13 +798,15 @@
                 </div>
                 <div class="cr-input-group">
                     <label>Lugar de Trabajo / Empresa *</label>
-                    <input type="text" class="cr-input" id="inWork" placeholder="Empresa / Actividad económica" oninput="updateView()">
+                    <input type="text" class="cr-input" id="inWork" placeholder="Empresa / Actividad económica"
+                        oninput="updateView()">
                 </div>
                 <div class="cr-input-group">
                     <label>Ingresos Mensuales (USD) *</label>
                     <div class="cr-input-wrap">
                         <span class="cr-prefix">$</span>
-                        <input type="number" class="cr-input" id="inIncome" min="0" placeholder="500" oninput="updateView()">
+                        <input type="number" class="cr-input" id="inIncome" min="0" placeholder="500"
+                            oninput="updateView()">
                     </div>
                 </div>
                 <div class="cr-input-group">
@@ -366,7 +841,8 @@
                     <label>Entrada / Cuota Inicial * (mín. $88)</label>
                     <div class="cr-input-wrap">
                         <span class="cr-prefix">$</span>
-                        <input type="number" class="cr-input" id="inDown" min="88" placeholder="88" oninput="calculateAll()">
+                        <input type="number" class="cr-input" id="inDown" min="88" placeholder="88"
+                            oninput="calculateAll()">
                     </div>
                 </div>
                 <div class="cr-input-group">
@@ -410,7 +886,8 @@
                 </div>
                 <div class="cr-input-group" style="margin-top:12px;">
                     <label>Observación / Nota Interna</label>
-                    <textarea class="cr-input" id="inNote" rows="2" placeholder="Ej: Pendiente planilla de servicios..." oninput="updateView()" style="resize:vertical;"></textarea>
+                    <textarea class="cr-input" id="inNote" rows="2" placeholder="Ej: Pendiente planilla de servicios..."
+                        oninput="updateView()" style="resize:vertical;"></textarea>
                 </div>
             </div>
 
@@ -493,31 +970,38 @@
                     <div class="section-sub">Análisis Económico</div>
                     <div style="margin-bottom:20px;">
                         <div class="econ-row">
-                            <span class="er-label"><i class="fa fa-dollar-sign" style="width:14px;"></i> Ingresos Mensuales</span>
+                            <span class="er-label"><i class="fa fa-dollar-sign" style="width:14px;"></i> Ingresos
+                                Mensuales</span>
                             <span class="er-value" id="eIncome">$—</span>
                         </div>
                         <div class="econ-row">
-                            <span class="er-label"><i class="fa fa-arrow-down" style="width:14px;"></i> Entrada Inicial</span>
+                            <span class="er-label"><i class="fa fa-arrow-down" style="width:14px;"></i> Entrada
+                                Inicial</span>
                             <span class="er-value" id="eDown">$—</span>
                         </div>
                         <div class="econ-row">
-                            <span class="er-label"><i class="fa fa-coins" style="width:14px;"></i> Monto a Financiar</span>
+                            <span class="er-label"><i class="fa fa-coins" style="width:14px;"></i> Monto a
+                                Financiar</span>
                             <span class="er-value highlight" id="eFinanced" style="color:#a855f7;">$—</span>
                         </div>
                         <div class="econ-row">
-                            <span class="er-label"><i class="fa fa-calendar-check" style="width:14px;"></i> Cuota Mensual (plan seleccionado)</span>
+                            <span class="er-label"><i class="fa fa-calendar-check" style="width:14px;"></i> Cuota
+                                Mensual (plan seleccionado)</span>
                             <span class="er-value" id="eCuota" style="font-size:1.05rem;">$—</span>
                         </div>
                         <div class="econ-row">
-                            <span class="er-label"><i class="fa fa-percent" style="width:14px;"></i> Razón de Endeudamiento</span>
+                            <span class="er-label"><i class="fa fa-percent" style="width:14px;"></i> Razón de
+                                Endeudamiento</span>
                             <span class="er-value" id="eRatio">—</span>
                         </div>
                         <div class="econ-row">
-                            <span class="er-label"><i class="fa fa-hourglass-half" style="width:14px;"></i> Período de Gracia</span>
+                            <span class="er-label"><i class="fa fa-hourglass-half" style="width:14px;"></i> Período de
+                                Gracia</span>
                             <span class="er-value" id="eGrace">0 meses</span>
                         </div>
                         <div class="econ-row">
-                            <span class="er-label"><i class="fa fa-calculator" style="width:14px;"></i> Total a Pagar</span>
+                            <span class="er-label"><i class="fa fa-calculator" style="width:14px;"></i> Total a
+                                Pagar</span>
                             <span class="er-value" id="eTotal" style="font-weight:900;">$—</span>
                         </div>
                     </div>
@@ -567,13 +1051,17 @@
                     </ul>
 
                     <!-- Note display -->
-                    <div id="noteDisplay" style="display:none;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:16px;">
-                        <div style="font-size:.7rem;font-weight:800;color:var(--text-dim);text-transform:uppercase;margin-bottom:4px;">Observación</div>
+                    <div id="noteDisplay"
+                        style="display:none;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:16px;">
+                        <div
+                            style="font-size:.7rem;font-weight:800;color:var(--text-dim);text-transform:uppercase;margin-bottom:4px;">
+                            Observación</div>
                         <div id="noteText" style="font-size:.85rem;color:var(--text);"></div>
                     </div>
 
                     <!-- Footer -->
-                    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--text-dim);">
+                    <div
+                        style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--text-dim);">
                         <span>ecugamingimport.online</span>
                         <span id="certFooterDate"></span>
                     </div>
@@ -595,308 +1083,308 @@
     </div>
 
     <script>
-    // ── STATE ────────────────────────────────────────────────────
-    const PLANS = [
-        { months: 3,  factor: 1.10 },
-        { months: 6,  factor: 1.18 },
-        { months: 9,  factor: 1.22 },
-        { months: 12, factor: 1.25 },
-        { months: 18, factor: 1.35 },
-    ];
+        // ── STATE ────────────────────────────────────────────────────
+        const PLANS = [
+            { months: 3, factor: 1.10 },
+            { months: 6, factor: 1.18 },
+            { months: 9, factor: 1.22 },
+            { months: 12, factor: 1.25 },
+            { months: 18, factor: 1.35 },
+        ];
 
-    let catalogProducts = [];
-    let currentDocStatus = 'Pendiente';
-    let selectedProduct = null;
+        let catalogProducts = [];
+        let currentDocStatus = 'Pendiente';
+        let selectedProduct = null;
 
-    // ── INIT ─────────────────────────────────────────────────────
-    async function init() {
-        updateCertDate();
-        await loadCatalog();
-        calculateAll();
-    }
-
-    function updateCertDate() {
-        const now = new Date();
-        const str = now.toLocaleDateString('es-EC', { day:'2-digit', month:'long', year:'numeric' });
-        document.getElementById('certDate').textContent = 'Fecha: ' + str;
-        document.getElementById('certFooterDate').textContent = str;
-    }
-
-    // ── CATALOG FROM API ──────────────────────────────────────────
-    async function loadCatalog() {
-        // Feature 4: Loading state
-        const sel = document.getElementById('inProduct');
-        sel.innerHTML = '<option value="" disabled selected>⏳ Cargando catálogo...</option>';
-        sel.disabled = true;
-
-        try {
-            const res = await fetch('/api/stock');
-            if (!res.ok) throw new Error();
-            catalogProducts = await res.json();
-        } catch (_) {
-            // Fallback basic catalog
-            catalogProducts = [
-                { id:'fallback1', name:'PlayStation 5 Slim 1TB', category:'Consolas', price:699, image_url:'' },
-                { id:'fallback2', name:'iPhone 16 Pro Max 256GB', category:'iPhone', price:1199, image_url:'' },
-                { id:'fallback3', name:'Nintendo Switch OLED', category:'Consolas', price:349, image_url:'' },
-                { id:'fallback4', name:'Laptop Gamer RTX 4060', category:'Laptops', price:999, image_url:'' },
-                { id:'fallback5', name:'Xbox Series X', category:'Consolas', price:499, image_url:'' },
-            ];
+        // ── INIT ─────────────────────────────────────────────────────
+        async function init() {
+            updateCertDate();
+            await loadCatalog();
+            calculateAll();
         }
 
-        const sel2 = document.getElementById('inProduct');
-        sel2.disabled = false;
-
-        // Feature 4: Empty state if no products
-        if (!catalogProducts || catalogProducts.length === 0) {
-            sel2.innerHTML = '<option value="" disabled selected>⚠ Sin productos disponibles</option>';
-            return;
+        function updateCertDate() {
+            const now = new Date();
+            const str = now.toLocaleDateString('es-EC', { day: '2-digit', month: 'long', year: 'numeric' });
+            document.getElementById('certDate').textContent = 'Fecha: ' + str;
+            document.getElementById('certFooterDate').textContent = str;
         }
 
-        sel2.innerHTML = '<option value="">— Selecciona un producto —</option>';
+        // ── CATALOG FROM API ──────────────────────────────────────────
+        async function loadCatalog() {
+            // Feature 4: Loading state
+            const sel = document.getElementById('inProduct');
+            sel.innerHTML = '<option value="" disabled selected>⏳ Cargando catálogo...</option>';
+            sel.disabled = true;
 
-        // Group by category
-        const groups = {};
-        catalogProducts.forEach(p => {
-            const cat = p.category || 'General';
-            if (!groups[cat]) groups[cat] = [];
-            groups[cat].push(p);
-        });
+            try {
+                const res = await fetch('/api/stock');
+                if (!res.ok) throw new Error();
+                catalogProducts = await res.json();
+            } catch (_) {
+                // Fallback basic catalog
+                catalogProducts = [
+                    { id: 'fallback1', name: 'PlayStation 5 Slim 1TB', category: 'Consolas', price: 699, image_url: '' },
+                    { id: 'fallback2', name: 'iPhone 16 Pro Max 256GB', category: 'iPhone', price: 1199, image_url: '' },
+                    { id: 'fallback3', name: 'Nintendo Switch OLED', category: 'Consolas', price: 349, image_url: '' },
+                    { id: 'fallback4', name: 'Laptop Gamer RTX 4060', category: 'Laptops', price: 999, image_url: '' },
+                    { id: 'fallback5', name: 'Xbox Series X', category: 'Consolas', price: 499, image_url: '' },
+                ];
+            }
 
-        Object.entries(groups).forEach(([cat, items]) => {
-            const og = document.createElement('optgroup');
-            og.label = cat;
-            items.forEach(p => {
-                const op = document.createElement('option');
-                op.value = p.id;
-                op.style.background = '#1c1c1e';
-                op.style.color = '#f5f5f7';
-                op.textContent = `${p.name} — $${Number(p.price).toFixed(2)}`;
-                og.appendChild(op);
+            const sel2 = document.getElementById('inProduct');
+            sel2.disabled = false;
+
+            // Feature 4: Empty state if no products
+            if (!catalogProducts || catalogProducts.length === 0) {
+                sel2.innerHTML = '<option value="" disabled selected>⚠ Sin productos disponibles</option>';
+                return;
+            }
+
+            sel2.innerHTML = '<option value="">— Selecciona un producto —</option>';
+
+            // Group by category
+            const groups = {};
+            catalogProducts.forEach(p => {
+                const cat = p.category || 'General';
+                if (!groups[cat]) groups[cat] = [];
+                groups[cat].push(p);
             });
-            sel2.appendChild(og);
-        });
-    }
 
-    function loadProductPrice() {
-        const id = document.getElementById('inProduct').value;
-        selectedProduct = catalogProducts.find(p => p.id === id) || null;
-        if (selectedProduct) {
-            const price = selectedProduct.sale_price ?? selectedProduct.price;
-            document.getElementById('inPrice').value = Number(price).toFixed(2);
-            // Suggest minimum down payment (25% or $88, whichever is higher)
-            const suggested = Math.max(88, Math.round(price * 0.25));
-            document.getElementById('inDown').value = suggested;
-
-            // Update product highlight
-            document.getElementById('certProductName').textContent = selectedProduct.name;
-            document.getElementById('certProductCat').textContent = selectedProduct.category || '';
-            document.getElementById('certProductPrice').textContent = '$' + Number(price).toFixed(2);
-            const img = document.getElementById('certProductImg');
-            if (selectedProduct.image_url) { img.src = selectedProduct.image_url; img.style.display = 'block'; }
-            else img.style.display = 'none';
-        }
-        calculateAll();
-    }
-
-    // ── CALCULATIONS ──────────────────────────────────────────────
-    function calculateAll() {
-        const price  = parseFloat(document.getElementById('inPrice').value) || 0;
-        const down   = parseFloat(document.getElementById('inDown').value) || 0;
-        const months = parseInt(document.getElementById('inPlan').value) || 12;
-        const income = parseFloat(document.getElementById('inIncome').value) || 0;
-        const grace  = parseInt(document.getElementById('inGrace').value) || 0;
-
-        const financed = Math.max(0, price - down);
-        const plan = PLANS.find(p => p.months === months) || PLANS[3];
-        const totalPay = financed * plan.factor;
-        const cuota = months > 0 ? totalPay / months : 0;
-        const ratio = income > 0 ? (cuota / income) * 100 : 0;
-
-        // Economic analysis panel
-        document.getElementById('eIncome').textContent = income > 0 ? `$${income.toFixed(2)}` : '—';
-        document.getElementById('eDown').textContent = down > 0 ? `$${down.toFixed(2)}` : '—';
-        document.getElementById('eFinanced').textContent = financed > 0 ? `$${financed.toFixed(2)}` : '—';
-        document.getElementById('eCuota').textContent = cuota > 0 ? `$${cuota.toFixed(2)}/mes` : '—';
-        document.getElementById('eTotal').textContent = (totalPay + down) > 0 ? `$${(totalPay + down).toFixed(2)}` : '—';
-        document.getElementById('eGrace').textContent = grace === 0 ? 'Sin gracia' : `${grace} mes${grace > 1 ? 'es' : ''}`;
-
-        const ratioEl = document.getElementById('eRatio');
-        if (ratio > 0) {
-            const cls = ratio <= 30 ? 'good' : ratio <= 45 ? 'warn' : 'bad';
-            ratioEl.className = `er-value ${cls}`;
-            const label = ratio <= 30 ? '✓ Excelente' : ratio <= 45 ? '⚠ Aceptable' : '✗ Alto';
-            ratioEl.textContent = `${ratio.toFixed(1)}% — ${label}`;
-        } else {
-            ratioEl.className = 'er-value';
-            ratioEl.textContent = '—';
+            Object.entries(groups).forEach(([cat, items]) => {
+                const og = document.createElement('optgroup');
+                og.label = cat;
+                items.forEach(p => {
+                    const op = document.createElement('option');
+                    op.value = p.id;
+                    op.style.background = '#1c1c1e';
+                    op.style.color = '#f5f5f7';
+                    op.textContent = `${p.name} — $${Number(p.price).toFixed(2)}`;
+                    og.appendChild(op);
+                });
+                sel2.appendChild(og);
+            });
         }
 
-        // Plans table
-        buildPlansTable(financed, months);
+        function loadProductPrice() {
+            const id = document.getElementById('inProduct').value;
+            selectedProduct = catalogProducts.find(p => p.id === id) || null;
+            if (selectedProduct) {
+                const price = selectedProduct.sale_price ?? selectedProduct.price;
+                document.getElementById('inPrice').value = Number(price).toFixed(2);
+                // Suggest minimum down payment (25% or $88, whichever is higher)
+                const suggested = Math.max(88, Math.round(price * 0.25));
+                document.getElementById('inDown').value = suggested;
 
-        // Amortization table
-        buildAmortTable(financed, plan, months, grace);
+                // Update product highlight
+                document.getElementById('certProductName').textContent = selectedProduct.name;
+                document.getElementById('certProductCat').textContent = selectedProduct.category || '';
+                document.getElementById('certProductPrice').textContent = '$' + Number(price).toFixed(2);
+                const img = document.getElementById('certProductImg');
+                if (selectedProduct.image_url) { img.src = selectedProduct.image_url; img.style.display = 'block'; }
+                else img.style.display = 'none';
+            }
+            calculateAll();
+        }
 
-        updateView();
-    }
+        // ── CALCULATIONS ──────────────────────────────────────────────
+        function calculateAll() {
+            const price = parseFloat(document.getElementById('inPrice').value) || 0;
+            const down = parseFloat(document.getElementById('inDown').value) || 0;
+            const months = parseInt(document.getElementById('inPlan').value) || 12;
+            const income = parseFloat(document.getElementById('inIncome').value) || 0;
+            const grace = parseInt(document.getElementById('inGrace').value) || 0;
 
-    function buildPlansTable(financed, selectedMonths) {
-        const tbody = document.getElementById('plansTbody');
-        tbody.innerHTML = '';
-        // Feature 4: Empty state when no amount entered
-        if (financed <= 0) {
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1.5rem; color:var(--text-dim); font-size:.82rem;">
+            const financed = Math.max(0, price - down);
+            const plan = PLANS.find(p => p.months === months) || PLANS[3];
+            const totalPay = financed * plan.factor;
+            const cuota = months > 0 ? totalPay / months : 0;
+            const ratio = income > 0 ? (cuota / income) * 100 : 0;
+
+            // Economic analysis panel
+            document.getElementById('eIncome').textContent = income > 0 ? `$${income.toFixed(2)}` : '—';
+            document.getElementById('eDown').textContent = down > 0 ? `$${down.toFixed(2)}` : '—';
+            document.getElementById('eFinanced').textContent = financed > 0 ? `$${financed.toFixed(2)}` : '—';
+            document.getElementById('eCuota').textContent = cuota > 0 ? `$${cuota.toFixed(2)}/mes` : '—';
+            document.getElementById('eTotal').textContent = (totalPay + down) > 0 ? `$${(totalPay + down).toFixed(2)}` : '—';
+            document.getElementById('eGrace').textContent = grace === 0 ? 'Sin gracia' : `${grace} mes${grace > 1 ? 'es' : ''}`;
+
+            const ratioEl = document.getElementById('eRatio');
+            if (ratio > 0) {
+                const cls = ratio <= 30 ? 'good' : ratio <= 45 ? 'warn' : 'bad';
+                ratioEl.className = `er-value ${cls}`;
+                const label = ratio <= 30 ? '✓ Excelente' : ratio <= 45 ? '⚠ Aceptable' : '✗ Alto';
+                ratioEl.textContent = `${ratio.toFixed(1)}% — ${label}`;
+            } else {
+                ratioEl.className = 'er-value';
+                ratioEl.textContent = '—';
+            }
+
+            // Plans table
+            buildPlansTable(financed, months);
+
+            // Amortization table
+            buildAmortTable(financed, plan, months, grace);
+
+            updateView();
+        }
+
+        function buildPlansTable(financed, selectedMonths) {
+            const tbody = document.getElementById('plansTbody');
+            tbody.innerHTML = '';
+            // Feature 4: Empty state when no amount entered
+            if (financed <= 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1.5rem; color:var(--text-dim); font-size:.82rem;">
                 <i class="fa fa-calculator" style="font-size:1.5rem; display:block; margin-bottom:.5rem; opacity:.4;"></i>
                 Ingresa el precio del producto y la entrada para ver los planes disponibles
             </td></tr>`;
-            return;
-        }
-        PLANS.forEach(p => {
-            const total = financed * p.factor;
-            const cuota = total / p.months;
-            const cost  = total - financed;
-            const tr = document.createElement('tr');
-            if (p.months === selectedMonths) tr.className = 'selected-plan';
-            tr.innerHTML = `
+                return;
+            }
+            PLANS.forEach(p => {
+                const total = financed * p.factor;
+                const cuota = total / p.months;
+                const cost = total - financed;
+                const tr = document.createElement('tr');
+                if (p.months === selectedMonths) tr.className = 'selected-plan';
+                tr.innerHTML = `
                 <td><strong>${p.months} meses</strong>${p.months === selectedMonths ? ' <span style="color:#a855f7;font-size:.7rem;">▶ actual</span>' : ''}</td>
                 <td style="color:var(--text-dim);">x${p.factor.toFixed(2)}</td>
                 <td><span class="plan-cuota">$${financed > 0 ? cuota.toFixed(2) : '—'}</span><br><span class="plan-total">/mes</span></td>
                 <td>$${financed > 0 ? total.toFixed(2) : '—'}</td>
                 <td style="color:#f59e0b;">$${financed > 0 ? cost.toFixed(2) : '—'}</td>`;
-            tbody.appendChild(tr);
-        });
-    }
+                tbody.appendChild(tr);
+            });
+        }
 
-    function buildAmortTable(financed, plan, months, grace) {
-        const tbody = document.getElementById('amortTbody');
-        tbody.innerHTML = '';
-        if (financed <= 0 || months <= 0) {
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1rem; color:var(--text-dim); font-size:.78rem; opacity:.6;">
+        function buildAmortTable(financed, plan, months, grace) {
+            const tbody = document.getElementById('amortTbody');
+            tbody.innerHTML = '';
+            if (financed <= 0 || months <= 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:1rem; color:var(--text-dim); font-size:.78rem; opacity:.6;">
                 Tabla de amortización aparecerá aquí
             </td></tr>`;
-            return;
+                return;
+            }
+
+            const totalPay = financed * plan.factor;
+            const cuota = totalPay / months;
+            // Simple declining balance with monthly rate implied by the factor
+            const monthlyRate = Math.pow(plan.factor, 1 / months) - 1;
+
+            let balance = financed;
+            let totalInterest = 0;
+            let totalCapital = 0;
+
+            // Grace period rows
+            for (let g = 1; g <= grace; g++) {
+                const interest = balance * monthlyRate;
+                balance += interest;
+                const tr = document.createElement('tr');
+                tr.style.opacity = '.6';
+                tr.innerHTML = `<td>Gracia ${g}</td><td style="color:#f59e0b;">—</td><td>$${interest.toFixed(2)}</td><td>$0.00</td><td>$${balance.toFixed(2)}</td>`;
+                tbody.appendChild(tr);
+            }
+
+            // Payment rows
+            const adjustedCuota = balance > 0 ? (balance * plan.factor) / months : cuota;
+            for (let m = 1; m <= months; m++) {
+                const interest = balance * monthlyRate;
+                const capital = adjustedCuota - interest;
+                balance = Math.max(0, balance - capital);
+                totalInterest += interest;
+                totalCapital += capital;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>Mes ${m + grace}</td><td>$${adjustedCuota.toFixed(2)}</td><td>$${interest.toFixed(2)}</td><td>$${capital.toFixed(2)}</td><td>$${balance.toFixed(2)}</td>`;
+                tbody.appendChild(tr);
+            }
+
+            // Totals row
+            const trTotal = document.createElement('tr');
+            trTotal.innerHTML = `<td>TOTAL</td><td>$${(adjustedCuota * months).toFixed(2)}</td><td>$${totalInterest.toFixed(2)}</td><td>$${totalCapital.toFixed(2)}</td><td>$0.00</td>`;
+            tbody.appendChild(trTotal);
         }
 
-        const totalPay = financed * plan.factor;
-        const cuota = totalPay / months;
-        // Simple declining balance with monthly rate implied by the factor
-        const monthlyRate = Math.pow(plan.factor, 1 / months) - 1;
+        // ── UI UPDATE ─────────────────────────────────────────────────
+        function updateView() {
+            document.getElementById('certName').textContent = document.getElementById('inName').value || '—';
+            document.getElementById('certCI').textContent = document.getElementById('inCI').value || '—';
+            document.getElementById('certPhone').textContent = document.getElementById('inPhone').value || '—';
+            document.getElementById('certRole').textContent = document.getElementById('inRole').value;
 
-        let balance = financed;
-        let totalInterest = 0;
-        let totalCapital = 0;
-
-        // Grace period rows
-        for (let g = 1; g <= grace; g++) {
-            const interest = balance * monthlyRate;
-            balance += interest;
-            const tr = document.createElement('tr');
-            tr.style.opacity = '.6';
-            tr.innerHTML = `<td>Gracia ${g}</td><td style="color:#f59e0b;">—</td><td>$${interest.toFixed(2)}</td><td>$0.00</td><td>$${balance.toFixed(2)}</td>`;
-            tbody.appendChild(tr);
+            const note = document.getElementById('inNote').value.trim();
+            const noteDisplay = document.getElementById('noteDisplay');
+            if (note) { noteDisplay.style.display = 'block'; document.getElementById('noteText').textContent = note; }
+            else { noteDisplay.style.display = 'none'; }
         }
 
-        // Payment rows
-        const adjustedCuota = balance > 0 ? (balance * plan.factor) / months : cuota;
-        for (let m = 1; m <= months; m++) {
-            const interest = balance * monthlyRate;
-            const capital  = adjustedCuota - interest;
-            balance = Math.max(0, balance - capital);
-            totalInterest += interest;
-            totalCapital  += capital;
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td>Mes ${m + grace}</td><td>$${adjustedCuota.toFixed(2)}</td><td>$${interest.toFixed(2)}</td><td>$${capital.toFixed(2)}</td><td>$${balance.toFixed(2)}</td>`;
-            tbody.appendChild(tr);
+        function updateGrace() {
+            const g = document.getElementById('inGrace').value;
+            document.getElementById('graceLabel').textContent = g === '0' ? '0 meses' : `${g} mes${g > 1 ? 'es' : ''}`;
+            calculateAll();
         }
 
-        // Totals row
-        const trTotal = document.createElement('tr');
-        trTotal.innerHTML = `<td>TOTAL</td><td>$${(adjustedCuota * months).toFixed(2)}</td><td>$${totalInterest.toFixed(2)}</td><td>$${totalCapital.toFixed(2)}</td><td>$0.00</td>`;
-        tbody.appendChild(trTotal);
-    }
+        function setDocStatus(btn) {
+            document.querySelectorAll('.doc-status-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentDocStatus = btn.dataset.status;
+            updateDocBadge();
+        }
 
-    // ── UI UPDATE ─────────────────────────────────────────────────
-    function updateView() {
-        document.getElementById('certName').textContent  = document.getElementById('inName').value  || '—';
-        document.getElementById('certCI').textContent    = document.getElementById('inCI').value    || '—';
-        document.getElementById('certPhone').textContent = document.getElementById('inPhone').value || '—';
-        document.getElementById('certRole').textContent  = document.getElementById('inRole').value;
+        function updateDocBadge() {
+            const badge = document.getElementById('certBadge');
+            const map = {
+                'Pendiente': { bg: 'rgba(245,158,11,.15)', border: '#f59e0b', color: '#f59e0b', icon: '🟡' },
+                'En Revisión': { bg: 'rgba(59,130,246,.15)', border: '#3b82f6', color: '#3b82f6', icon: '🔵' },
+                'Aprobado': { bg: 'rgba(34,197,94,.15)', border: '#22c55e', color: '#22c55e', icon: '🟢' },
+                'Rechazado': { bg: 'rgba(239,68,68,.15)', border: '#ef4444', color: '#ef4444', icon: '🔴' },
+            };
+            const s = map[currentDocStatus] || map['Pendiente'];
+            badge.style.background = s.bg;
+            badge.style.border = `1px solid ${s.border}`;
+            badge.style.color = s.color;
+            badge.textContent = `${s.icon} ${currentDocStatus}`;
+        }
 
-        const note = document.getElementById('inNote').value.trim();
-        const noteDisplay = document.getElementById('noteDisplay');
-        if (note) { noteDisplay.style.display = 'block'; document.getElementById('noteText').textContent = note; }
-        else { noteDisplay.style.display = 'none'; }
-    }
+        // ── RESET ─────────────────────────────────────────────────────
+        function resetForm() {
+            if (!confirm('¿Limpiar todos los datos e iniciar una nueva consulta?')) return;
+            ['inName', 'inCI', 'inPhone', 'inWork', 'inIncome', 'inNote'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('inProduct').value = '';
+            document.getElementById('inPrice').value = '';
+            document.getElementById('inDown').value = '';
+            document.getElementById('inPlan').value = '12';
+            document.getElementById('inGrace').value = '0';
+            document.getElementById('inRole').value = 'Solicitante Principal';
+            selectedProduct = null;
+            document.getElementById('graceLabel').textContent = '0 meses';
+            document.getElementById('certProductName').textContent = 'Selecciona un producto';
+            document.getElementById('certProductCat').textContent = '—';
+            document.getElementById('certProductPrice').textContent = '$0.00';
+            document.getElementById('certProductImg').style.display = 'none';
+            // Reset status
+            document.querySelectorAll('.doc-status-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.doc-status-btn.pending').classList.add('active');
+            currentDocStatus = 'Pendiente';
+            updateDocBadge();
+            calculateAll();
+        }
 
-    function updateGrace() {
-        const g = document.getElementById('inGrace').value;
-        document.getElementById('graceLabel').textContent = g === '0' ? '0 meses' : `${g} mes${g > 1 ? 'es' : ''}`;
-        calculateAll();
-    }
+        // ── WHATSAPP SUBMISSION ──────────────────────────────────────
+        function sendWhatsApp() {
+            const name = document.getElementById('inName').value.trim();
+            const ci = document.getElementById('inCI').value.trim();
+            const phone = document.getElementById('inPhone').value.trim();
+            const work = document.getElementById('inWork').value.trim();
+            const income = document.getElementById('inIncome').value;
+            const price = document.getElementById('inPrice').value;
+            const down = document.getElementById('inDown').value;
+            const plan = document.getElementById('inPlan').value;
+            const pName = selectedProduct ? selectedProduct.name : document.getElementById('inProduct').options[document.getElementById('inProduct').selectedIndex]?.text || '—';
 
-    function setDocStatus(btn) {
-        document.querySelectorAll('.doc-status-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentDocStatus = btn.dataset.status;
-        updateDocBadge();
-    }
+            if (!name || !ci || !phone) { alert('Completa nombre, cédula y WhatsApp antes de enviar.'); return; }
 
-    function updateDocBadge() {
-        const badge = document.getElementById('certBadge');
-        const map = {
-            'Pendiente':   { bg:'rgba(245,158,11,.15)', border:'#f59e0b', color:'#f59e0b', icon:'🟡' },
-            'En Revisión': { bg:'rgba(59,130,246,.15)', border:'#3b82f6', color:'#3b82f6', icon:'🔵' },
-            'Aprobado':    { bg:'rgba(34,197,94,.15)',  border:'#22c55e', color:'#22c55e', icon:'🟢' },
-            'Rechazado':   { bg:'rgba(239,68,68,.15)',  border:'#ef4444', color:'#ef4444', icon:'🔴' },
-        };
-        const s = map[currentDocStatus] || map['Pendiente'];
-        badge.style.background = s.bg;
-        badge.style.border = `1px solid ${s.border}`;
-        badge.style.color = s.color;
-        badge.textContent = `${s.icon} ${currentDocStatus}`;
-    }
-
-    // ── RESET ─────────────────────────────────────────────────────
-    function resetForm() {
-        if (!confirm('¿Limpiar todos los datos e iniciar una nueva consulta?')) return;
-        ['inName','inCI','inPhone','inWork','inIncome','inNote'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('inProduct').value = '';
-        document.getElementById('inPrice').value = '';
-        document.getElementById('inDown').value = '';
-        document.getElementById('inPlan').value = '12';
-        document.getElementById('inGrace').value = '0';
-        document.getElementById('inRole').value = 'Solicitante Principal';
-        selectedProduct = null;
-        document.getElementById('graceLabel').textContent = '0 meses';
-        document.getElementById('certProductName').textContent = 'Selecciona un producto';
-        document.getElementById('certProductCat').textContent = '—';
-        document.getElementById('certProductPrice').textContent = '$0.00';
-        document.getElementById('certProductImg').style.display = 'none';
-        // Reset status
-        document.querySelectorAll('.doc-status-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('.doc-status-btn.pending').classList.add('active');
-        currentDocStatus = 'Pendiente';
-        updateDocBadge();
-        calculateAll();
-    }
-
-    // ── WHATSAPP SUBMISSION ──────────────────────────────────────
-    function sendWhatsApp() {
-        const name  = document.getElementById('inName').value.trim();
-        const ci    = document.getElementById('inCI').value.trim();
-        const phone = document.getElementById('inPhone').value.trim();
-        const work  = document.getElementById('inWork').value.trim();
-        const income = document.getElementById('inIncome').value;
-        const price  = document.getElementById('inPrice').value;
-        const down   = document.getElementById('inDown').value;
-        const plan   = document.getElementById('inPlan').value;
-        const pName  = selectedProduct ? selectedProduct.name : document.getElementById('inProduct').options[document.getElementById('inProduct').selectedIndex]?.text || '—';
-
-        if (!name || !ci || !phone) { alert('Completa nombre, cédula y WhatsApp antes de enviar.'); return; }
-
-        const msg = encodeURIComponent(
-`🎮 *SOLICITUD DE CRÉDITO DIRECTO — Ecugaming Import*
+            const msg = encodeURIComponent(
+                `🎮 *SOLICITUD DE CRÉDITO DIRECTO — Ecugaming Import*
 
 👤 *Solicitante:* ${name}
 🪪 *Cédula:* ${ci}
@@ -912,42 +1400,42 @@
 📝 *Estado:* ${currentDocStatus}
 
 Por favor confirmar disponibilidad y condiciones. Gracias.`
-        );
-        window.open(`https://wa.me/593962609951?text=${msg}`, '_blank');
+            );
+            window.open(`https://wa.me/593962609951?text=${msg}`, '_blank');
 
-        // Also send to backend/n8n silently
-        fetch('/api/credit-check', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                tipo: 'SOLICITUD_CREDITO_DIRECTO',
-                solicitante: { nombres: name, cedula: ci, whatsapp: phone, lugar_trabajo: work },
-                economia: { producto: pName, precio: parseFloat(price||0), entrada_ofrecida: parseFloat(down||0), ingresos_mensuales: parseFloat(income||0), plan_meses: parseInt(plan) },
-                estado_documentos: currentDocStatus,
-                fechaRegistro: new Date().toISOString()
-            })
-        }).catch(() => {});
-    }
+            // Also send to backend/n8n silently
+            fetch('/api/credit-check', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    tipo: 'SOLICITUD_CREDITO_DIRECTO',
+                    solicitante: { nombres: name, cedula: ci, whatsapp: phone, lugar_trabajo: work },
+                    economia: { producto: pName, precio: parseFloat(price || 0), entrada_ofrecida: parseFloat(down || 0), ingresos_mensuales: parseFloat(income || 0), plan_meses: parseInt(plan) },
+                    estado_documentos: currentDocStatus,
+                    fechaRegistro: new Date().toISOString()
+                })
+            }).catch(() => { });
+        }
 
-    // ── PRINT SIMULATION (Feature 2) ─────────────────────────────
-    function printSimulation() {
-        window.print();
-    }
+        // ── PRINT SIMULATION (Feature 2) ─────────────────────────────
+        function printSimulation() {
+            window.print();
+        }
 
-    // ── WHATSAPP SHARE SIMULATION (Feature 3) ────────────────────
-    function shareSimulationWhatsApp() {
-        const price  = parseFloat(document.getElementById('inPrice').value) || 0;
-        const down   = parseFloat(document.getElementById('inDown').value) || 0;
-        const plan   = document.getElementById('inPlan').value;
-        const pName  = selectedProduct ? selectedProduct.name
-            : (document.getElementById('inProduct').options[document.getElementById('inProduct').selectedIndex]?.text || '—');
-        const financed = Math.max(0, price - down);
-        const planObj  = PLANS.find(p => p.months === parseInt(plan)) || PLANS[3];
-        const totalPay = financed * planObj.factor;
-        const cuota    = plan > 0 ? (totalPay / parseInt(plan)) : 0;
+        // ── WHATSAPP SHARE SIMULATION (Feature 3) ────────────────────
+        function shareSimulationWhatsApp() {
+            const price = parseFloat(document.getElementById('inPrice').value) || 0;
+            const down = parseFloat(document.getElementById('inDown').value) || 0;
+            const plan = document.getElementById('inPlan').value;
+            const pName = selectedProduct ? selectedProduct.name
+                : (document.getElementById('inProduct').options[document.getElementById('inProduct').selectedIndex]?.text || '—');
+            const financed = Math.max(0, price - down);
+            const planObj = PLANS.find(p => p.months === parseInt(plan)) || PLANS[3];
+            const totalPay = financed * planObj.factor;
+            const cuota = plan > 0 ? (totalPay / parseInt(plan)) : 0;
 
-        const msg = encodeURIComponent(
-`🎮 *SIMULACIÓN DE CRÉDITO — Ecugaming Import*
+            const msg = encodeURIComponent(
+                `🎮 *SIMULACIÓN DE CRÉDITO — Ecugaming Import*
 
 🛒 *Producto:* ${pName}
 💵 *Precio:* $${price.toFixed(2)}
@@ -958,218 +1446,219 @@ Por favor confirmar disponibilidad y condiciones. Gracias.`
 📊 *Total a pagar:* $${(totalPay + down).toFixed(2)}
 
 ¿Te interesa solicitar este crédito? Escríbenos para más información.`
-        );
-        window.open(`https://wa.me/593962609951?text=${msg}`, '_blank');
-    }
-
-    // ── PDF GENERATION ───────────────────────────────────────────
-    function generatePDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-
-        const name   = document.getElementById('inName').value  || 'No indicado';
-        const ci     = document.getElementById('inCI').value    || 'No indicado';
-        const phone  = document.getElementById('inPhone').value || 'No indicado';
-        const work   = document.getElementById('inWork').value  || 'No indicado';
-        const income = parseFloat(document.getElementById('inIncome').value) || 0;
-        const price  = parseFloat(document.getElementById('inPrice').value) || 0;
-        const down   = parseFloat(document.getElementById('inDown').value) || 0;
-        const months = parseInt(document.getElementById('inPlan').value) || 12;
-        const grace  = parseInt(document.getElementById('inGrace').value) || 0;
-        const pName  = selectedProduct ? selectedProduct.name : '—';
-        const pCat   = selectedProduct ? (selectedProduct.category || '') : '';
-        const note   = document.getElementById('inNote').value.trim();
-
-        const financed = Math.max(0, price - down);
-        const plan = PLANS.find(p => p.months === months) || PLANS[3];
-        const totalPay = financed * plan.factor;
-        const cuota = months > 0 ? totalPay / months : 0;
-        const ratio = income > 0 ? ((cuota / income) * 100).toFixed(1) : '—';
-
-        const now = new Date();
-        const dateStr = now.toLocaleDateString('es-EC', { day:'2-digit', month:'long', year:'numeric' });
-
-        // PAGE 1: Certificate
-        // Header gradient band (simulated with colored rect)
-        doc.setFillColor(26, 26, 46);
-        doc.rect(0, 0, 210, 45, 'F');
-
-        doc.setFillColor(108, 99, 255);
-        doc.rect(0, 0, 105, 45, 'F');
-        doc.setFillColor(168, 85, 247);
-        doc.rect(105, 0, 105, 45, 'F');
-
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Ecugaming Import', 14, 20);
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'normal');
-        doc.text('Pre-Aprobación de Crédito Directo', 14, 28);
-        doc.text('ecugamingimport.online', 14, 35);
-        doc.setFontSize(9);
-        doc.text(`Fecha: ${dateStr}`, 14, 42);
-
-        // Status badge area
-        const statusColors = {
-            'Pendiente':   [245,158,11],
-            'En Revisión': [59,130,246],
-            'Aprobado':    [34,197,94],
-            'Rechazado':   [239,68,68],
-        };
-        const [r,g,b] = statusColors[currentDocStatus] || [245,158,11];
-        doc.setFillColor(r,g,b);
-        doc.roundedRect(140, 12, 56, 12, 6, 6, 'F');
-        doc.setTextColor(255,255,255);
-        doc.setFontSize(9);
-        doc.setFont('helvetica', 'bold');
-        doc.text(currentDocStatus, 168, 20, { align: 'center' });
-
-        // Client data table
-        doc.setTextColor(30,30,50);
-        doc.autoTable({
-            startY: 52,
-            head: [['Datos del Solicitante', '']],
-            body: [
-                ['Nombre Completo', name],
-                ['Cédula / CI', ci],
-                ['WhatsApp', phone],
-                ['Lugar de Trabajo', work],
-                ['Ingresos Mensuales', `$${income.toFixed(2)}`],
-                ['Rol', document.getElementById('inRole').value],
-            ],
-            theme: 'grid',
-            headStyles: { fillColor: [108,99,255], textColor: 255, fontStyle: 'bold', fontSize: 9 },
-            styles: { fontSize: 9, cellPadding: 3 },
-            columnStyles: { 0: { fontStyle: 'bold', cellWidth: 65 } },
-        });
-
-        // Product + financial summary table
-        doc.autoTable({
-            startY: doc.lastAutoTable.finalY + 8,
-            head: [['Producto y Financiamiento', '']],
-            body: [
-                ['Producto', pName],
-                ['Categoría', pCat],
-                ['Precio de Venta', `$${price.toFixed(2)}`],
-                ['Cuota de Entrada', `$${down.toFixed(2)}`],
-                ['Monto a Financiar', `$${financed.toFixed(2)}`],
-                ['Plan Seleccionado', `${months} meses (factor x${plan.factor.toFixed(2)})`],
-                ['Período de Gracia', grace === 0 ? 'Sin gracia' : `${grace} mes(es)`],
-                ['Cuota Mensual', `$${cuota.toFixed(2)}`],
-                ['Total a Pagar', `$${(totalPay + down).toFixed(2)}`],
-                ['Costo Financiero Total', `$${(totalPay - financed).toFixed(2)}`],
-                ['Razón de Endeudamiento', income > 0 ? `${ratio}%` : 'No calculable'],
-            ],
-            theme: 'grid',
-            headStyles: { fillColor: [168,85,247], textColor: 255, fontStyle: 'bold', fontSize: 9 },
-            styles: { fontSize: 9, cellPadding: 3 },
-            columnStyles: { 0: { fontStyle: 'bold', cellWidth: 65 } },
-        });
-
-        if (note) {
-            doc.autoTable({
-                startY: doc.lastAutoTable.finalY + 6,
-                head: [['Observación / Nota Interna']],
-                body: [[note]],
-                theme: 'grid',
-                headStyles: { fillColor: [60,60,80], textColor: 255, fontSize: 9 },
-                styles: { fontSize: 9, cellPadding: 3 },
-            });
+            );
+            window.open(`https://wa.me/593962609951?text=${msg}`, '_blank');
         }
 
-        // All plans table
-        doc.autoTable({
-            startY: doc.lastAutoTable.finalY + 8,
-            head: [['Plazo', 'Factor', 'Cuota/mes', 'Total a Pagar', 'Costo Fin.']],
-            body: PLANS.map(p => {
-                const tot = financed * p.factor;
-                const c   = tot / p.months;
-                const selected = p.months === months;
-                return [
-                    (selected ? '▶ ' : '') + `${p.months} meses`,
-                    `x${p.factor.toFixed(2)}`,
-                    financed > 0 ? `$${c.toFixed(2)}` : '—',
-                    financed > 0 ? `$${tot.toFixed(2)}` : '—',
-                    financed > 0 ? `$${(tot - financed).toFixed(2)}` : '—',
-                ];
-            }),
-            theme: 'grid',
-            headStyles: { fillColor: [30,30,50], textColor: 255, fontStyle: 'bold', fontSize: 8 },
-            styles: { fontSize: 8, cellPadding: 3 },
-            didParseCell(data) {
-                if (data.section === 'body' && data.row.index === PLANS.findIndex(p => p.months === months)) {
-                    data.cell.styles.fillColor = [168,85,247,30];
-                    data.cell.styles.fontStyle = 'bold';
-                }
-            }
-        });
+        // ── PDF GENERATION ───────────────────────────────────────────
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
 
-        // PAGE 2: Amortization
-        if (financed > 0) {
-            doc.addPage();
+            const name = document.getElementById('inName').value || 'No indicado';
+            const ci = document.getElementById('inCI').value || 'No indicado';
+            const phone = document.getElementById('inPhone').value || 'No indicado';
+            const work = document.getElementById('inWork').value || 'No indicado';
+            const income = parseFloat(document.getElementById('inIncome').value) || 0;
+            const price = parseFloat(document.getElementById('inPrice').value) || 0;
+            const down = parseFloat(document.getElementById('inDown').value) || 0;
+            const months = parseInt(document.getElementById('inPlan').value) || 12;
+            const grace = parseInt(document.getElementById('inGrace').value) || 0;
+            const pName = selectedProduct ? selectedProduct.name : '—';
+            const pCat = selectedProduct ? (selectedProduct.category || '') : '';
+            const note = document.getElementById('inNote').value.trim();
+
+            const financed = Math.max(0, price - down);
+            const plan = PLANS.find(p => p.months === months) || PLANS[3];
+            const totalPay = financed * plan.factor;
+            const cuota = months > 0 ? totalPay / months : 0;
+            const ratio = income > 0 ? ((cuota / income) * 100).toFixed(1) : '—';
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('es-EC', { day: '2-digit', month: 'long', year: 'numeric' });
+
+            // PAGE 1: Certificate
+            // Header gradient band (simulated with colored rect)
             doc.setFillColor(26, 26, 46);
-            doc.rect(0, 0, 210, 24, 'F');
-            doc.setTextColor(255,255,255);
-            doc.setFontSize(13);
+            doc.rect(0, 0, 210, 45, 'F');
+
+            doc.setFillColor(108, 99, 255);
+            doc.rect(0, 0, 105, 45, 'F');
+            doc.setFillColor(168, 85, 247);
+            doc.rect(105, 0, 105, 45, 'F');
+
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(18);
             doc.setFont('helvetica', 'bold');
-            doc.text('Tabla de Amortización', 14, 16);
+            doc.text('Ecugaming Import', 14, 20);
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            doc.text('Pre-Aprobación de Crédito Directo', 14, 28);
+            doc.text('ecugamingimport.online', 14, 35);
+            doc.setFontSize(9);
+            doc.text(`Fecha: ${dateStr}`, 14, 42);
 
-            const monthlyRate = Math.pow(plan.factor, 1 / months) - 1;
-            let balance = financed;
-            const amortRows = [];
+            // Status badge area
+            const statusColors = {
+                'Pendiente': [245, 158, 11],
+                'En Revisión': [59, 130, 246],
+                'Aprobado': [34, 197, 94],
+                'Rechazado': [239, 68, 68],
+            };
+            const [r, g, b] = statusColors[currentDocStatus] || [245, 158, 11];
+            doc.setFillColor(r, g, b);
+            doc.roundedRect(140, 12, 56, 12, 6, 6, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(9);
+            doc.setFont('helvetica', 'bold');
+            doc.text(currentDocStatus, 168, 20, { align: 'center' });
 
-            for (let g = 1; g <= grace; g++) {
-                const interest = balance * monthlyRate;
-                balance += interest;
-                amortRows.push([`Gracia ${g}`, '—', `$${interest.toFixed(2)}`, '$0.00', `$${balance.toFixed(2)}`]);
-            }
-
-            const adjCuota = balance > 0 ? (balance * plan.factor) / months : cuota;
-            let totInt = 0, totCap = 0;
-            for (let m = 1; m <= months; m++) {
-                const interest = balance * monthlyRate;
-                const capital  = adjCuota - interest;
-                balance = Math.max(0, balance - capital);
-                totInt += interest; totCap += capital;
-                amortRows.push([`Mes ${m + grace}`, `$${adjCuota.toFixed(2)}`, `$${interest.toFixed(2)}`, `$${capital.toFixed(2)}`, `$${balance.toFixed(2)}`]);
-            }
-            amortRows.push(['TOTAL', `$${(adjCuota * months).toFixed(2)}`, `$${totInt.toFixed(2)}`, `$${totCap.toFixed(2)}`, '$0.00']);
-
+            // Client data table
+            doc.setTextColor(30, 30, 50);
             doc.autoTable({
-                startY: 32,
-                head: [['Período', 'Cuota', 'Interés', 'Capital', 'Saldo']],
-                body: amortRows,
-                theme: 'striped',
-                headStyles: { fillColor: [168,85,247], textColor: 255, fontStyle: 'bold', fontSize: 9 },
+                startY: 52,
+                head: [['Datos del Solicitante', '']],
+                body: [
+                    ['Nombre Completo', name],
+                    ['Cédula / CI', ci],
+                    ['WhatsApp', phone],
+                    ['Lugar de Trabajo', work],
+                    ['Ingresos Mensuales', `$${income.toFixed(2)}`],
+                    ['Rol', document.getElementById('inRole').value],
+                ],
+                theme: 'grid',
+                headStyles: { fillColor: [108, 99, 255], textColor: 255, fontStyle: 'bold', fontSize: 9 },
+                styles: { fontSize: 9, cellPadding: 3 },
+                columnStyles: { 0: { fontStyle: 'bold', cellWidth: 65 } },
+            });
+
+            // Product + financial summary table
+            doc.autoTable({
+                startY: doc.lastAutoTable.finalY + 8,
+                head: [['Producto y Financiamiento', '']],
+                body: [
+                    ['Producto', pName],
+                    ['Categoría', pCat],
+                    ['Precio de Venta', `$${price.toFixed(2)}`],
+                    ['Cuota de Entrada', `$${down.toFixed(2)}`],
+                    ['Monto a Financiar', `$${financed.toFixed(2)}`],
+                    ['Plan Seleccionado', `${months} meses (factor x${plan.factor.toFixed(2)})`],
+                    ['Período de Gracia', grace === 0 ? 'Sin gracia' : `${grace} mes(es)`],
+                    ['Cuota Mensual', `$${cuota.toFixed(2)}`],
+                    ['Total a Pagar', `$${(totalPay + down).toFixed(2)}`],
+                    ['Costo Financiero Total', `$${(totalPay - financed).toFixed(2)}`],
+                    ['Razón de Endeudamiento', income > 0 ? `${ratio}%` : 'No calculable'],
+                ],
+                theme: 'grid',
+                headStyles: { fillColor: [168, 85, 247], textColor: 255, fontStyle: 'bold', fontSize: 9 },
+                styles: { fontSize: 9, cellPadding: 3 },
+                columnStyles: { 0: { fontStyle: 'bold', cellWidth: 65 } },
+            });
+
+            if (note) {
+                doc.autoTable({
+                    startY: doc.lastAutoTable.finalY + 6,
+                    head: [['Observación / Nota Interna']],
+                    body: [[note]],
+                    theme: 'grid',
+                    headStyles: { fillColor: [60, 60, 80], textColor: 255, fontSize: 9 },
+                    styles: { fontSize: 9, cellPadding: 3 },
+                });
+            }
+
+            // All plans table
+            doc.autoTable({
+                startY: doc.lastAutoTable.finalY + 8,
+                head: [['Plazo', 'Factor', 'Cuota/mes', 'Total a Pagar', 'Costo Fin.']],
+                body: PLANS.map(p => {
+                    const tot = financed * p.factor;
+                    const c = tot / p.months;
+                    const selected = p.months === months;
+                    return [
+                        (selected ? '▶ ' : '') + `${p.months} meses`,
+                        `x${p.factor.toFixed(2)}`,
+                        financed > 0 ? `$${c.toFixed(2)}` : '—',
+                        financed > 0 ? `$${tot.toFixed(2)}` : '—',
+                        financed > 0 ? `$${(tot - financed).toFixed(2)}` : '—',
+                    ];
+                }),
+                theme: 'grid',
+                headStyles: { fillColor: [30, 30, 50], textColor: 255, fontStyle: 'bold', fontSize: 8 },
                 styles: { fontSize: 8, cellPadding: 3 },
                 didParseCell(data) {
-                    if (data.section === 'body' && data.row.index === amortRows.length - 1) {
+                    if (data.section === 'body' && data.row.index === PLANS.findIndex(p => p.months === months)) {
+                        data.cell.styles.fillColor = [168, 85, 247, 30];
                         data.cell.styles.fontStyle = 'bold';
-                        data.cell.styles.fillColor = [30,30,50];
-                        data.cell.styles.textColor = [255,255,255];
                     }
                 }
             });
+
+            // PAGE 2: Amortization
+            if (financed > 0) {
+                doc.addPage();
+                doc.setFillColor(26, 26, 46);
+                doc.rect(0, 0, 210, 24, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(13);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Tabla de Amortización', 14, 16);
+
+                const monthlyRate = Math.pow(plan.factor, 1 / months) - 1;
+                let balance = financed;
+                const amortRows = [];
+
+                for (let g = 1; g <= grace; g++) {
+                    const interest = balance * monthlyRate;
+                    balance += interest;
+                    amortRows.push([`Gracia ${g}`, '—', `$${interest.toFixed(2)}`, '$0.00', `$${balance.toFixed(2)}`]);
+                }
+
+                const adjCuota = balance > 0 ? (balance * plan.factor) / months : cuota;
+                let totInt = 0, totCap = 0;
+                for (let m = 1; m <= months; m++) {
+                    const interest = balance * monthlyRate;
+                    const capital = adjCuota - interest;
+                    balance = Math.max(0, balance - capital);
+                    totInt += interest; totCap += capital;
+                    amortRows.push([`Mes ${m + grace}`, `$${adjCuota.toFixed(2)}`, `$${interest.toFixed(2)}`, `$${capital.toFixed(2)}`, `$${balance.toFixed(2)}`]);
+                }
+                amortRows.push(['TOTAL', `$${(adjCuota * months).toFixed(2)}`, `$${totInt.toFixed(2)}`, `$${totCap.toFixed(2)}`, '$0.00']);
+
+                doc.autoTable({
+                    startY: 32,
+                    head: [['Período', 'Cuota', 'Interés', 'Capital', 'Saldo']],
+                    body: amortRows,
+                    theme: 'striped',
+                    headStyles: { fillColor: [168, 85, 247], textColor: 255, fontStyle: 'bold', fontSize: 9 },
+                    styles: { fontSize: 8, cellPadding: 3 },
+                    didParseCell(data) {
+                        if (data.section === 'body' && data.row.index === amortRows.length - 1) {
+                            data.cell.styles.fontStyle = 'bold';
+                            data.cell.styles.fillColor = [30, 30, 50];
+                            data.cell.styles.textColor = [255, 255, 255];
+                        }
+                    }
+                });
+            }
+
+            // Footer on all pages
+            const totalPages = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= totalPages; i++) {
+                doc.setPage(i);
+                doc.setFontSize(7);
+                doc.setTextColor(120, 120, 140);
+                doc.setFont('helvetica', 'normal');
+                doc.text(`Ecugaming Import · ecugamingimport.online · Lago Agrio, Ecuador`, 14, 290);
+                doc.text(`Documento generado el ${dateStr} · Pág. ${i}/${totalPages}`, 196, 290, { align: 'right' });
+            }
+
+            const safeFilename = name.replace(/\s+/g, '_') || 'solicitante';
+            doc.save(`Credito_${safeFilename}_${months}meses.pdf`);
         }
 
-        // Footer on all pages
-        const totalPages = doc.internal.getNumberOfPages();
-        for (let i = 1; i <= totalPages; i++) {
-            doc.setPage(i);
-            doc.setFontSize(7);
-            doc.setTextColor(120,120,140);
-            doc.setFont('helvetica', 'normal');
-            doc.text(`Ecugaming Import · ecugamingimport.online · Lago Agrio, Ecuador`, 14, 290);
-            doc.text(`Documento generado el ${dateStr} · Pág. ${i}/${totalPages}`, 196, 290, { align: 'right' });
-        }
-
-        const safeFilename = name.replace(/\s+/g,'_') || 'solicitante';
-        doc.save(`Credito_${safeFilename}_${months}meses.pdf`);
-    }
-
-    // Start
-    init();
+        // Start
+        init();
     </script>
 </body>
+
 </html>

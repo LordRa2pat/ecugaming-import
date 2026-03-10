@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,259 +9,767 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: var(--bg-light); color: var(--text); min-height: 100vh; }
+        body {
+            background: var(--bg-light);
+            color: var(--text);
+            min-height: 100vh;
+        }
 
         /* ── HEADER ─────────────────────────── */
-        header { background: rgba(10,10,11,.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
+        header {
+            background: rgba(10, 10, 11, .95);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
 
         /* ── HERO BAND ───────────────────────── */
         .hero-band {
-            background: linear-gradient(135deg, rgba(108,99,255,.12) 0%, rgba(168,85,247,.08) 100%);
+            background: linear-gradient(135deg, rgba(108, 99, 255, .12) 0%, rgba(168, 85, 247, .08) 100%);
             border-bottom: 1px solid var(--border);
-            padding: 36px 5% 32px; text-align: center;
+            padding: 36px 5% 32px;
+            text-align: center;
         }
+
         .hero-band .hb-icon {
-            width: 60px; height: 60px; border-radius: 18px;
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
             background: linear-gradient(135deg, #6c63ff, #a855f7);
-            display: inline-flex; align-items: center; justify-content: center;
-            font-size: 1.6rem; margin-bottom: 14px;
-            box-shadow: 0 8px 24px rgba(168,85,247,.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 24px rgba(168, 85, 247, .4);
         }
-        .hero-band h1 { font-size: 1.8rem; font-weight: 900; margin: 0 0 8px; }
-        .hero-band h1 span { color: #a855f7; }
-        .hero-band p { color: var(--text-dim); font-size: .95rem; max-width: 520px; margin: 0 auto; }
+
+        .hero-band h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin: 0 0 8px;
+        }
+
+        .hero-band h1 span {
+            color: #a855f7;
+        }
+
+        .hero-band p {
+            color: var(--text-dim);
+            font-size: .95rem;
+            max-width: 520px;
+            margin: 0 auto;
+        }
 
         /* ── STEP INDICATOR ─────────────────── */
         .step-wrap {
-            max-width: 680px; margin: 32px auto 0; padding: 0 5%;
+            max-width: 680px;
+            margin: 32px auto 0;
+            padding: 0 5%;
         }
+
         .step-bar {
-            display: flex; align-items: center; gap: 0;
+            display: flex;
+            align-items: center;
+            gap: 0;
         }
+
         .step-node {
-            display: flex; flex-direction: column; align-items: center; gap: 4px;
-            flex: 1; position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+            position: relative;
         }
+
         .step-circle {
-            width: 34px; height: 34px; border-radius: 50%;
-            border: 2px solid var(--border); background: var(--card-bg);
-            display: flex; align-items: center; justify-content: center;
-            font-size: .78rem; font-weight: 800; color: var(--text-dim);
-            transition: .3s; position: relative; z-index: 1;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .78rem;
+            font-weight: 800;
+            color: var(--text-dim);
+            transition: .3s;
+            position: relative;
+            z-index: 1;
         }
-        .step-circle.done { background: #22c55e; border-color: #22c55e; color: #fff; }
-        .step-circle.active { background: #a855f7; border-color: #a855f7; color: #fff; box-shadow: 0 0 14px rgba(168,85,247,.5); }
-        .step-label { font-size: .65rem; font-weight: 700; color: var(--text-dim); text-align: center; white-space: nowrap; }
-        .step-label.active { color: #a855f7; }
+
+        .step-circle.done {
+            background: #22c55e;
+            border-color: #22c55e;
+            color: #fff;
+        }
+
+        .step-circle.active {
+            background: #a855f7;
+            border-color: #a855f7;
+            color: #fff;
+            box-shadow: 0 0 14px rgba(168, 85, 247, .5);
+        }
+
+        .step-label {
+            font-size: .65rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .step-label.active {
+            color: #a855f7;
+        }
+
         .step-connector {
-            height: 2px; flex: 1; background: var(--border);
-            margin-top: -16px; transition: .3s;
+            height: 2px;
+            flex: 1;
+            background: var(--border);
+            margin-top: -16px;
+            transition: .3s;
         }
-        .step-connector.done { background: #22c55e; }
+
+        .step-connector.done {
+            background: #22c55e;
+        }
 
         /* ── FORM CARD ───────────────────────── */
         .form-card {
-            max-width: 680px; margin: 28px auto 60px; padding: 0 5%;
+            max-width: 680px;
+            margin: 28px auto 60px;
+            padding: 0 5%;
         }
+
         .form-panel {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 20px; padding: 32px 36px;
-            display: none; animation: slideUp .35s ease both;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px 36px;
+            display: none;
+            animation: slideUp .35s ease both;
         }
-        .form-panel.active { display: block; }
-        @keyframes slideUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+
+        .form-panel.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
 
         .panel-title {
-            font-size: 1.1rem; font-weight: 900; margin: 0 0 6px;
-            display: flex; align-items: center; gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            margin: 0 0 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .panel-title i { color: #a855f7; font-size: 1rem; }
-        .panel-sub { color: var(--text-dim); font-size: .85rem; margin: 0 0 24px; }
+
+        .panel-title i {
+            color: #a855f7;
+            font-size: 1rem;
+        }
+
+        .panel-sub {
+            color: var(--text-dim);
+            font-size: .85rem;
+            margin: 0 0 24px;
+        }
 
         /* ── FORM ELEMENTS ───────────────────── */
-        .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        @media(max-width:560px) { .field-grid { grid-template-columns: 1fr; } .form-panel { padding: 24px 20px; } }
-        .field-full { grid-column: 1 / -1; }
-
-        .fg { margin-bottom: 0; }
-        .fg label { display: block; font-size: .78rem; font-weight: 700; color: var(--text-dim); margin-bottom: 6px; }
-        .fg .req { color: #ef4444; margin-left: 2px; }
-        .fg-input {
-            width: 100%; padding: 11px 14px;
-            background: rgba(255,255,255,.05); border: 1.5px solid var(--border);
-            border-radius: 11px; color: var(--text); font-size: .9rem;
-            transition: .2s; box-sizing: border-box; font-family: inherit;
+        .field-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
         }
-        .fg-input:focus { outline: none; border-color: #a855f7; background: rgba(168,85,247,.06); }
-        .fg-input.error { border-color: #ef4444; }
-        select.fg-input { background: #1a1a2e; color: #f5f5f7 !important; -webkit-appearance: none; appearance: none; }
-        select.fg-input option { background: #1a1a2e; color: #f5f5f7; }
-        .fg-prefix-wrap { position: relative; }
-        .fg-prefix { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-weight: 800; }
-        .fg-prefix-wrap .fg-input { padding-left: 26px; }
-        .fg-hint { font-size: .7rem; color: var(--text-dim); margin-top: 4px; }
-        .fg-err { font-size: .7rem; color: #ef4444; margin-top: 4px; display: none; }
+
+        @media(max-width:560px) {
+            .field-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-panel {
+                padding: 24px 20px;
+            }
+        }
+
+        .field-full {
+            grid-column: 1 / -1;
+        }
+
+        .fg {
+            margin-bottom: 0;
+        }
+
+        .fg label {
+            display: block;
+            font-size: .78rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+
+        .fg .req {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+
+        .fg-input {
+            width: 100%;
+            padding: 11px 14px;
+            background: rgba(255, 255, 255, .05);
+            border: 1.5px solid var(--border);
+            border-radius: 11px;
+            color: var(--text);
+            font-size: .9rem;
+            transition: .2s;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .fg-input:focus {
+            outline: none;
+            border-color: #a855f7;
+            background: rgba(168, 85, 247, .06);
+        }
+
+        .fg-input.error {
+            border-color: #ef4444;
+        }
+
+        select.fg-input {
+            background: #1a1a2e;
+            color: #f5f5f7 !important;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        select.fg-input option {
+            background: #1a1a2e;
+            color: #f5f5f7;
+        }
+
+        .fg-prefix-wrap {
+            position: relative;
+        }
+
+        .fg-prefix {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            font-weight: 800;
+        }
+
+        .fg-prefix-wrap .fg-input {
+            padding-left: 26px;
+        }
+
+        .fg-hint {
+            font-size: .7rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .fg-err {
+            font-size: .7rem;
+            color: #ef4444;
+            margin-top: 4px;
+            display: none;
+        }
 
         /* File upload */
         .file-zone {
-            border: 2px dashed rgba(168,85,247,.3); border-radius: 12px;
-            padding: 20px 16px; text-align: center; cursor: pointer;
-            transition: .2s; position: relative; background: rgba(168,85,247,.03);
+            border: 2px dashed rgba(168, 85, 247, .3);
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: .2s;
+            position: relative;
+            background: rgba(168, 85, 247, .03);
         }
-        .file-zone:hover { border-color: #a855f7; background: rgba(168,85,247,.07); }
-        .file-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-        .file-zone i { font-size: 1.6rem; color: rgba(168,85,247,.6); margin-bottom: 6px; display: block; }
-        .file-zone .fz-label { font-size: .82rem; font-weight: 700; color: var(--text-dim); }
-        .file-zone .fz-hint { font-size: .7rem; color: var(--text-dim); margin-top: 2px; }
-        .file-zone .fz-ok { display: none; font-size: .78rem; font-weight: 700; color: #22c55e; margin-top: 6px; }
-        .file-zone.has-file { border-color: #22c55e; background: rgba(34,197,94,.05); }
-        .file-zone.has-file i { color: #22c55e; }
-        .file-zone.has-file .fz-ok { display: block; }
+
+        .file-zone:hover {
+            border-color: #a855f7;
+            background: rgba(168, 85, 247, .07);
+        }
+
+        .file-zone input[type=file] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-zone i {
+            font-size: 1.6rem;
+            color: rgba(168, 85, 247, .6);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .file-zone .fz-label {
+            font-size: .82rem;
+            font-weight: 700;
+            color: var(--text-dim);
+        }
+
+        .file-zone .fz-hint {
+            font-size: .7rem;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+
+        .file-zone .fz-ok {
+            display: none;
+            font-size: .78rem;
+            font-weight: 700;
+            color: #22c55e;
+            margin-top: 6px;
+        }
+
+        .file-zone.has-file {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, .05);
+        }
+
+        .file-zone.has-file i {
+            color: #22c55e;
+        }
+
+        .file-zone.has-file .fz-ok {
+            display: block;
+        }
 
         /* Docs grid */
-        .docs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        @media(max-width:560px) { .docs-grid { grid-template-columns: 1fr; } }
+        .docs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        @media(max-width:560px) {
+            .docs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
 
         /* Plan selector */
-        .plan-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; }
-        @media(max-width:560px) { .plan-grid { grid-template-columns: repeat(3,1fr); } }
+        .plan-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        @media(max-width:560px) {
+            .plan-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         .plan-card {
-            border: 1.5px solid var(--border); border-radius: 12px;
-            padding: 10px 6px; text-align: center; cursor: pointer; transition: .18s;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: .18s;
             background: transparent;
         }
-        .plan-card:hover { border-color: #a855f7; }
-        .plan-card.selected { border-color: #a855f7; background: rgba(168,85,247,.1); }
-        .plan-card .pc-months { font-size: .88rem; font-weight: 900; color: var(--text); }
-        .plan-card .pc-cuota { font-size: .68rem; color: #a855f7; font-weight: 700; margin-top: 2px; }
-        .plan-card .pc-factor { font-size: .6rem; color: var(--text-dim); }
+
+        .plan-card:hover {
+            border-color: #a855f7;
+        }
+
+        .plan-card.selected {
+            border-color: #a855f7;
+            background: rgba(168, 85, 247, .1);
+        }
+
+        .plan-card .pc-months {
+            font-size: .88rem;
+            font-weight: 900;
+            color: var(--text);
+        }
+
+        .plan-card .pc-cuota {
+            font-size: .68rem;
+            color: #a855f7;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        .plan-card .pc-factor {
+            font-size: .6rem;
+            color: var(--text-dim);
+        }
 
         /* Info notice */
         .notice {
-            background: rgba(168,85,247,.07); border: 1px solid rgba(168,85,247,.25);
-            border-radius: 12px; padding: 14px 16px; margin-bottom: 24px;
-            font-size: .82rem; color: var(--text-dim); line-height: 1.5;
+            background: rgba(168, 85, 247, .07);
+            border: 1px solid rgba(168, 85, 247, .25);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 24px;
+            font-size: .82rem;
+            color: var(--text-dim);
+            line-height: 1.5;
         }
-        .notice strong { color: var(--text); }
+
+        .notice strong {
+            color: var(--text);
+        }
 
         /* Summary */
         .summary-row {
-            display: flex; justify-content: space-between; align-items: baseline;
-            padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.05);
-            font-size: .88rem; gap: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .05);
+            font-size: .88rem;
+            gap: 12px;
         }
-        .summary-row:last-child { border-bottom: none; }
-        .sr-label { color: var(--text-dim); min-width: 140px; }
-        .sr-value { font-weight: 700; color: var(--text); text-align: right; }
-        .sr-value.highlight { color: #a855f7; font-size: 1.1rem; font-weight: 900; }
-        .summary-section { margin-bottom: 20px; }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .sr-label {
+            color: var(--text-dim);
+            min-width: 140px;
+        }
+
+        .sr-value {
+            font-weight: 700;
+            color: var(--text);
+            text-align: right;
+        }
+
+        .sr-value.highlight {
+            color: #a855f7;
+            font-size: 1.1rem;
+            font-weight: 900;
+        }
+
+        .summary-section {
+            margin-bottom: 20px;
+        }
+
         .ss-title {
-            font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em;
-            color: var(--text-dim); margin-bottom: 8px; padding-bottom: 6px;
+            font-size: .68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            padding-bottom: 6px;
             border-bottom: 1px solid var(--border);
         }
 
         /* Terms */
         .terms-box {
-            background: rgba(255,255,255,.03); border: 1px solid var(--border);
-            border-radius: 12px; padding: 14px 16px; margin: 20px 0;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 20px 0;
         }
+
         .terms-check {
-            display: flex; gap: 12px; align-items: flex-start; cursor: pointer;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            cursor: pointer;
         }
-        .terms-check input { margin-top: 3px; accent-color: #a855f7; flex-shrink: 0; width: 15px; height: 15px; }
-        .terms-check span { font-size: .82rem; color: var(--text-dim); line-height: 1.5; }
-        .terms-check a { color: #a855f7; text-decoration: none; }
+
+        .terms-check input {
+            margin-top: 3px;
+            accent-color: #a855f7;
+            flex-shrink: 0;
+            width: 15px;
+            height: 15px;
+        }
+
+        .terms-check span {
+            font-size: .82rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        .terms-check a {
+            color: #a855f7;
+            text-decoration: none;
+        }
 
         /* Navigation buttons */
         .btn-nav {
-            display: flex; gap: 10px; margin-top: 28px; justify-content: flex-end;
+            display: flex;
+            gap: 10px;
+            margin-top: 28px;
+            justify-content: flex-end;
         }
+
         .btn-back {
-            padding: 11px 24px; border-radius: 12px; border: 1.5px solid var(--border);
-            background: transparent; color: var(--text-dim); font-weight: 700; font-size: .88rem;
-            cursor: pointer; transition: .18s;
+            padding: 11px 24px;
+            border-radius: 12px;
+            border: 1.5px solid var(--border);
+            background: transparent;
+            color: var(--text-dim);
+            font-weight: 700;
+            font-size: .88rem;
+            cursor: pointer;
+            transition: .18s;
         }
-        .btn-back:hover { border-color: var(--text-dim); color: var(--text); }
+
+        .btn-back:hover {
+            border-color: var(--text-dim);
+            color: var(--text);
+        }
+
         .btn-next {
-            padding: 11px 28px; border-radius: 12px; border: none;
+            padding: 11px 28px;
+            border-radius: 12px;
+            border: none;
             background: linear-gradient(135deg, #6c63ff, #a855f7);
-            color: #fff; font-weight: 800; font-size: .9rem; cursor: pointer; transition: .2s;
-            display: flex; align-items: center; gap: 8px;
+            color: #fff;
+            font-weight: 800;
+            font-size: .9rem;
+            cursor: pointer;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .btn-next:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(168,85,247,.4); }
-        .btn-next:disabled { opacity: .5; cursor: default; transform: none; }
+
+        .btn-next:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(168, 85, 247, .4);
+        }
+
+        .btn-next:disabled {
+            opacity: .5;
+            cursor: default;
+            transform: none;
+        }
+
         .btn-submit {
-            padding: 14px 36px; border-radius: 12px; border: none;
+            padding: 14px 36px;
+            border-radius: 12px;
+            border: none;
             background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: #fff; font-weight: 800; font-size: .95rem; cursor: pointer; transition: .2s;
-            display: flex; align-items: center; gap: 8px; width: 100%; justify-content: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: .95rem;
+            cursor: pointer;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
             margin-top: 20px;
         }
-        .btn-submit:hover { box-shadow: 0 8px 20px rgba(34,197,94,.4); transform: translateY(-1px); }
-        .btn-submit:disabled { opacity: .5; cursor: default; transform: none; }
+
+        .btn-submit:hover {
+            box-shadow: 0 8px 20px rgba(34, 197, 94, .4);
+            transform: translateY(-1px);
+        }
+
+        .btn-submit:disabled {
+            opacity: .5;
+            cursor: default;
+            transform: none;
+        }
 
         /* Success screen */
         .success-screen {
-            max-width: 540px; margin: 48px auto 80px; padding: 0 5%;
-            text-align: center; display: none;
+            max-width: 540px;
+            margin: 48px auto 80px;
+            padding: 0 5%;
+            text-align: center;
+            display: none;
         }
+
         .success-icon {
-            width: 80px; height: 80px; border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
             background: linear-gradient(135deg, #22c55e, #16a34a);
-            display: inline-flex; align-items: center; justify-content: center;
-            font-size: 2rem; margin-bottom: 20px;
-            box-shadow: 0 0 40px rgba(34,197,94,.35);
-            animation: popIn .5s cubic-bezier(.175,.885,.32,1.275) both;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            box-shadow: 0 0 40px rgba(34, 197, 94, .35);
+            animation: popIn .5s cubic-bezier(.175, .885, .32, 1.275) both;
         }
-        @keyframes popIn { from { opacity:0; transform:scale(.5); } to { opacity:1; transform:scale(1); } }
-        .success-screen h2 { font-size: 1.6rem; font-weight: 900; margin: 0 0 10px; }
-        .success-screen p { color: var(--text-dim); font-size: .9rem; line-height: 1.6; margin-bottom: 0; }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(.5);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-screen h2 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin: 0 0 10px;
+        }
+
+        .success-screen p {
+            color: var(--text-dim);
+            font-size: .9rem;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
         .success-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 18px; padding: 24px; margin: 24px 0; text-align: left;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            margin: 24px 0;
+            text-align: left;
         }
-        .success-card h3 { font-size: .8rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: var(--text-dim); margin: 0 0 12px; }
+
+        .success-card h3 {
+            font-size: .8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--text-dim);
+            margin: 0 0 12px;
+        }
+
         .success-step {
-            display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 14px;
         }
-        .success-step:last-child { margin-bottom: 0; }
+
+        .success-step:last-child {
+            margin-bottom: 0;
+        }
+
         .ss-num {
-            width: 24px; height: 24px; border-radius: 50%; background: rgba(168,85,247,.15);
-            border: 1.5px solid rgba(168,85,247,.4); flex-shrink: 0;
-            display: flex; align-items: center; justify-content: center;
-            font-size: .7rem; font-weight: 900; color: #a855f7;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(168, 85, 247, .15);
+            border: 1.5px solid rgba(168, 85, 247, .4);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .7rem;
+            font-weight: 900;
+            color: #a855f7;
         }
-        .ss-text { font-size: .85rem; color: var(--text-dim); line-height: 1.5; }
-        .ss-text strong { color: var(--text); }
+
+        .ss-text {
+            font-size: .85rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        .ss-text strong {
+            color: var(--text);
+        }
+
         .btn-wa-big {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            padding: 16px 32px; border-radius: 14px; border: none;
-            background: #25D366; color: #fff; font-weight: 800; font-size: 1rem;
-            cursor: pointer; width: 100%; margin-bottom: 12px; transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 14px;
+            border: none;
+            background: #25D366;
+            color: #fff;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 12px;
+            transition: .2s;
             text-decoration: none;
         }
-        .btn-wa-big:hover { background: #1ebe5d; box-shadow: 0 8px 24px rgba(37,211,102,.4); }
-        .btn-back-store {
-            display: block; text-align: center; font-size: .85rem; color: var(--text-dim);
-            text-decoration: none; padding: 10px;
+
+        .btn-wa-big:hover {
+            background: #1ebe5d;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, .4);
         }
-        .btn-back-store:hover { color: var(--text); }
+
+        .btn-back-store {
+            display: block;
+            text-align: center;
+            font-size: .85rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .btn-back-store:hover {
+            color: var(--text);
+        }
 
         /* Loader */
-        .loader-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 999; align-items: center; justify-content: center; flex-direction: column; gap: 14px; }
-        .loader-overlay.on { display: flex; }
-        .loader-overlay p { color: #fff; font-weight: 700; font-size: .95rem; }
+        .loader-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .6);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .loader-overlay.on {
+            display: flex;
+        }
+
+        .loader-overlay p {
+            color: #fff;
+            font-weight: 700;
+            font-size: .95rem;
+        }
     </style>
 </head>
+
 <body>
 
     <header>
         <div class="logo" onclick="location.href='/'">Ecugaming <span>Import</span></div>
         <div class="nav-actions">
-            <a href="/" style="font-size:.82rem;font-weight:700;color:var(--text-dim);text-decoration:none;display:flex;align-items:center;gap:.4rem;">
+            <a href="/"
+                style="font-size:.82rem;font-weight:700;color:var(--text-dim);text-decoration:none;display:flex;align-items:center;gap:.4rem;">
                 <i class="fa fa-arrow-left"></i> Tienda
             </a>
+            <div id="authArea"></div>
         </div>
     </header>
 
@@ -332,7 +841,8 @@
                 </div>
                 <div class="fg">
                     <label>WhatsApp<span class="req">*</span></label>
-                    <input class="fg-input" id="fPhone" placeholder="0991234567" maxlength="10" oninput="clearErr(this)">
+                    <input class="fg-input" id="fPhone" placeholder="0991234567" maxlength="10"
+                        oninput="clearErr(this)">
                     <div class="fg-err" id="ePhone">Número de 10 dígitos requerido</div>
                 </div>
                 <div class="fg">
@@ -393,14 +903,16 @@
                 </div>
                 <div class="fg field-full" id="employerField">
                     <label>Empresa / Lugar de Trabajo<span class="req">*</span></label>
-                    <input class="fg-input" id="fEmployer" placeholder="Nombre de la empresa o negocio" oninput="clearErr(this)">
+                    <input class="fg-input" id="fEmployer" placeholder="Nombre de la empresa o negocio"
+                        oninput="clearErr(this)">
                     <div class="fg-err" id="eEmployer">Especifica tu lugar de trabajo</div>
                 </div>
                 <div class="fg">
                     <label>Ingresos Mensuales<span class="req">*</span></label>
                     <div class="fg-prefix-wrap">
                         <span class="fg-prefix">$</span>
-                        <input class="fg-input" id="fIncome" type="number" min="0" placeholder="500" oninput="clearErr(this); updatePlanCuotas()">
+                        <input class="fg-input" id="fIncome" type="number" min="0" placeholder="500"
+                            oninput="clearErr(this); updatePlanCuotas()">
                     </div>
                     <div class="fg-err" id="eIncome">Ingresa tus ingresos mensuales</div>
                 </div>
@@ -441,7 +953,8 @@
             <p class="panel-sub">Selecciona el equipo y las condiciones del crédito</p>
 
             <div class="notice">
-                <strong>💡 Nota:</strong> Todos los créditos requieren una cuota de entrada inicial. El mínimo es <strong>$88</strong>.
+                <strong>💡 Nota:</strong> Todos los créditos requieren una cuota de entrada inicial. El mínimo es
+                <strong>$88</strong>.
                 El equipo permanece en <strong>reserva de dominio</strong> hasta el pago de la última cuota.
             </div>
 
@@ -461,7 +974,8 @@
                     <label>Precio Referencial</label>
                     <div class="fg-prefix-wrap">
                         <span class="fg-prefix">$</span>
-                        <input class="fg-input" id="fPrice" type="number" min="0" placeholder="0.00" oninput="updatePlanCuotas()">
+                        <input class="fg-input" id="fPrice" type="number" min="0" placeholder="0.00"
+                            oninput="updatePlanCuotas()">
                     </div>
                     <div class="fg-hint">Se llena automáticamente · editable</div>
                 </div>
@@ -469,7 +983,8 @@
                     <label>Cuota de Entrada<span class="req">*</span></label>
                     <div class="fg-prefix-wrap">
                         <span class="fg-prefix">$</span>
-                        <input class="fg-input" id="fDown" type="number" min="88" placeholder="88" oninput="clearErr(this); updatePlanCuotas()">
+                        <input class="fg-input" id="fDown" type="number" min="88" placeholder="88"
+                            oninput="clearErr(this); updatePlanCuotas()">
                     </div>
                     <div class="fg-err" id="eDown">Mínimo $88 de entrada</div>
                 </div>
@@ -498,8 +1013,9 @@
             <div class="docs-grid">
                 <div class="fg">
                     <label>Cédula Frontal<span class="req">*</span></label>
-                    <div class="file-zone" id="fzCedFront" onclick="triggerFile('fileCedFront')">
-                        <input type="file" id="fileCedFront" accept="image/*,.pdf" onchange="handleFile(this,'fzCedFront','lblCedFront')">
+                    <div class="file-zone" id="fzCedFront" onclick="triggerFile('fileCedFront', event)">
+                        <input type="file" id="fileCedFront" accept="image/*,.pdf"
+                            onchange="handleFile(this,'fzCedFront','lblCedFront')">
                         <i class="fa fa-id-card"></i>
                         <div class="fz-label">Clic para subir</div>
                         <div class="fz-hint">JPG, PNG o PDF · máx. 5MB</div>
@@ -509,8 +1025,9 @@
                 </div>
                 <div class="fg">
                     <label>Cédula Posterior<span class="req">*</span></label>
-                    <div class="file-zone" id="fzCedBack" onclick="triggerFile('fileCedBack')">
-                        <input type="file" id="fileCedBack" accept="image/*,.pdf" onchange="handleFile(this,'fzCedBack','lblCedBack')">
+                    <div class="file-zone" id="fzCedBack" onclick="triggerFile('fileCedBack', event)">
+                        <input type="file" id="fileCedBack" accept="image/*,.pdf"
+                            onchange="handleFile(this,'fzCedBack','lblCedBack')">
                         <i class="fa fa-id-card"></i>
                         <div class="fz-label">Clic para subir</div>
                         <div class="fz-hint">JPG, PNG o PDF · máx. 5MB</div>
@@ -520,8 +1037,9 @@
                 </div>
                 <div class="fg">
                     <label>Selfie con Cédula<span class="req">*</span></label>
-                    <div class="file-zone" id="fzSelfie" onclick="triggerFile('fileSelfie')">
-                        <input type="file" id="fileSelfie" accept="image/*" capture="user" onchange="handleFile(this,'fzSelfie','lblSelfie')">
+                    <div class="file-zone" id="fzSelfie" onclick="triggerFile('fileSelfie', event)">
+                        <input type="file" id="fileSelfie" accept="image/*" capture="user"
+                            onchange="handleFile(this,'fzSelfie','lblSelfie')">
                         <i class="fa fa-camera"></i>
                         <div class="fz-label">Clic para subir</div>
                         <div class="fz-hint">Foto tuya sosteniendo tu cédula</div>
@@ -531,8 +1049,9 @@
                 </div>
                 <div class="fg">
                     <label>Planilla de Servicios<span class="req">*</span></label>
-                    <div class="file-zone" id="fzPlanilla" onclick="triggerFile('filePlanilla')">
-                        <input type="file" id="filePlanilla" accept="image/*,.pdf" onchange="handleFile(this,'fzPlanilla','lblPlanilla')">
+                    <div class="file-zone" id="fzPlanilla" onclick="triggerFile('filePlanilla', event)">
+                        <input type="file" id="filePlanilla" accept="image/*,.pdf"
+                            onchange="handleFile(this,'fzPlanilla','lblPlanilla')">
                         <i class="fa fa-file-invoice"></i>
                         <div class="fz-label">Clic para subir</div>
                         <div class="fz-hint">Planilla de luz, agua o teléfono reciente</div>
@@ -543,11 +1062,14 @@
             </div>
 
             <div class="fg" style="margin-top:16px;">
-                <label>Certificado Laboral / Rol de Pagos <span style="color:var(--text-dim);font-weight:400;">(Opcional)</span></label>
-                <div class="file-zone" id="fzLaboral" onclick="triggerFile('fileLaboral')" style="padding:14px;">
-                    <input type="file" id="fileLaboral" accept="image/*,.pdf" onchange="handleFile(this,'fzLaboral','lblLaboral')">
+                <label>Certificado Laboral / Rol de Pagos <span
+                        style="color:var(--text-dim);font-weight:400;">(Opcional)</span></label>
+                <div class="file-zone" id="fzLaboral" onclick="triggerFile('fileLaboral', event)" style="padding:14px;">
+                    <input type="file" id="fileLaboral" accept="image/*,.pdf"
+                        onchange="handleFile(this,'fzLaboral','lblLaboral')">
                     <i class="fa fa-file-contract" style="font-size:1.2rem;margin-bottom:4px;"></i>
-                    <div class="fz-label" style="font-size:.78rem;">Sube si tienes disponible (mejora tu aprobación)</div>
+                    <div class="fz-label" style="font-size:.78rem;">Sube si tienes disponible (mejora tu aprobación)
+                    </div>
                     <div class="fz-ok" id="lblLaboral">✓ Archivo cargado</div>
                 </div>
             </div>
@@ -572,7 +1094,8 @@
                     <span>
                         He leído y acepto los <a href="/terminos" target="_blank">Términos y Condiciones</a>.
                         Autorizo a <strong>Ecugaming Import</strong> a verificar la información proporcionada y
-                        consultar mi historial crediticio. Entiendo que el equipo queda en <strong>reserva de dominio</strong>
+                        consultar mi historial crediticio. Entiendo que el equipo queda en <strong>reserva de
+                            dominio</strong>
                         hasta el pago de la última cuota.
                     </span>
                 </label>
@@ -584,7 +1107,8 @@
             </button>
 
             <div class="btn-nav" style="justify-content:flex-start;margin-top:12px;">
-                <button class="btn-back" onclick="goStep(5,4)"><i class="fa fa-arrow-left"></i> Revisar Documentos</button>
+                <button class="btn-back" onclick="goStep(5,4)"><i class="fa fa-arrow-left"></i> Revisar
+                    Documentos</button>
             </div>
         </div>
 
@@ -600,15 +1124,19 @@
             <h3>Próximos Pasos</h3>
             <div class="success-step">
                 <div class="ss-num">1</div>
-                <div class="ss-text">Nuestro sistema analiza tu perfil automáticamente. Recibirás una respuesta en <strong>menos de 5 minutos</strong> por WhatsApp.</div>
+                <div class="ss-text">Nuestro sistema analiza tu perfil automáticamente. Recibirás una respuesta en
+                    <strong>menos de 5 minutos</strong> por WhatsApp.
+                </div>
             </div>
             <div class="success-step">
                 <div class="ss-num">2</div>
-                <div class="ss-text">Si hay aprobación, te enviaremos el <strong>contrato virtual</strong> por WhatsApp para tu firma digital.</div>
+                <div class="ss-text">Si hay aprobación, te enviaremos el <strong>contrato virtual</strong> por WhatsApp
+                    para tu firma digital.</div>
             </div>
             <div class="success-step">
                 <div class="ss-num">3</div>
-                <div class="ss-text">Una vez confirmada la <strong>cuota de entrada</strong>, procedemos al despacho del equipo.</div>
+                <div class="ss-text">Una vez confirmada la <strong>cuota de entrada</strong>, procedemos al despacho del
+                    equipo.</div>
             </div>
         </div>
 
@@ -628,306 +1156,325 @@
         <i class="fab fa-whatsapp"></i>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="/lib/supabase-client.js"></script>
     <script>
-    // ── CONFIG ──────────────────────────────────────────────────────
-    const PLANS = [
-        { months: 3,  factor: 1.10, label: '3 meses' },
-        { months: 6,  factor: 1.18, label: '6 meses' },
-        { months: 9,  factor: 1.22, label: '9 meses' },
-        { months: 12, factor: 1.25, label: '12 meses' },
-        { months: 18, factor: 1.35, label: '18 meses' },
-    ];
+        // ── CONFIG ──────────────────────────────────────────────────────
+        const PLANS = [
+            { months: 3, factor: 1.10, label: '3 meses' },
+            { months: 6, factor: 1.18, label: '6 meses' },
+            { months: 9, factor: 1.22, label: '9 meses' },
+            { months: 12, factor: 1.25, label: '12 meses' },
+            { months: 18, factor: 1.35, label: '18 meses' },
+        ];
 
-    let currentStep = 1;
-    let selectedPlan = null;
-    let catalogProducts = [];
-    let selectedProduct = null;
+        let currentStep = 1;
+        let selectedPlan = null;
+        let catalogProducts = [];
+        let selectedProduct = null;
 
-    // ── INIT ────────────────────────────────────────────────────────
-    buildPlanGrid();
-    loadCatalog();
+        // ── INIT ────────────────────────────────────────────────────────
+        buildPlanGrid();
+        loadCatalog();
 
-    async function loadCatalog() {
-        try {
-            const res = await fetch('/api/stock');
-            if (!res.ok) throw new Error();
-            catalogProducts = await res.json();
-        } catch (_) {
-            catalogProducts = [
-                { id:'p1', name:'PlayStation 5 Slim 1TB', category:'Consolas', price:699 },
-                { id:'p2', name:'iPhone 16 Pro Max 256GB', category:'iPhone', price:1199 },
-                { id:'p3', name:'Nintendo Switch OLED', category:'Consolas', price:349 },
-                { id:'p4', name:'Laptop Gamer RTX 4060', category:'Laptops', price:999 },
-                { id:'p5', name:'Xbox Series X', category:'Consolas', price:499 },
-            ];
-        }
+        async function loadCatalog() {
+            try {
+                const res = await fetch('/api/stock');
+                if (!res.ok) throw new Error();
+                catalogProducts = await res.json();
+            } catch (_) {
+                catalogProducts = [
+                    { id: 'p1', name: 'PlayStation 5 Slim 1TB', category: 'Consolas', price: 699 },
+                    { id: 'p2', name: 'iPhone 16 Pro Max 256GB', category: 'iPhone', price: 1199 },
+                    { id: 'p3', name: 'Nintendo Switch OLED', category: 'Consolas', price: 349 },
+                    { id: 'p4', name: 'Laptop Gamer RTX 4060', category: 'Laptops', price: 999 },
+                    { id: 'p5', name: 'Xbox Series X', category: 'Consolas', price: 499 },
+                ];
+            }
 
-        const sel = document.getElementById('fProduct');
-        sel.innerHTML = '<option value="">— Selecciona un producto —</option>';
+            const sel = document.getElementById('fProduct');
+            sel.innerHTML = '<option value="">— Selecciona un producto —</option>';
 
-        const groups = {};
-        catalogProducts.forEach(p => {
-            const cat = p.category || 'General';
-            if (!groups[cat]) groups[cat] = [];
-            groups[cat].push(p);
-        });
-        Object.entries(groups).forEach(([cat, items]) => {
-            const og = document.createElement('optgroup');
-            og.label = cat;
-            items.forEach(p => {
-                const op = document.createElement('option');
-                op.value = p.id;
-                op.textContent = `${p.name}  —  $${Number(p.price).toFixed(2)}`;
-                og.appendChild(op);
+            const groups = {};
+            catalogProducts.forEach(p => {
+                const cat = p.category || 'General';
+                if (!groups[cat]) groups[cat] = [];
+                groups[cat].push(p);
             });
-            sel.appendChild(og);
-        });
+            Object.entries(groups).forEach(([cat, items]) => {
+                const og = document.createElement('optgroup');
+                og.label = cat;
+                items.forEach(p => {
+                    const op = document.createElement('option');
+                    op.value = p.id;
+                    op.textContent = `${p.name}  —  $${Number(p.price).toFixed(2)}`;
+                    og.appendChild(op);
+                });
+                sel.appendChild(og);
+            });
 
-        // Add "Otro" option at the end
-        const other = document.createElement('option');
-        other.value = 'OTRO';
-        other.textContent = '🔍 Otro equipo (especificar)';
-        sel.appendChild(other);
-    }
+            // Add "Otro" option at the end
+            const other = document.createElement('option');
+            other.value = 'OTRO';
+            other.textContent = '🔍 Otro equipo (especificar)';
+            sel.appendChild(other);
+        }
 
-    function loadProduct() {
-        const id = document.getElementById('fProduct').value;
-        document.getElementById('otroProductoField').style.display = id === 'OTRO' ? 'block' : 'none';
+        function loadProduct() {
+            const id = document.getElementById('fProduct').value;
+            document.getElementById('otroProductoField').style.display = id === 'OTRO' ? 'block' : 'none';
 
-        if (id && id !== 'OTRO') {
-            selectedProduct = catalogProducts.find(p => p.id === id);
-            if (selectedProduct) {
-                const price = selectedProduct.sale_price ?? selectedProduct.price;
-                document.getElementById('fPrice').value = Number(price).toFixed(2);
-                const suggested = Math.max(88, Math.round(price * 0.25));
-                document.getElementById('fDown').value = suggested;
+            if (id && id !== 'OTRO') {
+                selectedProduct = catalogProducts.find(p => p.id === id);
+                if (selectedProduct) {
+                    const price = selectedProduct.sale_price ?? selectedProduct.price;
+                    document.getElementById('fPrice').value = Number(price).toFixed(2);
+                    const suggested = Math.max(88, Math.round(price * 0.25));
+                    document.getElementById('fDown').value = suggested;
+                }
+            } else {
+                selectedProduct = null;
             }
-        } else {
-            selectedProduct = null;
+            clearErr(document.getElementById('fProduct'));
+            updatePlanCuotas();
         }
-        clearErr(document.getElementById('fProduct'));
-        updatePlanCuotas();
-    }
 
-    // ── PLAN GRID ───────────────────────────────────────────────────
-    function buildPlanGrid() {
-        const grid = document.getElementById('planGrid');
-        grid.innerHTML = '';
-        PLANS.forEach(p => {
-            const card = document.createElement('div');
-            card.className = 'plan-card';
-            card.id = `pc${p.months}`;
-            card.onclick = () => selectPlan(p.months);
-            card.innerHTML = `<div class="pc-months">${p.months}m</div><div class="pc-cuota" id="pq${p.months}">—</div><div class="pc-factor">x${p.factor.toFixed(2)}</div>`;
-            grid.appendChild(card);
-        });
-    }
-
-    function selectPlan(months) {
-        selectedPlan = months;
-        document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
-        document.getElementById(`pc${months}`).classList.add('selected');
-        clearErr(document.getElementById('ePlan'));
-        updateRatioHint();
-    }
-
-    function updatePlanCuotas() {
-        const price = parseFloat(document.getElementById('fPrice').value) || 0;
-        const down  = parseFloat(document.getElementById('fDown').value) || 0;
-        const financed = Math.max(0, price - down);
-
-        PLANS.forEach(p => {
-            const cuota = financed > 0 ? (financed * p.factor) / p.months : 0;
-            const el = document.getElementById(`pq${p.months}`);
-            if (el) el.textContent = cuota > 0 ? `$${cuota.toFixed(0)}/m` : '—';
-        });
-        updateRatioHint();
-    }
-
-    function updateRatioHint() {
-        if (!selectedPlan) return;
-        const price = parseFloat(document.getElementById('fPrice').value) || 0;
-        const down  = parseFloat(document.getElementById('fDown').value) || 0;
-        const income = parseFloat(document.getElementById('fIncome').value) || 0;
-        const financed = Math.max(0, price - down);
-        const plan = PLANS.find(p => p.months === selectedPlan);
-        if (!plan) return;
-        const cuota = financed > 0 ? (financed * plan.factor) / selectedPlan : 0;
-        const ratio = income > 0 ? (cuota / income) * 100 : 0;
-        const el = document.getElementById('planRatio');
-        if (cuota > 0 && income > 0) {
-            const color = ratio <= 30 ? '#22c55e' : ratio <= 45 ? '#f59e0b' : '#ef4444';
-            const label = ratio <= 30 ? 'Excelente' : ratio <= 45 ? 'Aceptable' : 'Alto';
-            el.innerHTML = `Cuota mensual: <strong style="color:#a855f7;">$${cuota.toFixed(2)}</strong> · Razón de endeudamiento: <strong style="color:${color};">${ratio.toFixed(1)}% — ${label}</strong>`;
-        } else {
-            el.textContent = '';
+        // ── PLAN GRID ───────────────────────────────────────────────────
+        function buildPlanGrid() {
+            const grid = document.getElementById('planGrid');
+            grid.innerHTML = '';
+            PLANS.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'plan-card';
+                card.id = `pc${p.months}`;
+                card.onclick = () => selectPlan(p.months);
+                card.innerHTML = `<div class="pc-months">${p.months}m</div><div class="pc-cuota" id="pq${p.months}">—</div><div class="pc-factor">x${p.factor.toFixed(2)}</div>`;
+                grid.appendChild(card);
+            });
         }
-    }
 
-    // ── EMPLOYER TOGGLE ─────────────────────────────────────────────
-    function toggleEmployer() {
-        const occ = document.getElementById('fOcupacion').value;
-        const show = occ && occ !== 'Ama de Casa';
-        document.getElementById('employerField').style.display = show ? 'block' : 'none';
-    }
-    toggleEmployer();
-
-    // ── FILE HANDLING ───────────────────────────────────────────────
-    function triggerFile(id) { document.getElementById(id).click(); }
-
-    function handleFile(input, zoneId, lblId) {
-        const file = input.files[0];
-        if (!file) return;
-        const MAX = 5 * 1024 * 1024;
-        if (file.size > MAX) {
-            alert(`"${file.name}" supera el límite de 5MB.`);
-            input.value = ''; return;
+        function selectPlan(months) {
+            selectedPlan = months;
+            document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+            document.getElementById(`pc${months}`).classList.add('selected');
+            clearErr(document.getElementById('ePlan'));
+            updateRatioHint();
         }
-        const zone = document.getElementById(zoneId);
-        zone.classList.add('has-file');
-        const lbl = document.getElementById(lblId);
-        lbl.textContent = `✓ ${file.name.length > 24 ? file.name.slice(0,22)+'…' : file.name}`;
-        // Clear associated error
-        const errMap = { fzCedFront:'eCedFront', fzCedBack:'eCedBack', fzSelfie:'eSelfie', fzPlanilla:'ePlanilla' };
-        if (errMap[zoneId]) document.getElementById(errMap[zoneId]).style.display = 'none';
-    }
 
-    function fileToBase64(input) {
-        return new Promise((resolve) => {
-            const file = input.files[0];
-            if (!file) return resolve(null);
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = () => resolve(null);
-            reader.readAsDataURL(file);
-        });
-    }
+        function updatePlanCuotas() {
+            const price = parseFloat(document.getElementById('fPrice').value) || 0;
+            const down = parseFloat(document.getElementById('fDown').value) || 0;
+            const financed = Math.max(0, price - down);
 
-    // ── VALIDATION ──────────────────────────────────────────────────
-    function showErr(id, msg) {
-        const el = document.getElementById(id);
-        if (!el) return false;
-        el.textContent = msg || el.textContent;
-        el.style.display = 'block';
-        return false;
-    }
-    function clearErr(el) {
-        if (typeof el === 'string') el = document.getElementById(el);
-        if (el) el.classList.remove('error');
-        // hide sibling fg-err
-        const parent = el?.closest('.fg');
-        if (parent) { const e = parent.querySelector('.fg-err'); if (e) e.style.display = 'none'; }
-    }
-
-    function validateStep(step) {
-        let ok = true;
-        const req = (id, msg) => {
-            const el = document.getElementById(id);
-            const val = el?.value?.trim();
-            if (!val) { showErr('e' + id.slice(1) || id, msg); el?.classList.add('error'); ok = false; }
-            return !!val;
-        };
-
-        if (step === 1) {
-            if (!document.getElementById('fNombres').value.trim()) { showErr('eNombres'); ok = false; }
-            if (!document.getElementById('fApellidos').value.trim()) { showErr('eApellidos'); ok = false; }
-            const ci = document.getElementById('fCI').value.trim();
-            if (!/^\d{10}$/.test(ci)) { showErr('eCI'); ok = false; }
-            if (!document.getElementById('fBirthday').value) { showErr('eBirthday'); ok = false; }
-            const ph = document.getElementById('fPhone').value.trim();
-            if (!/^\d{10}$/.test(ph)) { showErr('ePhone'); ok = false; }
-            if (!document.getElementById('fAddress').value.trim()) { showErr('eAddress'); ok = false; }
-            if (!document.getElementById('fCity').value.trim()) { showErr('eCity'); ok = false; }
+            PLANS.forEach(p => {
+                const cuota = financed > 0 ? (financed * p.factor) / p.months : 0;
+                const el = document.getElementById(`pq${p.months}`);
+                if (el) el.textContent = cuota > 0 ? `$${cuota.toFixed(0)}/m` : '—';
+            });
+            updateRatioHint();
         }
-        if (step === 2) {
-            if (!document.getElementById('fOcupacion').value) { showErr('eOcupacion'); ok = false; }
+
+        function updateRatioHint() {
+            if (!selectedPlan) return;
+            const price = parseFloat(document.getElementById('fPrice').value) || 0;
+            const down = parseFloat(document.getElementById('fDown').value) || 0;
+            const income = parseFloat(document.getElementById('fIncome').value) || 0;
+            const financed = Math.max(0, price - down);
+            const plan = PLANS.find(p => p.months === selectedPlan);
+            if (!plan) return;
+            const cuota = financed > 0 ? (financed * plan.factor) / selectedPlan : 0;
+            const ratio = income > 0 ? (cuota / income) * 100 : 0;
+            const el = document.getElementById('planRatio');
+            if (cuota > 0 && income > 0) {
+                const color = ratio <= 30 ? '#22c55e' : ratio <= 45 ? '#f59e0b' : '#ef4444';
+                const label = ratio <= 30 ? 'Excelente' : ratio <= 45 ? 'Aceptable' : 'Alto';
+                el.innerHTML = `Cuota mensual: <strong style="color:#a855f7;">$${cuota.toFixed(2)}</strong> · Razón de endeudamiento: <strong style="color:${color};">${ratio.toFixed(1)}% — ${label}</strong>`;
+            } else {
+                el.textContent = '';
+            }
+        }
+
+        // ── EMPLOYER TOGGLE ─────────────────────────────────────────────
+        function toggleEmployer() {
             const occ = document.getElementById('fOcupacion').value;
-            if (occ && occ !== 'Ama de Casa' && !document.getElementById('fEmployer').value.trim()) { showErr('eEmployer'); ok = false; }
-            const inc = parseFloat(document.getElementById('fIncome').value);
-            if (!inc || inc <= 0) { showErr('eIncome'); ok = false; }
+            const show = occ && occ !== 'Ama de Casa';
+            document.getElementById('employerField').style.display = show ? 'block' : 'none';
         }
-        if (step === 3) {
-            const prod = document.getElementById('fProduct').value;
-            if (!prod) { showErr('eProduct'); ok = false; }
-            const down = parseFloat(document.getElementById('fDown').value);
-            if (!down || down < 88) { showErr('eDown', 'Mínimo $88 de entrada'); ok = false; }
-            if (!selectedPlan) { document.getElementById('ePlan').style.display = 'block'; ok = false; }
-        }
-        if (step === 4) {
-            if (!document.getElementById('fileCedFront').files[0]) { showErr('eCedFront'); ok = false; }
-            if (!document.getElementById('fileCedBack').files[0]) { showErr('eCedBack'); ok = false; }
-            if (!document.getElementById('fileSelfie').files[0]) { showErr('eSelfie'); ok = false; }
-            if (!document.getElementById('filePlanilla').files[0]) { showErr('ePlanilla'); ok = false; }
-        }
-        return ok;
-    }
+        toggleEmployer();
 
-    // ── STEP NAVIGATION ─────────────────────────────────────────────
-    function goStep(from, to) {
-        if (to > from && !validateStep(from)) {
-            // Scroll to first error
-            const firstErr = document.querySelector(`#panel${from} .fg-err[style*="block"], #panel${from} .fg-input.error`);
-            firstErr?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            return;
+        // ── FILE HANDLING ───────────────────────────────────────────────
+        function triggerFile(id, event) {
+            // Prevent event bubbling loop if the click originated from the input itself
+            if (event && event.target.tagName === 'INPUT') return;
+            document.getElementById(id).click();
         }
-        // If going to step 5, build summary
-        if (to === 5) buildSummary();
 
-        // Hide current, show next
-        document.getElementById(`panel${from}`).classList.remove('active');
-        document.getElementById(`panel${to}`).classList.add('active');
-        currentStep = to;
-
-        // Update step indicator
-        for (let i = 1; i <= 5; i++) {
-            const sc = document.getElementById(`sc${i}`);
-            const sl = document.getElementById(`sl${i}`);
-            sc.classList.remove('active','done');
-            sl.classList.remove('active');
-            if (i < to) { sc.classList.add('done'); sc.innerHTML = '<i class="fa fa-check" style="font-size:.65rem;"></i>'; }
-            else if (i === to) { sc.classList.add('active'); sc.textContent = i; sl.classList.add('active'); }
-            else { sc.textContent = i; }
-            if (i < 5) {
-                const conn = document.getElementById(`conn${i}`);
-                conn.classList.toggle('done', i < to);
+        function handleFile(input, zoneId, lblId) {
+            const file = input.files[0];
+            if (!file) return;
+            const MAX = 5 * 1024 * 1024;
+            if (file.size > MAX) {
+                alert(`"${file.name}" supera el límite de 5MB.`);
+                input.value = ''; return;
             }
+            const zone = document.getElementById(zoneId);
+            zone.classList.add('has-file');
+            const lbl = document.getElementById(lblId);
+            lbl.textContent = `✓ ${file.name.length > 24 ? file.name.slice(0, 22) + '…' : file.name}`;
+            // Clear associated error
+            const errMap = { fzCedFront: 'eCedFront', fzCedBack: 'eCedBack', fzSelfie: 'eSelfie', fzPlanilla: 'ePlanilla' };
+            if (errMap[zoneId]) document.getElementById(errMap[zoneId]).style.display = 'none';
         }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 
-    // ── SUMMARY ─────────────────────────────────────────────────────
-    function buildSummary() {
-        const nombres   = document.getElementById('fNombres').value.trim();
-        const apellidos = document.getElementById('fApellidos').value.trim();
-        const ci        = document.getElementById('fCI').value.trim();
-        const birthday  = document.getElementById('fBirthday').value;
-        const phone     = document.getElementById('fPhone').value.trim();
-        const email     = document.getElementById('fEmail').value.trim();
-        const address   = document.getElementById('fAddress').value.trim();
-        const city      = document.getElementById('fCity').value.trim();
-        const civil     = document.getElementById('fCivil').value;
+        // Upload a file directly to Supabase Storage (bypasses Vercel body limit)
+        async function uploadDocToStorage(inputEl, key, cedula) {
+            const file = inputEl.files[0];
+            if (!file) return null;
 
-        const ocupacion = document.getElementById('fOcupacion').value;
-        const employer  = document.getElementById('fEmployer').value.trim();
-        const income    = parseFloat(document.getElementById('fIncome').value) || 0;
-        const expenses  = parseFloat(document.getElementById('fExpenses').value) || 0;
-        const timeJob   = document.getElementById('fTimeJob').value;
-        const ref1      = document.getElementById('fRef1Name').value.trim();
+            await window._supabaseReady;
+            const sb = window._supabase;
+            if (!sb) throw new Error('Supabase no disponible');
 
-        const prodId    = document.getElementById('fProduct').value;
-        const prodName  = prodId === 'OTRO'
-            ? document.getElementById('fOtroProducto').value.trim()
-            : (selectedProduct?.name || document.getElementById('fProduct').options[document.getElementById('fProduct').selectedIndex]?.text || '—');
-        const price     = parseFloat(document.getElementById('fPrice').value) || 0;
-        const down      = parseFloat(document.getElementById('fDown').value) || 0;
-        const financed  = Math.max(0, price - down);
-        const plan      = PLANS.find(p => p.months === selectedPlan);
-        const cuota     = plan && financed > 0 ? (financed * plan.factor) / selectedPlan : 0;
-        const total     = plan ? (financed * plan.factor) + down : down;
+            const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
+            const filename = `${Date.now()}_${key}_${Math.random().toString(36).substr(2, 5)}.${ext}`;
+            const path = `applications/${cedula || 'unknown'}/${filename}`;
 
-        const docOk = (id) => document.getElementById(id).files[0] ? '✅' : '—';
+            const { error } = await sb.storage
+                .from('credit-docs')
+                .upload(path, file, { contentType: file.type || 'image/jpeg' });
 
-        document.getElementById('summaryContent').innerHTML = `
+            if (error) {
+                console.error(`[upload] ${key}:`, error.message);
+                throw new Error(`Error subiendo ${key}: ${error.message}`);
+            }
+            return path;
+        }
+
+        // ── VALIDATION ──────────────────────────────────────────────────
+        function showErr(id, msg) {
+            const el = document.getElementById(id);
+            if (!el) return false;
+            el.textContent = msg || el.textContent;
+            el.style.display = 'block';
+            return false;
+        }
+        function clearErr(el) {
+            if (typeof el === 'string') el = document.getElementById(el);
+            if (el) el.classList.remove('error');
+            // hide sibling fg-err
+            const parent = el?.closest('.fg');
+            if (parent) { const e = parent.querySelector('.fg-err'); if (e) e.style.display = 'none'; }
+        }
+
+        function validateStep(step) {
+            let ok = true;
+            const req = (id, msg) => {
+                const el = document.getElementById(id);
+                const val = el?.value?.trim();
+                if (!val) { showErr('e' + id.slice(1) || id, msg); el?.classList.add('error'); ok = false; }
+                return !!val;
+            };
+
+            if (step === 1) {
+                if (!document.getElementById('fNombres').value.trim()) { showErr('eNombres'); ok = false; }
+                if (!document.getElementById('fApellidos').value.trim()) { showErr('eApellidos'); ok = false; }
+                const ci = document.getElementById('fCI').value.trim();
+                if (!/^\d{10}$/.test(ci)) { showErr('eCI'); ok = false; }
+                if (!document.getElementById('fBirthday').value) { showErr('eBirthday'); ok = false; }
+                const ph = document.getElementById('fPhone').value.trim();
+                if (!/^\d{10}$/.test(ph)) { showErr('ePhone'); ok = false; }
+                if (!document.getElementById('fAddress').value.trim()) { showErr('eAddress'); ok = false; }
+                if (!document.getElementById('fCity').value.trim()) { showErr('eCity'); ok = false; }
+            }
+            if (step === 2) {
+                if (!document.getElementById('fOcupacion').value) { showErr('eOcupacion'); ok = false; }
+                const occ = document.getElementById('fOcupacion').value;
+                if (occ && occ !== 'Ama de Casa' && !document.getElementById('fEmployer').value.trim()) { showErr('eEmployer'); ok = false; }
+                const inc = parseFloat(document.getElementById('fIncome').value);
+                if (!inc || inc <= 0) { showErr('eIncome'); ok = false; }
+            }
+            if (step === 3) {
+                const prod = document.getElementById('fProduct').value;
+                if (!prod) { showErr('eProduct'); ok = false; }
+                const down = parseFloat(document.getElementById('fDown').value);
+                if (!down || down < 88) { showErr('eDown', 'Mínimo $88 de entrada'); ok = false; }
+                if (!selectedPlan) { document.getElementById('ePlan').style.display = 'block'; ok = false; }
+            }
+            if (step === 4) {
+                if (!document.getElementById('fileCedFront').files[0]) { showErr('eCedFront'); ok = false; }
+                if (!document.getElementById('fileCedBack').files[0]) { showErr('eCedBack'); ok = false; }
+                if (!document.getElementById('fileSelfie').files[0]) { showErr('eSelfie'); ok = false; }
+                if (!document.getElementById('filePlanilla').files[0]) { showErr('ePlanilla'); ok = false; }
+            }
+            return ok;
+        }
+
+        // ── STEP NAVIGATION ─────────────────────────────────────────────
+        function goStep(from, to) {
+            if (to > from && !validateStep(from)) {
+                // Scroll to first error
+                const firstErr = document.querySelector(`#panel${from} .fg-err[style*="block"], #panel${from} .fg-input.error`);
+                firstErr?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            // If going to step 5, build summary
+            if (to === 5) buildSummary();
+
+            // Hide current, show next
+            document.getElementById(`panel${from}`).classList.remove('active');
+            document.getElementById(`panel${to}`).classList.add('active');
+            currentStep = to;
+
+            // Update step indicator
+            for (let i = 1; i <= 5; i++) {
+                const sc = document.getElementById(`sc${i}`);
+                const sl = document.getElementById(`sl${i}`);
+                sc.classList.remove('active', 'done');
+                sl.classList.remove('active');
+                if (i < to) { sc.classList.add('done'); sc.innerHTML = '<i class="fa fa-check" style="font-size:.65rem;"></i>'; }
+                else if (i === to) { sc.classList.add('active'); sc.textContent = i; sl.classList.add('active'); }
+                else { sc.textContent = i; }
+                if (i < 5) {
+                    const conn = document.getElementById(`conn${i}`);
+                    conn.classList.toggle('done', i < to);
+                }
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ── SUMMARY ─────────────────────────────────────────────────────
+        function buildSummary() {
+            const nombres = document.getElementById('fNombres').value.trim();
+            const apellidos = document.getElementById('fApellidos').value.trim();
+            const ci = document.getElementById('fCI').value.trim();
+            const birthday = document.getElementById('fBirthday').value;
+            const phone = document.getElementById('fPhone').value.trim();
+            const email = document.getElementById('fEmail').value.trim();
+            const address = document.getElementById('fAddress').value.trim();
+            const city = document.getElementById('fCity').value.trim();
+            const civil = document.getElementById('fCivil').value;
+
+            const ocupacion = document.getElementById('fOcupacion').value;
+            const employer = document.getElementById('fEmployer').value.trim();
+            const income = parseFloat(document.getElementById('fIncome').value) || 0;
+            const expenses = parseFloat(document.getElementById('fExpenses').value) || 0;
+            const timeJob = document.getElementById('fTimeJob').value;
+            const ref1 = document.getElementById('fRef1Name').value.trim();
+
+            const prodId = document.getElementById('fProduct').value;
+            const prodName = prodId === 'OTRO'
+                ? document.getElementById('fOtroProducto').value.trim()
+                : (selectedProduct?.name || document.getElementById('fProduct').options[document.getElementById('fProduct').selectedIndex]?.text || '—');
+            const price = parseFloat(document.getElementById('fPrice').value) || 0;
+            const down = parseFloat(document.getElementById('fDown').value) || 0;
+            const financed = Math.max(0, price - down);
+            const plan = PLANS.find(p => p.months === selectedPlan);
+            const cuota = plan && financed > 0 ? (financed * plan.factor) / selectedPlan : 0;
+            const total = plan ? (financed * plan.factor) + down : down;
+
+            const docOk = (id) => document.getElementById(id).files[0] ? '✅' : '—';
+
+            document.getElementById('summaryContent').innerHTML = `
             <div class="summary-section">
                 <div class="ss-title">👤 Datos Personales</div>
                 <div class="summary-row"><span class="sr-label">Nombre completo</span><span class="sr-value">${nombres} ${apellidos}</span></div>
@@ -965,127 +1512,125 @@
                 <div class="summary-row"><span class="sr-label">Planilla servicios</span><span class="sr-value">${docOk('filePlanilla')} Cargado</span></div>
                 <div class="summary-row"><span class="sr-label">Cert. laboral (opcional)</span><span class="sr-value">${docOk('fileLaboral')} ${document.getElementById('fileLaboral').files[0] ? 'Cargado' : 'No adjuntado'}</span></div>
             </div>`;
-    }
-
-    // ── SUBMIT ───────────────────────────────────────────────────────
-    async function submitForm() {
-        if (!document.getElementById('chkTerms').checked) {
-            document.getElementById('eTerms').style.display = 'block';
-            return;
         }
-        document.getElementById('eTerms').style.display = 'none';
 
-        const btn = document.getElementById('btnSubmit');
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Procesando...';
-        document.getElementById('loaderOverlay').classList.add('on');
+        // ── SUBMIT ───────────────────────────────────────────────────────
+        async function submitForm() {
+            if (!document.getElementById('chkTerms').checked) {
+                document.getElementById('eTerms').style.display = 'block';
+                return;
+            }
+            document.getElementById('eTerms').style.display = 'none';
 
-        try {
-            // Convert docs to base64 (skip if too heavy — send filename only as fallback)
-            const [cedFront, cedBack, selfie, planilla, laboral] = await Promise.all([
-                fileToBase64(document.getElementById('fileCedFront')),
-                fileToBase64(document.getElementById('fileCedBack')),
-                fileToBase64(document.getElementById('fileSelfie')),
-                fileToBase64(document.getElementById('filePlanilla')),
-                fileToBase64(document.getElementById('fileLaboral')),
-            ]);
+            const btn = document.getElementById('btnSubmit');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Subiendo documentos...';
+            document.getElementById('loaderOverlay').classList.add('on');
+            document.querySelector('#loaderOverlay p').textContent = 'Subiendo documentos...';
 
-            const prodId   = document.getElementById('fProduct').value;
-            const prodName = prodId === 'OTRO'
-                ? document.getElementById('fOtroProducto').value.trim()
-                : (selectedProduct?.name || '—');
-            const price    = parseFloat(document.getElementById('fPrice').value) || 0;
-            const down     = parseFloat(document.getElementById('fDown').value) || 0;
-            const income   = parseFloat(document.getElementById('fIncome').value) || 0;
-            const financed = Math.max(0, price - down);
-            const plan     = PLANS.find(p => p.months === selectedPlan);
-            const cuota    = plan && financed > 0 ? (financed * plan.factor) / selectedPlan : 0;
+            try {
+                const cedula = document.getElementById('fCI').value.trim();
 
-            const payload = {
-                tipo: 'SOLICITUD_CREDITO_DIRECTO',
-                solicitante: {
-                    nombres:         document.getElementById('fNombres').value.trim(),
-                    apellidos:       document.getElementById('fApellidos').value.trim(),
-                    nombre_completo: `${document.getElementById('fNombres').value.trim()} ${document.getElementById('fApellidos').value.trim()}`,
-                    cedula:          document.getElementById('fCI').value.trim(),
-                    fecha_nacimiento: document.getElementById('fBirthday').value,
-                    whatsapp:        document.getElementById('fPhone').value.trim(),
-                    email:           document.getElementById('fEmail').value.trim(),
-                    direccion:       document.getElementById('fAddress').value.trim(),
-                    ciudad:          document.getElementById('fCity').value.trim(),
-                    estado_civil:    document.getElementById('fCivil').value,
-                },
-                economia: {
-                    ocupacion:          document.getElementById('fOcupacion').value,
-                    lugar_trabajo:      document.getElementById('fEmployer').value.trim(),
-                    ingresos_mensuales: income,
-                    gastos_mensuales:   parseFloat(document.getElementById('fExpenses').value) || 0,
-                    tiempo_en_trabajo:  document.getElementById('fTimeJob').value,
-                    referencia_personal: document.getElementById('fRef1Name').value.trim(),
-                },
-                producto: {
-                    nombre:          prodName,
-                    precio:          price,
-                    entrada_inicial: down,
-                    monto_financiar: financed,
-                    plan_meses:      selectedPlan,
-                    factor:          plan?.factor,
-                    cuota_mensual:   cuota,
-                    total_pagar:     plan ? (financed * plan.factor) + down : down,
-                },
-                documentos: {
-                    cedula_frontal:   cedFront   || null,
-                    cedula_reverso:   cedBack    || null,
-                    selfie_cedula:    selfie     || null,
-                    planilla_servicios: planilla || null,
-                    certificado_laboral: laboral || null,
-                },
-                fechaRegistro: new Date().toISOString(),
-            };
+                // 1. Upload documents directly to Supabase Storage (bypasses Vercel 4.5MB limit)
+                const [pathCedFront, pathCedBack, pathSelfie, pathPlanilla, pathLaboral] = await Promise.all([
+                    uploadDocToStorage(document.getElementById('fileCedFront'), 'cedula_frontal', cedula),
+                    uploadDocToStorage(document.getElementById('fileCedBack'), 'cedula_reverso', cedula),
+                    uploadDocToStorage(document.getElementById('fileSelfie'), 'selfie_cedula', cedula),
+                    uploadDocToStorage(document.getElementById('filePlanilla'), 'planilla_servicios', cedula),
+                    uploadDocToStorage(document.getElementById('fileLaboral'), 'certificado_laboral', cedula),
+                ]);
 
-            // Send to n8n via backend
-            await fetch('/api/credit-check', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            }).catch(() => {}); // Fire and forget — show success regardless
+                document.querySelector('#loaderOverlay p').textContent = 'Registrando solicitud...';
 
-            // Build WhatsApp follow-up message
-            const waMsg = encodeURIComponent(
-`🎮 *SOLICITUD DE CRÉDITO DIRECTO — Ecugaming Import*
+                // 2. Build lightweight payload (only storage paths, no base64)
+                const prodId = document.getElementById('fProduct').value;
+                const prodName = prodId === 'OTRO'
+                    ? document.getElementById('fOtroProducto').value.trim()
+                    : (selectedProduct?.name || '—');
+                const price = parseFloat(document.getElementById('fPrice').value) || 0;
+                const down = parseFloat(document.getElementById('fDown').value) || 0;
+                const income = parseFloat(document.getElementById('fIncome').value) || 0;
+                const financed = Math.max(0, price - down);
+                const plan = PLANS.find(p => p.months === selectedPlan);
+                const cuota = plan && financed > 0 ? (financed * plan.factor) / selectedPlan : 0;
 
-👤 *${payload.solicitante.nombre_completo}*
-🪪 Cédula: ${payload.solicitante.cedula}
-📱 WhatsApp: ${payload.solicitante.whatsapp}
-📍 ${payload.solicitante.ciudad}
+                const payload = {
+                    tipo: 'SOLICITUD_CREDITO_DIRECTO',
+                    solicitante: {
+                        nombres: document.getElementById('fNombres').value.trim(),
+                        apellidos: document.getElementById('fApellidos').value.trim(),
+                        nombre_completo: `${document.getElementById('fNombres').value.trim()} ${document.getElementById('fApellidos').value.trim()}`,
+                        cedula: cedula,
+                        fecha_nacimiento: document.getElementById('fBirthday').value,
+                        whatsapp: document.getElementById('fPhone').value.trim(),
+                        email: document.getElementById('fEmail').value.trim(),
+                        direccion: document.getElementById('fAddress').value.trim(),
+                        ciudad: document.getElementById('fCity').value.trim(),
+                        estado_civil: document.getElementById('fCivil').value,
+                    },
+                    economia: {
+                        ocupacion: document.getElementById('fOcupacion').value,
+                        lugar_trabajo: document.getElementById('fEmployer').value.trim(),
+                        ingresos_mensuales: income,
+                        gastos_mensuales: parseFloat(document.getElementById('fExpenses').value) || 0,
+                        tiempo_en_trabajo: document.getElementById('fTimeJob').value,
+                        referencia_personal: document.getElementById('fRef1Name').value.trim(),
+                    },
+                    producto: {
+                        nombre: prodName,
+                        precio: price,
+                        entrada_inicial: down,
+                        monto_financiar: financed,
+                        plan_meses: selectedPlan,
+                        factor: plan?.factor,
+                        cuota_mensual: cuota,
+                        total_pagar: plan ? (financed * plan.factor) + down : down,
+                    },
+                    storage_paths: {
+                        cedula_frontal: pathCedFront,
+                        cedula_reverso: pathCedBack,
+                        selfie_cedula: pathSelfie,
+                        planilla_servicios: pathPlanilla,
+                        certificado_laboral: pathLaboral,
+                    },
+                    fechaRegistro: new Date().toISOString(),
+                };
 
-🛒 *Producto:* ${prodName}
-💵 Precio: $${price.toFixed(2)}
-💳 Entrada: $${down.toFixed(2)}
-📅 Plan: ${selectedPlan} meses · Cuota: $${cuota.toFixed(2)}/mes
+                // 3. Send lightweight payload to API (< 5KB instead of ~27MB)
+                const res = await fetch('/api/credit-check', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
 
-🏢 Trabajo: ${payload.economia.lugar_trabajo || payload.economia.ocupacion}
-💰 Ingresos: $${income.toFixed(2)}/mes
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    throw new Error(errData.error || `Error del servidor (${res.status})`);
+                }
 
-Acabo de enviar mi solicitud. Adjunté los documentos en el formulario web. Espero respuesta. ¡Gracias!`
-            );
-            document.getElementById('waFollowUp').href = `https://wa.me/593962609951?text=${waMsg}`;
+                // Build WhatsApp follow-up message
+                const waMsg = encodeURIComponent(
+                    `🎮 *SOLICITUD DE CRÉDITO DIRECTO — Ecugaming Import*\n\n👤 *${payload.solicitante.nombre_completo}*\n🪪 Cédula: ${payload.solicitante.cedula}\n📱 WhatsApp: ${payload.solicitante.whatsapp}\n📍 ${payload.solicitante.ciudad}\n\n🛒 *Producto:* ${prodName}\n💵 Precio: $${price.toFixed(2)}\n💳 Entrada: $${down.toFixed(2)}\n📅 Plan: ${selectedPlan} meses · Cuota: $${cuota.toFixed(2)}/mes\n\n🏢 Trabajo: ${payload.economia.lugar_trabajo || payload.economia.ocupacion}\n💰 Ingresos: $${income.toFixed(2)}/mes\n\nAcabo de enviar mi solicitud. Adjunté los documentos en el formulario web. Espero respuesta. ¡Gracias!`
+                );
+                document.getElementById('waFollowUp').href = `https://wa.me/593962609951?text=${waMsg}`;
 
-            // Show success
-            document.getElementById('loaderOverlay').classList.remove('on');
-            document.querySelector('.form-card').style.display = 'none';
-            document.querySelector('.step-wrap').style.display = 'none';
-            document.querySelector('.hero-band').style.display = 'none';
-            document.getElementById('successScreen').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Show success
+                document.getElementById('loaderOverlay').classList.remove('on');
+                document.querySelector('.form-card').style.display = 'none';
+                document.querySelector('.step-wrap').style.display = 'none';
+                document.querySelector('.hero-band').style.display = 'none';
+                document.getElementById('successScreen').style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        } catch (err) {
-            document.getElementById('loaderOverlay').classList.remove('on');
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fa fa-paper-plane"></i> Enviar Solicitud';
-            alert('Error al procesar los archivos. Intenta de nuevo o contacta por WhatsApp.');
+            } catch (err) {
+                console.error('[credit-submit]', err);
+                document.getElementById('loaderOverlay').classList.remove('on');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa fa-paper-plane"></i> Enviar Solicitud';
+                alert('Error al enviar solicitud: ' + (err.message || 'Intenta de nuevo o contacta por WhatsApp.'));
+            }
         }
-    }
     </script>
 </body>
+
 </html>

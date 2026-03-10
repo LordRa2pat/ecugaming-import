@@ -10,232 +10,614 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <style>
-        body { background: var(--bg-light); color: var(--text); }
+        body {
+            background: var(--bg-light);
+            color: var(--text);
+        }
 
         /* Header Overrides */
-        header { background: rgba(10,10,11,0.9); border-bottom: 1px solid var(--border); }
-        header .logo, header .nav-actions i, header .nav-actions a { color: var(--text); }
-        .search-container input { background: rgba(255,255,255,0.08); color: #fff; }
+        header {
+            background: rgba(10, 10, 11, 0.9);
+            border-bottom: 1px solid var(--border);
+        }
+
+        header .logo,
+        header .nav-actions i,
+        header .nav-actions a {
+            color: var(--text);
+        }
+
+        .search-container input {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
 
         /* ── BADGE TAGS ────────────────────────────── */
-        .badge-tag { display:inline-block; font-size:.7rem; font-weight:800; padding:2px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:.05em; }
-        .badge-oferta { background:rgba(255,45,85,.15); color:#ff2d55; border:1px solid rgba(255,45,85,.3); }
-        .badge-remate { background:rgba(255,149,0,.15); color:#ff9500; border:1px solid rgba(255,149,0,.3); }
-        .badge-nuevo  { background:rgba(52,199,89,.15); color:#34c759; border:1px solid rgba(52,199,89,.3); }
+        .badge-tag {
+            display: inline-block;
+            font-size: .7rem;
+            font-weight: 800;
+            padding: 2px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+
+        .badge-oferta {
+            background: rgba(255, 45, 85, .15);
+            color: #ff2d55;
+            border: 1px solid rgba(255, 45, 85, .3);
+        }
+
+        .badge-remate {
+            background: rgba(255, 149, 0, .15);
+            color: #ff9500;
+            border: 1px solid rgba(255, 149, 0, .3);
+        }
+
+        .badge-nuevo {
+            background: rgba(52, 199, 89, .15);
+            color: #34c759;
+            border: 1px solid rgba(52, 199, 89, .3);
+        }
 
         /* ── PLATFORM BADGES ────────────────────────── */
-        .plat-badge { display:inline-flex; align-items:center; gap:3px; font-size:9px; font-weight:900; padding:3px 7px; border-radius:5px; text-transform:uppercase; letter-spacing:.06em; flex-shrink:0; }
-        .plat-ps5      { background:#003087; color:#fff; }
-        .plat-ps4      { background:#00439c; color:#fff; }
-        .plat-ps3      { background:#1a1a3e; color:#aaa; }
-        .plat-xbox     { background:#107c10; color:#fff; }
-        .plat-nintendo { background:#e60012; color:#fff; }
-        .plat-pc       { background:#1b2838; color:#66c0f4; }
-        .plat-multi    { background:#333; color:#ccc; }
-        .card-meta { display:flex; align-items:center; gap:5px; margin-bottom:4px; flex-wrap:wrap; }
+        .plat-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 3px 7px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            flex-shrink: 0;
+        }
+
+        .plat-ps5 {
+            background: #003087;
+            color: #fff;
+        }
+
+        .plat-ps4 {
+            background: #00439c;
+            color: #fff;
+        }
+
+        .plat-ps3 {
+            background: #1a1a3e;
+            color: #aaa;
+        }
+
+        .plat-xbox {
+            background: #107c10;
+            color: #fff;
+        }
+
+        .plat-nintendo {
+            background: #e60012;
+            color: #fff;
+        }
+
+        .plat-pc {
+            background: #1b2838;
+            color: #66c0f4;
+        }
+
+        .plat-multi {
+            background: #333;
+            color: #ccc;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+        }
 
         /* ── SUBCATEGORY NAV ────────────────────────── */
         .cat-nav-wrap {
-            position: sticky; top: 48px; z-index: 200;
-            background: var(--bg-light); border-bottom: 1px solid var(--border);
-            padding: 0 5%; overflow: visible;
+            position: sticky;
+            top: 48px;
+            z-index: 200;
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border);
+            padding: 0 5%;
+            overflow: visible;
         }
+
         .cat-nav {
-            display: flex; align-items: stretch; gap: 2px;
-            height: 44px; overflow-x: auto; scrollbar-width: none;
+            display: flex;
+            align-items: stretch;
+            gap: 2px;
+            height: 44px;
+            overflow-x: auto;
+            scrollbar-width: none;
         }
-        .cat-nav::-webkit-scrollbar { display: none; }
-        .cat-item { position: relative; display: flex; align-items: stretch; }
+
+        .cat-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-item {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+        }
+
         .cat-btn {
-            display: flex; align-items: center; gap: 5px;
-            padding: 0 14px; border: none; background: none;
-            color: var(--text-dim); font-size: .84rem; font-weight: 700;
-            cursor: pointer; transition: color .2s; white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0 14px;
+            border: none;
+            background: none;
+            color: var(--text-dim);
+            font-size: .84rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: color .2s;
+            white-space: nowrap;
             border-bottom: 2px solid transparent;
         }
-        .cat-btn:hover, .cat-btn.active { color: var(--text); border-bottom-color: var(--primary); }
-        .cat-btn .caret { font-size: .6rem; margin-top: 1px; opacity: .6; }
+
+        .cat-btn:hover,
+        .cat-btn.active {
+            color: var(--text);
+            border-bottom-color: var(--primary);
+        }
+
+        .cat-btn .caret {
+            font-size: .6rem;
+            margin-top: 1px;
+            opacity: .6;
+        }
+
         /* SUPER PROMOCIONES pill */
         .cat-btn-promo {
-            display: flex; align-items: center; gap: 6px;
-            padding: 5px 14px; border: none; border-radius: 980px;
-            background: linear-gradient(135deg, rgba(255,149,0,.18), rgba(255,45,85,.18));
-            border: 1px solid rgba(255,149,0,.45);
-            color: #ff9500; font-size: .82rem; font-weight: 800;
-            cursor: pointer; white-space: nowrap;
-            box-shadow: 0 0 12px rgba(255,149,0,.25);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border: none;
+            border-radius: 980px;
+            background: linear-gradient(135deg, rgba(255, 149, 0, .18), rgba(255, 45, 85, .18));
+            border: 1px solid rgba(255, 149, 0, .45);
+            color: #ff9500;
+            font-size: .82rem;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 0 12px rgba(255, 149, 0, .25);
             animation: promoGlow 2.5s ease-in-out infinite;
             transition: transform .15s;
-            align-self: center; margin-left: 6px;
+            align-self: center;
+            margin-left: 6px;
         }
-        .cat-btn-promo:hover { transform: scale(1.04); }
-        .cat-btn-promo.active { background: linear-gradient(135deg, rgba(255,149,0,.35), rgba(255,45,85,.35)); box-shadow: 0 0 20px rgba(255,149,0,.5); }
+
+        .cat-btn-promo:hover {
+            transform: scale(1.04);
+        }
+
+        .cat-btn-promo.active {
+            background: linear-gradient(135deg, rgba(255, 149, 0, .35), rgba(255, 45, 85, .35));
+            box-shadow: 0 0 20px rgba(255, 149, 0, .5);
+        }
+
         @keyframes promoGlow {
-            0%,100% { box-shadow: 0 0 8px rgba(255,149,0,.25); }
-            50%      { box-shadow: 0 0 20px rgba(255,149,0,.55); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 8px rgba(255, 149, 0, .25);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(255, 149, 0, .55);
+            }
         }
 
         /* ── PAGINATION ─────────────────────────────── */
         .pagination-bar {
-            display: flex; align-items: center; justify-content: center;
-            gap: 12px; padding: 24px 5% 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 24px 5% 40px;
         }
+
         .pag-btn {
-            display: flex; align-items: center; gap: 6px;
-            padding: 9px 22px; border-radius: 980px; border: 1.5px solid var(--border);
-            background: var(--card-bg); color: var(--text); font-size: .84rem; font-weight: 700;
-            cursor: pointer; transition: .18s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 22px;
+            border-radius: 980px;
+            border: 1.5px solid var(--border);
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: .84rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .18s;
         }
-        .pag-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
-        .pag-btn:disabled { opacity: .35; cursor: default; }
-        .pag-info { color: var(--text-dim); font-size: .82rem; font-weight: 600; min-width: 80px; text-align: center; }
+
+        .pag-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .pag-btn:disabled {
+            opacity: .35;
+            cursor: default;
+        }
+
+        .pag-info {
+            color: var(--text-dim);
+            font-size: .82rem;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+        }
 
         /* Dropdown */
         .cat-dropdown {
-            display: none; position: fixed;
-            min-width: 210px; background: #1a1a26;
-            border: 1px solid var(--border); border-radius: 14px;
-            padding: 8px; box-shadow: 0 12px 40px rgba(0,0,0,.5);
+            display: none;
+            position: fixed;
+            min-width: 210px;
+            background: #1a1a26;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 8px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, .5);
             z-index: 9999;
         }
-        .cat-dropdown.dd-open { display: block; }
-        .cat-dropdown a {
-            display: flex; align-items: center; gap: 8px;
-            padding: 9px 12px; border-radius: 9px;
-            color: var(--text-dim); font-size: .83rem; font-weight: 600;
-            text-decoration: none; transition: .15s; cursor: pointer;
+
+        .cat-dropdown.dd-open {
+            display: block;
         }
-        .cat-dropdown a:hover { background: rgba(255,140,0,.12); color: var(--primary); }
-        .cat-dropdown a i { width: 16px; text-align: center; font-size: .9rem; }
-        .cat-dd-sep { height: 1px; background: var(--border); margin: 6px 0; }
+
+        .cat-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 12px;
+            border-radius: 9px;
+            color: var(--text-dim);
+            font-size: .83rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: .15s;
+            cursor: pointer;
+        }
+
+        .cat-dropdown a:hover {
+            background: rgba(255, 140, 0, .12);
+            color: var(--primary);
+        }
+
+        .cat-dropdown a i {
+            width: 16px;
+            text-align: center;
+            font-size: .9rem;
+        }
+
+        .cat-dd-sep {
+            height: 1px;
+            background: var(--border);
+            margin: 6px 0;
+        }
 
         /* ── PROMO SLIDER ───────────────────────────── */
         #promoSliderSection {
             padding: 28px 5% 0;
         }
+
         .promo-slider-hdr {
-            display: flex; align-items: center; justify-content: space-between;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 16px;
         }
+
         .promo-slider-hdr h2 {
-            font-size: 1.3rem; font-weight: 900; display: flex; align-items: center; gap: .5rem;
+            font-size: 1.3rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
         }
-        .swiper-promo { width: 100%; overflow: hidden; border-radius: 18px; }
+
+        .swiper-promo {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 18px;
+        }
+
         .swiper-promo .swiper-slide {
-            border-radius: 18px; overflow: hidden;
-            background: var(--card-bg); border: 1px solid var(--border);
-            display: flex; align-items: center; gap: 0;
-            height: 180px; cursor: pointer;
+            border-radius: 18px;
+            overflow: hidden;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0;
+            height: 180px;
+            cursor: pointer;
             transition: border-color .25s;
         }
-        .swiper-promo .swiper-slide:hover { border-color: var(--primary); }
+
+        .swiper-promo .swiper-slide:hover {
+            border-color: var(--primary);
+        }
+
         .slide-img {
-            width: 160px; height: 180px; flex-shrink: 0;
-            background: #111; display: flex; align-items: center; justify-content: center; overflow: hidden;
+            width: 160px;
+            height: 180px;
+            flex-shrink: 0;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
-        .slide-img img { width: 100%; height: 100%; object-fit: contain; padding: 12px; }
+
+        .slide-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 12px;
+        }
+
         .slide-info {
-            flex: 1; padding: 16px 20px; display: flex; flex-direction: column; gap: 6px;
+            flex: 1;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
-        .slide-info .s-cat { font-size: .72rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; }
-        .slide-info .s-name { font-size: 1rem; font-weight: 800; color: var(--text); line-height: 1.2; }
-        .slide-info .s-price { font-size: 1.4rem; font-weight: 900; color: var(--primary); }
-        .slide-info .s-old   { font-size: .85rem; color: var(--text-dim); text-decoration: line-through; }
-        .slide-info .s-badge { align-self: flex-start; }
-        .swiper-promo .swiper-pagination-bullet { background: var(--text-dim); }
-        .swiper-promo .swiper-pagination-bullet-active { background: var(--primary); }
+
+        .slide-info .s-cat {
+            font-size: .72rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .slide-info .s-name {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .slide-info .s-price {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .slide-info .s-old {
+            font-size: .85rem;
+            color: var(--text-dim);
+            text-decoration: line-through;
+        }
+
+        .slide-info .s-badge {
+            align-self: flex-start;
+        }
+
+        .swiper-promo .swiper-pagination-bullet {
+            background: var(--text-dim);
+        }
+
+        .swiper-promo .swiper-pagination-bullet-active {
+            background: var(--primary);
+        }
+
         .swiper-promo .swiper-button-next,
-        .swiper-promo .swiper-button-prev { color: var(--primary); }
+        .swiper-promo .swiper-button-prev {
+            color: var(--primary);
+        }
 
         /* ── CATALOG ────────────────────────────────── */
         .catalog-section {
-            background: var(--bg-light) !important; margin-top: 0 !important; padding-top: 2rem;
+            background: var(--bg-light) !important;
+            margin-top: 0 !important;
+            padding-top: 2rem;
         }
+
         #catalogTitle {
-            font-size: 1.2rem; font-weight: 900; padding: 0 5% 12px;
-            color: var(--text); display: flex; align-items: center; gap: .5rem;
+            font-size: 1.2rem;
+            font-weight: 900;
+            padding: 0 5% 12px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: .5rem;
         }
-        .card { background: var(--card-bg); border: 1px solid var(--border); box-shadow: var(--shadow-glass); }
-        .card:hover { border-color: var(--primary); }
-        .card-name { color: var(--text); }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-glass);
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+        }
+
+        .card-name {
+            color: var(--text);
+        }
+
         /* Image placeholder fallback */
-        .card-img-placeholder { background: #111; }
+        .card-img-placeholder {
+            background: #111;
+        }
 
         /* ── NEWS ───────────────────────────────────── */
-        #newsSection { padding: 60px 5% 40px; }
-        #newsSection h2 { font-size: 1.8rem; font-weight: 900; margin-bottom: 30px; color: var(--text); }
+        #newsSection {
+            padding: 60px 5% 40px;
+        }
+
+        #newsSection h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: var(--text);
+        }
 
         /* ── FOOTER ─────────────────────────────────── */
-        footer { background: #050505 !important; border-top: 1px solid var(--border); }
-        footer .logo { color: #fff; }
+        footer {
+            background: #050505 !important;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .logo {
+            color: #fff;
+        }
 
         @media(max-width:600px) {
-            .slide-img { width: 110px; }
-            .slide-info .s-name { font-size: .88rem; }
+            .slide-img {
+                width: 110px;
+            }
+
+            .slide-info .s-name {
+                font-size: .88rem;
+            }
         }
 
         /* ── ANNOUNCEMENT BAR ── (Feature 1) */
         #announcementBar {
-            background: linear-gradient(90deg, rgba(255,140,0,.18), rgba(255,45,85,.12));
-            border-bottom: 1px solid rgba(255,140,0,.3);
-            padding: 7px 5%; font-size: .78rem; font-weight: 700;
-            color: #ffb347; display: flex; align-items: center; justify-content: center;
-            gap: 8px; position: relative;
+            background: linear-gradient(90deg, rgba(255, 140, 0, .18), rgba(255, 45, 85, .12));
+            border-bottom: 1px solid rgba(255, 140, 0, .3);
+            padding: 7px 5%;
+            font-size: .78rem;
+            font-weight: 700;
+            color: #ffb347;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
         }
+
         #announcementBar .ann-close {
-            position: absolute; right: 1rem; cursor: pointer;
-            font-size: 1rem; color: rgba(255,179,71,.6);
-            background: none; border: none;
+            position: absolute;
+            right: 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            color: rgba(255, 179, 71, .6);
+            background: none;
+            border: none;
             transition: .15s;
         }
-        #announcementBar .ann-close:hover { color: #ffb347; }
+
+        #announcementBar .ann-close:hover {
+            color: #ffb347;
+        }
 
         /* ── BACK TO TOP ── (Feature 2) */
         #backToTop {
-            position: fixed; bottom: 5.5rem; right: 1.5rem;
-            width: 40px; height: 40px; border-radius: 50%;
-            background: var(--primary); color: #fff;
-            border: none; cursor: pointer; font-size: 1rem;
-            display: none; align-items: center; justify-content: center;
-            box-shadow: 0 4px 14px rgba(255,140,0,.4);
-            z-index: 500; transition: opacity .2s, transform .2s;
+            position: fixed;
+            bottom: 5.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(255, 140, 0, .4);
+            z-index: 500;
+            transition: opacity .2s, transform .2s;
         }
-        #backToTop.show { display: flex; }
-        #backToTop:hover { transform: translateY(-2px); }
+
+        #backToTop.show {
+            display: flex;
+        }
+
+        #backToTop:hover {
+            transform: translateY(-2px);
+        }
 
         /* ── CATALOG TOOLBAR ── (Features 3,4,9) */
         .catalog-toolbar {
-            display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: .5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: .5rem;
             padding: .5rem 5%;
-            border-bottom: 1px solid rgba(255,255,255,.05);
+            border-bottom: 1px solid rgba(255, 255, 255, .05);
         }
-        .cat-count { font-size: .8rem; color: var(--text-dim); font-weight: 600; }
-        .cat-count strong { color: var(--text); }
+
+        .cat-count {
+            font-size: .8rem;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        .cat-count strong {
+            color: var(--text);
+        }
+
         .filter-reset {
-            display: none; align-items: center; gap: 4px;
-            background: rgba(255,140,0,.1); border: 1px solid rgba(255,140,0,.3);
-            color: var(--primary); border-radius: 980px;
-            padding: 4px 12px; font-size: .75rem; font-weight: 800;
-            cursor: pointer; transition: .15s;
+            display: none;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 140, 0, .1);
+            border: 1px solid rgba(255, 140, 0, .3);
+            color: var(--primary);
+            border-radius: 980px;
+            padding: 4px 12px;
+            font-size: .75rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: .15s;
         }
-        .filter-reset:hover { background: rgba(255,140,0,.2); }
+
+        .filter-reset:hover {
+            background: rgba(255, 140, 0, .2);
+        }
+
         .sort-select {
-            background: rgba(255,255,255,.04); border: 1px solid var(--border);
-            color: var(--text); border-radius: 8px; padding: 5px 10px;
-            font-size: .78rem; font-weight: 700; cursor: pointer;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: .78rem;
+            font-weight: 700;
+            cursor: pointer;
         }
 
         /* ── SKELETON LOADING ── (Feature 6) */
         @keyframes shimmer {
-            0%   { background-position: -400px 0; }
-            100% { background-position: 400px 0; }
+            0% {
+                background-position: -400px 0;
+            }
+
+            100% {
+                background-position: 400px 0;
+            }
         }
+
         .skeleton-card {
-            border-radius: 16px; overflow: hidden;
-            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
             padding: 1rem;
         }
+
         .skeleton-line {
             border-radius: 4px;
             background: linear-gradient(90deg, #1c1c28 25%, #252535 50%, #1c1c28 75%);
@@ -245,38 +627,99 @@
 
         /* ── BADGE PULSE ANIMATION ── (Feature 11) */
         @keyframes badgePulse {
-            0%,100% { box-shadow: 0 0 0 0 rgba(255,149,0,.4); }
-            50%      { box-shadow: 0 0 0 5px rgba(255,149,0,0); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 149, 0, .4);
+            }
+
+            50% {
+                box-shadow: 0 0 0 5px rgba(255, 149, 0, 0);
+            }
         }
-        .badge-remate { animation: badgePulse 2s ease-in-out infinite; }
+
+        .badge-remate {
+            animation: badgePulse 2s ease-in-out infinite;
+        }
 
         /* ── RECENTLY VIEWED ── (Feature 10) */
         #recentlyViewed {
-            padding: 20px 5% 0; display: none;
+            padding: 20px 5% 0;
+            display: none;
         }
+
         .rv-header {
-            display: flex; align-items: center; justify-content: space-between;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 12px;
         }
-        .rv-header h3 { font-size: 1rem; font-weight: 800; color: var(--text); }
+
+        .rv-header h3 {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
         .rv-strip {
-            display: flex; gap: .75rem; overflow-x: auto; padding-bottom: 8px;
+            display: flex;
+            gap: .75rem;
+            overflow-x: auto;
+            padding-bottom: 8px;
             scrollbar-width: none;
         }
-        .rv-strip::-webkit-scrollbar { display: none; }
+
+        .rv-strip::-webkit-scrollbar {
+            display: none;
+        }
+
         .rv-card {
-            flex-shrink: 0; width: 100px; cursor: pointer;
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 12px; padding: .6rem; text-align: center;
+            flex-shrink: 0;
+            width: 100px;
+            cursor: pointer;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: .6rem;
+            text-align: center;
             transition: border-color .18s;
         }
-        .rv-card:hover { border-color: var(--primary); }
-        .rv-card img { width: 60px; height: 60px; object-fit: contain; border-radius: 6px; }
-        .rv-card .rv-name { font-size: .68rem; font-weight: 700; color: var(--text); margin-top: .3rem; line-height: 1.2; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-        .rv-card .rv-price { font-size: .72rem; font-weight: 900; color: var(--primary); }
+
+        .rv-card:hover {
+            border-color: var(--primary);
+        }
+
+        .rv-card img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        .rv-card .rv-name {
+            font-size: .68rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: .3rem;
+            line-height: 1.2;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .rv-card .rv-price {
+            font-size: .72rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
 
         /* ── STOCK URGENCY ── (Feature 5) */
-        .stock-urgent { color: #ff9500; font-size: .72rem; font-weight: 800; }
+        .stock-urgent {
+            color: #ff9500;
+            font-size: .72rem;
+            font-weight: 800;
+        }
     </style>
 </head>
 
@@ -318,29 +761,40 @@
         background: radial-gradient(ellipse at 60% 40%, #1f1a2e 0%, #0a0a0f 55%, #050505 100%);">
         <!-- Glow orbs -->
         <div style="position:absolute;inset:0;pointer-events:none;z-index:0;">
-            <div style="position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(255,140,0,.13) 0%,transparent 70%);border-radius:50%;"></div>
-            <div style="position:absolute;bottom:-80px;left:10%;width:400px;height:400px;background:radial-gradient(circle,rgba(120,0,255,.08) 0%,transparent 70%);border-radius:50%;"></div>
-            <div style="position:absolute;top:30%;right:5%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,45,85,.07) 0%,transparent 70%);border-radius:50%;"></div>
+            <div
+                style="position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(255,140,0,.13) 0%,transparent 70%);border-radius:50%;">
+            </div>
+            <div
+                style="position:absolute;bottom:-80px;left:10%;width:400px;height:400px;background:radial-gradient(circle,rgba(120,0,255,.08) 0%,transparent 70%);border-radius:50%;">
+            </div>
+            <div
+                style="position:absolute;top:30%;right:5%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,45,85,.07) 0%,transparent 70%);border-radius:50%;">
+            </div>
             <!-- Grid overlay -->
-            <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,140,0,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,140,0,.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 40%,transparent 100%);"></div>
+            <div
+                style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,140,0,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,140,0,.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 40%,transparent 100%);">
+            </div>
         </div>
         <div style="position:relative;z-index:1;display:contents;">
-        <h1 id="heroTitle"
-            style="background: var(--gradient-premium); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-size: 4rem; font-weight: 900; position:relative; z-index:1;">
-            Ecugaming Import</h1>
-        <p id="heroDesc" style="color: rgba(255,255,255,0.7); font-size: 1.4rem; position:relative; z-index:1;">Tecnología premium · El búnker gamer
-            del Ecuador.</p>
-        <div style="display:flex; gap:20px; margin-top:30px; position:relative; z-index:1;">
-            <button class="btn-buy" onclick="scrollToCatalog()" style="padding: 14px 40px; font-size: 1rem;">Explorar
-                Todo</button>
-            <button class="btn-secondary" onclick="scrollToCatalog()"
-                style="color: var(--primary); border: 2px solid var(--primary); border-radius: 980px; padding: 14px 40px; font-weight: 800; font-size: 1rem; transition: .3s; background: rgba(255,140,0,0.05);">
-                Ofertas Flash <i class="fa fa-bolt"></i>
-            </button>
-        </div>
-        <div class="scene-3d fade-in" style="margin-top:50px; width:100%; max-width:900px; position:relative; z-index:1;">
-            <div class="card-3d" id="hero3dCard" style="background:none; border:none; box-shadow:none;"></div>
-        </div>
+            <h1 id="heroTitle"
+                style="background: var(--gradient-premium); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-size: 4rem; font-weight: 900; position:relative; z-index:1;">
+                Ecugaming Import</h1>
+            <p id="heroDesc" style="color: rgba(255,255,255,0.7); font-size: 1.4rem; position:relative; z-index:1;">
+                Tecnología premium · El búnker gamer
+                del Ecuador.</p>
+            <div style="display:flex; gap:20px; margin-top:30px; position:relative; z-index:1;">
+                <button class="btn-buy" onclick="scrollToCatalog()"
+                    style="padding: 14px 40px; font-size: 1rem;">Explorar
+                    Todo</button>
+                <button class="btn-secondary" onclick="scrollToCatalog()"
+                    style="color: var(--primary); border: 2px solid var(--primary); border-radius: 980px; padding: 14px 40px; font-weight: 800; font-size: 1rem; transition: .3s; background: rgba(255,140,0,0.05);">
+                    Ofertas Flash <i class="fa fa-bolt"></i>
+                </button>
+            </div>
+            <div class="scene-3d fade-in"
+                style="margin-top:50px; width:100%; max-width:900px; position:relative; z-index:1;">
+                <div class="card-3d" id="hero3dCard" style="background:none; border:none; box-shadow:none;"></div>
+            </div>
     </section>
 
     <!-- ── CATEGORY NAV WITH DROPDOWNS ─────────────────────── -->
@@ -366,18 +820,22 @@
                     <i class="fa fa-gamepad"></i> Consolas <span class="caret">▼</span>
                 </button>
                 <div class="cat-dropdown">
-                    <a onclick="filterSub('Consolas','Todas las Consolas')"><i class="fa fa-gamepad"></i> Todas las Consolas</a>
+                    <a onclick="filterSub('Consolas','Todas las Consolas')"><i class="fa fa-gamepad"></i> Todas las
+                        Consolas</a>
                     <div class="cat-dd-sep"></div>
                     <a onclick="filterSub('PS5','PlayStation 5')"><i class="fab fa-playstation"></i> PlayStation 5</a>
                     <a onclick="filterSub('PS4','PlayStation 4')"><i class="fab fa-playstation"></i> PlayStation 4</a>
                     <div class="cat-dd-sep"></div>
-                    <a onclick="filterSub('Xbox Series','Xbox Series X|S')"><i class="fab fa-xbox"></i> Xbox Series X|S</a>
+                    <a onclick="filterSub('Xbox Series','Xbox Series X|S')"><i class="fab fa-xbox"></i> Xbox Series
+                        X|S</a>
                     <a onclick="filterSub('Xbox One','Xbox One')"><i class="fab fa-xbox"></i> Xbox One</a>
                     <div class="cat-dd-sep"></div>
-                    <a onclick="filterSub('Nintendo Switch','Nintendo Switch')"><i class="fa fa-circle-nodes"></i> Nintendo Switch</a>
+                    <a onclick="filterSub('Nintendo Switch','Nintendo Switch')"><i class="fa fa-circle-nodes"></i>
+                        Nintendo Switch</a>
                     <a onclick="filterSub('Steam Deck','Steam Deck')"><i class="fab fa-steam"></i> Steam Deck</a>
                     <div class="cat-dd-sep"></div>
-                    <a onclick="filterSub('Retro','Consolas Retro')"><i class="fa fa-clock-rotate-left"></i> Consolas Retro</a>
+                    <a onclick="filterSub('Retro','Consolas Retro')"><i class="fa fa-clock-rotate-left"></i> Consolas
+                        Retro</a>
                     <a onclick="filterSub('Accesorios Consola','Accesorios')"><i class="fa fa-plug"></i> Accesorios</a>
                 </div>
             </div>
@@ -390,15 +848,22 @@
                 <div class="cat-dropdown">
                     <a onclick="filterSub('Juegos','Todos los Juegos')"><i class="fa fa-dice"></i> Todos los Juegos</a>
                     <div class="cat-dd-sep"></div>
-                    <a onclick="filterSub('Juegos PS5','Juegos PS5')"><i class="fab fa-playstation"></i> Juegos PlayStation 5</a>
-                    <a onclick="filterSub('Juegos PS4','Juegos PS4')"><i class="fab fa-playstation"></i> Juegos PlayStation 4</a>
-                    <a onclick="filterSub('Juegos PS3','Juegos PS3')"><i class="fab fa-playstation"></i> Juegos PlayStation 3</a>
+                    <a onclick="filterSub('Juegos PS5','Juegos PS5')"><i class="fab fa-playstation"></i> Juegos
+                        PlayStation 5</a>
+                    <a onclick="filterSub('Juegos PS4','Juegos PS4')"><i class="fab fa-playstation"></i> Juegos
+                        PlayStation 4</a>
+                    <a onclick="filterSub('Juegos PS3','Juegos PS3')"><i class="fab fa-playstation"></i> Juegos
+                        PlayStation 3</a>
                     <div class="cat-dd-sep"></div>
-                    <a onclick="filterSub('Juegos Xbox Series','Juegos Xbox Series')"><i class="fab fa-xbox"></i> Juegos Xbox Series</a>
-                    <a onclick="filterSub('Juegos Xbox One','Juegos Xbox One')"><i class="fab fa-xbox"></i> Juegos Xbox One</a>
-                    <a onclick="filterSub('Juegos Xbox 360','Juegos Xbox 360')"><i class="fab fa-xbox"></i> Juegos Xbox 360</a>
+                    <a onclick="filterSub('Juegos Xbox Series','Juegos Xbox Series')"><i class="fab fa-xbox"></i> Juegos
+                        Xbox Series</a>
+                    <a onclick="filterSub('Juegos Xbox One','Juegos Xbox One')"><i class="fab fa-xbox"></i> Juegos Xbox
+                        One</a>
+                    <a onclick="filterSub('Juegos Xbox 360','Juegos Xbox 360')"><i class="fab fa-xbox"></i> Juegos Xbox
+                        360</a>
                     <div class="cat-dd-sep"></div>
-                    <a onclick="filterSub('Juegos Nintendo Switch','Juegos Nintendo Switch')"><i class="fa fa-circle-nodes"></i> Juegos Nintendo Switch</a>
+                    <a onclick="filterSub('Juegos Nintendo Switch','Juegos Nintendo Switch')"><i
+                            class="fa fa-circle-nodes"></i> Juegos Nintendo Switch</a>
                     <a onclick="filterSub('Juegos PC','Juegos PC')"><i class="fab fa-steam"></i> Juegos PC / Steam</a>
                 </div>
             </div>
@@ -430,7 +895,8 @@
     <section id="promoSliderSection" style="display:none;">
         <div class="promo-slider-hdr">
             <h2><i class="fa fa-bolt" style="color:#ff9500;"></i> Super Promociones</h2>
-            <span style="font-size:.82rem; color:var(--text-dim);">Desliza para ver más <i class="fa fa-arrow-right"></i></span>
+            <span style="font-size:.82rem; color:var(--text-dim);">Desliza para ver más <i
+                    class="fa fa-arrow-right"></i></span>
         </div>
         <div class="swiper swiper-promo" id="promoSwiper">
             <div class="swiper-wrapper" id="sliderCards"></div>
@@ -575,28 +1041,28 @@
         });
 
         // ── Platform keyword mapping for game subcategories ──────────────
-        const XBOX_GAMES = ['halo','forza','gears of war','sea of thieves','grounded','fable'];
-        const NINTENDO_GAMES = ['mario','zelda','pokemon','pokémon','splatoon','animal crossing','metroid','kirby','donkey kong'];
-        const PC_GAMES = ['palworld','baldur\'s gate','overwatch','diablo','world of warcraft'];
-        const PS3_GAMES = ['tekken 7 - legendary','bioshock: the collection'];
+        const XBOX_GAMES = ['halo', 'forza', 'gears of war', 'sea of thieves', 'grounded', 'fable'];
+        const NINTENDO_GAMES = ['mario', 'zelda', 'pokemon', 'pokémon', 'splatoon', 'animal crossing', 'metroid', 'kirby', 'donkey kong'];
+        const PC_GAMES = ['palworld', 'baldur\'s gate', 'overwatch', 'diablo', 'world of warcraft'];
+        const PS3_GAMES = ['tekken 7 - legendary', 'bioshock: the collection'];
         const PS5_EXCLUSIVES = [
-            'spider-man 2','spider man 2','marvel\'s spider-man 2',
-            'returnal','ratchet & clank','demon\'s souls','rise of the ronin',
-            'final fantasy xvi','final fantasy vii rebirth','final fantasy xvi',
-            'dragon\'s dogma 2','stellar blade','astro\'s playroom',
-            'god of war ragnar','god of war: ragnar',
-            'gran turismo 7','gt7',
-            'horizon forbidden west','horizon: forbidden west',
-            'the last of us part i','last of us part i',
-            'death stranding: director','death stranding director',
-            'ufc 5','ea sports ufc 5',
+            'spider-man 2', 'spider man 2', 'marvel\'s spider-man 2',
+            'returnal', 'ratchet & clank', 'demon\'s souls', 'rise of the ronin',
+            'final fantasy xvi', 'final fantasy vii rebirth', 'final fantasy xvi',
+            'dragon\'s dogma 2', 'stellar blade', 'astro\'s playroom',
+            'god of war ragnar', 'god of war: ragnar',
+            'gran turismo 7', 'gt7',
+            'horizon forbidden west', 'horizon: forbidden west',
+            'the last of us part i', 'last of us part i',
+            'death stranding: director', 'death stranding director',
+            'ufc 5', 'ea sports ufc 5',
             'elden ring',
             'ghost of tsushima',
             'alan wake 2',
             'final fantasy vii rebirth',
-            'call of duty: modern warfare iii','call of duty modern warfare iii',
+            'call of duty: modern warfare iii', 'call of duty modern warfare iii',
         ];
-        const RETRO_KEYWORDS = ['game boy','3ds','ps vita','sega','retro console','3do','neo geo'];
+        const RETRO_KEYWORDS = ['game boy', '3ds', 'ps vita', 'sega', 'retro console', '3do', 'neo geo'];
 
         function getPlatform(p) {
             const n = p.name.toLowerCase();
@@ -627,11 +1093,11 @@
         function platformBadgeHTML(p) {
             const plat = getPlatform(p);
             const MAP = {
-                ps5: ['PS5','plat-ps5'], ps4: ['PS4','plat-ps4'], ps3: ['PS3','plat-ps3'],
-                xbox: ['Xbox','plat-xbox'], xboxseries: ['Xbox Series','plat-xbox'], xboxone: ['Xbox One','plat-xbox'],
-                nintendo: ['Nintendo','plat-nintendo'], switch: ['Switch','plat-nintendo'],
-                pc: ['PC','plat-pc'], steamdeck: ['Steam Deck','plat-pc'],
-                retro: ['Retro','plat-multi'],
+                ps5: ['PS5', 'plat-ps5'], ps4: ['PS4', 'plat-ps4'], ps3: ['PS3', 'plat-ps3'],
+                xbox: ['Xbox', 'plat-xbox'], xboxseries: ['Xbox Series', 'plat-xbox'], xboxone: ['Xbox One', 'plat-xbox'],
+                nintendo: ['Nintendo', 'plat-nintendo'], switch: ['Switch', 'plat-nintendo'],
+                pc: ['PC', 'plat-pc'], steamdeck: ['Steam Deck', 'plat-pc'],
+                retro: ['Retro', 'plat-multi'],
             };
             if (!MAP[plat]) return '';
             const [label, cls] = MAP[plat];
@@ -651,33 +1117,33 @@
 
             let filtered;
             switch (key) {
-                case 'All':         filtered = allProducts; break;
-                case 'Promos':      filtered = allProducts.filter(p => p.badge); break;
-                case 'iPhone':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('iphone')); break;
-                case 'Consolas':    filtered = allProducts.filter(p => ['consolas','retro'].includes((p.category||'').toLowerCase())); break;
-                case 'PS5':         filtered = allProducts.filter(p => getPlatform(p) === 'ps5'); break;
-                case 'PS4':         filtered = allProducts.filter(p => getPlatform(p) === 'ps4'); break;
+                case 'All': filtered = allProducts; break;
+                case 'Promos': filtered = allProducts.filter(p => p.badge); break;
+                case 'iPhone': filtered = allProducts.filter(p => (p.category || '').toLowerCase().includes('iphone')); break;
+                case 'Consolas': filtered = allProducts.filter(p => ['consolas', 'retro'].includes((p.category || '').toLowerCase())); break;
+                case 'PS5': filtered = allProducts.filter(p => getPlatform(p) === 'ps5'); break;
+                case 'PS4': filtered = allProducts.filter(p => getPlatform(p) === 'ps4'); break;
                 case 'Xbox Series': filtered = allProducts.filter(p => getPlatform(p) === 'xboxseries'); break;
-                case 'Xbox One':    filtered = allProducts.filter(p => getPlatform(p) === 'xboxone'); break;
+                case 'Xbox One': filtered = allProducts.filter(p => getPlatform(p) === 'xboxone'); break;
                 case 'Nintendo Switch': filtered = allProducts.filter(p => getPlatform(p) === 'switch'); break;
-                case 'Steam Deck':  filtered = allProducts.filter(p => getPlatform(p) === 'steamdeck'); break;
-                case 'Retro':       filtered = allProducts.filter(p => getPlatform(p) === 'retro'); break;
+                case 'Steam Deck': filtered = allProducts.filter(p => getPlatform(p) === 'steamdeck'); break;
+                case 'Retro': filtered = allProducts.filter(p => getPlatform(p) === 'retro'); break;
                 case 'Accesorios Consola': filtered = allProducts.filter(p => {
                     const n = p.name.toLowerCase();
-                    return ['dualsense','controller','headset','charging','camera','remote','portal','vr2','ssd expansion','console cover','funda'].some(k => n.includes(k));
+                    return ['dualsense', 'controller', 'headset', 'charging', 'camera', 'remote', 'portal', 'vr2', 'ssd expansion', 'console cover', 'funda'].some(k => n.includes(k));
                 }); break;
-                case 'Juegos':          filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('juego')); break;
-                case 'Juegos PS5':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('juego') && getPlatform(p) === 'ps5'); break;
-                case 'Juegos PS4':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('juego') && getPlatform(p) === 'ps4'); break;
-                case 'Juegos PS3':      filtered = allProducts.filter(p => getPlatform(p) === 'ps3'); break;
+                case 'Juegos': filtered = allProducts.filter(p => (p.category || '').toLowerCase().includes('juego')); break;
+                case 'Juegos PS5': filtered = allProducts.filter(p => (p.category || '').toLowerCase().includes('juego') && getPlatform(p) === 'ps5'); break;
+                case 'Juegos PS4': filtered = allProducts.filter(p => (p.category || '').toLowerCase().includes('juego') && getPlatform(p) === 'ps4'); break;
+                case 'Juegos PS3': filtered = allProducts.filter(p => getPlatform(p) === 'ps3'); break;
                 case 'Juegos Xbox Series':
                 case 'Juegos Xbox One':
                 case 'Juegos Xbox 360': filtered = allProducts.filter(p => getPlatform(p) === 'xbox'); break;
                 case 'Juegos Nintendo Switch': filtered = allProducts.filter(p => getPlatform(p) === 'nintendo'); break;
-                case 'Juegos PC':       filtered = allProducts.filter(p => getPlatform(p) === 'pc'); break;
-                case 'Accesorios':      filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('accesorio')); break;
-                case 'Laptop':          filtered = allProducts.filter(p => (p.category||'').toLowerCase().includes('laptop')); break;
-                default:                filtered = allProducts.filter(p => (p.name+' '+(p.category||'')).toLowerCase().includes(key.toLowerCase())); break;
+                case 'Juegos PC': filtered = allProducts.filter(p => getPlatform(p) === 'pc'); break;
+                case 'Accesorios': filtered = allProducts.filter(p => (p.category || '').toLowerCase().includes('accesorio')); break;
+                case 'Laptop': filtered = allProducts.filter(p => (p.category || '').toLowerCase().includes('laptop')); break;
+                default: filtered = allProducts.filter(p => (p.name + ' ' + (p.category || '')).toLowerCase().includes(key.toLowerCase())); break;
             }
 
             curProducts = applySortTo(filtered);
@@ -729,9 +1195,9 @@
         function applySortTo(items) {
             const arr = [...items];
             switch (currentSortKey) {
-                case 'price-asc':  return arr.sort((a,b) => (a.sale_price??a.price) - (b.sale_price??b.price));
-                case 'price-desc': return arr.sort((a,b) => (b.sale_price??b.price) - (a.sale_price??a.price));
-                case 'name-asc':   return arr.sort((a,b) => a.name.localeCompare(b.name));
+                case 'price-asc': return arr.sort((a, b) => (a.sale_price ?? a.price) - (b.sale_price ?? b.price));
+                case 'price-desc': return arr.sort((a, b) => (b.sale_price ?? b.price) - (a.sale_price ?? a.price));
+                case 'name-asc': return arr.sort((a, b) => a.name.localeCompare(b.name));
                 default: return arr;
             }
         }
@@ -749,7 +1215,7 @@
         }
 
         // Category sort order — iPhones appear first, then consolas, then the rest
-        const CAT_ORDER = ['iphone','consolas','accesorios','laptop','juegos','general','retro'];
+        const CAT_ORDER = ['iphone', 'consolas', 'accesorios', 'laptop', 'juegos', 'general', 'retro'];
         function catRank(p) {
             const c = (p.category || '').toLowerCase();
             const idx = CAT_ORDER.findIndex(k => c.includes(k));
@@ -760,7 +1226,7 @@
         function showSkeletons() {
             const container = document.getElementById('catalog');
             if (!container) return;
-            container.innerHTML = Array.from({length: 12}).map(() => `
+            container.innerHTML = Array.from({ length: 12 }).map(() => `
                 <div class="skeleton-card">
                     <div class="skeleton-line" style="height:160px; border-radius:12px; margin-bottom:.8rem;"></div>
                     <div class="skeleton-line" style="height:14px; width:60%; margin-bottom:.5rem;"></div>
@@ -836,7 +1302,7 @@
                 pagination: { el: '.swiper-pagination', clickable: true },
                 navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
                 breakpoints: {
-                    640:  { slidesPerView: 2 },
+                    640: { slidesPerView: 2 },
                     1024: { slidesPerView: 3 },
                 }
             });
@@ -857,15 +1323,15 @@
                     card.style.animation = `slideIn 0.5s ease backwards ${idx * 0.1}s`;
                     card.innerHTML = `
                         <div style="width:100%;height:150px;background:#111;border-radius:12px;margin-bottom:1rem;overflow:hidden;">
-                            <img src="${news.image||''}" style="width:100%;height:100%;object-fit:cover;"
+                            <img src="${news.image || ''}" style="width:100%;height:100%;object-fit:cover;"
                                 onerror="this.style.display='none'">
                         </div>
-                        <h3 style="font-size:1rem;font-weight:700;margin-bottom:.5rem;line-height:1.2;color:var(--text);">${news.title||''}</h3>
-                        <p style="font-size:.8rem;color:var(--text-dim);">${news.summary||news.contentSnippet||'Actualización tecnológica...'}</p>
-                        <a href="${news.link||'#'}" target="_blank" style="margin-top:1rem;display:inline-block;font-size:.85rem;color:var(--primary);font-weight:700;text-decoration:none;">Leer más <i class="fa fa-arrow-right"></i></a>`;
+                        <h3 style="font-size:1rem;font-weight:700;margin-bottom:.5rem;line-height:1.2;color:var(--text);">${news.title || ''}</h3>
+                        <p style="font-size:.8rem;color:var(--text-dim);">${news.summary || news.contentSnippet || 'Actualización tecnológica...'}</p>
+                        <a href="${news.link || '#'}" target="_blank" style="margin-top:1rem;display:inline-block;font-size:.85rem;color:var(--primary);font-weight:700;text-decoration:none;">Leer más <i class="fa fa-arrow-right"></i></a>`;
                     container.appendChild(card);
                 });
-            } catch (_) {}
+            } catch (_) { }
         }
 
         function setup3DHero(item) {
@@ -888,7 +1354,7 @@
                 const rect = scene.getBoundingClientRect();
                 const x = (e.clientX - rect.left) / rect.width - .5;
                 const y = ((e.clientY - rect.top) / rect.height - .5) * -1;
-                heroCard.style.transform = `rotateY(${x*15}deg) rotateX(${y*15}deg)`;
+                heroCard.style.transform = `rotateY(${x * 15}deg) rotateX(${y * 15}deg)`;
             });
             scene.addEventListener('mouseleave', () => {
                 heroCard.style.transform = 'rotateY(0deg) rotateX(0deg)';
@@ -938,21 +1404,21 @@
                 ? (item.stock <= 5 ? `<span class="stock-urgent">¡Solo quedan ${item.stock}!</span>` : '')
                 : '<span style="color:#888;font-size:.72rem;font-weight:700;">Agotado</span>';
             return `
-                <div class="card-tag">${item.category||''}</div>
+                <div class="card-tag">${item.category || ''}</div>
                 ${badgeHTML(item.badge)}
-                <div class="card-img-placeholder" onclick="trackView(${JSON.stringify({id:item.id,name:item.name,price:activePrice,image_url:imgSrc||''}).replace(/"/g,'&quot;')});location.href='/product?id=${item.id}'" style="cursor:pointer;">${imgTag}</div>
+                <div class="card-img-placeholder" onclick="trackView(${JSON.stringify({ id: item.id, name: item.name, price: activePrice, image_url: imgSrc || '' }).replace(/"/g, '&quot;')});location.href='/product?id=${item.id}'" style="cursor:pointer;">${imgTag}</div>
                 ${platBadge ? `<div class="card-meta">${platBadge}</div>` : ''}
-                <h3 class="card-name" onclick="trackView(${JSON.stringify({id:item.id,name:item.name,price:activePrice,image_url:imgSrc||''}).replace(/"/g,'&quot;')});location.href='/product?id=${item.id}'" style="cursor:pointer;">${item.name}</h3>
+                <h3 class="card-name" onclick="trackView(${JSON.stringify({ id: item.id, name: item.name, price: activePrice, image_url: imgSrc || '' }).replace(/"/g, '&quot;')});location.href='/product?id=${item.id}'" style="cursor:pointer;">${item.name}</h3>
                 <div class="price-container">
                     <div class="card-price">$${Number(activePrice).toFixed(2)}</div>
                     ${hasPromo ? `<div class="card-old-price">$${Number(item.price).toFixed(2)}</div>` : ''}
                 </div>
                 ${stockText ? `<div style="margin:2px 0 4px;">${stockText}</div>` : ''}
-                <p class="card-desc">${item.description||'Tecnología premium garantizada. Envío seguro a todo el país.'}</p>
+                <p class="card-desc">${item.description || 'Tecnología premium garantizada. Envío seguro a todo el país.'}</p>
                 <div style="display:flex;gap:.5rem;">
                     ${item.stock > 0
-                        ? `<button class="btn-buy" onclick="addToCart('${item.id}')"><i class="fa fa-cart-plus"></i></button>`
-                        : `<button class="btn-secondary" disabled style="opacity:.5;">Agotado</button>`}
+                    ? `<button class="btn-buy" onclick="addToCart('${item.id}')"><i class="fa fa-cart-plus"></i></button>`
+                    : `<button class="btn-secondary" disabled style="opacity:.5;">Agotado</button>`}
                     <button class="btn-secondary" style="margin-top:0;" onclick="location.href='/product?id=${item.id}'">Ver</button>
                 </div>`;
         }
@@ -1019,7 +1485,7 @@
                 return;
             }
             const filtered = allProducts.filter(p =>
-                p.name.toLowerCase().includes(query) || (p.category||'').toLowerCase().includes(query)
+                p.name.toLowerCase().includes(query) || (p.category || '').toLowerCase().includes(query)
             );
             isFiltered = true;
             curProducts = applySortTo(filtered);
@@ -1064,7 +1530,7 @@
                         <div>
                             <div style="font-weight:700;font-size:.9rem;color:var(--text);">${item.name}</div>
                             <div style="color:var(--primary);font-size:.95rem;font-weight:800;">$${Number(item.price).toFixed(2)}</div>
-                            <div style="color:var(--text-dim);font-size:.75rem;">Cant: ${item.qty||1}</div>
+                            <div style="color:var(--text-dim);font-size:.75rem;">Cant: ${item.qty || 1}</div>
                         </div>
                     </div>
                     <i class="fa fa-trash" style="color:#ef4444;cursor:pointer;padding:.5rem;" onclick="removeFromCart(${idx})"></i>`;
@@ -1079,6 +1545,7 @@
 
         async function handleCheckout() {
             if (Cart.isEmpty()) return alert('El carrito está vacío.');
+            await window._supabaseReady;
             const session = await _supabase.auth.getSession();
             if (!session.data.session) { location.href = '/login?redirect=/checkout'; return; }
             toggleCart(false);
@@ -1090,7 +1557,7 @@
         // ── Dropdown toggle (fixed positioning to escape overflow clipping) ──
         document.querySelectorAll('.cat-item').forEach(item => {
             const btn = item.querySelector('.cat-btn');
-            const dd  = item.querySelector('.cat-dropdown');
+            const dd = item.querySelector('.cat-dropdown');
             if (!btn || !dd) return;
             btn.addEventListener('click', e => {
                 e.stopPropagation();
@@ -1098,7 +1565,7 @@
                 document.querySelectorAll('.cat-dropdown').forEach(d => d.classList.remove('dd-open'));
                 if (!wasOpen) {
                     const rect = btn.getBoundingClientRect();
-                    dd.style.top  = (rect.bottom + 4) + 'px';
+                    dd.style.top = (rect.bottom + 4) + 'px';
                     dd.style.left = rect.left + 'px';
                     dd.classList.add('dd-open');
                 }

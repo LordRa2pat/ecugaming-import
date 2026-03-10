@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Envíos | Ecugaming</title>
     <link rel="stylesheet" href="style.css?v=1.0.8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .legal-container {
@@ -110,9 +111,20 @@
             color: var(--white);
         }
 
-        .badge-fast { color: #34c759; font-weight: 700; }
-        .badge-mid  { color: #ff9f0a; font-weight: 700; }
-        .badge-slow { color: #ff6b6b; font-weight: 700; }
+        .badge-fast {
+            color: #34c759;
+            font-weight: 700;
+        }
+
+        .badge-mid {
+            color: #ff9f0a;
+            font-weight: 700;
+        }
+
+        .badge-slow {
+            color: #ff6b6b;
+            font-weight: 700;
+        }
     </style>
 </head>
 
@@ -154,7 +166,8 @@
             </ul>
 
             <h2>2. Tiempos de Despacho y Entrega</h2>
-            <p>Todo pedido cuyo pago (transferencia/depósito/cripto) sea confirmado antes de las 16:00 horas en días laborables, será despachado el mismo día.</p>
+            <p>Todo pedido cuyo pago (transferencia/depósito/cripto) sea confirmado antes de las 16:00 horas en días
+                laborables, será despachado el mismo día.</p>
 
             <table class="delivery-table">
                 <thead>
@@ -204,11 +217,13 @@
                     </tr>
                     <tr>
                         <td>Lago Agrio (entrega local)</td>
-                        <td colspan="3" style="text-align:center;"><span class="badge-fast">Mismo día — entrega en tienda o a domicilio</span></td>
+                        <td colspan="3" style="text-align:center;"><span class="badge-fast">Mismo día — entrega en
+                                tienda o a domicilio</span></td>
                     </tr>
                 </tbody>
             </table>
-            <p style="font-size:0.85rem; color:var(--text-dim);">* Tiempos contados desde la confirmación del pago en días laborables. Para zonas rurales o de difícil acceso puede haber 1 día adicional.</p>
+            <p style="font-size:0.85rem; color:var(--text-dim);">* Tiempos contados desde la confirmación del pago en
+                días laborables. Para zonas rurales o de difícil acceso puede haber 1 día adicional.</p>
 
             <h2>3. Costos de Envío</h2>
             <p>El costo del envío es <strong>GRATUITO</strong> en los siguientes casos:</p>
@@ -217,7 +232,8 @@
                 <li>Productos con etiqueta <strong>"Súper OFERTA"</strong> o <strong>"Remate"</strong> (envío incluido
                     en la promoción).</li>
             </ul>
-            <p>Para compras menores a $500, el costo base de envío es de <strong>$5.00 USD</strong> a nivel nacional. Este valor puede variar según el volumen del paquete y la cobertura del carrier.</p>
+            <p>Para compras menores a $500, el costo base de envío es de <strong>$5.00 USD</strong> a nivel nacional.
+                Este valor puede variar según el volumen del paquete y la cobertura del carrier.</p>
 
             <div class="notice-box">
                 <i class="fa fa-info-circle" style="color:var(--accent); margin-right:0.5rem;"></i>
@@ -228,9 +244,13 @@
 
             <!-- Feature 9: Province delivery calculator -->
             <h2>Calculadora de Entrega Estimada</h2>
-            <div style="background:rgba(255,140,0,.08);border:1px solid rgba(255,140,0,.25);border-radius:14px;padding:1.4rem;margin-bottom:1.5rem;">
-                <p style="margin-bottom:.8rem;font-weight:700;font-size:.9rem;"><i class="fa fa-map-marker-alt" style="color:var(--primary);margin-right:.4rem;"></i> Selecciona tu provincia:</p>
-                <select id="provCalc" style="width:100%;padding:.8rem 1rem;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:var(--text);font-size:.9rem;margin-bottom:.8rem;" onchange="calcDelivery(this.value)">
+            <div
+                style="background:rgba(255,140,0,.08);border:1px solid rgba(255,140,0,.25);border-radius:14px;padding:1.4rem;margin-bottom:1.5rem;">
+                <p style="margin-bottom:.8rem;font-weight:700;font-size:.9rem;"><i class="fa fa-map-marker-alt"
+                        style="color:var(--primary);margin-right:.4rem;"></i> Selecciona tu provincia:</p>
+                <select id="provCalc"
+                    style="width:100%;padding:.8rem 1rem;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:var(--text);font-size:.9rem;margin-bottom:.8rem;"
+                    onchange="calcDelivery(this.value)">
                     <option value="">— Elige tu provincia —</option>
                     <option value="sucumbios">Sucumbíos (Lago Agrio)</option>
                     <option value="pichincha">Pichincha (Quito)</option>
@@ -244,21 +264,23 @@
                     <option value="orellana">Orellana (Coca)</option>
                     <option value="other">Otra provincia</option>
                 </select>
-                <div id="deliveryResult" style="display:none;padding:.8rem 1rem;background:rgba(52,199,89,.08);border:1px solid rgba(52,199,89,.25);border-radius:10px;font-size:.9rem;font-weight:600;"></div>
+                <div id="deliveryResult"
+                    style="display:none;padding:.8rem 1rem;background:rgba(52,199,89,.08);border:1px solid rgba(52,199,89,.25);border-radius:10px;font-size:.9rem;font-weight:600;">
+                </div>
             </div>
             <script>
                 const DELIVERY = {
                     sucumbios: { days: '1-2 días hábiles', carrier: 'Servientrega / entrega local', cost: '$0 (gratis si compras +$500)' },
                     pichincha: { days: '1-2 días hábiles', carrier: 'Servientrega', cost: '$5 (gratis si +$500)' },
-                    guayas:    { days: '1-2 días hábiles', carrier: 'Servientrega / Tramaco Express', cost: '$5 (gratis si +$500)' },
-                    azuay:     { days: '2-3 días hábiles', carrier: 'Servientrega', cost: '$5 (gratis si +$500)' },
-                    manabi:    { days: '2-3 días hábiles', carrier: 'Tramaco Express', cost: '$5 (gratis si +$500)' },
-                    tungurahua:{ days: '2-3 días hábiles', carrier: 'Servientrega', cost: '$5 (gratis si +$500)' },
-                    loja:      { days: '3-4 días hábiles', carrier: 'Servientrega', cost: '$5 (gratis si +$500)' },
-                    esmeraldas:{ days: '2-3 días hábiles', carrier: 'Tramaco Express', cost: '$5 (gratis si +$500)' },
-                    napo:      { days: '2-3 días hábiles', carrier: 'Cooperativa', cost: '$5 (gratis si +$500)' },
-                    orellana:  { days: '2-3 días hábiles', carrier: 'Cooperativa', cost: '$5 (gratis si +$500)' },
-                    other:     { days: '3-5 días hábiles', carrier: 'Servientrega / Cooperativa', cost: '$5 (gratis si +$500)' },
+                    guayas: { days: '1-2 días hábiles', carrier: 'Servientrega / Tramaco Express', cost: '$5 (gratis si +$500)' },
+                    azuay: { days: '2-3 días hábiles', carrier: 'Servientrega', cost: '$5 (gratis si +$500)' },
+                    manabi: { days: '2-3 días hábiles', carrier: 'Tramaco Express', cost: '$5 (gratis si +$500)' },
+                    tungurahua: { days: '2-3 días hábiles', carrier: 'Servientrega', cost: '$5 (gratis si +$500)' },
+                    loja: { days: '3-4 días hábiles', carrier: 'Servientrega', cost: '$5 (gratis si +$500)' },
+                    esmeraldas: { days: '2-3 días hábiles', carrier: 'Tramaco Express', cost: '$5 (gratis si +$500)' },
+                    napo: { days: '2-3 días hábiles', carrier: 'Cooperativa', cost: '$5 (gratis si +$500)' },
+                    orellana: { days: '2-3 días hábiles', carrier: 'Cooperativa', cost: '$5 (gratis si +$500)' },
+                    other: { days: '3-5 días hábiles', carrier: 'Servientrega / Cooperativa', cost: '$5 (gratis si +$500)' },
                 };
                 function calcDelivery(val) {
                     const r = document.getElementById('deliveryResult');

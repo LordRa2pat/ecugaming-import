@@ -489,7 +489,7 @@ app.post('/api/orders/create', requireAuth(async (req, res) => {
         return res.status(400).json({ error: 'Ingresa el nombre de la agencia cooperativa' });
     }
     if (!shippingAddress?.city) return res.status(400).json({ error: 'Dirección de envío incompleta' });
-    if (!['transferencia', 'cripto'].includes(paymentMethod)) {
+    if (!['transferencia', 'cripto', 'paypal'].includes(paymentMethod)) {
         return res.status(400).json({ error: 'Método de pago inválido' });
     }
 
@@ -1106,22 +1106,28 @@ app.get('/api/news', async (req, res) => {
 
 // ============================================================
 // PUBLIC: POST /api/credit-check — saves credit application to Supabase
+// Frontend now uploads documents directly to Storage; this endpoint
+// receives only lightweight storage_paths (< 5KB total).
+// Backward compatible with legacy base64 uploads if needed.
 // ============================================================
 app.post('/api/credit-check', async (req, res) => {
     const b = req.body;
     const sol = b.solicitante || {};
     const eco = b.economia || {};
     const prod = b.producto || {};
+    const frontendPaths = b.storage_paths || {};
     const docs = b.documentos || {};
 
     try {
         if (!useSupabase) return res.json({ ok: true });
 
-        // 1. Upload documents to Storage first (private bucket 'credit-docs')
-        const storagePaths = {};
+        // Use paths uploaded by frontend; fall back to server-side base64 upload
+        const storagePaths = { ...frontendPaths };
         const docKeys = ['cedula_frontal', 'cedula_reverso', 'selfie_cedula', 'planilla_servicios', 'certificado_laboral'];
 
+        // Legacy fallback: if frontend didn't upload, try base64 (old flow)
         for (const key of docKeys) {
+            if (storagePaths[key]) continue; // Already uploaded by frontend
             const b64 = docs[key];
             if (b64 && b64.includes('base64,')) {
                 const buffer = base64ToBuffer(b64);
@@ -1129,18 +1135,16 @@ app.post('/api/credit-check', async (req, res) => {
                     const ext = b64.includes('image/png') ? 'png' : b64.includes('application/pdf') ? 'pdf' : 'jpg';
                     const filename = `${Date.now()}_${key}_${Math.random().toString(36).substr(2, 5)}.${ext}`;
                     const path = `applications/${sol.cedula || 'unknown'}/${filename}`;
-
                     const { error: uploadError } = await supabase.storage
                         .from('credit-docs')
                         .upload(path, buffer, { contentType: b64.split(';')[0].split(':')[1] || 'image/jpeg' });
-
                     if (!uploadError) storagePaths[key] = path;
                     else console.error(`[credit-storage] error uploading ${key}:`, uploadError.message);
                 }
             }
         }
 
-        // 2. Map payload to database schema (matches migration 002 + 005)
+        // Map payload to database schema (matches migration 002 + 005)
         const dbPayload = {
             status: 'pendiente',
             // Personal
@@ -1168,11 +1172,11 @@ app.post('/api/credit-check', async (req, res) => {
             product_price: parseFloat(prod.precio) || 0,
             cuota_entrada: parseFloat(prod.entrada_inicial) || 0,
             entrada_inicial: parseFloat(prod.entrada_inicial) || 0,
-            monto_financiar: parseFloat(prod.monto_financiar) || 1, // Avoid divide-by-zero
+            monto_financiar: parseFloat(prod.monto_financiar) || 1,
             plazo_meses: parseInt(prod.plan_meses) || 0,
             cuota_mensual: parseFloat(prod.cuota_mensual) || 0,
             total_pagar: parseFloat(prod.total_pagar) || 0,
-            // Documents (Paths)
+            // Documents (Storage paths)
             cedula_frontal: storagePaths.cedula_frontal || null,
             cedula_reverso: storagePaths.cedula_reverso || null,
             selfie_cedula: storagePaths.selfie_cedula || null,
@@ -1183,16 +1187,11 @@ app.post('/api/credit-check', async (req, res) => {
         const { error: dbError } = await supabase.from('credit_applications').insert(dbPayload);
         if (dbError) throw dbError;
 
-        // 3. Notify by WhatsApp/Email (Existing logic)
+        // Notify by WhatsApp/Email (fire-and-forget)
         const url = process.env.N8N_CREDIT_WEBHOOK_URL || process.env.N8N_ORDER_WEBHOOK_URL;
         if (url) {
-            // Send payload without base64 to n8n (too heavy) + storage paths
             const n8nPayload = { ...b, storage_paths: storagePaths };
-            if (n8nPayload.documentos) {
-                Object.keys(n8nPayload.documentos).forEach(k => {
-                    if (n8nPayload.documentos[k]) n8nPayload.documentos[k] = '[stored_in_supabase]';
-                });
-            }
+            delete n8nPayload.documentos; // Never send base64 to n8n
             fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(n8nPayload), signal: AbortSignal.timeout(5000) })
                 .catch(e => console.error('[credit n8n]', e.message));
         }

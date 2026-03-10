@@ -9,136 +9,140 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-    body { background: var(--bg-light); color: var(--text); }
-    .auth-container {
-    max-width: 450px;
-    margin: 80px auto;
-    padding: 2.5rem;
-    background: var(--card-bg);
-    border-radius: 24px;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid var(--border);
-    }
+        body {
+            background: var(--bg-light);
+            color: var(--text);
+        }
 
-    .auth-header {
-    text-align: center;
-    margin-bottom: 2rem;
-    }
+        .auth-container {
+            max-width: 450px;
+            margin: 80px auto;
+            padding: 2.5rem;
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border);
+        }
 
-    .auth-header h1 {
-    color: var(--white);
-    font-weight: 900;
-    font-size: 2rem;
-    }
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-    .auth-header span {
-    color: var(--primary);
-    }
+        .auth-header h1 {
+            color: var(--white);
+            font-weight: 900;
+            font-size: 2rem;
+        }
 
-    .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: .8rem;
-    }
+        .auth-header span {
+            color: var(--primary);
+        }
 
-    .form-group {
-    margin-bottom: 1.1rem;
-    }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .8rem;
+        }
 
-    .form-group label {
-    display: block;
-    margin-bottom: .4rem;
-    font-weight: 600;
-    font-size: .9rem;
-    color: var(--text-dim);
-    }
+        .form-group {
+            margin-bottom: 1.1rem;
+        }
 
-    .form-control {
-    width: 100%;
-    padding: .9rem 1rem;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--white);
-    font-size: 1rem;
-    transition: .3s;
-    box-sizing: border-box;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: .4rem;
+            font-weight: 600;
+            font-size: .9rem;
+            color: var(--text-dim);
+        }
 
-    .form-control:focus {
-    border-color: var(--primary);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 113, 227, .1);
-    }
+        .form-control {
+            width: 100%;
+            padding: .9rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            font-size: 1rem;
+            transition: .3s;
+            box-sizing: border-box;
+        }
 
-    .btn-auth {
-    width: 100%;
-    padding: 1rem;
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: .2s;
-    }
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, .1);
+        }
 
-    .btn-auth:hover {
-    opacity: .88;
-    }
+        .btn-auth {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: .2s;
+        }
 
-    .btn-auth:disabled {
-    opacity: .6;
-    cursor: not-allowed;
-    }
+        .btn-auth:hover {
+            opacity: .88;
+        }
 
-    .auth-footer {
-    text-align: center;
-    margin-top: 1.5rem;
-    font-size: .9rem;
-    color: var(--text-dim);
-    }
+        .btn-auth:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
 
-    .auth-footer a {
-    color: var(--primary);
-    font-weight: 700;
-    text-decoration: none;
-    }
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: .9rem;
+            color: var(--text-dim);
+        }
 
-    .error-msg {
-    background: #fff0f0;
-    color: #c0392b;
-    border: 1px solid #f5c6c6;
-    border-radius: 10px;
-    padding: .8rem 1rem;
-    margin-bottom: 1rem;
-    font-size: .9rem;
-    display: none;
-    }
+        .auth-footer a {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+        }
 
-    .success-msg {
-    background: #f0fff4;
-    color: #27ae60;
-    border: 1px solid #b2dfdb;
-    border-radius: 10px;
-    padding: .8rem 1rem;
-    margin-bottom: 1rem;
-    font-size: .9rem;
-    display: none;
-    }
+        .error-msg {
+            background: #fff0f0;
+            color: #c0392b;
+            border: 1px solid #f5c6c6;
+            border-radius: 10px;
+            padding: .8rem 1rem;
+            margin-bottom: 1rem;
+            font-size: .9rem;
+            display: none;
+        }
 
-    .password-hint {
-    font-size: .78rem;
-    color: var(--text-dim);
-    margin-top: .25rem;
-    }
+        .success-msg {
+            background: #f0fff4;
+            color: #27ae60;
+            border: 1px solid #b2dfdb;
+            border-radius: 10px;
+            padding: .8rem 1rem;
+            margin-bottom: 1rem;
+            font-size: .9rem;
+            display: none;
+        }
 
-    @media (max-width: 500px) {
-    .form-row {
-    grid-template-columns: 1fr;
-    }
-    }
+        .password-hint {
+            font-size: .78rem;
+            color: var(--text-dim);
+            margin-top: .25rem;
+        }
+
+        @media (max-width: 500px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
@@ -146,7 +150,8 @@
     <header>
         <div class="logo" onclick="location.href='/'">Ecugaming <span>Import</span></div>
         <div class="nav-actions">
-            <a href="/" style="font-size:.82rem; font-weight:700; color:var(--text-dim); text-decoration:none; display:flex; align-items:center; gap:.4rem;">
+            <a href="/"
+                style="font-size:.82rem; font-weight:700; color:var(--text-dim); text-decoration:none; display:flex; align-items:center; gap:.4rem;">
                 <i class="fa fa-arrow-left"></i> Volver a la Tienda
             </a>
         </div>
@@ -182,11 +187,18 @@
                     autocomplete="new-password" oninput="updateRegStrength(this.value)">
                 <!-- Feature 6: Password strength meter -->
                 <div style="display:flex;gap:4px;margin-top:.4rem;">
-                    <div id="rs1" style="height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .2s;"></div>
-                    <div id="rs2" style="height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .2s;"></div>
-                    <div id="rs3" style="height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .2s;"></div>
+                    <div id="rs1"
+                        style="height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .2s;">
+                    </div>
+                    <div id="rs2"
+                        style="height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .2s;">
+                    </div>
+                    <div id="rs3"
+                        style="height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,.1);transition:background .2s;">
+                    </div>
                 </div>
-                <div id="rsLabel" style="font-size:.72rem;font-weight:700;color:var(--text-dim);margin-top:.2rem;"></div>
+                <div id="rsLabel" style="font-size:.72rem;font-weight:700;color:var(--text-dim);margin-top:.2rem;">
+                </div>
             </div>
             <div class="form-group">
                 <label>Confirmar Contraseña</label>
@@ -213,9 +225,9 @@
             if (val.length >= 6) s = 1;
             if (val.length >= 8 && hasNum) s = 2;
             if (val.length >= 8 && hasNum && hasSpec) s = 3;
-            const colors = ['','#ff453a','#ff9500','#34c759'];
-            const labels = ['','Débil','Media','Fuerte'];
-            for (let i=1;i<=3;i++) document.getElementById('rs'+i).style.background = i<=s ? colors[s] : 'rgba(255,255,255,.1)';
+            const colors = ['', '#ff453a', '#ff9500', '#34c759'];
+            const labels = ['', 'Débil', 'Media', 'Fuerte'];
+            for (let i = 1; i <= 3; i++) document.getElementById('rs' + i).style.background = i <= s ? colors[s] : 'rgba(255,255,255,.1)';
             const lbl = document.getElementById('rsLabel');
             lbl.textContent = val.length ? labels[s] : '';
             lbl.style.color = colors[s] || 'var(--text-dim)';
@@ -259,6 +271,8 @@
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creando cuenta...';
 
+            await window._supabaseReady;
+            if (!window._supabase) { showError('Error de conexión. Recarga la página.'); btn.disabled = false; btn.innerHTML = '<i class="fas fa-user-plus"></i> Crear Cuenta'; return; }
             const { data, error } = await _supabase.auth.signUp({
                 email,
                 password,

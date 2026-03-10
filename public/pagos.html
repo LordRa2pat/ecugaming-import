@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Métodos de Pago | Ecugaming Import</title>
     <link rel="stylesheet" href="style.css?v=1.0.8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .legal-container {
@@ -17,18 +18,25 @@
             box-shadow: var(--shadow-glass);
             border: 1px solid var(--border);
         }
+
         .legal-content h1 {
             color: var(--secondary);
             margin-bottom: 0.5rem;
             font-size: 2.2rem;
             font-weight: 900;
         }
-        .legal-content h1 i { color: var(--primary); margin-right: 0.75rem; }
+
+        .legal-content h1 i {
+            color: var(--primary);
+            margin-right: 0.75rem;
+        }
+
         .legal-content .last-updated {
             font-size: 0.85rem;
             color: var(--text-dim);
             margin-bottom: 2rem;
         }
+
         .legal-content h2 {
             color: #fff;
             margin-top: 2.5rem;
@@ -38,32 +46,40 @@
             align-items: center;
             gap: 0.75rem;
         }
+
         .legal-content p {
             color: var(--text);
             margin-bottom: 1rem;
             line-height: 1.8;
             font-size: 1rem;
         }
+
         .legal-content ul {
             margin-left: 2rem;
             margin-bottom: 1.5rem;
             color: var(--text-dim);
         }
-        .legal-content li { margin-bottom: 0.5rem; line-height: 1.7; }
+
+        .legal-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
 
         .payment-card {
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
         }
+
         .payment-card-header {
             display: flex;
             align-items: center;
             gap: 1rem;
             margin-bottom: 1rem;
         }
+
         .payment-card-icon {
             width: 48px;
             height: 48px;
@@ -75,19 +91,30 @@
             color: #fff;
             flex-shrink: 0;
         }
-        .icon-bank { background: linear-gradient(135deg, #1e40af, #3b82f6); }
-        .icon-crypto { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .icon-card { background: #94a3b8; }
+
+        .icon-bank {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+        }
+
+        .icon-crypto {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .icon-card {
+            background: #94a3b8;
+        }
 
         .payment-card-title {
             font-weight: 800;
             font-size: 1.15rem;
             color: #fff;
         }
+
         .payment-card-subtitle {
             font-size: 0.85rem;
             color: var(--text-dim);
         }
+
         .badge-maintenance {
             display: inline-block;
             background: #fef3c7;
@@ -101,12 +128,14 @@
             letter-spacing: 0.05em;
             margin-left: 0.5rem;
         }
+
         .step-list {
             counter-reset: steps;
             list-style: none;
             margin-left: 0;
             padding: 0;
         }
+
         .step-list li {
             counter-increment: steps;
             display: flex;
@@ -114,6 +143,7 @@
             align-items: flex-start;
             margin-bottom: 0.75rem;
         }
+
         .step-list li::before {
             content: counter(steps);
             min-width: 28px;
@@ -128,8 +158,9 @@
             font-weight: 700;
             flex-shrink: 0;
         }
+
         .notice-box {
-            background: rgba(34,197,94,0.07);
+            background: rgba(34, 197, 94, 0.07);
             border-left: 4px solid var(--accent);
             padding: 1.25rem 1.5rem;
             border-radius: 0 12px 12px 0;
@@ -137,10 +168,12 @@
             color: var(--text);
             font-size: 0.95rem;
         }
+
         .notice-warning {
-            background: rgba(245,158,11,0.08);
+            background: rgba(245, 158, 11, 0.08);
             border-left-color: #f59e0b;
         }
+
         .footer-note {
             margin-top: 3rem;
             padding-top: 2rem;
@@ -168,11 +201,16 @@
             <h1><i class="fa fa-credit-card"></i>Métodos de Pago</h1>
             <p class="last-updated">Última actualización: Marzo 2026</p>
             <div style="display:flex;gap:.75rem;margin-bottom:1.5rem;flex-wrap:wrap;">
-                <button onclick="window.print()" style="display:inline-flex;align-items:center;gap:6px;background:var(--primary);border:none;border-radius:10px;padding:7px 16px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;"><i class="fa fa-print"></i> Imprimir</button>
-                <button onclick="navigator.clipboard.writeText(location.href).then(()=>alert('Enlace copiado'))" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;padding:7px 16px;font-size:13px;font-weight:600;color:#e2e2e7;cursor:pointer;"><i class="fa fa-link"></i> Copiar Enlace</button>
+                <button onclick="window.print()"
+                    style="display:inline-flex;align-items:center;gap:6px;background:var(--primary);border:none;border-radius:10px;padding:7px 16px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;"><i
+                        class="fa fa-print"></i> Imprimir</button>
+                <button onclick="navigator.clipboard.writeText(location.href).then(()=>alert('Enlace copiado'))"
+                    style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;padding:7px 16px;font-size:13px;font-weight:600;color:#e2e2e7;cursor:pointer;"><i
+                        class="fa fa-link"></i> Copiar Enlace</button>
             </div>
 
-            <p>Todos los precios están en <strong>Dólares de los Estados Unidos (USD)</strong>. Aceptamos los siguientes métodos de pago para compras en línea:</p>
+            <p>Todos los precios están en <strong>Dólares de los Estados Unidos (USD)</strong>. Aceptamos los siguientes
+                métodos de pago para compras en línea:</p>
 
             <!-- Transferencia bancaria -->
             <div class="payment-card">
@@ -183,13 +221,15 @@
                         <div class="payment-card-subtitle">Disponible — Confirmación en 1–2 horas hábiles</div>
                     </div>
                 </div>
-                <p>Realiza una transferencia o depósito a una de nuestras cuentas bancarias y sube el comprobante directamente en el checkout. Aceptamos:</p>
+                <p>Realiza una transferencia o depósito a una de nuestras cuentas bancarias y sube el comprobante
+                    directamente en el checkout. Aceptamos:</p>
                 <ul>
                     <li><strong>Banco Pichincha</strong> — Cuenta Corriente</li>
                     <li><strong>Banco del Pacífico</strong> — Cuenta de Ahorros</li>
                     <li><strong>Banco Guayaquil</strong> — Cuenta de Ahorros</li>
                 </ul>
-                <p>Los números de cuenta actualizados se muestran al seleccionar el banco en el paso de pago del checkout.</p>
+                <p>Los números de cuenta actualizados se muestran al seleccionar el banco en el paso de pago del
+                    checkout.</p>
                 <h3 style="font-size:1rem;font-weight:700;color:#fff;margin:1rem 0 0.5rem;">Proceso paso a paso:</h3>
                 <ol class="step-list">
                     <li>Selecciona tu banco en el checkout y anota el número de cuenta y titular.</li>
@@ -213,7 +253,8 @@
                         <div class="payment-card-subtitle">Disponible — Confirmación en 10–60 minutos según red</div>
                     </div>
                 </div>
-                <p>Aceptamos pagos en criptomonedas. Las redes disponibles y sus wallets se muestran en el checkout. Actualmente aceptamos:</p>
+                <p>Aceptamos pagos en criptomonedas. Las redes disponibles y sus wallets se muestran en el checkout.
+                    Actualmente aceptamos:</p>
                 <ul>
                     <li><strong>Binance Pay</strong> — Pago instantáneo con tu cuenta Binance.</li>
                     <li><strong>USDT (TRC20)</strong> — Tether en la red TRON (comisiones bajas).</li>
@@ -229,7 +270,8 @@
                 </ol>
                 <div class="notice-box notice-warning">
                     <i class="fa fa-triangle-exclamation" style="color:#f59e0b;margin-right:0.5rem;"></i>
-                    Verifica siempre que envías a la red correcta. Los fondos enviados a una red equivocada (ej: USDT en red ERC20 vs TRC20) pueden perderse sin posibilidad de recuperación.
+                    Verifica siempre que envías a la red correcta. Los fondos enviados a una red equivocada (ej: USDT en
+                    red ERC20 vs TRC20) pueden perderse sin posibilidad de recuperación.
                 </div>
             </div>
 
@@ -245,14 +287,20 @@
                         <div class="payment-card-subtitle">Próximamente disponible</div>
                     </div>
                 </div>
-                <p>El módulo de pago con tarjeta está siendo implementado. Estaremos habilitando Visa, Mastercard y American Express. Síguenos en nuestras redes sociales para saber cuándo esté disponible.</p>
+                <p>El módulo de pago con tarjeta está siendo implementado. Estaremos habilitando Visa, Mastercard y
+                    American Express. Síguenos en nuestras redes sociales para saber cuándo esté disponible.</p>
             </div>
 
             <h2><i class="fa fa-shield-halved"></i>Seguridad de los Pagos</h2>
-            <p>Ecugaming Import nunca te pedirá tu contraseña bancaria ni datos de tarjeta por WhatsApp, correo o redes sociales. Todos los comprobantes subidos son almacenados de forma segura y solo son accesibles por nuestro equipo de verificación.</p>
+            <p>Ecugaming Import nunca te pedirá tu contraseña bancaria ni datos de tarjeta por WhatsApp, correo o redes
+                sociales. Todos los comprobantes subidos son almacenados de forma segura y solo son accesibles por
+                nuestro equipo de verificación.</p>
 
             <h2><i class="fa fa-rotate-left"></i>Reembolsos</h2>
-            <p>En caso de cancelación de orden confirmada o producto defectuoso sin stock de reposición, el reembolso se realiza por el mismo método de pago utilizado en un plazo de <strong>3 a 5 días hábiles</strong>. Para más detalles, consulta nuestra <a href="/devoluciones" style="color:var(--primary);font-weight:600;">Política de Devoluciones</a>.</p>
+            <p>En caso de cancelación de orden confirmada o producto defectuoso sin stock de reposición, el reembolso se
+                realiza por el mismo método de pago utilizado en un plazo de <strong>3 a 5 días hábiles</strong>. Para
+                más detalles, consulta nuestra <a href="/devoluciones"
+                    style="color:var(--primary);font-weight:600;">Política de Devoluciones</a>.</p>
 
             <div class="footer-note">
                 Consultas sobre pagos: <strong>096 260 9951</strong> (WhatsApp)<br>

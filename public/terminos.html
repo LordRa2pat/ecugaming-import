@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Términos y Condiciones | Ecugaming</title>
     <link rel="stylesheet" href="style.css?v=1.0.8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .legal-container {
@@ -51,17 +52,41 @@
 
         /* TOC */
         .toc-box {
-            background: rgba(255,140,0,0.06);
-            border: 1px solid rgba(255,140,0,0.2);
+            background: rgba(255, 140, 0, 0.06);
+            border: 1px solid rgba(255, 140, 0, 0.2);
             border-radius: 16px;
             padding: 1.2rem 1.5rem;
             margin-bottom: 2rem;
         }
-        .toc-box h3 { color: var(--primary); font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
-        .toc-box ol { padding-left: 1.2rem; margin: 0; }
-        .toc-box li { margin-bottom: 0.3rem; }
-        .toc-box a { color: var(--text-dim); font-size: 0.9rem; text-decoration: none; transition: 0.2s; }
-        .toc-box a:hover { color: var(--primary); }
+
+        .toc-box h3 {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.75rem;
+        }
+
+        .toc-box ol {
+            padding-left: 1.2rem;
+            margin: 0;
+        }
+
+        .toc-box li {
+            margin-bottom: 0.3rem;
+        }
+
+        .toc-box a {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .toc-box a:hover {
+            color: var(--primary);
+        }
 
         /* Print / action bar */
         .legal-actions {
@@ -70,11 +95,12 @@
             margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
+
         .legal-btn {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 7px 16px;
@@ -85,18 +111,51 @@
             text-decoration: none;
             transition: 0.2s;
         }
-        .legal-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
-        .legal-btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+        .legal-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .legal-btn.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
 
         /* section anchors */
-        .legal-content h2 { scroll-margin-top: 80px; }
+        .legal-content h2 {
+            scroll-margin-top: 80px;
+        }
 
         @media print {
-            header, .legal-actions, .toc-box { display: none !important; }
-            .legal-container { margin: 0; border: none; box-shadow: none; }
-            body { background: #fff; color: #000; }
-            .legal-content h1, .legal-content h2 { color: #000; }
-            .legal-content p, .legal-content li { color: #222; }
+
+            header,
+            .legal-actions,
+            .toc-box {
+                display: none !important;
+            }
+
+            .legal-container {
+                margin: 0;
+                border: none;
+                box-shadow: none;
+            }
+
+            body {
+                background: #fff;
+                color: #000;
+            }
+
+            .legal-content h1,
+            .legal-content h2 {
+                color: #000;
+            }
+
+            .legal-content p,
+            .legal-content li {
+                color: #222;
+            }
         }
     </style>
 </head>
@@ -119,7 +178,9 @@
             <!-- Action Bar -->
             <div class="legal-actions">
                 <button class="legal-btn primary" onclick="window.print()"><i class="fa fa-print"></i> Imprimir</button>
-                <button class="legal-btn" onclick="navigator.clipboard.writeText(location.href).then(()=>alert('Enlace copiado'))"><i class="fa fa-link"></i> Copiar Enlace</button>
+                <button class="legal-btn"
+                    onclick="navigator.clipboard.writeText(location.href).then(()=>alert('Enlace copiado'))"><i
+                        class="fa fa-link"></i> Copiar Enlace</button>
             </div>
 
             <!-- Table of Contents -->
@@ -205,7 +266,7 @@
     <script>
         Auth.updateAuthUI();
         // Auto-generate TOC from h2 headings
-        (function() {
+        (function () {
             const headings = document.querySelectorAll('.legal-content h2');
             const list = document.getElementById('tocList');
             headings.forEach((h, i) => {
