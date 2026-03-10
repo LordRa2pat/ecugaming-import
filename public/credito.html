@@ -1409,12 +1409,28 @@ Por favor confirmar disponibilidad y condiciones. Gracias.`
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     tipo: 'SOLICITUD_CREDITO_DIRECTO',
-                    solicitante: { nombres: name, cedula: ci, whatsapp: phone, lugar_trabajo: work },
-                    economia: { producto: pName, precio: parseFloat(price || 0), entrada_ofrecida: parseFloat(down || 0), ingresos_mensuales: parseFloat(income || 0), plan_meses: parseInt(plan) },
+                    solicitante: {
+                        nombres: name,
+                        nombre_completo: name,
+                        cedula: ci,
+                        whatsapp: phone,
+                        lugar_trabajo: work
+                    },
+                    economia: {
+                        ingresos_mensuales: parseFloat(income || 0)
+                    },
+                    producto: {
+                        nombre: pName,
+                        precio: parseFloat(price || 0),
+                        entrada_inicial: parseFloat(down || 0),
+                        plan_meses: parseInt(plan)
+                    },
                     estado_documentos: currentDocStatus,
                     fechaRegistro: new Date().toISOString()
                 })
-            }).catch(() => { });
+            }).catch((err) => {
+                console.error('[credit-check] backend error:', err);
+            });
         }
 
         // ── PRINT SIMULATION (Feature 2) ─────────────────────────────
