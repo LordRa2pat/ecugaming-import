@@ -64,6 +64,14 @@ app.use(async (req, res, next) => {
     next();
 });
 
+// PUBLIC: GET /api/config
+app.get('/api/config', (req, res) => {
+    res.json({
+        supabaseUrl: process.env.SUPABASE_URL || 'https://dpomkchvjpdkndkksphy.supabase.co',
+        supabaseAnonKey: process.env.SUPABASE_ANON_KEY || ''
+    });
+});
+
 // ============================================================
 // JSON FALLBACK (read-only, for /api/stock when no Supabase)
 // ============================================================
