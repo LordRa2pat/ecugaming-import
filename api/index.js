@@ -19,8 +19,8 @@ app.use(express.json({ limit: '25mb' }));
 // ============================================================
 // DATABASE (Supabase service_role — full access, server only)
 // ============================================================
-const SUPABASE_URL = process.env.SUPABASE_URL?.trim();
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY?.trim();
+const SUPABASE_URL = process.env.SUPABASE_URL?.trim() || 'https://dpomkchvjpdkndkksphy.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY?.trim() || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwb21rY2h2anBka25ka2tzcGh5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjQ5NDg5OCwiZXhwIjoyMDg4MDcwODk4fQ.ozc20Sicro_jT3aV7Ipsyn6b0s_08pN4zSITlOcA88g';
 
 process.on('uncaughtException', (err) => {
     console.error('UNCAUGHT EXCEPTION:', err);
