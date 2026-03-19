@@ -188,7 +188,14 @@
             const { data: { session } } = await _supabase.auth.getSession();
             if (session) {
                 const params = new URLSearchParams(location.search);
-                location.href = params.get('redirect') || '/';
+                let redirectUrl = params.get('redirect');
+                if (!redirectUrl) {
+                    try {
+                        const { data: profile } = await _supabase.from('profiles').select('role').eq('id', session.user.id).single();
+                        redirectUrl = (profile && profile.role === 'admin') ? '/admin.html' : '/';
+                    } catch(e) { redirectUrl = '/'; }
+                }
+                location.href = redirectUrl;
                 return;
             }
         })();
@@ -247,8 +254,16 @@
 
             showSuccess('¡Bienvenido! Redirigiendo...');
             const params = new URLSearchParams(location.search);
+            let redirectUrl = params.get('redirect');
+            if (!redirectUrl) {
+                try {
+                    const { data: profile } = await _supabase.from('profiles').select('role').eq('id', data.user.id).single();
+                    redirectUrl = (profile && profile.role === 'admin') ? '/admin.html' : '/';
+                } catch(e) { redirectUrl = '/'; }
+            }
+
             setTimeout(() => {
-                location.href = params.get('redirect') || '/';
+                location.href = redirectUrl;
             }, 600);
         });
     </script>

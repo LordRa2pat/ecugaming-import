@@ -36,7 +36,7 @@
             align-items: center;
             gap: 10px;
         }
-        .sidebar-brand span { color: #ff8c00; }
+        .sidebar-brand span { color: #00b4d8; }
         .sidebar-group {
             font-size: 10px;
             font-weight: 800;
@@ -64,9 +64,9 @@
         }
         .sidebar-item:hover { background: rgba(255,255,255,.04); color: #fff; }
         .sidebar-item.active {
-            background: #ff8c00 !important;
+            background: #00b4d8 !important;
             color: #fff !important;
-            box-shadow: 0 4px 12px rgba(255,140,0,.35);
+            box-shadow: 0 4px 12px rgba(0, 180, 216,.35);
             font-weight: 700;
         }
         .sidebar-footer { margin-top: auto; padding: 1rem 0 0; border-top: 1px solid rgba(255,255,255,.06); }
@@ -125,7 +125,7 @@
             width: 220px;
             transition: border-color .2s;
         }
-        .search-input:focus { outline: none; border-color: #ff8c00; }
+        .search-input:focus { outline: none; border-color: #00b4d8; }
         .search-input::placeholder { color: #52525b; }
         .filter-select {
             background: rgba(255,255,255,.05);
@@ -140,7 +140,7 @@
             -webkit-appearance: none;
             appearance: none;
         }
-        .filter-select:focus { outline: none; border-color: #ff8c00; }
+        .filter-select:focus { outline: none; border-color: #00b4d8; }
         .filter-select option { background: #18181b; color: #e2e2e7; }
 
         /* Filter tabs */
@@ -165,7 +165,7 @@
             white-space: nowrap;
         }
         .filter-tab.active {
-            background: #ff8c00;
+            background: #00b4d8;
             color: #fff;
         }
         .filter-tab:hover:not(.active) { color: #e2e2e7; }
@@ -196,7 +196,7 @@
         }
         .admin-table th:hover { color: #e2e2e7; }
         .admin-table th .sort-icon { margin-left: 4px; font-size: 10px; opacity: .5; }
-        .admin-table th.sorted { color: #ff8c00; }
+        .admin-table th.sorted { color: #00b4d8; }
         .admin-table th.sorted .sort-icon { opacity: 1; }
         .admin-table td {
             padding: 14px 16px;
@@ -205,7 +205,7 @@
             vertical-align: middle;
         }
         .admin-table tr:last-child td { border-bottom: none; }
-        .admin-table tr.bulk-selected td { background: rgba(255,140,0,.05); }
+        .admin-table tr.bulk-selected td { background: rgba(0, 180, 216,.05); }
 
         /* ── BUTTONS ── */
         .btn-action {
@@ -224,7 +224,7 @@
             white-space: nowrap;
         }
         .btn-action:hover { background: rgba(255,255,255,.1); }
-        .btn-action.primary { background: #ff8c00; border-color: #ff8c00; color: #fff; font-weight: 700; }
+        .btn-action.primary { background: #00b4d8; border-color: #00b4d8; color: #fff; font-weight: 700; }
         .btn-action.primary:hover { background: #e07b00; }
         .btn-action.danger { background: rgba(255,107,107,.15); border-color: rgba(255,107,107,.3); color: #ff6b6b; }
         .btn-action.danger:hover { background: rgba(255,107,107,.25); }
@@ -240,13 +240,13 @@
             align-items: center;
             gap: .75rem;
             padding: .75rem 1rem;
-            background: rgba(255,140,0,.08);
-            border: 1px solid rgba(255,140,0,.25);
+            background: rgba(0, 180, 216,.08);
+            border: 1px solid rgba(0, 180, 216,.25);
             border-radius: 12px;
             margin-bottom: 1rem;
         }
         .bulk-bar.visible { display: flex; }
-        .bulk-bar span { font-size: 13px; font-weight: 700; color: #ff8c00; }
+        .bulk-bar span { font-size: 13px; font-weight: 700; color: #00b4d8; }
 
         /* ── MODAL ── */
         .modal-overlay {
@@ -313,7 +313,7 @@
             -webkit-appearance: none;
             appearance: none;
         }
-        .form-control:focus { outline: none; border-color: #ff8c00; }
+        .form-control:focus { outline: none; border-color: #00b4d8; }
         .form-control option { background: #1c1c1e; color: #f5f5f7; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .code-input-wrap { position: relative; }
@@ -322,10 +322,10 @@
             position: absolute;
             right: 6px; top: 50%;
             transform: translateY(-50%);
-            background: rgba(255,140,0,.15);
-            border: 1px solid rgba(255,140,0,.3);
+            background: rgba(0, 180, 216,.15);
+            border: 1px solid rgba(0, 180, 216,.3);
             border-radius: 8px;
-            color: #ff8c00;
+            color: #00b4d8;
             font-size: 11px;
             font-weight: 700;
             padding: 4px 10px;
@@ -333,7 +333,7 @@
             transition: .2s;
             white-space: nowrap;
         }
-        .code-gen-btn:hover { background: rgba(255,140,0,.25); }
+        .code-gen-btn:hover { background: rgba(0, 180, 216,.25); }
 
         /* Toggle switch */
         .toggle-row {
@@ -367,7 +367,7 @@
             border-radius: 50%;
             transition: .2s;
         }
-        .toggle input:checked + .toggle-slider { background: #ff8c00; }
+        .toggle input:checked + .toggle-slider { background: #00b4d8; }
         .toggle input:checked + .toggle-slider::before { transform: translateX(20px); background: #fff; }
 
         /* Chips */
@@ -413,24 +413,24 @@
             overflow: hidden;
             min-width: 60px;
         }
-        .uses-fill { height: 100%; background: #ff8c00; border-radius: 4px; transition: width .3s; }
+        .uses-fill { height: 100%; background: #00b4d8; border-radius: 4px; transition: width .3s; }
 
         /* Checkbox */
         .row-checkbox {
             width: 16px; height: 16px;
-            accent-color: #ff8c00;
+            accent-color: #00b4d8;
             cursor: pointer;
         }
 
         /* Preview calculator */
         .preview-calc {
-            background: rgba(255,140,0,.06);
-            border: 1px solid rgba(255,140,0,.2);
+            background: rgba(0, 180, 216,.06);
+            border: 1px solid rgba(0, 180, 216,.2);
             border-radius: 12px;
             padding: 1rem;
             margin-top: .5rem;
         }
-        .preview-calc .pc-label { font-size: 12px; font-weight: 700; color: #ff8c00; margin-bottom: .5rem; }
+        .preview-calc .pc-label { font-size: 12px; font-weight: 700; color: #00b4d8; margin-bottom: .5rem; }
         .preview-calc .pc-result { font-size: 1.1rem; font-weight: 900; color: #fff; }
         .preview-calc .pc-detail { font-size: 12px; color: #71717a; margin-top: 2px; }
 
@@ -524,7 +524,7 @@
                 <div class="stat-label">Cupones Activos</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon" style="background:rgba(255,140,0,.12); color:#ff8c00;"><i class="fa fa-fire"></i></div>
+                <div class="stat-icon" style="background:rgba(0, 180, 216,.12); color:#00b4d8;"><i class="fa fa-fire"></i></div>
                 <div class="stat-value" id="statUses">—</div>
                 <div class="stat-label">Total Usos</div>
             </div>
@@ -650,7 +650,7 @@
                 <input type="number" id="couponMinSubtotal" class="form-control" placeholder="0" min="0" step="0.01">
             </div>
             <div class="form-group">
-                <label>Límite de usos <small style="color:#ff8c00;">(0 = ilimitado)</small></label>
+                <label>Límite de usos <small style="color:#00b4d8;">(0 = ilimitado)</small></label>
                 <input type="number" id="couponMaxRedemptions" class="form-control" placeholder="0" min="0" step="1">
             </div>
         </div>
@@ -671,7 +671,7 @@
         <!-- Envío gratis -->
         <div class="toggle-row">
             <div class="toggle-label">
-                <i class="fa fa-truck" style="color:#ff8c00; margin-right:8px;"></i> Envío gratis incluido
+                <i class="fa fa-truck" style="color:#00b4d8; margin-right:8px;"></i> Envío gratis incluido
                 <small>Al aplicar el cupón se elimina el costo de envío</small>
             </div>
             <label class="toggle">
@@ -849,9 +849,9 @@
             return `<tr id="row-${c.id}" class="${selectedIds.has(c.id) ? 'bulk-selected' : ''}">
                 <td><input type="checkbox" class="row-checkbox" ${checked} onchange="toggleRowSelect('${c.id}', this.checked)"></td>
                 <td>
-                    <span style="font-weight:800; font-family:monospace; font-size:14px; color:#ff8c00;">${c.code}</span>
+                    <span style="font-weight:800; font-family:monospace; font-size:14px; color:#00b4d8;">${c.code}</span>
                 </td>
-                <td><span style="background:rgba(255,140,0,.1);color:#ff8c00;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;">${c.type === 'percent' ? '% Porcentaje' : '$ Fijo'}</span></td>
+                <td><span style="background:rgba(0, 180, 216,.1);color:#00b4d8;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;">${c.type === 'percent' ? '% Porcentaje' : '$ Fijo'}</span></td>
                 <td style="font-weight:700; color:#fff;">${c.type === 'percent' ? c.value + '%' : '$' + Number(c.value).toFixed(2)}</td>
                 <td>${c.free_shipping ? '<i class="fa fa-check" style="color:#34c759;"></i>' : '<i class="fa fa-times" style="color:#52525b;"></i>'}</td>
                 <td style="font-size:12px;">${c.min_subtotal > 0 ? '$' + Number(c.min_subtotal).toFixed(2) : '—'}</td>
