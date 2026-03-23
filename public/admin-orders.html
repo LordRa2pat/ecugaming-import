@@ -1183,12 +1183,24 @@
             return [1, '...', current - 1, current, current + 1, '...', total];
         }
 
+        function statusLabel(status) {
+            const map = {
+                'confirmando_pago': 'Confirmando Pago',
+                'orden_confirmada': 'Confirmada',
+                'empacando': 'Empacando',
+                'enviado': 'Enviado',
+                'recibido': 'Recibido',
+                'cancelado': 'Cancelado'
+            };
+            return map[status] || status || '—';
+        }
+
         // ── Build Table Row ───────────────────────────────────
         function buildRow(o) {
             const ip = o.ip_address || o.customer?.last_ip || '—';
             const isBanned = o.customer?.is_banned;
             const customerId = o.customer?.id || '';
-            const phone = o.shipping_address?.phone || '';
+            const phone = String(o.shipping_address?.phone || '');
             const waPhone = phone.replace(/\D/g, '');
             const trackCode = o.tracking_code || '—';
             const shortId = String(o.id).substring(0, 8) + '...';

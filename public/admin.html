@@ -1028,15 +1028,21 @@
         async function loadDashboard() {
             try {
                 const [pr, or, ur, cr] = await Promise.all([
-                    apiFetch('/api/admin/products'),
-                    apiFetch('/api/admin/orders?limit=200'),
-                    apiFetch('/api/admin/users'),
-                    apiFetch('/api/admin/credits?limit=500')
+                    apiFetch('/api/admin/products').catch(e => null),
+                    apiFetch('/api/admin/orders?limit=200').catch(e => null),
+                    apiFetch('/api/admin/users').catch(e => null),
+                    apiFetch('/api/admin/credits?limit=500').catch(e => null)
                 ]);
-                const prods = await pr.json();
-                const odata = await or.json();
-                const users = await ur.json();
-                const cdata = await cr.json().catch(() => ({ applications: [] }));
+                
+                const parseRes = async (res, fallback) => {
+                    if (!res || !res.ok) return fallback;
+                    return await res.json().catch(e => fallback);
+                };
+
+                const prods = await parseRes(pr, []);
+                const odata = await parseRes(or, { orders: [] });
+                const users = await parseRes(ur, []);
+                const cdata = await parseRes(cr, { applications: [] });
 
                 allOrders = odata.orders || [];
                 const totalOrders = odata.total || allOrders.length;
